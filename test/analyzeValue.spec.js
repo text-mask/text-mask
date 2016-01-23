@@ -3,7 +3,7 @@ import chai from 'chai'
 
 const expect = chai.expect
 
-describe.only('analyzeValue', () => {
+describe('analyzeValue', () => {
   it('takes a current mask value, previous value, and a pattern and returns an array ' +
     'with analysis of every character in the value', () => {
     expect(analyzeValue('1_/__/____', '__/__/____', '11/11/1111')).to.be.an('array')
@@ -26,5 +26,11 @@ describe.only('analyzeValue', () => {
 
     expect(valueAnalysis[1]).to.have.property('newCharacter').and.to.equal(false)
     expect(valueAnalysis[1]).to.have.property('partOfPlaceholder').and.to.equal(true)
+  })
+
+  it('tells us if a character is part of the pattern', () => {
+    const valueAnalysis = analyzeValue('/__/__/____', '__/__/____', '11/11/1111')
+
+    expect(valueAnalysis[0]).to.have.property('partOfPattern').and.to.equal(false)
   })
 })
