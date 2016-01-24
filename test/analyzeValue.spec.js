@@ -6,7 +6,7 @@ const expect = chai.expect
 describe('analyzeValue', () => {
   it('takes a current mask value, previous value, and a pattern and returns an array ' +
     'with analysis of every character in the value', () => {
-    expect(analyzeValue('1_/__/____', '__/__/____', '11/11/1111')).to.be.an('array')
+    expect(analyzeValue('__/__/____', '1__/__/____', '11/11/1111')).to.be.an('array')
   })
 
   it('returns an object that has as many keys as the number of characters in the ' +

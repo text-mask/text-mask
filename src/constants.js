@@ -3,3 +3,7 @@ export const operationTypes = {
   addition: 'addition',
   deletion: 'deletion'
 }
+
+export const maskingCharacters = ['1', 'A', '#']
+
+export const placeholderCharacter = '_'
