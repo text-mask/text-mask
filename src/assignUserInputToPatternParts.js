@@ -1,6 +1,6 @@
 import {removeCharactersStartingAtIndex} from './utilities.js'
 
-export default function assignUserInputToPatternEditableAreas(
+export default function assignUserInputToPatternParts(
   patternEditableAreas = [],
   userInput = ''
 ) {

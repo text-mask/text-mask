@@ -3,7 +3,7 @@ import chai from 'chai'
 
 const expect = chai.expect
 
-describe.only('conformToMask', () => {
+describe('conformToMask', () => {
   describe('simple transformations', () => {
     describe('given pattern 11/11/1111', () => {
       const pattern = '11/11/1111'

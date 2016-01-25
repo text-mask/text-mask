@@ -1,6 +1,6 @@
 import {getDelimiters} from './utilities.js'
 
-export default function chunkUserInput(userInput = '', pattern = '') {
+export default function getUserInputParts(userInput = '', pattern = '') {
   //const userInputChunks = []
   const delimiters = getDelimiters(pattern)
 

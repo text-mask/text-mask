@@ -4,9 +4,9 @@ import {
   constructConformedString
 } from './utilities.js'
 import analyzeValue from './analyzeValue.js'
-import getPatternEditableAreas from './getPatternEditableAreas.js'
-import chunkUserInput from './chunkUserInput.js'
-import assignUserInputToPatternEditableAreas from './assignUserInputToPatternEditableAreas.js'
+import getPatternParts from './getPatternParts.js'
+import chunkUserInput from './getUserInputParts.js'
+import assignUserInputToPatternParts from './assignUserInputToPatternParts.js'
 import isUnexpectedUserInput from './isUnexpectedUserInput.js'
 
 export default function conformToMask(userInput, pattern) {
@@ -17,12 +17,12 @@ export default function conformToMask(userInput, pattern) {
     }
   }
 
-  const patternEditableAreas = getPatternEditableAreas(pattern)
+  const patternEditableAreas = getPatternParts(pattern)
   const userInputChunks = chunkUserInput(userInput, pattern)
 
   console.log(patternEditableAreas, userInputChunks);
 
-  const editableAreasWithContent = assignUserInputToPatternEditableAreas(
+  const editableAreasWithContent = assignUserInputToPatternParts(
     patternEditableAreas,
     userInputChunks
   )

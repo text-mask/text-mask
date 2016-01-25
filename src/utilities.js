@@ -29,11 +29,15 @@ export function getDelimiters(pattern ='') {
   }, [])
 }
 
+export function printPadding(paddingCharacter, length) {
+  return Array.from({length: length}, () => paddingCharacter).join('')
+}
+
 export function constructConformedString(editableAreasWithContent) {
   return editableAreasWithContent.reduce((accumulator, editableAreaWithContent) => {
     const {content = '', length, delimiter} = editableAreaWithContent
     const contentAndEditableAreaLengthDelta = length - content.length
-    const padding = Array.from({length: contentAndEditableAreaLengthDelta}, () => '_').join('')
+    const padding = printPadding(placeholderCharacter, contentAndEditableAreaLengthDelta)
 
     accumulator += content + padding + (delimiter || '')
 
