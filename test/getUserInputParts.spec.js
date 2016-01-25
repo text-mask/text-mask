@@ -4,7 +4,7 @@ import {convertPatternToPlaceholder} from '../src/utilities.js'
 
 const expect = chai.expect
 
-describe('getUserInputParts', () => {
+describe.only('getUserInputParts', () => {
   it('returns an array of user input chunks', () => {
     expect(getUserInputParts()).to.be.an('array')
   })
@@ -17,19 +17,14 @@ describe('getUserInputParts', () => {
     expect(getUserInputParts('11', '11/11')).to.deep.equal(['11'])
   })
 
-  it('returns [`84`, `734`] for input `84/734` and pattern `11/111`', () => {
-    expect(getUserInputParts('84/734', '11/111')).to.deep.equal(['84', '734'])
-  })
-
-  it('knows how to process `(787) 787-7878` given pattern `(111) 111-1111`', () => {
-    expect(getUserInputParts('(787) 787-7878', '(111) 111-1111')).to.deep.equal([
-      '787', '787', '7878'
-    ])
-  })
-
-  it('knows how to process `(787)787-7878` given pattern `(111) 111-1111`', () => {
-    expect(getUserInputParts('(787)787-7878', '(111) 111-1111')).to.deep.equal([
-      '787', '787', '7878'
-    ])
+  ;[
+    {input: '84/734', pattern: '11/111', output: ['84', '734']},
+    {input: '(787) 787-7878', pattern: '(111) 111-1111', output: ['787', '787', '7878']},
+    {input: '(787)787-7878', pattern: '(111) 111-1111', output: ['787', '787', '7878']}
+  ].map((test) => {
+    it(`returns ${JSON.stringify(test.output)} for input ${test.input} and pattern ` +
+       `${test.pattern}`, () => {
+      expect(getUserInputParts(test.input, test.pattern)).to.deep.equal(test.output)
+    })
   })
 })
