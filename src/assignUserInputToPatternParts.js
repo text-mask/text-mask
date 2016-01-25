@@ -17,13 +17,13 @@ export default function assignUserInputToPatternParts(patternParts = [], userInp
         remainderFromLastProcessedUserInput + userInputParts[index] :
         remainderFromLastProcessedUserInput
 
-      const processedPart = processPart(userInput, length)
+      const {remainder, results} = processPart(userInput, length)
 
-      remainderFromLastProcessedUserInput = processedPart.remainder
+      remainderFromLastProcessedUserInput = remainder
 
       return {
         ...patternPart,
-        content: processedPart.results
+        content: results
       }
     }
   })

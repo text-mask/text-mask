@@ -75,6 +75,22 @@ describe.only('assignUserInputToPatternParts', () => {
         {length: 2, delimiter: '/', content: '22'},
         {length: 2, delimiter: '', content: '21'}
       ]
+    },
+
+    {
+      input: '8_/4_2/222_1', pattern: '11/11/1111', output: [
+        {length: 2, delimiter: '/', content: '8_'},
+        {length: 2, delimiter: '/', content: '42'},
+        {length: 4, delimiter: '', content: '2221'}
+      ]
+    },
+
+    {
+      input: '8293847/4_2/222_1', pattern: '11/11/1111', output: [
+        {length: 2, delimiter: '/', content: '82'},
+        {length: 2, delimiter: '/', content: '93'},
+        {length: 4, delimiter: '', content: '8474'}
+      ]
     }
 
     //{

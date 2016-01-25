@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "./node_modules/.bin/babel --presets es2015 -d lib/ src/"
+    "compile": "./node_modules/.bin/babel --presets es2015 -d lib/ src/",
+    "tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register test --recursive --watch"
   },
   "repository": {
     "type": "git",
