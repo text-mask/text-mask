@@ -2,50 +2,96 @@ import chai from 'chai'
 import assignUserInputToPatternParts from
   '../src/assignUserInputToPatternParts.js'
 import getPatternParts from '../src/getPatternParts.js'
-import chunkUserInput from '../src/getUserInputParts.js'
+import getUserInputParts from '../src/getUserInputParts.js'
+
 const expect = chai.expect
 
-describe('assignUserInputToPatternParts', () => {
-  it('returns an array', () => {
-    expect(
-      assignUserInputToPatternParts()
-    ).to.be.an('array')
-  })
+describe.only('assignUserInputToPatternParts', () => {
+  //it('returns an array', () => {
+  //  expect(
+  //    assignUserInputToPatternParts()
+  //  ).to.be.an('array')
+  //})
+  //
+  //it('takes two objects: pattern parts and user input parts', () => {
+  //  const pattern = '11/11/1111'
+  //
+  //  expect(() => assignUserInputToPatternParts(
+  //    getPatternParts(pattern),
+  //    getUserInputParts('11/11', pattern)
+  //  )).to.not.throw()
+  //})
 
-  it('takes two objects: pattern editable areas and user input chunks', () => {
-    const pattern = '11/11/1111'
+  ;[
+    {
+      input: '1', pattern: '(', output: [
+        {length: 0, delimiter: '(', content: ''}
+      ]
+    },
 
-    expect(() => assignUserInputToPatternParts(
-      getPatternParts(pattern),
-      chunkUserInput('11/11', pattern)
-    )).to.not.throw()
-  })
+    {
+      input: '2', pattern: '1', output: [
+        {length: 1, delimiter: '', content: '2'}
+      ]
+    },
 
-  it('inserts user content into pattern editable areas', () => {
-    const pattern = '11/11/1111'
+    {
+      input: '__/22', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '__'},
+        {length: 2, delimiter: '', content: '22'}
+      ]
+    },
 
-    expect(assignUserInputToPatternParts(
-      getPatternParts(pattern),
-      chunkUserInput('11/11', pattern)
-    )).to.deep.equal([
-      {length: 2, delimiter: '/', content: '11'},
-      {length: 2, delimiter: '/', content: '11'},
-      {length: 4, delimiter: '', content: ''}
-    ])
-  })
+    {
+      input: '2__/22', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '2_'},
+        {length: 2, delimiter: '', content: '22'}
+      ]
+    },
 
-  it('knows how to merge (747)474-4747 into (111) 111-1111', () => {
-    const pattern = '(111) 111-1111'
+    {
+      input: '22', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '22'},
+        {length: 2, delimiter: '', content: '__'}
+      ]
+    },
 
-    expect(assignUserInputToPatternParts(
-      getPatternParts(pattern),
-      chunkUserInput('(747)474-4747', pattern)
-    )).to.deep.equal([
-      {length: 0, delimiter: '(', content: ''},
-      {length: 3, delimiter: ')', content: '747'},
-      {length: 0, delimiter: ' ', content: ''},
-      {length: 3, delimiter: '-', content: '474'},
-      {length: 4, delimiter: '', content: '4747'}
-    ])
+    {
+      input: '222', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '22'},
+        {length: 2, delimiter: '', content: '2_'}
+      ]
+    },
+
+    {
+      input: '777777', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '77'},
+        {length: 2, delimiter: '', content: '77'}
+      ]
+    },
+
+    {
+      input: '222/1', pattern: '11/11', output: [
+        {length: 2, delimiter: '/', content: '22'},
+        {length: 2, delimiter: '', content: '21'}
+      ]
+    }
+
+    //{
+    //  userInput: '__/11', pattern: '11/11', output: [
+    //    {length: 2, delimiter: '/', content: ''},
+    //    {length: 2, delimiter: '', content: '11'}
+    //  ]
+    //}
+  ].map((test) => {
+    //if (!test.only) { return }
+
+    it(`returns ${JSON.stringify(test.output)} for input '${test.input}' and ` +
+       `pattern '${test.pattern}'`, () => {
+      expect(assignUserInputToPatternParts(
+        getPatternParts(test.pattern),
+        getUserInputParts(test.input, test.pattern))
+      ).to.deep.equal(test.output)
+    })
   })
 })

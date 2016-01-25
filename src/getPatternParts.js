@@ -1,31 +1,32 @@
 import {placeholderCharacter} from './constants.js'
 import {convertPatternToPlaceholder} from './utilities.js'
 
-export default function getPlaceholderEditableAreas(pattern = '') {
+export default function getPatternParts(pattern = '') {
   const placeholder = convertPatternToPlaceholder(pattern)
-  const editableAreas = []
+  const patternParts = []
 
-  let lengthOfLastEncounteredArea = 0
+  let lengthOfPart = 0
   placeholder.split('').forEach((character) => {
     if (character === placeholderCharacter) {
-      lengthOfLastEncounteredArea++
+      lengthOfPart++
     } else {
-      editableAreas.push({
-        length: lengthOfLastEncounteredArea,
+      patternParts.push({
+        length: lengthOfPart,
         delimiter: character,
         content: ''
       })
-      lengthOfLastEncounteredArea = 0
+
+      lengthOfPart = 0
     }
   })
 
-  if (lengthOfLastEncounteredArea > 0) {
-    editableAreas.push({
-      length: lengthOfLastEncounteredArea,
+  if (lengthOfPart > 0) {
+    patternParts.push({
+      length: lengthOfPart,
       delimiter: '',
       content: ''
     })
   }
 
-  return editableAreas
+  return patternParts
 }

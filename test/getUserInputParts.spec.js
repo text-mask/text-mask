@@ -4,7 +4,7 @@ import {convertPatternToPlaceholder} from '../src/utilities.js'
 
 const expect = chai.expect
 
-describe.only('getUserInputParts', () => {
+describe('getUserInputParts', () => {
   it('returns an array of user input chunks', () => {
     expect(getUserInputParts()).to.be.an('array')
   })
@@ -20,7 +20,8 @@ describe.only('getUserInputParts', () => {
   ;[
     {input: '84/734', pattern: '11/111', output: ['84', '734']},
     {input: '(787) 787-7878', pattern: '(111) 111-1111', output: ['787', '787', '7878']},
-    {input: '(787)787-7878', pattern: '(111) 111-1111', output: ['787', '787', '7878']}
+    {input: '(787)787-7878', pattern: '(111) 111-1111', output: ['787', '787', '7878']},
+    {input: '(7874)787-7878', pattern: '(111) 111-1111', output: ['7874', '787', '7878']}
   ].map((test) => {
     it(`returns ${JSON.stringify(test.output)} for input ${test.input} and pattern ` +
        `${test.pattern}`, () => {

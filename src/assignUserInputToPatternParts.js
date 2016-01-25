@@ -1,38 +1,30 @@
 import {removeCharactersStartingAtIndex} from './utilities.js'
+import processPart from './processPart.js'
 
-export default function assignUserInputToPatternParts(
-  patternEditableAreas = [],
-  userInput = ''
-) {
-  return patternEditableAreas.map((editableArea) => {
-    let {content, length} = editableArea
+export default function assignUserInputToPatternParts(patternParts = [], userInputParts = []) {
+  let remainderFromLastProcessedUserInput = ''
 
-    userInput.split('').forEach((character) => {
-      if (content.length < length) {
-        content += character
+  return patternParts.map((patternPart, index) => {
+    let {content, length} = patternPart
+
+    if (length === 0) {
+      return {
+        ...patternPart,
+        content
       }
-    })
+    } else {
+      const userInput = (userInputParts && userInputParts[index]) ?
+        remainderFromLastProcessedUserInput + userInputParts[index] :
+        remainderFromLastProcessedUserInput
 
-    userInput = removeCharactersStartingAtIndex(userInput, 0, content.length)
+      const processedPart = processPart(userInput, length)
 
-    return {
-      ...editableArea,
-      ...{content}
+      remainderFromLastProcessedUserInput = processedPart.remainder
+
+      return {
+        ...patternPart,
+        content: processedPart.results
+      }
     }
   })
-
-  //const editableAreasWithContent = []
-  //let indexOfLastEditableArea = 0
-  //
-  //userInput.split('').forEach((character) => {
-  //  patternEditableAreas.forEach((editableArea) => {
-  //    const {content, length} = editableArea
-  //
-  //    if (content.length < length) {
-  //      content += character
-  //    }
-  //  })
-  //})
-  //
-  //return editableAreasWithContent
 }

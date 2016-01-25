@@ -4,8 +4,11 @@ import {
 } from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function processPart (userInput = '', acceptedLength = 0) {
-  while(userInput.length > acceptedLength && userInput.indexOf(placeholderCharacter) !== -1) {
+export default function processPart(userInput = '', acceptedLength = 0) {
+  while(
+    userInput.length > acceptedLength &&
+    userInput.indexOf(placeholderCharacter) !== -1
+  ) {
     const indexOfLastPlaceholderChar = userInput.lastIndexOf(placeholderCharacter)
 
     userInput = removeCharactersStartingAtIndex(userInput, indexOfLastPlaceholderChar, 1)
