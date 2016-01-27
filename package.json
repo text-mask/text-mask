@@ -1,7 +1,7 @@
 {
-  "name": "string-mask",
-  "version": "1.0.0",
-  "description": "",
+  "name": "string-pattern",
+  "version": "0.0.1",
+  "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {
     "build": "exit 1",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/msafi/string-mask.git"
+    "url": "git+https://github.com/msafi/string-pattern.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/msafi/string-mask/issues"
+    "url": "https://github.com/msafi/string-pattern/issues"
   },
-  "homepage": "https://github.com/msafi/string-mask#readme",
+  "homepage": "https://github.com/msafi/string-pattern#readme",
   "dependencies": {
     "jsdiff": "^1.1.1"
   },
