@@ -11,6 +11,6 @@ export default function processPart(userInput = '', acceptedLength = 0) {
 
   return {
     results: head + printPadding(placeholderCharacter, sizeDifference),
-    remainder: tail.replace(new RegExp(placeholderCharacter, 'g'), '')
+    remainder: tail
   }
 }

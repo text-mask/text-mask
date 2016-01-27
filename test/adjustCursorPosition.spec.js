@@ -3,7 +3,7 @@ import adjustCursorPosition from '../src/adjustCursorPosition.js'
 
 const expect = chai.expect
 
-describe.only('adjustCursorPosition', () => {
+describe('adjustCursorPosition', () => {
   it('only knows how to adjust the cursor position when there is one change between ' +
      'new and old inputs, otherwise it returns the current cursor position', () => {
     expect(adjustCursorPosition('3333', '2938', 1000)).to.equal(1000)
