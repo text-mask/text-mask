@@ -20,12 +20,3 @@ export default function getUserInputParts(userInput = '', pattern = '') {
 
   return userInputParts
 }
-
-//
-//return userInput.split('').reduce((accumulator, character) => {
-//  if (delimiters.indexOf(character) === -1) {
-//    accumulator += character
-//  }
-//
-//  return accumulator
-//}, '')
