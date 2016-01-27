@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "hot": "node ./server.js",
+    "build": "exit 1",
+    "hot": "node ./demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "./node_modules/.bin/babel -d lib/ src/",
     "tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register test --recursive --watch"

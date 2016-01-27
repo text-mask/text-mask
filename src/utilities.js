@@ -1,11 +1,7 @@
 import {operationTypes, maskingCharacters, placeholderCharacter} from './constants.js'
 
 export function convertPatternToPlaceholder(pattern = '') {
-  return pattern.replace(/1/g, '_')
-}
-
-export function countUnderscores(string = '') {
-  return string.match(/_/g).length
+  return pattern.replace(/1/g, placeholderCharacter)
 }
 
 export function removeCharactersStartingAtIndex(string = '', index = 0, numberOfCharacters = 1) {
@@ -33,11 +29,11 @@ export function printPadding(paddingCharacter, length) {
   return Array.from({length: length}, () => paddingCharacter).join('')
 }
 
-export function constructConformedString(editableAreasWithContent) {
-  return editableAreasWithContent.reduce((accumulator, editableAreaWithContent) => {
+export function constructConformedString(patternPartsWithContent) {
+  return patternPartsWithContent.reduce((accumulator, editableAreaWithContent) => {
     const {content = '', length, delimiter} = editableAreaWithContent
-    const contentAndEditableAreaLengthDelta = length - content.length
-    const padding = printPadding(placeholderCharacter, contentAndEditableAreaLengthDelta)
+    const contentAndLengthDelta = length - content.length
+    const padding = printPadding(placeholderCharacter, contentAndLengthDelta)
 
     accumulator += content + padding + (delimiter || '')
 

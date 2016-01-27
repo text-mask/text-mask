@@ -5,15 +5,22 @@ import {actionCreators} from './actions';
 import Form from './form'
 import _ from 'lodash'
 
-class Main extends Component {
-  constructor(props) {
-    super(props)
-  }
+const Main = React.createClass({
+  propTypes: {
+    results: PropTypes.any.isRequired
+  },
 
   render() {
+    const actions = bindActionCreators(actionCreators, this.props.dispatch)
+
     return (
       <div>
-        <Form/>
+        <Form
+          updateValue={actions.updateResults}
+          setCursorPosition={actions.setCursorPosition}
+          cursorPosition={this.props.cursorPosition}
+          value={this.props.results}
+        />
 
         <pre>
           {JSON.stringify(_.get(this, 'props.results'), null, 2)}
@@ -21,6 +28,6 @@ class Main extends Component {
       </div>
     );
   }
-}
+})
 
-export default connect((state) => ({ results: _.get(state, 'form.form.results') }))(Main)
+export default connect((state) => _.get(state, 'main'))(Main)

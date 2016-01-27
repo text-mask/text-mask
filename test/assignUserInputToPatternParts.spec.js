@@ -6,7 +6,7 @@ import getUserInputParts from '../src/getUserInputParts.js'
 
 const expect = chai.expect
 
-describe.only('assignUserInputToPatternParts', () => {
+describe('assignUserInputToPatternParts', () => {
   //it('returns an array', () => {
   //  expect(
   //    assignUserInputToPatternParts()
@@ -90,6 +90,16 @@ describe.only('assignUserInputToPatternParts', () => {
         {length: 2, delimiter: '/', content: '82'},
         {length: 2, delimiter: '/', content: '93'},
         {length: 4, delimiter: '', content: '8474'}
+      ]
+    },
+
+    {
+      input: '777', pattern: '(111) 111-1111', output: [
+        {length: 0, delimiter: '(', content: ''},
+        {length: 3, delimiter: ')', content: '777'},
+        {length: 0, delimiter: ' ', content: ''},
+        {length: 3, delimiter: '-', content: '___'},
+        {length: 4, delimiter: '', content: '____'}
       ]
     }
 
