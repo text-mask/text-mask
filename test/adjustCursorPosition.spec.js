@@ -120,7 +120,8 @@ describe('adjustCursorPosition', () => {
     //if (!test.only) { return }
 
     it(`for user inputs previous: '${test.previousInput}', new: '${test.newInput}', ` +
-       `and pattern '${test.pattern}', it guesses the new cursor position to be ${test.results}`, () => {
+       `and pattern '${test.pattern}', it guesses the new cursor position to be ` +
+       `${test.results}`, () => {
       expect(adjustCursorPosition(
         test.previousInput,
         test.newInput,
