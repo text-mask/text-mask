@@ -6,27 +6,21 @@ export default function assignUserInputToPatternParts(patternParts = [], userInp
   let remainderFromLastProcessedUserInput = ''
 
   return patternParts.map((patternPart) => {
-    let {content, length} = patternPart
+    const {length} = patternPart
 
-    if (length === 0) {
-      return {
-        ...patternPart,
-        content
-      }
-    } else {
-      const userInput = (userInputParts && userInputParts[userInputIndex]) ?
-        remainderFromLastProcessedUserInput + userInputParts[userInputIndex] :
-        remainderFromLastProcessedUserInput
+    if (length === 0) { return patternPart }
 
-      const {remainder, results} = processPart(userInput, length)
+    const userInput = (userInputParts && userInputParts[userInputIndex]) ?
+      remainderFromLastProcessedUserInput + userInputParts[userInputIndex] :
+      remainderFromLastProcessedUserInput
 
-      remainderFromLastProcessedUserInput = remainder
-      userInputIndex++
+    const {remainder, results} = processPart(userInput, length)
 
-      return {
-        ...patternPart,
-        content: results
-      }
-    }
+    remainderFromLastProcessedUserInput = remainder
+    userInputIndex++
+
+    patternPart.content = results
+
+    return patternPart
   })
 }

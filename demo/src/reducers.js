@@ -1,5 +1,6 @@
 import {actionTypes} from './actions';
-import conformToMask from '../../src/conformToMask.js'
+import conformToPattern from '../../src/conformToPattern.js'
+import extend from 'lodash/extend'
 
 const initialState = {
   results: '(___) ___-____'
@@ -8,9 +9,9 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.UPDATE_RESULTS:
-      return {...state, results: conformToMask(action.payload, '(111) 111-1111')}
+      return extend({}, state, {results: conformToPattern(action.payload, '(111) 111-1111')})
     case actionTypes.SET_CURSOR_POSITION:
-      return {...state, cursorPosition: action.payload}
+      return extend({}, state, {cursorPosition: action.payload})
     default:
       return state;
   }
