@@ -17,8 +17,8 @@ const Main = React.createClass({
       <div>
         <Form
           updateValue={actions.updateResults}
-          setCursorPosition={actions.setCursorPosition}
-          cursorPosition={this.props.cursorPosition}
+          setCaretPosition={actions.setCaretPosition}
+          caretPosition={this.props.caretPosition}
           value={this.props.results}
         />
 

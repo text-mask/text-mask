@@ -16,14 +16,4 @@ describe('utilities', () => {
       expect(getDelimiters('11/11/1111')).to.eql(['/'])
     })
   })
-
-  describe('constructConformedString', () => {
-    it('does its thing', () => {
-      expect(constructConformedString([
-        {length: 2, delimiter: '/', content: '11'},
-        {length: 2, delimiter: '/', content: '11'},
-        {length: 4, delimiter: undefined, content: undefined}
-      ])).to.equal('11/11/____')
-    })
-  })
 })

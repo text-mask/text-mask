@@ -5,7 +5,7 @@ import {
 } from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function insertCharacterIntoPatter(characterPositions = [], pattern = '') {
+export default function insertCharacterIntoPattern(characterPositions = [], pattern = '') {
   const placeholder = convertPatternToPlaceholder(pattern)
 
   let currentArea = 0

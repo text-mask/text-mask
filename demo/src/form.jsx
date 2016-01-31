@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import {getSelection, setSelection} from 'react/lib/ReactInputSelection'
-import adjustCursorPosition from '../../src/adjustCursorPosition.js'
+import adjustCaretPosition from '../../src/adjustCaretPosition.js'
 
 const Form = React.createClass({
   propTypes: {
     value: PropTypes.string.isRequired,
     updateValue: PropTypes.func.isRequired,
-    cursorPosition: PropTypes.object,
-    setCursorPosition: PropTypes.func.isRequired
+    caretPosition: PropTypes.object,
+    setCaretPosition: PropTypes.func.isRequired
   },
 
   componentWillMount() {
@@ -19,23 +19,23 @@ const Form = React.createClass({
   },
 
   onChange(event) {
-    this.props.setCursorPosition(getSelection(this.refs.hello))
+    this.props.setCaretPosition(getSelection(this.refs.hello))
     this.props.updateValue(event.target.value)
   },
 
   componentDidUpdate() {
     console.log(this.previousValue);
     console.log(this.props.value);
-    console.log(this.props.cursorPosition);
+    console.log(this.props.caretPosition);
 
-    const cursorPosition = adjustCursorPosition(
+    const caretPosition = adjustCaretPosition(
       this.previousValue,
       this.props.value,
-      this.props.cursorPosition.start,
+      this.props.caretPosition.start,
       '(111) 111-1111'
     )
 
-    setSelection(this.refs.hello, {start: cursorPosition, end: cursorPosition})
+    setSelection(this.refs.hello, {start: caretPosition, end: caretPosition})
 
     this.previousValue = this.props.value
   }

@@ -41,15 +41,3 @@ export function findCharacter(characterPositions = [], location = {}) {
     }
   }
 }
-
-export function constructConformedString(patternPartsWithContent) {
-  return patternPartsWithContent.reduce((accumulator, editableAreaWithContent) => {
-    const {content = '', length, delimiter} = editableAreaWithContent
-    const contentAndLengthDelta = length - content.length
-    const padding = printPadding(placeholderCharacter, contentAndLengthDelta)
-
-    accumulator += content + padding + (delimiter || '')
-
-    return accumulator
-  }, '')
-}

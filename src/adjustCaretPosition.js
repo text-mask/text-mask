@@ -2,14 +2,14 @@ import diff from 'diff'
 import {convertPatternToPlaceholder} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function adjustCursorPosition(
+export default function adjustCaretPosition(
   previousUserInput = '',
   newUserInput = '',
-  currentCursorPosition = 0,
+  currentCaretPosition = 0,
   pattern = ''
 ) {
-  // Nothing changed. Keep cursor at where it currently is.
-  if (previousUserInput === newUserInput) { return currentCursorPosition }
+  // Nothing changed. Keep caret at where it currently is.
+  if (previousUserInput === newUserInput) { return currentCaretPosition }
 
   const diffResults = diff.diffChars(previousUserInput, newUserInput)
 
@@ -40,15 +40,15 @@ export default function adjustCursorPosition(
   //console.log(indexOfWhereChangeOccurred);
   //console.log(newCharacterIsPlaceholderCharacter);
 
-  // The cursor position and the change are too far apart, which means some ambiguous change
+  // The caret position and the change are too far apart, which means some ambiguous change
   // happened. I.e (333) ___-____ to (333) 3__-____
-  // In that case, just return the currentCursorPosition
-  if ((indexOfWhereChangeOccurred - currentCursorPosition) > 1) { return currentCursorPosition }
+  // In that case, just return the currentCaretPosition
+  if ((indexOfWhereChangeOccurred - currentCaretPosition) > 1) { return currentCaretPosition }
 
   // There are more than one change in the diffResults, which means we're dealing with
-  // paste or select and delete operation. We don't need to adjust the cursor position
+  // paste or select and delete operation. We don't need to adjust the caret position
   // for those operations.
-  if (addedCount > 1 || removedCount > 1) { return currentCursorPosition }
+  if (addedCount > 1 || removedCount > 1) { return currentCaretPosition }
 
   const placeholder = convertPatternToPlaceholder(pattern)
 
@@ -57,7 +57,7 @@ export default function adjustCursorPosition(
 
   if (
     // New character was added at the end of a pattern part. Find the nearest placeholder character
-    // to the right and return that the new cursor position
+    // to the right and return that the new caret position
     (newCharacterIsPlaceholderCharacter !== true) &&
     (placeholder[indexOfWhereChangeOccurred + 1] !== undefined) &&
     (placeholder[indexOfWhereChangeOccurred + 1] !== placeholderCharacter)
@@ -68,12 +68,12 @@ export default function adjustCursorPosition(
       }
     }
 
-    // New character possibly at the end of entire pattern. Just keep the cursor at its place.
-    return currentCursorPosition
+    // New character possibly at the end of entire pattern. Just keep the caret at its place.
+    return currentCaretPosition
   } else if (
     // A character has actually been deleted and the previous spot in the pattern
     // is not a placeholder. So, find the nearest placeholder character on the left and return that
-    // as the new cursor position
+    // as the new caret position
     (newCharacterIsPlaceholderCharacter === true) &&
     (placeholder[indexOfWhereChangeOccurred - 1] !== undefined) &&
     (placeholder[indexOfWhereChangeOccurred - 1] !== placeholderCharacter)
@@ -84,7 +84,7 @@ export default function adjustCursorPosition(
       }
     }
 
-    return currentCursorPosition
+    return currentCaretPosition
   }
 
   // Not sure yet why I need this condition here. There's a logical reason for it, but I will think

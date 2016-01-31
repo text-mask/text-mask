@@ -1,6 +1,6 @@
 export const actionTypes = {
   UPDATE_RESULTS: 'UPDATE_RESULTS',
-  SET_CURSOR_POSITION: 'SET_CURSOR_POSITION'
+  SET_CARET_POSITION: 'SET_CARET_POSITION'
 }
 
 export const actionCreators = {
@@ -11,9 +11,9 @@ export const actionCreators = {
     }
   },
 
-  setCursorPosition(payload) {
+  setCaretPosition(payload) {
     return {
-      type: actionTypes.SET_CURSOR_POSITION,
+      type: actionTypes.SET_CARET_POSITION,
       payload
     }
   }

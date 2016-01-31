@@ -1,7 +1,4 @@
-import {
-  getDelimiters,
-  removeCharactersStartingAtIndex
-} from './utilities.js'
+import {getDelimiters} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 import getPatternAreaLengths from './getPatternAreaLengths.js'
 
