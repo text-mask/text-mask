@@ -3,7 +3,7 @@ import chai from 'chai'
 
 const expect = chai.expect
 
-describe.only('assignUserInputToPatternPositions', () => {
+describe('assignUserInputToPatternPositions', () => {
   it('returns an array', () => {
     expect(
       assignUserInputToPatternPositions()

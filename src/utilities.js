@@ -29,6 +29,19 @@ export function printPadding(paddingCharacter, length) {
   return Array.from({length: length}, () => paddingCharacter).join('')
 }
 
+export function findCharacter(characterPositions = [], location = {}) {
+  for (let i = 0; i < characterPositions.length; i++) {
+    const characterPosition = characterPositions[i]
+
+    if (
+      characterPosition.area === location.area &&
+      characterPosition.position === location.position
+    ) {
+      return characterPosition.character
+    }
+  }
+}
+
 export function constructConformedString(patternPartsWithContent) {
   return patternPartsWithContent.reduce((accumulator, editableAreaWithContent) => {
     const {content = '', length, delimiter} = editableAreaWithContent

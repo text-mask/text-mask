@@ -57,7 +57,7 @@ describe('conformToPattern', () => {
       })
 
       it('transforms 1_/1__/___1 to 1_/1_/___1', () => {
-        expect(conformToPattern('1_/1__/___1', pattern)).to.equal('1_/1_/___1')
+        expect(conformToPattern('1_/1__/___1', pattern)).to.equal('1_/1_/____')
       })
     })
   })

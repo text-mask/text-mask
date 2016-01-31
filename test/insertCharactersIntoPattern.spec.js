@@ -1,26 +1,25 @@
-import insertCharacterIntoPattern from '../src/insertCharacterIntoPattern.js'
+import insertCharactersIntoPattern from '../src/insertCharactersIntoPattern.js'
 import chai from 'chai'
 
 const expect = chai.expect
 
-describe('insertCharacterIntoPattern', () => {
+describe('insertCharactersIntoPattern', () => {
   it('returns a string', () => {
     expect(
-      insertCharacterIntoPattern()
+      insertCharactersIntoPattern()
     ).to.be.a('string')
   })
 
   ;[
     {input: {
-      characterPosition: {character: '2', position: 0, area: 0},
+      characterPosition: [{character: '2', position: 0, area: 1}],
       pattern: '11/11',
-      userInput: '__/__'
     }, output: '__/2_'},
 
   ].map((test) => {
-    it(`knows for characterPosition: ${test.input.characterPosition} and pattern ` +
+    it(`knows for characterPosition: ${JSON.stringify(test.input.characterPosition)} and pattern ` +
        `${test.input.pattern} to return ${test.output}`, () => {
-      expect(insertCharacterIntoPattern(
+      expect(insertCharactersIntoPattern(
         test.input.characterPosition,
         test.input.pattern
       )).to.equal(test.output)
