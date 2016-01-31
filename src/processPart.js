@@ -1,7 +1,4 @@
-import {
-  printPadding,
-  removeCharactersStartingAtIndex
-} from './utilities.js'
+import {printPadding} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
 export default function processPart(userInput = '', acceptedLength = 0) {

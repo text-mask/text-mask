@@ -1,5 +1,4 @@
 import {
-  convertPatternToPlaceholder,
   getDelimiters,
   removeCharactersStartingAtIndex
 } from './utilities.js'

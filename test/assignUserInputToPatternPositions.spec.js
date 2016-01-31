@@ -127,6 +127,15 @@ describe.only('assignUserInputToPatternPositions', () => {
     {input: {userInput: '/22', pattern: '11/11'}, output: [
       {character: '2', position: 0, area: 0},
       {character: '2', position: 1, area: 0},
+    ]},
+
+    {input: {userInput: '22/3/995', pattern: '11/11/1111'}, output: [
+      {character: '2', position: 0, area: 0},
+      {character: '2', position: 1, area: 0},
+      {character: '3', position: 0, area: 1},
+      {character: '9', position: 1, area: 1},
+      {character: '9', position: 0, area: 2},
+      {character: '5', position: 1, area: 2},
     ]}
   ].map((test) => {
     //if (!test.only) { return }
