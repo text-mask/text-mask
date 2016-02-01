@@ -1,6 +1,6 @@
 {
   "name": "string-pattern",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "lib/index.js",
   "scripts": {
