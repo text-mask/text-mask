@@ -2,11 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: ['./ghPages/index.jsx'],
+  entry: ['./website/index.jsx'],
   output: {
-    path: path.join(__dirname, 'ghPages/static'),
+    path: path.join(__dirname, 'website/static'),
     filename: 'bundle.js',
-    publicPath: '/ghPages/static/'
+    publicPath: '/website/static/'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
