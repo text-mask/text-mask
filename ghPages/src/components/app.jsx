@@ -1,5 +1,4 @@
 import React from 'react'
-import Form from './Form.jsx'
 import _ from 'lodash'
 import gettingStarted from '../markdowns/gettingStarted.md'
 import whyStringPattern from '../markdowns/whyStringPattern.md'

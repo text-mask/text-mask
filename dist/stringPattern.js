@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -62,19 +62,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _conformToPattern = __webpack_require__(5);
 
-	Object.defineProperty(exports, "conformToPattern", {
+	Object.defineProperty(exports, 'conformToPattern', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_conformToPattern).default;
 	  }
 	});
 
-	var _adjustCursorPosition = __webpack_require__(3);
+	var _adjustCaretPosition = __webpack_require__(3);
 
-	Object.defineProperty(exports, "adjustCursorPosition", {
+	Object.defineProperty(exports, 'adjustCaretPosition', {
 	  enumerable: true,
 	  get: function get() {
-	    return _interopRequireDefault(_adjustCursorPosition).default;
+	    return _interopRequireDefault(_adjustCaretPosition).default;
+	  }
+	});
+
+	var _utilities = __webpack_require__(2);
+
+	Object.defineProperty(exports, 'convertPatternToPlaceholder', {
+	  enumerable: true,
+	  get: function get() {
+	    return _utilities.convertPatternToPlaceholder;
 	  }
 	});
 
@@ -82,6 +91,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var operationTypes = exports.operationTypes = {
+	  replacement: 'replacement',
+	  addition: 'addition',
+	  deletion: 'deletion'
+	};
+
+	var maskingCharacters = exports.maskingCharacters = ['1', 'A', '#'];
+
+	var placeholderCharacter = exports.placeholderCharacter = '_';
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -94,9 +122,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getOperationType = getOperationType;
 	exports.getDelimiters = getDelimiters;
 	exports.printPadding = printPadding;
-	exports.constructConformedString = constructConformedString;
+	exports.findCharacter = findCharacter;
 
-	var _constants = __webpack_require__(2);
+	var _constants = __webpack_require__(1);
 
 	function convertPatternToPlaceholder() {
 	  var pattern = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
@@ -137,40 +165,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).join('');
 	}
 
-	function constructConformedString(patternPartsWithContent) {
-	  return patternPartsWithContent.reduce(function (accumulator, editableAreaWithContent) {
-	    var _editableAreaWithCont = editableAreaWithContent.content;
-	    var content = _editableAreaWithCont === undefined ? '' : _editableAreaWithCont;
-	    var length = editableAreaWithContent.length;
-	    var delimiter = editableAreaWithContent.delimiter;
+	function findCharacter() {
+	  var characterPositions = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var location = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-	    var contentAndLengthDelta = length - content.length;
-	    var padding = printPadding(_constants.placeholderCharacter, contentAndLengthDelta);
+	  for (var i = 0; i < characterPositions.length; i++) {
+	    var characterPosition = characterPositions[i];
 
-	    accumulator += content + padding + (delimiter || '');
-
-	    return accumulator;
-	  }, '');
+	    if (characterPosition.area === location.area && characterPosition.position === location.position) {
+	      return characterPosition.character;
+	    }
+	  }
 	}
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var operationTypes = exports.operationTypes = {
-	  replacement: 'replacement',
-	  addition: 'addition',
-	  deletion: 'deletion'
-	};
-
-	var maskingCharacters = exports.maskingCharacters = ['1', 'A', '#'];
-
-	var placeholderCharacter = exports.placeholderCharacter = '_';
 
 /***/ },
 /* 3 */
@@ -181,27 +187,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = adjustCursorPosition;
+	exports.default = adjustCaretPosition;
 
-	var _diff = __webpack_require__(9);
+	var _diff = __webpack_require__(8);
 
 	var _diff2 = _interopRequireDefault(_diff);
 
-	var _utilities = __webpack_require__(1);
+	var _utilities = __webpack_require__(2);
 
-	var _constants = __webpack_require__(2);
+	var _constants = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function adjustCursorPosition() {
+	function adjustCaretPosition() {
 	  var previousUserInput = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
 	  var newUserInput = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-	  var currentCursorPosition = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	  var currentCaretPosition = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
 	  var pattern = arguments.length <= 3 || arguments[3] === undefined ? '' : arguments[3];
 
-	  // Nothing changed. Keep cursor at where it currently is.
+	  // Nothing changed. Keep caret at where it currently is.
 	  if (previousUserInput === newUserInput) {
-	    return currentCursorPosition;
+	    return currentCaretPosition;
 	  }
 
 	  var diffResults = _diff2.default.diffChars(previousUserInput, newUserInput);
@@ -231,18 +237,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  //console.log(indexOfWhereChangeOccurred);
 	  //console.log(newCharacterIsPlaceholderCharacter);
 
-	  // The cursor position and the change are too far apart, which means some ambiguous change
+	  // The caret position and the change are too far apart, which means some ambiguous change
 	  // happened. I.e (333) ___-____ to (333) 3__-____
-	  // In that case, just return the currentCursorPosition
-	  if (indexOfWhereChangeOccurred - currentCursorPosition > 1) {
-	    return currentCursorPosition;
+	  // In that case, just return the currentCaretPosition
+	  if (indexOfWhereChangeOccurred - currentCaretPosition > 1) {
+	    return currentCaretPosition;
 	  }
 
 	  // There are more than one change in the diffResults, which means we're dealing with
-	  // paste or select and delete operation. We don't need to adjust the cursor position
+	  // paste or select and delete operation. We don't need to adjust the caret position
 	  // for those operations.
 	  if (addedCount > 1 || removedCount > 1) {
-	    return currentCursorPosition;
+	    return currentCaretPosition;
 	  }
 
 	  var placeholder = (0, _utilities.convertPatternToPlaceholder)(pattern);
@@ -252,7 +258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  if (
 	  // New character was added at the end of a pattern part. Find the nearest placeholder character
-	  // to the right and return that the new cursor position
+	  // to the right and return that the new caret position
 	  newCharacterIsPlaceholderCharacter !== true && placeholder[indexOfWhereChangeOccurred + 1] !== undefined && placeholder[indexOfWhereChangeOccurred + 1] !== _constants.placeholderCharacter) {
 	    for (var i = indexOfWhereChangeOccurred + 2; i < placeholder.length; i++) {
 	      if (placeholder[i] === _constants.placeholderCharacter) {
@@ -260,12 +266,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 
-	    // New character possibly at the end of entire pattern. Just keep the cursor at its place.
-	    return currentCursorPosition;
+	    // New character possibly at the end of entire pattern. Just keep the caret at its place.
+	    return currentCaretPosition;
 	  } else if (
 	  // A character has actually been deleted and the previous spot in the pattern
 	  // is not a placeholder. So, find the nearest placeholder character on the left and return that
-	  // as the new cursor position
+	  // as the new caret position
 	  newCharacterIsPlaceholderCharacter === true && placeholder[indexOfWhereChangeOccurred - 1] !== undefined && placeholder[indexOfWhereChangeOccurred - 1] !== _constants.placeholderCharacter) {
 	    for (var i = indexOfWhereChangeOccurred - 2; i > 0; i--) {
 	      if (placeholder[i] === _constants.placeholderCharacter) {
@@ -273,7 +279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 
-	    return currentCursorPosition;
+	    return currentCaretPosition;
 	  }
 
 	  // Not sure yet why I need this condition here. There's a logical reason for it, but I will think
@@ -290,42 +296,74 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = assignUserInputToPatternParts;
+	exports.default = assignUserInputToPatternPositions;
 
-	var _utilities = __webpack_require__(1);
+	var _utilities = __webpack_require__(2);
 
-	var _processPart2 = __webpack_require__(8);
+	var _constants = __webpack_require__(1);
 
-	var _processPart3 = _interopRequireDefault(_processPart2);
+	var _getPatternAreaLengths = __webpack_require__(6);
+
+	var _getPatternAreaLengths2 = _interopRequireDefault(_getPatternAreaLengths);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function assignUserInputToPatternParts() {
-	  var patternParts = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var userInputParts = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+	function assignUserInputToPatternPositions() {
+	  var userInput = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	  var pattern = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
-	  var userInputIndex = 0;
-	  var remainderFromLastProcessedUserInput = '';
+	  var patternDelimiters = (0, _utilities.getDelimiters)(pattern);
+	  var assignedCharacters = [];
+	  var patternAreaLengths = (0, _getPatternAreaLengths2.default)(pattern);
+	  var remainingPatternAreaLengths = patternAreaLengths.slice();
 
-	  return patternParts.map(function (patternPart) {
-	    if (patternPart.length === 0) {
-	      return patternPart;
+	  var areaPositionIndex = 0;
+	  var currentPatternAreaIndex = 0;
+
+	  userInput.split('').forEach(function (character) {
+	    if (
+	    // character is NOT pattern delimiter
+	    patternDelimiters.indexOf(character) === -1 &&
+	    // character is NOT a placeholder character
+	    character !== _constants.placeholderCharacter &&
+	    // There are still empty placeholder spots in the current pattern area
+	    remainingPatternAreaLengths[currentPatternAreaIndex] > 0 && (
+	    // We are NOT outside the boundaries of the pattern
+
+	    // This is NOT the last area of the pattern
+	    currentPatternAreaIndex !== patternAreaLengths.length - 1 ||
+	    // This IS the last area of the pattern
+	    currentPatternAreaIndex === patternAreaLengths.length - 1 &&
+	    // The area position index is still within the boundaries of the last area
+	    areaPositionIndex <= patternAreaLengths[currentPatternAreaIndex])) {
+	      assignedCharacters.push({
+	        character: character,
+	        position: areaPositionIndex,
+	        area: currentPatternAreaIndex
+	      });
+
+	      areaPositionIndex++;
+	      remainingPatternAreaLengths[currentPatternAreaIndex]--;
+	    } else if (character === _constants.placeholderCharacter) {
+	      areaPositionIndex++;
+	      remainingPatternAreaLengths[currentPatternAreaIndex]--;
 	    }
 
-	    var userInput = userInputParts && userInputParts[userInputIndex] ? remainderFromLastProcessedUserInput + userInputParts[userInputIndex] : remainderFromLastProcessedUserInput;
+	    // Should we advance to the next pattern area?
+	    if (patternDelimiters.indexOf(character) !== -1 && remainingPatternAreaLengths[currentPatternAreaIndex] <= 0 || areaPositionIndex + 1 > patternAreaLengths[currentPatternAreaIndex]) {
+	      var remainingCharactersInPatternArea = areaPositionIndex - patternAreaLengths[currentPatternAreaIndex];
 
-	    var _processPart = (0, _processPart3.default)(userInput, length);
+	      areaPositionIndex = 0;
+	      currentPatternAreaIndex++;
 
-	    var remainder = _processPart.remainder;
-	    var results = _processPart.results;
-
-	    remainderFromLastProcessedUserInput = remainder;
-	    userInputIndex++;
-
-	    patternPart.content = results;
-
-	    return patternPart;
+	      while (remainingCharactersInPatternArea > 0) {
+	        areaPositionIndex++;
+	        remainingCharactersInPatternArea--;
+	      }
+	    }
 	  });
+
+	  return assignedCharacters;
 	}
 
 /***/ },
@@ -339,28 +377,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = conformToPattern;
 
-	var _utilities = __webpack_require__(1);
+	var _utilities = __webpack_require__(2);
 
-	var _getPatternParts = __webpack_require__(6);
+	var _constants = __webpack_require__(1);
 
-	var _getPatternParts2 = _interopRequireDefault(_getPatternParts);
+	var _assignUserInputToPatternPositions = __webpack_require__(4);
 
-	var _getUserInputParts = __webpack_require__(7);
+	var _assignUserInputToPatternPositions2 = _interopRequireDefault(_assignUserInputToPatternPositions);
 
-	var _getUserInputParts2 = _interopRequireDefault(_getUserInputParts);
+	var _insertCharactersIntoPattern = __webpack_require__(7);
 
-	var _assignUserInputToPatternParts = __webpack_require__(4);
-
-	var _assignUserInputToPatternParts2 = _interopRequireDefault(_assignUserInputToPatternParts);
+	var _insertCharactersIntoPattern2 = _interopRequireDefault(_insertCharactersIntoPattern);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function conformToPattern(userInput, pattern) {
-	  var patternParts = (0, _getPatternParts2.default)(pattern);
-	  var userInputParts = (0, _getUserInputParts2.default)(userInput, pattern);
-	  var mergedParts = (0, _assignUserInputToPatternParts2.default)(patternParts, userInputParts);
+	  var characterPositions = (0, _assignUserInputToPatternPositions2.default)(userInput, pattern);
 
-	  return (0, _utilities.constructConformedString)(mergedParts);
+	  return (0, _insertCharactersIntoPattern2.default)(characterPositions, pattern);
 	}
 
 /***/ },
@@ -372,42 +406,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = getPatternParts;
+	exports.default = getPatternAreaLengths;
 
-	var _constants = __webpack_require__(2);
+	var _constants = __webpack_require__(1);
 
-	var _utilities = __webpack_require__(1);
+	var _utilities = __webpack_require__(2);
 
-	function getPatternParts() {
+	function getPatternAreaLengths() {
 	  var pattern = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
 
 	  var placeholder = (0, _utilities.convertPatternToPlaceholder)(pattern);
-	  var patternParts = [];
+	  var patternAreaLengths = [];
 
-	  var lengthOfPart = 0;
+	  var lengthOfArea = 0;
 	  placeholder.split('').forEach(function (character) {
 	    if (character === _constants.placeholderCharacter) {
-	      lengthOfPart++;
-	    } else {
-	      patternParts.push({
-	        length: lengthOfPart,
-	        delimiter: character,
-	        content: ''
-	      });
+	      lengthOfArea++;
+	    } else if (lengthOfArea > 0) {
+	      patternAreaLengths.push(lengthOfArea);
 
-	      lengthOfPart = 0;
+	      lengthOfArea = 0;
 	    }
 	  });
 
-	  if (lengthOfPart > 0) {
-	    patternParts.push({
-	      length: lengthOfPart,
-	      delimiter: '',
-	      content: ''
-	    });
+	  if (lengthOfArea > 0) {
+	    patternAreaLengths.push(lengthOfArea);
 	  }
 
-	  return patternParts;
+	  return patternAreaLengths;
 	}
 
 /***/ },
@@ -419,65 +445,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = getUserInputParts;
+	exports.default = insertCharactersIntoPattern;
 
-	var _utilities = __webpack_require__(1);
+	var _utilities = __webpack_require__(2);
 
-	function getUserInputParts() {
-	  var userInput = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	var _constants = __webpack_require__(1);
+
+	function insertCharactersIntoPattern() {
+	  var characterPositions = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var pattern = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
-	  var userInputParts = [];
-	  var delimiters = (0, _utilities.getDelimiters)(pattern);
+	  var placeholder = (0, _utilities.convertPatternToPlaceholder)(pattern);
 
-	  var lastEncounteredUserInputChunk = '';
-	  userInput.split('').forEach(function (character) {
-	    if (delimiters.indexOf(character) === -1) {
-	      lastEncounteredUserInputChunk += character;
-	    } else if (lastEncounteredUserInputChunk.length > 0) {
-	      userInputParts.push(lastEncounteredUserInputChunk);
-	      lastEncounteredUserInputChunk = '';
+	  var currentArea = 0;
+	  var currentPosition = 0;
+	  var canAdvanceToNextArea = false;
+
+	  return placeholder.split('').map(function (patternCharacter) {
+	    if (patternCharacter === _constants.placeholderCharacter) {
+	      var userInputCharacter = (0, _utilities.findCharacter)(characterPositions, {
+	        area: currentArea,
+	        position: currentPosition
+	      });
+
+	      currentPosition++;
+	      canAdvanceToNextArea = true;
+
+	      return userInputCharacter || patternCharacter;
+	    } else if (canAdvanceToNextArea) {
+	      currentArea++;
+	      currentPosition = 0;
+	      canAdvanceToNextArea = false;
 	    }
-	  });
 
-	  if (lastEncounteredUserInputChunk.length > 0) {
-	    userInputParts.push(lastEncounteredUserInputChunk);
-	  }
-
-	  return userInputParts;
+	    return patternCharacter;
+	  }).join('');
 	}
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = processPart;
-
-	var _utilities = __webpack_require__(1);
-
-	var _constants = __webpack_require__(2);
-
-	function processPart() {
-	  var userInput = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-	  var acceptedLength = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
-	  var head = userInput.substr(0, acceptedLength);
-	  var tail = userInput.substr(acceptedLength, userInput.length);
-	  var sizeDifference = acceptedLength - head.length;
-
-	  return {
-	    results: head + (0, _utilities.printPadding)(_constants.placeholderCharacter, sizeDifference),
-	    remainder: tail
-	  };
-	}
-
-/***/ },
-/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* See LICENSE file for terms of use */

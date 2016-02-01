@@ -2,27 +2,27 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './ghPages/index.jsx'
-  ],
+  entry: ['./ghPages/index.jsx'],
   output: {
-    path: path.join(__dirname, 'static'),
+    path: path.join(__dirname, 'ghPages/static'),
     filename: 'bundle.js',
     publicPath: '/ghPages/static/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
   resolve: {
-    alias: {
-      'redux': path.join(__dirname, 'node_modules/redux')
-    },
     extensions: ['', '.js', '.jsx']
   },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        screw_ie8: true,
+        warnings: false
+      }
+    })
+  ],
   module: {
     loaders: [{
       test: /\.jsx?$/,
@@ -33,10 +33,6 @@ module.exports = {
       test: /\.jsx?$/,
       loaders: ['babel-loader'],
       include: path.join(__dirname, '..', '..', 'src')
-    }, {
-      test: /\.css?$/,
-      loaders: ['style', 'raw'],
-      include: __dirname
     }, {
       test: /\.md/, loaders: ["html-loader", "markdown-loader"]
     }]

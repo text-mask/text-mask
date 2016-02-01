@@ -2,14 +2,15 @@
   "name": "string-pattern",
   "version": "0.0.1",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "hot": "node ./gh-pages/server.js",
+    "hot": "node ./ghPages/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ghPages": "./node_modules/.bin/webpack -p --config webpack.config.ghPages.js",
     "build:lib": "./node_modules/.bin/babel -d lib/ src/",
-    "build:umd": "webpack src/index.js dist/stringPattern.js --config webpack.config.development.js",
-    "build:umd:min": "webpack src/index.js dist/stringPattern.min.js -p --config webpack.config.production.js",
-    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "build:umd": "./node_modules/.bin/webpack src/index.js dist/stringPattern.js --config webpack.config.development.js",
+    "build:umd:min": "./node_modules/.bin/webpack src/index.js dist/stringPattern.min.js -p --config webpack.config.production.js",
+    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min && npm run build:ghPages",
     "tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register test --recursive --watch"
   },
   "repository": {
