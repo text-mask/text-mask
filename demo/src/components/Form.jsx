@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {getSelection, setSelection} from 'react/lib/ReactInputSelection'
-import adjustCaretPosition from '../../src/adjustCaretPosition.js'
+import {getSelection, setSelection} from '../../../node_modules/react/lib/ReactInputSelection'
+import adjustCaretPosition from '../../../src/adjustCaretPosition.js'
 
 const Form = React.createClass({
   propTypes: {
@@ -19,6 +19,7 @@ const Form = React.createClass({
   },
 
   onChange(event) {
+
     this.props.setCaretPosition(getSelection(this.refs.hello))
     this.props.updateValue(event.target.value)
   },

@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/demo/static/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -37,6 +37,8 @@ module.exports = {
       test: /\.css?$/,
       loaders: ['style', 'raw'],
       include: __dirname
+    }, {
+      test: /\.md/, loaders: ["html-loader", "markdown-loader"]
     }]
   }
 };
