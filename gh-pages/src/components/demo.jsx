@@ -13,13 +13,12 @@ const Demo = React.createClass({
   render() {
     return (
       <div>
-        <h2>Demo</h2>
+        <h2 id="demo">Demo</h2>
 
         <p>The library is currently pretty limited in features.</p>
 
         <p>
-          The only masking character is <code>1</code>, and it is replaceable
-          by <em>any character</em>.
+          The only masking character is <code>1</code>, which stands for: <em>any character</em>.
         </p>
 
         <div className="row">

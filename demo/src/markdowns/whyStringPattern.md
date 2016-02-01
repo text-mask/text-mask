@@ -1,3 +1,0 @@
-## Why
-
-Just because...

@@ -4,7 +4,7 @@
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {
-    "hot": "node ./demo/server.js",
+    "hot": "node ./gh-pages/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:lib": "./node_modules/.bin/babel -d lib/ src/",
     "build:umd": "webpack src/index.js dist/stringPattern.js --config webpack.config.development.js",

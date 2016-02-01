@@ -6,12 +6,12 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './demo/index.jsx'
+    './gh-pages/index.jsx'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/demo/static/'
+    publicPath: '/gh-pages/static/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

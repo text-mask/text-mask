@@ -13,19 +13,16 @@ const App = React.createClass({
         <div className="header clearfix">
           <nav>
             <ul className="nav nav-pills pull-right">
-              <li role="presentation">
-                <a href="https://github.com/msafi/string-pattern/">Getting started</a>
+              <li>
+                <a href="#demo">Demo</a>
               </li>
-              <li role="presentation">
-                <a href="https://github.com/msafi/string-pattern/">Demo</a>
+              <li>
+                <a href="#why">Why</a>
               </li>
-              <li role="presentation">
-                <a href="https://github.com/msafi/string-pattern/">Why</a>
+              <li>
+                <a href="#api-documentation">API</a>
               </li>
-              <li role="presentation">
-                <a href="https://github.com/msafi/string-pattern/">API</a>
-              </li>
-              <li role="presentation">
+              <li>
                 <a href="https://github.com/msafi/string-pattern/">GitHub</a>
               </li>
             </ul>
@@ -38,12 +35,18 @@ const App = React.createClass({
           dangerouslySetInnerHTML={{__html: gettingStarted}}
         ></div>
 
+        <hr/>
+
         <Demo/>
+
+        <hr/>
 
         <div
           className="markdown"
           dangerouslySetInnerHTML={{__html: whyStringPattern}}
         ></div>
+
+        <hr/>
 
         <div
           className="markdown"
