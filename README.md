@@ -10,13 +10,13 @@ be sufficient.
 
 First...
 
-```
+```js
 npm i string-pattern --save
 ```
 
 Then, in the file where you wanna use it...
 
-```
+```js
 import {
   convertPatternToPlaceholder,
   conformToPattern,
@@ -33,7 +33,7 @@ for how `string-pattern` can be used with React, and
 
 ## Why
 
-`string-pattern` has a few short-comings. But it's still totally worth your time, I think, because:
+`string-pattern` has a few temporary short-comings. But it's still totally worth your time, I think, because:
 
 * It works
 * It has a bunch of [unit tests](https://github.com/msafi/string-pattern/tree/master/test)
@@ -48,7 +48,7 @@ for how `string-pattern` can be used with React, and
 
 This function takes a pattern (string), i.e. `11/11/1111`, and returns a placeholder (string).
 
-```
+```js
 const placeholder = convertPatternToPlaceholder('11/11/1111')
 
 placeholder // __/__/____
@@ -67,7 +67,7 @@ This function takes two arguments:
 
 And it returns the user input conformed to the given pattern as a string.
 
-```
+```js
 const phoneNumber = conformToPattern('5554833902', '(111) 111-1111')
 
 phoneNumber // (555) 483-3902
