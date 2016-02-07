@@ -3,74 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <title>Conform string to pattern (mask) and hook-up to HTML input</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"
-        media="screen, projection"
-        rel="stylesheet"
-        type="text/css"/>
-  <script
-    src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
-
-  <style type="text/css">
-    /* Space out content a bit */
-    body {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
-
-    /* Everything but the jumbotron gets side spacing for mobile first views */
-    .header {
-      padding-right: 15px;
-      padding-left: 15px;
-    }
-
-    /* Custom page header */
-    .header {
-      padding-bottom: 20px;
-      border-bottom: 1px solid #e5e5e5;
-    }
-
-    /* Make the masthead heading the same height as the navigation */
-    .header h3 {
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 40px;
-    }
-
-    /* Custom page footer */
-    .footer {
-      padding-top: 19px;
-      color: #777;
-      border-top: 1px solid #e5e5e5;
-    }
-
-    /* Customize container */
-    @media (min-width: 768px) {
-      .container {
-        max-width: 730px;
-      }
-    }
-
-    /* Responsive: Portrait tablets and up */
-    @media screen and (min-width: 768px) {
-      /* Remove the padding we set earlier */
-      .header,
-      .marketing,
-      .footer {
-        padding-right: 0;
-        padding-left: 0;
-      }
-
-      /* Space out the masthead */
-      .header {
-        margin-bottom: 30px;
-      }
-    }
-  </style>
 </head>
 
 <body>
 
-<div id="content">Loading...</div>
+<div id="app">
+  <style type="text/css" scoped>
+    .loader {
+      margin: 10% auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(100, 100, 100, 0.2);
+      border-right: 1.1em solid rgba(100, 100, 100, 0.2);
+      border-bottom: 1.1em solid rgba(100, 100, 100, 0.2);
+      border-left: 1.1em solid grey;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
+
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
+
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <div class="loader">Loading...</div>
+</div>
 
 <script type="text/javascript" src="website/static/bundle.js"></script>
 </body>

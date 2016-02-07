@@ -40,7 +40,7 @@ const Demo = React.createClass({
 
               <div className="col-sm-9">
                 <input
-                  style={{height: '22px', fontSize: '90%'}}
+                  style={{height: '26px', fontSize: '90%'}}
                   type="text"
                   onChange={this.onPatternChange}
                   value={this.state.pattern}

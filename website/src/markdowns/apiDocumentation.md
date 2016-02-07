@@ -51,5 +51,3 @@ The functions diffs the new input and the previous input to guess where the care
 
 To see how it can be used, please take a look at this
 [source code](https://github.com/msafi/string-pattern/blob/49a06df575697fbd82a4497fbd21d3f93bf26fdd/demo/src/components/input.jsx).
-
-### If you need help, please [file an issue](https://github.com/msafi/string-pattern/issues).
