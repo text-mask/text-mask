@@ -1,7 +1,12 @@
-# string-pattern
+# Text Mask
 
-* [Demo](https://msafi.github.io/string-pattern/)
-* [Getting started](https://github.com/msafi/string-pattern/blob/master/website/src/markdowns/gettingStarted.md)
-* [API documentation](https://github.com/msafi/string-pattern/blob/master/website/src/markdowns/apiDocumentation.md)
+Text Mask let's you turn a plain `<input type="text">`, into one that conforms
+any user input, as they type, to a given mask pattern. For example:
 
-For support or questions, please [file an issue](https://github.com/msafi/string-pattern/issues).
+With mask `(111) 111-1111` and user input `5845739`, the output would be `(584) 573-9___`
+
+To get started or to see Text Mask in action,
+[checkout the website](https://msafi.github.io/text-mask/).
+
+For support or questions, please
+[file an issue](https://github.com/msafi/text-mask/issues).

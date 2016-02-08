@@ -1,67 +1,73 @@
 import React from 'react'
-import _ from 'lodash'
 import gettingStarted from '../markdowns/gettingStarted.md'
-import whyStringPattern from '../markdowns/whyStringPattern.md'
-import apiDocumentation from '../markdowns/apiDocumentation.md'
+import whyTextMask from '../markdowns/whyTextMask.md'
 import Demo from './demo.jsx'
 import style from './app.scss'
 import classnames from 'classnames'
+import NavBar from './navBar.jsx'
+import ReactGettingStarted from './react.gettingStarted.jsx'
+import CoreGettingStarted from './core.gettingStarted.jsx'
+import {Router, Route, IndexRoute, Link, hashHistory} from 'react-router'
 
 const App = React.createClass({
   render() {
     return (
       <span>
-        <nav className="navbar navbar-default navbar-fixed-top">
-          <div className="container">
-            <div className="navbar-header">
-              <a className="navbar-brand" href="#">string-pattern</a>
-            </div>
-            <div id="navbar" className="collapse navbar-collapse navbar-right">
-              <ul className="nav navbar-nav">
-                <li><a href="#demo">Demo</a></li>
-                <li><a href="#why">Why</a></li>
-                <li><a href="#api-documentation">API</a></li>
-                <li><a href="https://github.com/msafi/string-pattern/">GitHub</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <NavBar/>
 
         <div className={classnames(style.mainContainer, 'container')}>
-          <div
-            className="markdown"
-            dangerouslySetInnerHTML={{__html: gettingStarted}}
-          ></div>
-
-          <hr/>
-
-          <Demo/>
-
-          <hr/>
-
-          <div
-            className="markdown"
-            dangerouslySetInnerHTML={{__html: whyStringPattern}}
-          ></div>
-
-          <hr/>
-
-          <div
-            className="markdown"
-            dangerouslySetInnerHTML={{__html: apiDocumentation}}
-          ></div>
+          {this.props.children}
         </div>
 
         <footer className={style.footer}>
           <div className="container">
             <p className="text-muted">
-              If you need help, please <a href="https://github.com/msafi/string-pattern/issues">file an issue.</a>
+              If you need help, please <a href="https://github.com/msafi/text-mask/issues">file
+              an issue.</a>
             </p>
           </div>
         </footer>
+      </span>
+    )
+  }
+})
+
+const Homepage = React.createClass({
+  render() {
+    return (
+      <span>
+        <div
+          className="markdown"
+          dangerouslySetInnerHTML={{__html: gettingStarted}}
+        ></div>
+
+        <hr/>
+
+        <Demo/>
+
+        <hr/>
+
+        <div
+          className="markdown"
+          dangerouslySetInnerHTML={{__html: whyTextMask}}
+        ></div>
       </span>
     );
   }
 })
 
-export default App
+const AppWithRoutes = React.createClass({
+  render() {
+    return (
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Homepage}/>
+          <Route path="/react" component={ReactGettingStarted}/>
+          <Route path="/core" component={CoreGettingStarted}/>
+        </Route>
+      </Router>
+    )
+  }
+})
+
+export default AppWithRoutes

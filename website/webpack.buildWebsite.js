@@ -1,5 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
+var StatsPlugin = require('stats-webpack-plugin')
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   entry: path.join(__dirname, '../website/src/index.jsx'),
@@ -21,6 +22,9 @@ module.exports = {
         screw_ie8: true,
         warnings: false
       }
+    }),
+    new StatsPlugin('stats.json', {
+      chunkModules: true
     })
   ],
   module: {

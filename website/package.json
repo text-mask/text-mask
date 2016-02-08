@@ -1,0 +1,16 @@
+{
+  "name": "@msafi/text-mask-website",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Website of Text Mask",
+  "main": "src/index.js",
+  "author": "M.K. Safi <msafi@msafi.com>",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/msafi/text-mask/issues"
+  },
+  "homepage": "https://github.com/msafi/text-mask/#readme",
+  "devDependencies": {
+    "@msafi/react-text-mask": "^0.2.1"
+  }
+}

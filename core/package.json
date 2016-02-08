@@ -1,0 +1,12 @@
+{
+  "name": "@msafi/text-mask-core",
+  "version": "0.2.1",
+  "description": "Core of https://github.com/msafi/text-mask",
+  "main": "dist/textMaskCore.js",
+  "author": "M.K. Safi <msafi@msafi.com>",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/msafi/text-mask/issues"
+  },
+  "homepage": "https://github.com/msafi/text-mask/core/#readme"
+}

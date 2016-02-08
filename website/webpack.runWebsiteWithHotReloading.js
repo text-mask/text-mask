@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var coreLoaders = require('../core/webpack.buildCore.js').module.loaders
 
 module.exports = {
   devtool: 'eval',
@@ -32,10 +33,6 @@ module.exports = {
         path.join(__dirname, '../integrations/react/')
       ]
     }, {
-      test: /\.js$/,
-      loaders: ['babel-loader'],
-      include: path.join(__dirname, '../stringPattern/')
-    }, {
       test: /\.md/,
       loaders: ["html-loader", "markdown-loader"]
     }, {
@@ -54,6 +51,6 @@ module.exports = {
     }, {
       test: /\.(ttf|eot)$/,
       loader: 'file'
-    }]
+    }].concat(coreLoaders)
   }
 };

@@ -1,30 +1,28 @@
 {
-  "name": "string-pattern",
-  "version": "0.0.3",
+  "name": "@msafi/text-mask",
+  "version": "0.0.0",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "website": "node ./website/server.js",
+    "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:website": "./node_modules/.bin/webpack -p --config webpack/buildWebsite.js",
-    "build:lib": "./node_modules/.bin/babel -d lib/ src/",
-    "build:umd:min": "./node_modules/.bin/webpack src/index.js dist/stringPattern.min.js -p --config webpack/buildLibrary.js",
-    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min && npm run build:website",
-    "tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register test --recursive --watch"
+    "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
+    "build": "npm run build:umd && npm run website:build",
+    "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
+    "integrations:react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive --watch",
+    "integrations:react:build": "./node_modules/.bin/webpack -p --config integrations/react/webpack.buildReactIntegration.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/msafi/string-pattern.git"
+    "url": "git+https://github.com/msafi/text-mask.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "M.K. Safi <msafi@msafi.com>",
+  "license": "CC0",
   "bugs": {
-    "url": "https://github.com/msafi/string-pattern/issues"
+    "url": "https://github.com/msafi/text-mask/issues"
   },
-  "homepage": "https://github.com/msafi/string-pattern#readme",
-  "dependencies": {
-    "jsdiff": "^1.1.1"
-  },
+  "homepage": "https://github.com/msafi/text-mask#readme",
   "devDependencies": {
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
@@ -36,17 +34,25 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
+    "jsdom": "^8.0.2",
     "lodash": "^4.0.0",
     "mocha": "^2.3.4",
     "node-sass": "^3.4.2",
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
+    "react": "^0.14.7",
+    "react-addons-test-utils": "^0.14.7",
+    "react-dom": "^0.14.7",
     "react-hot-loader": "^1.3.0",
+    "react-router": "^2.0.0",
     "sass-loader": "^3.1.2",
+    "sinon": "^1.17.3",
     "stats-webpack-plugin": "^0.3.0",
     "style-loader": "^0.13.0",
+    "testdom": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "diff": "^2.2.1"
   }
 }

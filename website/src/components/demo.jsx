@@ -1,12 +1,13 @@
 import React from 'react'
-import MaskedTextInput from '../../../integrations/react/src/MaskedTextInput.js'
+//import MaskedTextInput from '../../../integrations/react/dist/MaskedTextInput.js'
+import MaskedTextInput from '@msafi/react-text-mask'
 
-const PATTERN = '(111) 111-1111'
+const MASK = '(111) 111-1111'
 
 const Demo = React.createClass({
   getInitialState() {
     return {
-      pattern: PATTERN
+      mask: MASK
     }
   },
 
@@ -14,8 +15,6 @@ const Demo = React.createClass({
     return (
       <div>
         <h2 id="demo">Demo</h2>
-
-        <p>The library is currently pretty limited in features.</p>
 
         <p>
           The only masking character is <code>1</code>, which stands for: <em>any character</em>.
@@ -27,25 +26,25 @@ const Demo = React.createClass({
               <label htmlFor="maskedInput">Masked input</label>
 
               <MaskedTextInput
-                pattern={this.state.pattern}
+                mask={this.state.mask}
                 className="form-control"
                 id="maskedInput"
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="pattern"
+              <label htmlFor="mask"
                      style={{fontSize: '90%', marginTop: '3px'}}
-                     className="col-sm-3 control-label">Pattern</label>
+                     className="col-sm-3 control-label">Mask</label>
 
               <div className="col-sm-9">
                 <input
                   style={{height: '26px', fontSize: '90%'}}
                   type="text"
-                  onChange={this.onPatternChange}
-                  value={this.state.pattern}
+                  onChange={this.onMaskChange}
+                  value={this.state.mask}
                   className="form-control"
-                  id="pattern"
+                  id="mask"
                 />
               </div>
             </div>
@@ -55,8 +54,8 @@ const Demo = React.createClass({
     )
   },
 
-  onPatternChange(event) {
-    this.setState({pattern: event.target.value})
+  onMaskChange(event) {
+    this.setState({mask: event.target.value})
   }
 })
 
