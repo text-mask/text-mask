@@ -1,5 +1,5 @@
 import React from 'react'
-import MaskedInput from './input.jsx'
+import MaskedTextInput from '../../../integrations/react/src/MaskedTextInput.js'
 
 const PATTERN = '(111) 111-1111'
 
@@ -26,7 +26,7 @@ const Demo = React.createClass({
             <div className="form-group">
               <label htmlFor="maskedInput">Masked input</label>
 
-              <MaskedInput
+              <MaskedTextInput
                 pattern={this.state.pattern}
                 className="form-control"
                 id="maskedInput"

@@ -1,4 +1,4 @@
-import assignUserInputToPatternPositions from '../src/assignUserInputToPatternPositions.js'
+import assignUserInputToPatternPositions from '../../stringPattern/src/assignUserInputToPatternPositions.js'
 import chai from 'chai'
 
 const expect = chai.expect

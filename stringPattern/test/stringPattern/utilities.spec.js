@@ -2,7 +2,7 @@ import chai from 'chai'
 import {
   getDelimiters,
   constructConformedString
-} from '../src/utilities.js'
+} from '../../stringPattern/src/utilities.js'
 
 const expect = chai.expect
 

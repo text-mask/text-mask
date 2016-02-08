@@ -1,4 +1,4 @@
-import insertCharactersIntoPattern from '../src/insertCharactersIntoPattern.js'
+import insertCharactersIntoPattern from '../../stringPattern/src/insertCharactersIntoPattern.js'
 import chai from 'chai'
 
 const expect = chai.expect

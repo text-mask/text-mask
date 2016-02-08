@@ -4,7 +4,7 @@ import {
   conformToPattern,
   convertPatternToPlaceholder,
   adjustCaretPosition
-} from '../../../src/index'
+} from '../../../stringPattern/src/index'
 
 let currentCaretPosition = null
 let previousValue = null

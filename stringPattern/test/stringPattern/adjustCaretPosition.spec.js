@@ -1,5 +1,5 @@
 import chai from 'chai'
-import adjustCaretPosition from '../src/adjustCaretPosition.js'
+import adjustCaretPosition from '../../stringPattern/src/adjustCaretPosition.js'
 
 const expect = chai.expect
 

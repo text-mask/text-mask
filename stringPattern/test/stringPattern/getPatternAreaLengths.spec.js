@@ -1,4 +1,4 @@
-import getPatternAreaLengths from '../src/getPatternAreaLengths.js'
+import getPatternAreaLengths from '../../stringPattern/src/getPatternAreaLengths.js'
 import chai from 'chai'
 
 const expect = chai.expect

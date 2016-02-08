@@ -1,4 +1,4 @@
-import conformToPattern from '../src/conformToPattern.js'
+import conformToPattern from '../../stringPattern/src/conformToPattern.js'
 import chai from 'chai'
 
 const expect = chai.expect
