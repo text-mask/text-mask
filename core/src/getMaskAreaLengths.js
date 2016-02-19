@@ -1,12 +1,12 @@
 import {placeholderCharacter} from './constants.js'
-import {convertMaskToPlaceholder} from './utilities.js'
+import {convertMaskToPlaceholder, tokenize} from './utilities.js'
 
 export default function getMaskAreaLengths(mask = '') {
-  const placeholder = convertMaskToPlaceholder(mask)
   const maskAreaLengths = []
 
   let lengthOfArea = 0
-  placeholder.split('').forEach((character) => {
+
+  tokenize(convertMaskToPlaceholder(mask)).forEach((character) => {
     if (character === placeholderCharacter) {
       lengthOfArea++
     } else if (lengthOfArea > 0) {

@@ -4,7 +4,7 @@ import {
   conformToMask,
   convertMaskToPlaceholder,
   adjustCaretPosition
-} from '../../../core/dist/textMaskCore.js'
+} from '../../../core/src/index.js'
 
 export default React.createClass({
   propTypes: {
@@ -17,6 +17,7 @@ export default React.createClass({
     return {
       placeholder: value,
       previousValue: value,
+      conformToMaskResults: {},
       value: null,
       currentCaretPosition: null
     }
@@ -34,12 +35,11 @@ export default React.createClass({
     if (this.refs.inputElement === document.activeElement) {
       // If setSelection is called while inputElement doesn't have focus, it's gonna steal focus,
       // which is not what we want here.
-      const caretPosition = adjustCaretPosition(
-        this.state.previousValue,
-        this.state.value,
-        this.state.currentCaretPosition,
-        this.props.mask
-      )
+      const caretPosition = adjustCaretPosition({
+        previousInput: this.state.previousValue,
+        conformToMaskResults: this.state.conformToMaskResults,
+        currentCaretPosition: this.state.currentCaretPosition
+      })
 
       setSelection(this.refs.inputElement, {start: caretPosition, end: caretPosition})
     }
@@ -48,7 +48,9 @@ export default React.createClass({
   render() {
     const {props, state, onChange} = this
     const placeholder = props.placeholder || state.placeholder
-    const value = (state.value !== state.placeholder) ? state.value : null
+    const value = (state.conformToMaskResults.output !== state.placeholder) ?
+      state.conformToMaskResults.output :
+      ''
 
     return (
       <input
@@ -63,11 +65,13 @@ export default React.createClass({
   },
 
   onChange(event) {
-    this.setState({
-      value: conformToMask(event.target.value, this.props.mask),
-      previousValue: this.state.value || this.state.previousValue,
+    const state = {
+      conformToMaskResults: conformToMask(event.target.value, this.props.mask),
+      previousValue: this.state.conformToMaskResults.output || this.state.previousValue,
       currentCaretPosition: getSelection(this.refs.inputElement).start
-    })
+    }
+
+    this.setState(state)
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)

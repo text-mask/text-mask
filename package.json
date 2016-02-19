@@ -4,6 +4,7 @@
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npm run core:build && npm run integrations:react:build && npm run website:build",
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "npm run core:test && npm run integrations:react:test",
@@ -19,7 +20,7 @@
     "url": "git+https://github.com/msafi/text-mask.git"
   },
   "author": "M.K. Safi <msafi@msafi.com>",
-  "license": "CC0",
+  "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/msafi/text-mask/issues"
   },
@@ -38,6 +39,7 @@
     "jsdom": "^8.0.2",
     "lodash": "^4.0.0",
     "mocha": "^2.3.4",
+    "mocha-dynamic-tests": "^1.1.1",
     "node-sass": "^3.4.2",
     "react": "^0.14.7",
     "react-addons-test-utils": "^0.14.7",

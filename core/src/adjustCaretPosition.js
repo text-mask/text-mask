@@ -2,16 +2,18 @@ import {diffChars} from 'diff'
 import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function adjustCaretPosition(
-  previousUserInput = '',
-  newUserInput = '',
-  currentCaretPosition = 0,
-  mask = ''
-) {
-  // Nothing changed. Keep caret at where it currently is.
-  if (previousUserInput === newUserInput) { return currentCaretPosition }
+export default function adjustCaretPosition2({
+  previousInput = '',
+  conformToMaskResults: {
+    output = '',
+    mask = '',
+  },
+  currentCaretPosition = 0
+}) {
+  // Nothing changed. Prevent the caret from moving.
+  if (previousInput === output) { return currentCaretPosition - 1 }
 
-  const diffResults = diffChars(previousUserInput, newUserInput)
+  const diffResults = diffChars(previousInput, output)
 
   let addedCount = 0
   let removedCount = 0
@@ -39,7 +41,9 @@ export default function adjustCaretPosition(
   // The caret position and the change are too far apart, which means some ambiguous change
   // happened. I.e (333) ___-____ to (333) 3__-____
   // In that case, just return the currentCaretPosition
-  if ((indexOfWhereChangeOccurred - currentCaretPosition) > 1) { return currentCaretPosition }
+  if ((indexOfWhereChangeOccurred - currentCaretPosition) > 1) {
+    return currentCaretPosition
+  }
 
   // There are more than one change in the diffResults, which means we're dealing with
   // paste or select and delete operation. We don't need to adjust the caret position

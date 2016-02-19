@@ -19,7 +19,7 @@ npm i @msafi/text-mask-core --save
 After installing with npm, you could possibly do something like this from your `index.html`:
 
 ```html
-<script src="./node_modules/text-mask-core/dist/textMaskCore.js"></script>
+<script src="./node_modules/@msafi/text-mask-core/dist/textMaskCore.js"></script>
 ```
 
 Including this file in your source code will expose the global object `textMaskCore`.
@@ -71,12 +71,12 @@ This function takes two arguments:
 * userInput (string): the string value that you want to conform to the mask
 * mask (string): the mask to which you want the string to conform
 
-And it returns the user input conformed to the given mask as a string.
+And it returns an object that contains the conformed string as well as other meta-data.
 
 ```
-const phoneNumber = conformToMask('5554833902', '(111) 111-1111')
+const results = conformToMask('5554833902', '(111) 111-1111')
 
-phoneNumber // (555) 483-3902
+results // {output: '(555) 483-3902', mask: '(111) 111-1111'}
 ```
 
 Whenever the value of the `input` element changes, you can pass that value to `conformToMask`
@@ -85,16 +85,16 @@ string as the new value of the `input` element.
 
 ---
 
-### `adjustCaretPosition(previousUserInput, newUserInput, currentCaretPosition, mask)`
+### `adjustCaretPosition(argumentsObject)`
 
 When you set the value of the `input` element, you lose the position of the caret. This function
 helps you restore the position.
 
-It takes three arguments:
+`adjustCaretPosition` takes the following object of arguments:
 
-* previousUserInput (string): the string value of the `input` before the last time you set its value
-* newUserInput (string): the new string value to which you set the `input`
+* previousInput (string): the string value of the `input` before the last time you set its value
+* conformedToMaskResults (object): the return value of the last call to `conformToMask`
 * currentCaretPosition (integer): the position of the caret before the last time you set `input` value
-* mask (string): the mask to which you conformed the string
 
-The functions diffs the new input and the previous input to guess where the caret should be.
+`adjustCaretPosition` will diff the new input and the previous input to
+guess where the caret should be.

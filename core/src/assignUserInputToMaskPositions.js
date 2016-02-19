@@ -1,4 +1,4 @@
-import {getDelimiters} from './utilities.js'
+import {getDelimiters, tokenize} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 import getMaskAreaLengths from './getMaskAreaLengths.js'
 
@@ -11,7 +11,7 @@ export default function assignUserInputToMaskPositions(userInput = '', mask = ''
   let areaPositionIndex = 0
   let currentMaskAreaIndex = 0
 
-  userInput.split('').forEach((character) => {
+  tokenize(userInput).forEach((character) => {
     if (
       // character is NOT mask delimiter
       maskDelimiters.indexOf(character) === -1 &&

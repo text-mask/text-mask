@@ -1,5 +1,6 @@
 import assignUserInputToMaskPositions from '../src/assignUserInputToMaskPositions.js'
 import chai from 'chai'
+import dynamicTests from 'mocha-dynamic-tests'
 
 const expect = chai.expect
 
@@ -10,7 +11,7 @@ describe('assignUserInputToMaskPositions', () => {
     ).to.be.an('array')
   })
 
-  ;[
+  dynamicTests([
     {input: {userInput: '12/32', mask: '11/11'}, output: [
       {character: '1', position: 0, area: 0},
       {character: '2', position: 1, area: 0},
@@ -137,15 +138,14 @@ describe('assignUserInputToMaskPositions', () => {
       {character: '9', position: 0, area: 2},
       {character: '5', position: 1, area: 2},
     ]}
-  ].map((test) => {
-    //if (!test.only) { return }
-
-    it(`knows for userInput: ${test.input.userInput} and mask ${test.input.mask}, to ` +
-       `output ${JSON.stringify(test.output)}`, () => {
+  ], (test) => ({
+    description: `knows for userInput: ${test.input.userInput} and mask ${test.input.mask}, to ` +
+      `output ${JSON.stringify(test.output)}`,
+    body: () => {
       expect(assignUserInputToMaskPositions(
         test.input.userInput,
         test.input.mask
       )).to.deep.equal(test.output)
-    })
-  })
+    }
+  }))
 })

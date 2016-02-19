@@ -5,7 +5,7 @@
   "description": "Website of Text Mask",
   "main": "src/index.js",
   "author": "M.K. Safi <msafi@msafi.com>",
-  "license": "CC0",
+  "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/msafi/text-mask/issues"
   },

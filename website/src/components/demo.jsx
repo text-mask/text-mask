@@ -1,6 +1,6 @@
 import React from 'react'
-//import MaskedTextInput from '../../../integrations/react/dist/MaskedTextInput.js'
-import MaskedTextInput from '@msafi/react-text-mask'
+import MaskedTextInput from '../../../integrations/react/src/MaskedTextInput.jsx'
+//import MaskedTextInput from '@msafi/react-text-mask'
 
 const MASK = '(111) 111-1111'
 
@@ -17,7 +17,7 @@ const Demo = React.createClass({
         <h2 id="demo">Demo</h2>
 
         <p>
-          The only masking character is <code>1</code>, which stands for: <em>any character</em>.
+          The only masking character is <code>1</code>, which stands for: <em>single numeric character</em>.
         </p>
 
         <div className="row">

@@ -1,11 +1,15 @@
-import {operationTypes, maskingCharacters, placeholderCharacter} from './constants.js'
+import {
+  maskingCharactersEnums,
+  maskingCharacters,
+  placeholderCharacter
+} from './constants.js'
 
 export function convertMaskToPlaceholder(mask = '') {
   return mask.replace(/1/g, placeholderCharacter)
 }
 
 export function getDelimiters(mask ='') {
-  return mask.split('').reduce((accumulator, character) => {
+  return tokenize(mask).reduce((accumulator, character) => {
     if (maskingCharacters.indexOf(character) === -1 && accumulator.indexOf(character) === -1) {
       accumulator.push(character)
     }
@@ -24,5 +28,20 @@ export function findCharacter(characterPositions = [], location = {}) {
     ) {
       return characterPosition.character
     }
+  }
+}
+
+export function tokenize(string = '') {
+  return string.split('')
+}
+
+export function isAcceptableCharacter(character, maskingCharacter) {
+  if (typeof character !== 'string') {
+    return null
+  }
+
+  switch(maskingCharacter) {
+    case maskingCharactersEnums.numeric:
+      return !isNaN(character)
   }
 }
