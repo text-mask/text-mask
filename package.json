@@ -6,11 +6,12 @@
   "scripts": {
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run core:test && npm run integrations:react:test",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
-    "build": "npm run build:umd && npm run website:build",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
+    "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive",
     "integrations:react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive --watch",
+    "integrations:react:test": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive",
     "integrations:react:build": "./node_modules/.bin/webpack -p --config integrations/react/webpack.buildReactIntegration.js"
   },
   "repository": {
