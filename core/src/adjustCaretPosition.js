@@ -36,10 +36,6 @@ export default function adjustCaretPosition(
     }
   })
 
-  //console.log(diffResults);
-  //console.log(indexOfWhereChangeOccurred);
-  //console.log(newCharacterIsPlaceholderCharacter);
-
   // The caret position and the change are too far apart, which means some ambiguous change
   // happened. I.e (333) ___-____ to (333) 3__-____
   // In that case, just return the currentCaretPosition
@@ -51,9 +47,6 @@ export default function adjustCaretPosition(
   if (addedCount > 1 || removedCount > 1) { return currentCaretPosition }
 
   const placeholder = convertMaskToPlaceholder(mask)
-
-  //console.log(placeholder);
-  //console.log(placeholder[indexOfWhereChangeOccurred - 1]);
 
   if (
     // New character was added at the end of a mask part. Find the nearest placeholder character
