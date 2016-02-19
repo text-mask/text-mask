@@ -1,4 +1,4 @@
-import {convertMaskToPlaceholder, getDelimiters} from './utilities.js'
+import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderCharacter, maskingCharacters} from './constants.js'
 import assignUserInputToMaskPositions from './assignUserInputToMaskPositions.js'
 import insertCharactersIntoMask from './insertCharactersIntoMask.js'

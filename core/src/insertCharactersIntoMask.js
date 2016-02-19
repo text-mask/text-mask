@@ -1,8 +1,4 @@
-import {
-  convertMaskToPlaceholder,
-  getDelimiters,
-  findCharacter
-} from './utilities.js'
+import {convertMaskToPlaceholder, findCharacter} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
 export default function insertCharactersIntoMask(characterPositions = [], mask = '') {

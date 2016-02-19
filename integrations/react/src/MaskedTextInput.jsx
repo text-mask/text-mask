@@ -4,7 +4,7 @@ import {
   conformToMask,
   convertMaskToPlaceholder,
   adjustCaretPosition
-} from '../../../core/src/index.js'
+} from '../../../core/dist/textMaskCore.js'
 
 export default React.createClass({
   propTypes: {
