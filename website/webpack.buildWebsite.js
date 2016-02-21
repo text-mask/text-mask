@@ -31,7 +31,11 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       loaders: ['babel-loader'],
-      include: [path.join(__dirname, '../website/src/'), path.join(__dirname, '../src/')]
+      include: [
+        path.join(__dirname, 'src/'),
+        path.join(__dirname, '../integrations/react/src/'),
+        path.join(__dirname, '../core/src'),
+      ]
     }, {
       test: /\.md/, loaders: ["html-loader", "markdown-loader"]
     }, {
