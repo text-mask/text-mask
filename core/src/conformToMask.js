@@ -6,5 +6,9 @@ import insertCharactersIntoMask from './insertCharactersIntoMask.js'
 export default function conformToMask(userInput, mask) {
   const characterPositions = assignUserInputToMaskPositions(userInput, mask)
 
-  return insertCharactersIntoMask(characterPositions, mask)
+  return {
+    input: userInput,
+    mask: mask,
+    output: insertCharactersIntoMask(characterPositions, mask)
+  }
 }

@@ -2,91 +2,140 @@ import {diffChars} from 'diff'
 import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function adjustCaretPosition2({
+export default function adjustCaretPosition({
   previousInput = '',
-  conformToMaskResults: {
-    output = '',
-    mask = '',
-  },
+  conformToMaskResults = {},
   currentCaretPosition = 0
 }) {
-  // Nothing changed. Prevent the caret from moving.
-  if (previousInput === output) { return currentCaretPosition - 1 }
+  // ensure sane argument values
+  conformToMaskResults.input = conformToMaskResults.input || ''
+  conformToMaskResults.output = conformToMaskResults.output || ''
+  conformToMaskResults.mask = conformToMaskResults.mask || ''
 
-  const diffResults = diffChars(previousInput, output)
+  const placeholder = convertMaskToPlaceholder(conformToMaskResults.mask)
 
-  let addedCount = 0
-  let removedCount = 0
-  let charactersBeforeChangeOccurred = ''
-  let indexOfWhereChangeOccurred = -1
-  let newCharacterIsPlaceholderCharacter = null
+  // First determine if the operation is deletion or addition to know whether we will be
+  // seeking to move the caret forward or back.
+  const isDeletion = (
+    // If previous input is the placeholder, then any change to it is addition.
+    previousInput !== placeholder &&
+    (
+      // if the conformed string or the input to be conformed is smaller than
+      // previous input, then the operation is deletion.
+      (conformToMaskResults.output.length < previousInput.length) ||
+      (conformToMaskResults.input.length < previousInput.length)
+    )
+  )
 
-  diffResults.forEach((result) => {
-    charactersBeforeChangeOccurred += result.value
+  // is addition...
+  if (isDeletion === false) {
 
-    if (result.added === true) {
-      addedCount += result.count
-      newCharacterIsPlaceholderCharacter = result.value === placeholderCharacter
-      indexOfWhereChangeOccurred = (indexOfWhereChangeOccurred === -1) ?
-        charactersBeforeChangeOccurred.length - 1 : indexOfWhereChangeOccurred
-    }
+    // if previous input and conformToMaskResults.output are exactly the same, it means
+    // adjustCaretPosition was called after conformToMask rejected a character
+    if (previousInput === conformToMaskResults.output) {
 
-    if (result.removed === true) {
-      removedCount += result.count
-      indexOfWhereChangeOccurred = (indexOfWhereChangeOccurred === -1) ?
-        charactersBeforeChangeOccurred.length - 1 : indexOfWhereChangeOccurred
-    }
-  })
+      // in that case, revert movement of the caret
+      return currentCaretPosition - 1
 
-  // The caret position and the change are too far apart, which means some ambiguous change
-  // happened. I.e (333) ___-____ to (333) 3__-____
-  // In that case, just return the currentCaretPosition
-  if ((indexOfWhereChangeOccurred - currentCaretPosition) > 1) {
-    return currentCaretPosition
-  }
+    // previous input is different from conformToMaskResults.output, so we need to do some work
+    } else {
 
-  // There are more than one change in the diffResults, which means we're dealing with
-  // paste or select and delete operation. We don't need to adjust the caret position
-  // for those operations.
-  if (addedCount > 1 || removedCount > 1) { return currentCaretPosition }
+      // get the difference
+      const diffResults = diffChars(previousInput, conformToMaskResults.output)
 
-  const placeholder = convertMaskToPlaceholder(mask)
+      // The following variables along with the diffResults loop help us figure out the index
+      // of the last added character
+      let indexOfLastAddedCharacter = null
+      let addedCharacters = ''
 
-  if (
-    // New character was added at the end of a mask part. Find the nearest placeholder character
-    // to the right and return that the new caret position
-    (newCharacterIsPlaceholderCharacter !== true) &&
-    (placeholder[indexOfWhereChangeOccurred + 1] !== undefined) &&
-    (placeholder[indexOfWhereChangeOccurred + 1] !== placeholderCharacter)
-  ) {
-    for (let i = indexOfWhereChangeOccurred + 2; i < placeholder.length; i++) {
-      if (placeholder[i] === placeholderCharacter) {
-        return i
+      diffResults.forEach((chunk) => {
+        addedCharacters += chunk.value
+
+        if (chunk.added === true) {
+          indexOfLastAddedCharacter = addedCharacters.length - 1
+        }
+      })
+
+      // if the index of the last changed character is ahead of current caret position by more
+      // than one, then an ambiguous change happened.
+      // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was last added.
+      // In that case, just return the current caret position unmodified.
+      if ((indexOfLastAddedCharacter - currentCaretPosition) > 0) {
+        return currentCaretPosition
+      }
+
+      // otherwise, starting at the position right after the last added character, seek the next
+      // placeholder where we can position the caret
+      for (let i = indexOfLastAddedCharacter + 1; i < placeholder.length; i++) {
+        if (placeholder[i] === placeholderCharacter) {
+          return i
+        }
       }
     }
 
-    // New character possibly at the end of entire mask. Just keep the caret at its place.
-    return currentCaretPosition
-  } else if (
-    // A character has actually been deleted and the previous spot in the mask
-    // is not a placeholder. So, find the nearest placeholder character on the left and return that
-    // as the new caret position
-    (newCharacterIsPlaceholderCharacter === true) &&
-    (placeholder[indexOfWhereChangeOccurred - 1] !== undefined) &&
-    (placeholder[indexOfWhereChangeOccurred - 1] !== placeholderCharacter)
-  ) {
-    for (let i = indexOfWhereChangeOccurred - 2; i > 0; i--) {
-      if (placeholder[i] === placeholderCharacter) {
-        return i + 1 // It should be right after the next placeholder character
+    // If the previous for-loop couldn't find a placeholder in which to position the caret, that
+    // means there isn't a placeholder after the index of the last character, so just position
+    // the caret at the end of the conformed string
+    return conformToMaskResults.output.length
+
+  // is deletion...
+  } else if (isDeletion === true) {
+
+    // if previous input and conformed string are the same, it means adjustCaretPosition is called
+    // because the user is pressing the backspace to move the caret back
+    if (previousInput === conformToMaskResults.output) {
+
+      // if the caret is at a placeholder character position, it's okay to keep it where it is
+      if (placeholder[currentCaretPosition] === placeholderCharacter) {
+        return currentCaretPosition
+      }
+
+      // if the caret is anywhere that's not a placeholder character, seek back to the closest
+      // placeholder character and place the caret right after it.
+      for (let i = currentCaretPosition; i > 0; i--) {
+        if (placeholder[i] === placeholderCharacter) {
+          return i + 1 // It should be immediately after the next placeholder character
+        }
+      }
+
+    // the user has actually deleted a character, so we need to do some work
+    } else {
+      const diffResults = diffChars(previousInput, conformToMaskResults.output)
+
+      // The following variables and the diffResults.forEach help us determine the index of the
+      // first removed character
+      let indexOfFirstRemovedCharacter = null
+      let addedCharacters = ''
+
+      diffResults.forEach((chunk) => {
+        if (indexOfFirstRemovedCharacter === null) {
+          addedCharacters += chunk.value
+
+          if (chunk.removed === true) {
+            indexOfFirstRemovedCharacter = addedCharacters.length - 1
+          }
+        }
+      })
+
+      // if the index of the last changed character is more than one position far from the current
+      // caret position, then an ambiguous change happened.
+      // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was removed.
+      // In that case, just return the current caret position unmodified.
+      if ((indexOfFirstRemovedCharacter - currentCaretPosition) > 0) {
+        return currentCaretPosition
+      }
+
+      // otherwise, starting at the index of the first removed character, seek back until we find
+      // a placeholder character at which to position the caret
+      for (let i = indexOfFirstRemovedCharacter - 1; i > 0; i--) {
+        if (placeholder[i] === placeholderCharacter) {
+          return i + 1 // It should be immediately after the next placeholder character
+        }
       }
     }
 
-    return currentCaretPosition
+    // if we sought back and couldn't find a placeholder character at which to position the caret
+    // we'd reach this point in the code. So, just place the caret at the beginning of the input
+    return 0
   }
-
-  // Not sure yet why I need this condition here. There's a logical reason for it, but I will think
-  // about it later.
-  return (!newCharacterIsPlaceholderCharacter) ?
-    indexOfWhereChangeOccurred + 1 :
-    indexOfWhereChangeOccurred
 }

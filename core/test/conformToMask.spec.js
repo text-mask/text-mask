@@ -1,4 +1,5 @@
 import conformToMask from '../src/conformToMask.js'
+import dynamicTests from 'mocha-dynamic-tests'
 import chai from 'chai'
 
 const expect = chai.expect
@@ -33,6 +34,10 @@ describe('conformToMask', () => {
       it('transforms 2389238 to 23/89/238_', () => {
         expect(conformToMask('2389238', mask).output).to.equal('23/89/238_')
       })
+
+      it('does its thing', () => {
+        expect(conformToMask('2', '11/11').output).to.equal('2_/__')
+      })
     })
 
     describe('given mask (111) 111-1111', () => {
@@ -62,9 +67,16 @@ describe('conformToMask', () => {
     })
   })
 
-  describe('simple transformations', () => {
-    it('does its thing', () => {
-      expect(conformToMask('2', '11/11').output).to.equal('2_/__')
-    })
-  })
+  dynamicTests([{
+    userInput: '(123 ___-____',
+    mask: '(111) 111-1111',
+    expected: '(12_) ___-____',
+    skip: true
+  }], (test) => ({
+    description: `for userInput ${test.userInput} and mask ${test.mask}, outputs ${test.expected}`,
+
+    body: () => {
+      expect(conformToMask(test.userInput, test.mask).output).to.equal(test.expected)
+    }
+  }))
 })

@@ -5,23 +5,24 @@ import dynamicTests from 'mocha-dynamic-tests'
 const expect = chai.expect
 
 describe('adjustCaretPosition', () => {
-  it('only knows how to adjust the caret position when there is one change between ' +
-     'new and old inputs, otherwise it returns the current caret position', () => {
+  it('places the caret after the last change when operation is addition', () => {
     expect(adjustCaretPosition({
       previousInput: '3333',
       conformToMaskResults: {
         output: '2938',
-        mask: '1111'
+        mask: '1111',
+        input: '2938'
       },
-      currentCaretPosition: 1000
-    })).to.equal(1000)
+      currentCaretPosition: 4
+    })).to.equal(4)
   })
 
   it('sets the caret back in order to prevent it from moving when the change ' +
-     'has not actually modified the output', () => {
+     'has not actually modified the output and the operation is not deletion', () => {
     expect(adjustCaretPosition({
       previousInput: '(___) ___-____',
       conformToMaskResults: {
+        input: '(___) ___-____',
         output: '(___) ___-____',
         mask: '(111) 111-1111'
       },
@@ -32,10 +33,24 @@ describe('adjustCaretPosition', () => {
       previousInput: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
+        input: '(123) ___-____',
         mask: '(111) 111-1111'
       },
       currentCaretPosition: 10
     })).to.equal(9)
+  })
+
+  it('knows to move the caret back when the previousInput and conformToMaskResults output ' +
+     'are identical but the operation is deletion', () => {
+    expect(adjustCaretPosition({
+      previousInput: '(123) ___-____',
+      conformToMaskResults: {
+        input: '(123 ___-____',
+        output: '(123) ___-____',
+        mask: '(111) 111-1111'
+      },
+      currentCaretPosition: 4
+    })).to.equal(4)
   })
 
   it('knows to move caret to the next mask area when the last character of the current part ' +
@@ -44,23 +59,16 @@ describe('adjustCaretPosition', () => {
       previousInput: '(12_) _',
       conformToMaskResults: {
         output: '(123) _',
+        input: '(123_) _',
         mask: '(111) 1',
       },
       currentCaretPosition: 4
     })).to.equal(6)
 
     expect(adjustCaretPosition({
-      previousInput: '(12_) _',
-      conformToMaskResults: {
-        output: '(132) _',
-        mask: '(111) 1'
-      },
-      currentCaretPosition: 3
-    }))
-
-    expect(adjustCaretPosition({
       previousInput: '(12_) 7',
       conformToMaskResults: {
+        input: '(132_) 7',
         output: '(132) 7',
         mask: '(111) 1'
       },
@@ -93,16 +101,18 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '(___)',
       conformToMaskResults: {
+        input: '(3___)',
         output: '(3__)',
         mask: '(111)',
       },
-      currentCaretPosition: 1,
+      currentCaretPosition: 2,
       expected: 2
     },
 
     {
       previousInput: '___',
       conformToMaskResults: {
+        input: '1___',
         output: '1__',
         mask: '111',
       },
@@ -113,6 +123,7 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '1__',
       conformToMaskResults: {
+        input: '11__',
         output: '11_',
         mask: '111',
       },
@@ -123,6 +134,7 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '11_',
       conformToMaskResults: {
+        input: '111_',
         output: '111',
         mask: '111',
       },
@@ -133,6 +145,7 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '(12_) _',
       conformToMaskResults: {
+        input: '(12f_) _',
         output: '(12_) _',
         mask: '(111) 1',
       },
@@ -143,10 +156,11 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '(___) ___-____',
       conformToMaskResults: {
+        input: '(1___) ___-____',
         output: '(1__) ___-____',
         mask: '(111) 111-1111',
       },
-      currentCaretPosition: 1,
+      currentCaretPosition: 2,
       expected: 2
     },
 
@@ -163,6 +177,7 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '(1__) ___-3___',
       conformToMaskResults: {
+        input: '(12__) ___-3___',
         output: '(12_) ___-3___',
         mask: '(111) 111-1111',
       },
@@ -173,11 +188,13 @@ describe('adjustCaretPosition', () => {
     {
       previousInput: '(333) ___-____',
       conformToMaskResults: {
+        input: '(3333) ___-____',
         output: '(333) 3__-____',
         mask: '(111) 111-1111',
       },
       currentCaretPosition: 2,
-      expected: 2
+      expected: 2,
+      //only: true
     },
 
     {
@@ -193,21 +210,124 @@ describe('adjustCaretPosition', () => {
     // TODO: fix this test case. It currently results in 8!!!
     {
       previousInput: '(__4) 444-____',
-      newInput: '(__4) 44_-____',
+      conformToMaskResults: {
+        output: '(__4) 44_-____',
+        mask: '(111) 111-1111',
+      },
       currentCaretPosition: 7,
-      mask: '(111) 111-1111',
       expected: 7,
-      skip: true
+      skip: true,
     },
 
+    // TODO: fix this test case. It currently results in 10!!!
     {
-      previousInput: '(__4) 444-___',
-      currentCaretPosition: 10,
+      previousInput: '(__4) 44_-____',
       conformToMaskResults: {
         output: '(__4) 444-____',
         mask: '(111) 111-1111',
       },
-      expected: 10
+      currentCaretPosition: 8,
+      expected: 8,
+      skip: true
+    },
+
+    {
+      previousInput: '(__4) 444-____',
+      conformToMaskResults: {
+        input: '(__4) 444-___',
+        output: '(__4) 444-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 10,
+      expected: 10,
+    },
+
+    {
+      previousInput: '(__4) 444-____',
+      conformToMaskResults: {
+        input: '(__4) 444____',
+        output: '(__4) 444-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 9,
+      expected: 9,
+    },
+
+    {
+      previousInput: '(__4) 444-____',
+      conformToMaskResults: {
+        input: '(__4) 44-____',
+        output: '(__4) 44_-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 8,
+      expected: 8,
+    },
+
+    {
+      previousInput: '(___) ___-____',
+      conformToMaskResults: {
+        input: '(__4_) ___-____',
+        output: '(__4) ___-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 4,
+      expected: 6,
+    },
+
+    {
+      previousInput: '(505) ___-____',
+      conformToMaskResults: {
+        input: '(505 ___-____',
+        output: '(505) ___-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 4,
+      expected: 4,
+    },
+
+    {
+      previousInput: '(505) ___-____',
+      conformToMaskResults: {
+        input: '(505) __-____',
+        output: '(505) ___-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 6,
+      expected: 6,
+    },
+
+    {
+      previousInput: '(333) 333-3___',
+      conformToMaskResults: {
+        input: '(33) 333-3___',
+        output: '(333) 333-____',
+        mask: '(111) 111-1111'
+      },
+      currentCaretPosition: 3,
+      expected: 3,
+    },
+
+    {
+      previousInput: '(___) ___-____',
+      conformToMaskResults: {
+        output: '(5__) ___-____',
+        input: '5',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 1,
+      expected: 2,
+    },
+
+    {
+      previousInput: '(000) ___-____',
+      conformToMaskResults: {
+        input: '(00) ___-____',
+        output: '(00_) ___-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 2,
+      expected: 2,
     }
   ], (test) => ({
     description: `for previousInput: '${test.previousInput}', currentCaretPosition: '${test.currentCaretPosition}' ` +

@@ -10,35 +10,28 @@ export default function insertCharactersIntoMask(characterPositions = [], mask =
   let currentArea = 0
   let currentPosition = 0
   let canAdvanceToNextArea = false
-  let rejectedCharacterIndex = null
 
-  return {
-    output: tokenize(convertMaskToPlaceholder(mask)).map((character, index) => {
-      if (character === placeholderCharacter) {
-        const userInputCharacter = findCharacter(characterPositions, {
-          area: currentArea,
-          position: currentPosition
-        })
+  return tokenize(convertMaskToPlaceholder(mask)).map((character, index) => {
+    if (character === placeholderCharacter) {
+      const userInputCharacter = findCharacter(characterPositions, {
+        area: currentArea,
+        position: currentPosition
+      })
 
-        currentPosition++
-        canAdvanceToNextArea = true
+      currentPosition++
+      canAdvanceToNextArea = true
 
-        if (isAcceptableCharacter(userInputCharacter, mask[index]) === false) {
-          if (rejectedCharacterIndex === null) { rejectedCharacterIndex = index }
-
-          return character
-        }
-
-        return userInputCharacter || character
-      } else if (canAdvanceToNextArea) {
-        currentArea++
-        currentPosition = 0
-        canAdvanceToNextArea = false
+      if (isAcceptableCharacter(userInputCharacter, mask[index]) === false) {
+        return character
       }
 
-      return character
-    }).join(''),
-    mask: mask,
-    rejectedCharacterIndex: rejectedCharacterIndex
-  }
+      return userInputCharacter || character
+    } else if (canAdvanceToNextArea) {
+      currentArea++
+      currentPosition = 0
+      canAdvanceToNextArea = false
+    }
+
+    return character
+  }).join('')
 }

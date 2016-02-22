@@ -5,10 +5,10 @@ import dynamicTests from 'mocha-dynamic-tests'
 const expect = chai.expect
 
 describe('insertCharactersIntoMask', () => {
-  it('returns an object', () => {
+  it('returns a string', () => {
     expect(
       insertCharactersIntoMask()
-    ).to.be.an('object')
+    ).to.be.a('string')
   })
 
   dynamicTests([{
@@ -16,31 +16,19 @@ describe('insertCharactersIntoMask', () => {
       characterPositions: [{character: '2', position: 0, area: 1}],
       mask: '11/11',
     },
-    expected: {
-      output: '__/2_',
-      mask: '11/11',
-      rejectedCharacterIndex: null
-    },
+    expected: '__/2_',
   }, {
     parameters: {
       characterPositions: [{character: 'a', position: 0, area: 1}],
       mask: '11/11'
     },
-    expected: {
-      output: '__/__',
-      mask: '11/11',
-      rejectedCharacterIndex: 3
-    },
+    expected: '__/__',
   }, {
     parameters: {
       characterPositions: [{character: '-', position: 0, area: 1}],
       mask: '11-11'
     },
-    expected: {
-      output: '__-__',
-      mask: '11-11',
-      rejectedCharacterIndex: 3
-    },
+    expected: '__-__',
   }], (test) => ({
     description: `knows for characterPositions: ${JSON.stringify(test.parameters.characterPositions)} and mask ` +
     `${test.parameters.mask} to return ${JSON.stringify(test.expected)}`,
