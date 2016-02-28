@@ -58,8 +58,8 @@ describe('adjustCaretPosition', () => {
     expect(adjustCaretPosition({
       previousInput: '(12_) _',
       conformToMaskResults: {
-        output: '(123) _',
         input: '(123_) _',
+        output: '(123) _',
         mask: '(111) 1',
       },
       currentCaretPosition: 4
@@ -88,14 +88,14 @@ describe('adjustCaretPosition', () => {
       currentCaretPosition: 6
     })).to.equal(4)
 
-    //expect(adjustCaretPosition({
-    //  previousInput: '(12_) 3',
-    //  conformToMaskResults: {
-    //    output: '(12_) _',
-    //    mask: '(111) 1'
-    //  },
-    //  currentCaretPosition: 6
-    //})).to.equal(4)
+    expect(adjustCaretPosition({
+      previousInput: '(12_) 3',
+      conformToMaskResults: {
+        output: '(12_) _',
+        mask: '(111) 1'
+      },
+      currentCaretPosition: 6
+    })).to.equal(4)
   })
 
   dynamicTests([
@@ -119,28 +119,6 @@ describe('adjustCaretPosition', () => {
       },
       currentCaretPosition: 1,
       expected: 1
-    },
-
-    {
-      previousInput: '1__',
-      conformToMaskResults: {
-        input: '11__',
-        output: '11_',
-        mask: '111',
-      },
-      currentCaretPosition: 2,
-      expected: 2
-    },
-
-    {
-      previousInput: '11_',
-      conformToMaskResults: {
-        input: '111_',
-        output: '111',
-        mask: '111',
-      },
-      currentCaretPosition: 3,
-      expected: 3
     },
 
     {
@@ -267,17 +245,6 @@ describe('adjustCaretPosition', () => {
     },
 
     {
-      previousInput: '(___) ___-____',
-      conformToMaskResults: {
-        input: '(__4_) ___-____',
-        output: '(__4) ___-____',
-        mask: '(111) 111-1111',
-      },
-      currentCaretPosition: 4,
-      expected: 6,
-    },
-
-    {
       previousInput: '(505) ___-____',
       conformToMaskResults: {
         input: '(505 ___-____',
@@ -319,6 +286,7 @@ describe('adjustCaretPosition', () => {
       },
       currentCaretPosition: 1,
       expected: 2,
+      //only: true
     },
 
     {
@@ -352,6 +320,53 @@ describe('adjustCaretPosition', () => {
       },
       currentCaretPosition: 6,
       expected: 4,
+    },
+
+    {
+      previousInput: '(449) _',
+      conformToMaskResults: {
+        input: '(4495) _',
+        output: '(449) 5',
+        mask: '(111) 1'
+      },
+      currentCaretPosition: 5,
+      expected: 7,
+      //only: true
+    },
+
+    {
+      previousInput: '(___) ___-____',
+      conformToMaskResults: {
+        input: '(__4_) ___-____',
+        output: '(__4) ___-____',
+        mask: '(111) 111-1111',
+      },
+      currentCaretPosition: 4,
+      expected: 6,
+      //only: true
+    },
+
+    {
+      previousInput: '1__',
+      conformToMaskResults: {
+        input: '11__',
+        output: '11_',
+        mask: '111',
+      },
+      currentCaretPosition: 2,
+      expected: 2,
+      //only: true
+    },
+
+    {
+      previousInput: '11_',
+      conformToMaskResults: {
+        input: '111_',
+        output: '111',
+        mask: '111',
+      },
+      currentCaretPosition: 3,
+      expected: 3,
     }
   ], (test) => ({
     description: `for previousInput: '${test.previousInput}', currentCaretPosition: '${test.currentCaretPosition}' ` +
@@ -364,5 +379,8 @@ describe('adjustCaretPosition', () => {
         currentCaretPosition: test.currentCaretPosition,
       })).to.equal(test.expected)
     }
-  }))
+  })
+  //}),
+  //  {only: true}
+  )
 })

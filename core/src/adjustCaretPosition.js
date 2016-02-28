@@ -1,4 +1,7 @@
-import {diffChars} from 'diff'
+import {
+  getIndexOfLastAddedCharacter,
+  getIndexOfFirstRemovedCharacter
+} from './getDiffIndexes.js'
 import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
@@ -39,28 +42,16 @@ export default function adjustCaretPosition({
 
     // previous input is different from conformToMaskResults.output, so we need to do some work
     } else {
-
-      // get the difference
-      const diffResults = diffChars(previousInput, conformToMaskResults.output)
-
-      // The following variables along with the diffResults loop help us figure out the index
-      // of the last added character
-      let indexOfLastAddedCharacter = null
-      let addedCharacters = ''
-
-      diffResults.forEach((chunk) => {
-        addedCharacters += chunk.value
-
-        if (chunk.added === true) {
-          indexOfLastAddedCharacter = addedCharacters.length - 1
-        }
-      })
+      const indexOfLastAddedCharacter = getIndexOfLastAddedCharacter(
+        previousInput,
+        conformToMaskResults.output
+      )
 
       // if the index of the last changed character is ahead of current caret position by more
       // than one, then an ambiguous change happened.
       // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was last added.
       // In that case, just return the current caret position unmodified.
-      if ((indexOfLastAddedCharacter - currentCaretPosition) > 0) {
+      if ((indexOfLastAddedCharacter - currentCaretPosition) > 1) {
         return currentCaretPosition
       }
 
@@ -100,28 +91,16 @@ export default function adjustCaretPosition({
 
     // the user has actually deleted a character, so we need to do some work
     } else {
-      const diffResults = diffChars(previousInput, conformToMaskResults.output)
-
-      // The following variables and the diffResults.forEach help us determine the index of the
-      // first removed character
-      let indexOfFirstRemovedCharacter = null
-      let addedCharacters = ''
-
-      diffResults.forEach((chunk) => {
-        if (indexOfFirstRemovedCharacter === null) {
-          addedCharacters += chunk.value
-
-          if (chunk.removed === true) {
-            indexOfFirstRemovedCharacter = addedCharacters.length - 1
-          }
-        }
-      })
+      const indexOfFirstRemovedCharacter = getIndexOfFirstRemovedCharacter(
+        previousInput,
+        conformToMaskResults.output
+      )
 
       // if the index of the last changed character is more than one position far from the current
       // caret position, then an ambiguous change happened.
       // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was removed.
       // In that case, just return the current caret position unmodified.
-      if ((indexOfFirstRemovedCharacter - currentCaretPosition) > 0) {
+      if ((indexOfFirstRemovedCharacter - currentCaretPosition) > 1) {
         return currentCaretPosition
       }
 

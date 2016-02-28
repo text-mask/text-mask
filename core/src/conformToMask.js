@@ -19,36 +19,35 @@ export default function conformToMask(userInput = '', mask = '') {
     output: tokenize(placeholder).map((characterInPlaceholder, index) => {
 
       // if current character is a placeholder character, that means we could potentially
-      // place user input in it
-      if (characterInPlaceholder === placeholderCharacter) {
+      // place user input in it. So, if we still have pending user tokens, let's do it!
+      if (
+        characterInPlaceholder === placeholderCharacter &&
+        pendingUserInputTokens.length > 0
+      ) {
 
-        // Do we still have user input characters to assign?
-        if (pendingUserInputTokens.length > 0) {
+        // Let's loop through the remaining user input characters to find out what
+        // should go in the current placeholder position
+        for (let i = 0; i <= pendingUserInputTokens.length; i++) {
 
-          // Let's loop through the remaining user input characters to find out what
-          // should go in the current placeholder position
-          for (let i = 0; i <= pendingUserInputTokens.length; i++) {
+          // Pull user character to potentially map it to the current
+          // placeholder position.
+          const userInputCharacter = pendingUserInputTokens.shift()
 
-            // Extract the character to potentially map it to the current
-            // placeholder position.
-            const userInputCharacter = pendingUserInputTokens.shift()
+          if (
 
-            if (
+            // is the character in the user input a placeholder character?
+            userInputCharacter === placeholderCharacter ||
 
-              // is the character in the user input a placeholder character?
-              userInputCharacter === placeholderCharacter ||
-              (
+            // or, are we sure the character is not part of the mask
+            // delimiters and that it is an acceptable character?
+            (
+              maskDelimiters.indexOf(userInputCharacter) === -1 &&
+              isAcceptableCharacter(userInputCharacter, mask[index]) === true
+            )
+          ) {
 
-                // otherwise, are we sure the character is not part of the mask
-                // delimiters and // it is an accpetable character?
-                maskDelimiters.indexOf(userInputCharacter) === -1 &&
-                isAcceptableCharacter(userInputCharacter, mask[index]) === true
-              )
-            ) {
-
-              // if so, map it!
-              return userInputCharacter
-            }
+            // if so, map it!
+            return userInputCharacter
           }
         }
       }
