@@ -5,73 +5,167 @@ import chai from 'chai'
 const expect = chai.expect
 
 describe('conformToMask', () => {
-  describe('simple transformations', () => {
-    describe('given mask 11/11/1111', () => {
-      const mask = '11/11/1111'
-
-      it('transforms 1__/__/____ to 1_/__/____', () => {
-        expect(conformToMask(
-          '1__/__/____',
-          mask
-        ).output).to.equal('1_/__/____')
-      })
-
-      it('transforms 11_/__/____ to 11/__/____', () => {
-        expect(conformToMask(
-          '11_/__/____',
-          mask
-        ).output).to.equal('11/__/____')
-      })
-
-      it('transforms 1111 to 11/11/____', () => {
-        expect(conformToMask('1111', mask).output).to.equal('11/11/____')
-      })
-
-      it('transforms 23892389 to 23/89/2389', () => {
-        expect(conformToMask('23892389', mask).output).to.equal('23/89/2389')
-      })
-
-      it('transforms 2389238 to 23/89/238_', () => {
-        expect(conformToMask('2389238', mask).output).to.equal('23/89/238_')
-      })
-
-      it('does its thing', () => {
-        expect(conformToMask('2', '11/11').output).to.equal('2_/__')
-      })
-    })
-
-    describe('given mask (111) 111-1111', () => {
-      const mask = '(111) 111-1111'
-
-      it('transforms 777 to (777) ___-___', () => {
-        expect(conformToMask('777', mask).output).to.equal('(777) ___-____')
-      })
-
-      it('transforms 7771 to (777) 1__-___', () => {
-        expect(conformToMask('7771', mask).output).to.equal('(777) 1__-____')
-      })
-    })
-  })
-
-  describe('transformations for sparse inputs', () => {
-    describe('given mask 11/11/1111', () => {
-      const mask = '11/11/1111'
-
-      it('transforms 1_/__/___1_ to 1_/__/___1', () => {
-        expect(conformToMask('1_/__/___1_', mask).output).to.equal('1_/__/___1')
-      })
-
-      it('transforms 1_/1__/___1 to 1_/1_/___1', () => {
-        expect(conformToMask('1_/1__/___1', mask).output).to.equal('1_/1_/____')
-      })
-    })
-  })
+  //dynamicTests([], (test) => ({
+  //  description: `knows for userInput: ${test.input.userInput} and mask ${test.input.mask}, to ` +
+  //  `output ${JSON.stringify(test.output)}`,
+  //  body: () => {
+  //    expect(assignUserInputToMaskPositions(
+  //      test.input.userInput,
+  //      test.input.mask
+  //    )).to.deep.equal(test.output)
+  //  }
+  //}))
 
   dynamicTests([{
     userInput: '(123 ___-____',
     mask: '(111) 111-1111',
     expected: '(12_) ___-____',
     skip: true
+  }, {
+    userInput: '1__/__/____',
+    mask: '11/11/1111',
+    expected: '1_/__/____',
+  }, {
+    userInput: '11_/__/____',
+    mask: '11/11/1111',
+    expected: '11/__/____',
+  }, {
+    userInput: '1111',
+    mask: '11/11/1111',
+    expected: '11/11/____',
+  }, {
+    userInput: '1111',
+    mask: '11/11/1111',
+    expected: '11/11/____',
+  }, {
+    userInput: '23840957',
+    mask: '11/11/1111',
+    expected: '23/84/0957',
+  }, {
+    userInput: '2384095',
+    mask: '11/11/1111',
+    expected: '23/84/095_',
+  }, {
+    userInput: '2',
+    mask: '11/11',
+    expected: '2_/__'
+  }, {
+    userInput: '777',
+    mask: '(111) 111-1111',
+    expected: '(777) ___-____',
+  }, {
+    userInput: '7771',
+    mask: '(111) 111-1111',
+    expected: '(777) 1__-____',
+  }, {
+    userInput: '1_/__/___1_',
+    mask: '11/11/1111',
+    expected: '1_/__/___1',
+    //only: true
+  }, {
+    userInput: '1_/1__/___1',
+    mask: '11/11/1111',
+    expected: '1_/1_/____',
+    //only: true
+  }, {
+    userInput: '(d1__) ___-____',
+    mask: '(111) 111-1111',
+    expected: '(1__) ___-____',
+  }, {
+    userInput: '12/32',
+    mask: '11/11',
+    expected: '12/32',
+  }, {
+    userInput: '__/32',
+    mask: '11/11',
+    expected: '__/32',
+  }, {
+    userInput: '1__/__/____',
+    mask: '11/11/1111',
+    expected: '1_/__/____',
+  }, {
+    userInput: '2/2_',
+    mask: '11/11',
+    expected: '22/__',
+  }, {
+    userInput: '(22) 2__-____',
+    mask: '(111) 111-1111',
+    expected: '(222) ___-____',
+  }, {
+    userInput: '_2_/2_',
+    mask: '11/11',
+    expected: '_2/_2',
+    //only: true
+  }, {
+    userInput: '_/2_',
+    mask: '11/11',
+    expected: '_2/__',
+  }, {
+    userInput: '1',
+    mask: '(',
+    expected: '('
+  }, {
+    userInput: '2',
+    mask: '1',
+    expected: '2',
+  }, {
+    userInput: '__/22',
+    mask: '11/11',
+    expected: '__/22',
+  }, {
+    userInput: '2__/22',
+    mask: '11/11',
+    expected: '2_/_2',
+  }, {
+    userInput: '22',
+    mask: '11/11',
+    expected: '22/__',
+  }, {
+    userInput: '222',
+    mask: '11/11',
+    expected: '22/2_',
+  }, {
+    userInput: '777777',
+    mask: '11/11',
+    expected: '77/77',
+  }, {
+    userInput: '222/1',
+    mask: '11/11',
+    expected: '22/21',
+    //only: true
+  }, {
+    userInput: '__5/__',
+    mask: '11/11',
+    expected: '__/5_',
+  }, {
+    userInput: '8_/4_5/222_1',
+    mask: '11/11/1111',
+    expected: '8_/4_/5222',
+    //only: true
+  }, {
+    userInput: '8293847/4_2/222_1',
+    mask: '11/11/1111',
+    expected: '82/93/8474',
+  }, {
+    userInput: '777',
+    mask: '(111) 111-1111',
+    expected: '(777) ___-____',
+  }, {
+    userInput: '0/22',
+    mask: '11/11',
+    expected: '02/2_',
+  }, {
+    userInput: '/22',
+    mask: '11/11',
+    expected: '22/__',
+  }, {
+    userInput: '22/3/995',
+    mask: '11/11/1111',
+    expected: '22/39/95__',
+  }, {
+    userInput: '2d',
+    mask: '11',
+    expected: '2_'
   }], (test) => ({
     description: `for userInput ${test.userInput} and mask ${test.mask}, outputs ${test.expected}`,
 

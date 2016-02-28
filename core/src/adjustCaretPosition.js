@@ -125,11 +125,17 @@ export default function adjustCaretPosition({
         return currentCaretPosition
       }
 
+      // if the previous character in the placeholder is a placeholder character,
+      // it's okay to keep the caret at its current position
+      if (placeholder[currentCaretPosition - 1] === placeholderCharacter) {
+        return currentCaretPosition
+      }
+
       // otherwise, starting at the index of the first removed character, seek back until we find
       // a placeholder character at which to position the caret
       for (let i = indexOfFirstRemovedCharacter - 1; i > 0; i--) {
         if (placeholder[i] === placeholderCharacter) {
-          return i + 1 // It should be immediately after the next placeholder character
+          return i + 1 // it should be immediately after the next placeholder character
         }
       }
     }

@@ -18,19 +18,6 @@ export function getDelimiters(mask ='') {
   }, [])
 }
 
-export function findCharacter(characterPositions = [], location = {}) {
-  for (let i = 0; i < characterPositions.length; i++) {
-    const characterPosition = characterPositions[i]
-
-    if (
-      characterPosition.area === location.area &&
-      characterPosition.position === location.position
-    ) {
-      return characterPosition.character
-    }
-  }
-}
-
 export function tokenize(string = '') {
   return string.split('')
 }
