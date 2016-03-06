@@ -4,6 +4,6 @@ export const maskingCharactersEnums = {
   alphanumeric: '?'
 }
 
-export const maskingCharacters = ['1', 'A', '?']
+export const maskingCharacters = ['1', 'A', '?', 'U', 'L']
 
 export const placeholderCharacter = '_'
