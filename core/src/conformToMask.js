@@ -6,10 +6,12 @@ import {
 } from './utilities.js'
 import {placeholderCharacter, maskingCharacters} from './constants.js'
 
+var counter = 0
 export default function conformToMask(userInput = '', mask = '') {
   const placeholder = convertMaskToPlaceholder(mask)
-  const pendingUserInputTokens = tokenize(userInput)
   const maskDelimiters = getDelimiters(mask)
+
+  let numberOfPendingUserInputCharacters = userInput.length
 
   return {
     input: userInput,
@@ -22,16 +24,22 @@ export default function conformToMask(userInput = '', mask = '') {
       // place user input in it. So, if we still have pending user tokens, let's do it!
       if (
         characterInPlaceholder === placeholderCharacter &&
-        pendingUserInputTokens.length > 0
+        numberOfPendingUserInputCharacters > 0
       ) {
 
         // Let's loop through the remaining user input characters to find out what
         // should go in the current placeholder position
-        for (let i = 0; i <= pendingUserInputTokens.length; i++) {
+        for (
+          let i = userInput.length - numberOfPendingUserInputCharacters;
+          i <= userInput.length;
+          i++
+        ) {
 
           // Pull user character to potentially map it to the current
           // placeholder position.
-          const userInputCharacter = pendingUserInputTokens.shift()
+          const userInputCharacter = userInput[i]
+
+          numberOfPendingUserInputCharacters--
 
           if (
 

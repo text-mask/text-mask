@@ -2,6 +2,7 @@ import chai from 'chai'
 import adjustCaretPosition from '../src/adjustCaretPosition.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from './testParameters.js'
+import _ from 'lodash'
 
 const expect = chai.expect
 
@@ -70,7 +71,7 @@ describe('adjustCaretPosition', () => {
       previousInput: '(12_) 7',
       conformToMaskResults: {
         input: '(132_) 7',
-        output: '(132) 7',
+        output: '(132) _',
         mask: '(111) 1'
       },
       currentCaretPosition: 3
@@ -99,21 +100,33 @@ describe('adjustCaretPosition', () => {
     })).to.equal(4)
   })
 
-  dynamicTests(testParameters, (test) => ({
-    description: `works for input: ${JSON.stringify(test.input)} and output: ${JSON.stringify(test.output)}`,
-    body: () => {
-      expect(adjustCaretPosition({
-        previousInput: test.input.startingInputFieldValue,
-        conformToMaskResults: {
-          input: test.input.userModifiedInputFieldValue,
-          output: test.output.conformedInputFieldValue,
-          mask: test.input.mask
-        },
-        currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
-      })).to.equal(test.output.adjustedCaretPosition)
-    }
-  })
-  //}),
-  //  {only: true}
+  dynamicTests(
+    _.filter(testParameters, (testParameter) => {
+      return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
+    }),
+
+    (test) => ({
+      description: `for previousInput: ${
+        JSON.stringify(test.input)
+        } and conformToMaskResults: ${JSON.stringify({
+        input: test.input.userModifiedInputFieldValue,
+        output: test.output.conformedInputFieldValue,
+        mask: test.input.mask
+      })}, it knows to adjust the caret to '${
+        test.output.adjustedCaretPosition
+      }'`,
+
+      body: () => {
+        expect(adjustCaretPosition({
+          previousInput: test.input.startingInputFieldValue,
+          conformToMaskResults: {
+            input: test.input.userModifiedInputFieldValue,
+            output: test.output.conformedInputFieldValue,
+            mask: test.input.mask
+          },
+          currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
+        })).to.equal(test.output.adjustedCaretPosition)
+      }
+    })
   )
 })

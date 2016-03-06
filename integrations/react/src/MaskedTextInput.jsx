@@ -18,7 +18,6 @@ export default React.createClass({
       placeholder: value,
       previousValue: value,
       conformToMaskResults: {},
-      value: null,
       currentCaretPosition: null
     }
   },

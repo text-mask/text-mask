@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom'
 import sinon from 'sinon'
 import ReactTestUtils from 'react-addons-test-utils'
 import MaskedTextInput from '../src/MaskedTextInput.jsx'
+import dynamicTests from 'mocha-dynamic-tests'
+import testParameters from '../../../core/test/testParameters.js'
+
+import _ from 'lodash'
 
 const expect = chai.expect
 
@@ -91,4 +95,58 @@ describe('MaskedTextInput', () => {
 
     expect(input.value).to.equal('')
   })
+
+  dynamicTests(
+    _.filter(
+      testParameters,
+      (testParameter) => {
+        return !(
+          _.isArray(testParameter.skips) && (
+            _.includes(testParameter.skips, 'adjustCaretPosition') ||
+            _.includes(testParameter.skips, 'integrations:react')
+          )
+        )
+      }
+    ),
+
+    (test) => {
+      return {
+        description: JSON.stringify(test),
+
+        body: () => {
+          const maskedTextInput = ReactTestUtils.renderIntoDocument(
+            <MaskedTextInput mask={test.input.mask} />
+          )
+
+          const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+
+          input.value = test.input.startingInputFieldValue
+          input.selectionStart = 0
+          input.selectionEnd = 0
+
+          maskedTextInput.refs.inputElement.focus()
+
+          ReactTestUtils.Simulate.change(input)
+
+          input.value = test.input.userModifiedInputFieldValue
+          input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+          input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
+          maskedTextInput.refs.inputElement.focus()
+
+          ReactTestUtils.Simulate.change(input)
+
+          expect([
+            input.value,
+            maskedTextInput.refs.inputElement.selectionStart,
+            maskedTextInput.refs.inputElement.selectionEnd
+          ]).to.deep.equal([
+            test.output.conformedInputFieldValue,
+            test.output.adjustedCaretPosition,
+            test.output.adjustedCaretPosition
+          ])
+        }
+      }
+    }
+  )
 })

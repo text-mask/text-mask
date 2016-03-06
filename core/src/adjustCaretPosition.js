@@ -1,9 +1,6 @@
-import {
-  getIndexOfLastAddedCharacter,
-  getIndexOfFirstRemovedCharacter
-} from './getDiffIndexes.js'
 import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderCharacter} from './constants.js'
+import getChangeDetails from './getChangeDetails.js'
 
 export default function adjustCaretPosition({
   previousInput = '',
@@ -42,8 +39,8 @@ export default function adjustCaretPosition({
 
     // previous input is different from conformToMaskResults.output, so we need to do some work
     } else {
-      const indexOfLastAddedCharacter = getIndexOfLastAddedCharacter(
-        previousInput,
+      const changeDetails = getChangeDetails(
+        previousInput || placeholder,
         conformToMaskResults.output
       )
 
@@ -51,13 +48,13 @@ export default function adjustCaretPosition({
       // than one, then an ambiguous change happened.
       // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was last added.
       // In that case, just return the current caret position unmodified.
-      if ((indexOfLastAddedCharacter - currentCaretPosition) > 1) {
+      if ((changeDetails.indexOfLastChange - currentCaretPosition) > 1) {
         return currentCaretPosition
       }
 
       // otherwise, starting at the position right after the last added character, seek the next
       // placeholder where we can position the caret
-      for (let i = indexOfLastAddedCharacter + 1; i < placeholder.length; i++) {
+      for (let i = changeDetails.indexOfLastChange + 1; i < placeholder.length; i++) {
         if (placeholder[i] === placeholderCharacter) {
           return i
         }
@@ -91,7 +88,7 @@ export default function adjustCaretPosition({
 
     // the user has actually deleted a character, so we need to do some work
     } else {
-      const indexOfFirstRemovedCharacter = getIndexOfFirstRemovedCharacter(
+      const changeDetails = getChangeDetails(
         previousInput,
         conformToMaskResults.output
       )
@@ -100,7 +97,7 @@ export default function adjustCaretPosition({
       // caret position, then an ambiguous change happened.
       // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was removed.
       // In that case, just return the current caret position unmodified.
-      if ((indexOfFirstRemovedCharacter - currentCaretPosition) > 1) {
+      if ((changeDetails.indexOfFirstChange - currentCaretPosition) > 1) {
         return currentCaretPosition
       }
 
@@ -112,7 +109,7 @@ export default function adjustCaretPosition({
 
       // otherwise, starting at the index of the first removed character, seek back until we find
       // a placeholder character at which to position the caret
-      for (let i = indexOfFirstRemovedCharacter - 1; i > 0; i--) {
+      for (let i = changeDetails.indexOfFirstChange - 1; i > 0; i--) {
         if (placeholder[i] === placeholderCharacter) {
           return i + 1 // it should be immediately after the next placeholder character
         }
