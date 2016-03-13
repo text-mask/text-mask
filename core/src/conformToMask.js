@@ -2,11 +2,11 @@ import {
   convertMaskToPlaceholder,
   tokenize,
   getDelimiters,
-  isAcceptableCharacter
+  isAcceptableCharacter,
+  potentiallyTransformCharacter
 } from './utilities.js'
 import {placeholderCharacter, maskingCharacters} from './constants.js'
 
-var counter = 0
 export default function conformToMask(userInput = '', mask = '') {
   const placeholder = convertMaskToPlaceholder(mask)
   const maskDelimiters = getDelimiters(mask)
@@ -31,7 +31,7 @@ export default function conformToMask(userInput = '', mask = '') {
         // should go in the current placeholder position
         for (
           let i = userInput.length - numberOfPendingUserInputCharacters;
-          i <= userInput.length;
+          i < userInput.length;
           i++
         ) {
 
@@ -54,8 +54,8 @@ export default function conformToMask(userInput = '', mask = '') {
             )
           ) {
 
-            // if so, map it!
-            return userInputCharacter
+            // if so, map it to a potentially transformed character!
+            return potentiallyTransformCharacter(userInputCharacter, mask[index])
           }
         }
       }

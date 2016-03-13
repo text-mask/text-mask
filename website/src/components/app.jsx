@@ -12,7 +12,7 @@ import {Router, Route, IndexRoute, Link, hashHistory} from 'react-router'
 const App = React.createClass({
   render() {
     return (
-      <span>
+      <div>
         <NavBar/>
 
         <div className={classnames(style.mainContainer, 'container')}>
@@ -27,7 +27,7 @@ const App = React.createClass({
             </p>
           </div>
         </footer>
-      </span>
+      </div>
     )
   }
 })

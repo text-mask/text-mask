@@ -12,26 +12,24 @@ export default React.createClass({
   },
 
   getInitialState() {
-    const value = convertMaskToPlaceholder(this.props.mask)
-
     return {
-      placeholder: value,
-      previousValue: value,
+      previousValue: '',
       conformToMaskResults: {},
       currentCaretPosition: null
     }
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      placeholder: convertMaskToPlaceholder(nextProps.mask),
-      value: null
-    })
+    if (nextProps.mask !== this.props.mask) {
+      this.setState(this.getInitialState())
+    }
   },
 
   componentDidUpdate() {
+
     // Check that inputElement has focus
     if (this.refs.inputElement === document.activeElement) {
+
       // If setSelection is called while inputElement doesn't have focus, it's gonna steal focus,
       // which is not what we want here.
       const caretPosition = adjustCaretPosition({
@@ -46,8 +44,8 @@ export default React.createClass({
 
   render() {
     const {props, state, onChange} = this
-    const placeholder = props.placeholder || state.placeholder
-    const value = (state.conformToMaskResults.output !== state.placeholder) ?
+    const placeholder = props.placeholder || convertMaskToPlaceholder(this.props.mask)
+    const value = (state.conformToMaskResults.output !== placeholder) ?
       state.conformToMaskResults.output :
       ''
 

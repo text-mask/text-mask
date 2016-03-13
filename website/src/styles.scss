@@ -29,3 +29,9 @@ body {
 code {
   font-size: 80%;
 }
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 830px;
+  }
+}

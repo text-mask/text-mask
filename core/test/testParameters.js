@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 
-export default _.filter((testParameter) => testParameter, [{
+export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U1U'*/, [{
   input: {
     startingInputFieldValue: '(___)',
     userModifiedInputFieldValue: '(3___)',
@@ -261,6 +261,8 @@ export default _.filter((testParameter) => testParameter, [{
     adjustedCaretPosition: 4,
     indexOfFirstRemovedCharacter: 6
   },
+
+  stuff: true
 }, {
   input: {
     startingInputFieldValue: '(449) _',
@@ -780,8 +782,6 @@ export default _.filter((testParameter) => testParameter, [{
     conformedInputFieldValue: '22/21',
     adjustedCaretPosition: 5,
   },
-
-  //only: true
 }, {
   input: {
     startingInputFieldValue: '__/__',
@@ -892,5 +892,91 @@ export default _.filter((testParameter) => testParameter, [{
   output: {
     conformedInputFieldValue: '(123) 3',
     adjustedCaretPosition: 7,
+  },
+}, {
+  input: {
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '(123) 3',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 7
+  },
+
+  output: {
+    conformedInputFieldValue: '___ ___',
+    adjustedCaretPosition: 0,
+  },
+
+  skips: ['adjustCaretPosition']
+}, {
+  input: {
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: 'M',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: 'M__ ___',
+    adjustedCaretPosition: 1,
+  },
+}, {
+  input: {
+    startingInputFieldValue: 'M__ ___',
+    userModifiedInputFieldValue: 'M2__ ___',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: 'M2_ ___',
+    adjustedCaretPosition: 2,
+  },
+}, {
+  input: {
+    startingInputFieldValue: 'M__ ___',
+    userModifiedInputFieldValue: 'M2j_ ___',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 3
+  },
+
+  output: {
+    conformedInputFieldValue: 'M2j ___',
+    adjustedCaretPosition: 4,
+  },
+}, {
+  input: {
+    startingInputFieldValue: 'M2j ___',
+    userModifiedInputFieldValue: 'M2j __2_',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 7
+  },
+
+  output: {
+    conformedInputFieldValue: 'M2j ___',
+    adjustedCaretPosition: 6,
+  },
+}, {
+  input: {
+    startingInputFieldValue: 'M2j ___',
+    userModifiedInputFieldValue: 'M2j __R_',
+    mask: 'A1A A1A',
+    caretPositionAfterInputFieldValueChange: 7
+  },
+
+  output: {
+    conformedInputFieldValue: 'M2j __R',
+    adjustedCaretPosition: 7,
+  },
+}, {
+  input: {
+    startingInputFieldValue: 'M__ ___',
+    userModifiedInputFieldValue: 'M2j_ ___',
+    mask: 'U1U U1U',
+    caretPositionAfterInputFieldValueChange: 3
+  },
+
+  output: {
+    conformedInputFieldValue: 'M2J ___',
+    adjustedCaretPosition: 4,
   },
 }])

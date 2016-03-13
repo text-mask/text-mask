@@ -5,7 +5,11 @@ import {
 } from './constants.js'
 
 export function convertMaskToPlaceholder(mask = '') {
-  return mask.replace(/1/g, placeholderCharacter)
+  return tokenize(mask).map((character) => {
+    return (maskingCharacters.indexOf(character) !== -1) ?
+      placeholderCharacter :
+      character
+  }).join('')
 }
 
 export function getDelimiters(mask ='') {
@@ -22,13 +26,41 @@ export function tokenize(string = '') {
   return string.split('')
 }
 
-export function isAcceptableCharacter(character, maskingCharacter) {
-  if (typeof character !== 'string') {
-    return null
-  }
-
+export function isAcceptableCharacter(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.numeric:
-      return !isNaN(character)
+      return isNumeric(character)
+
+    case maskingCharactersEnums.uppercase:
+    case maskingCharactersEnums.lowercase:
+    case maskingCharactersEnums.alphabetic:
+      return isAlphabetic(character)
+
+    case maskingCharactersEnums.alphanumeric:
+      return isNumeric(character) || isAlphabetic(character)
+
+    default:
+      return true
   }
+}
+
+export function potentiallyTransformCharacter(character = '', maskingCharacter) {
+  switch(maskingCharacter) {
+    case maskingCharactersEnums.uppercase:
+      return character.toUpperCase()
+
+    case maskingCharactersEnums.lowercase:
+      return character.toLowerCase()
+
+    default:
+      return character
+  }
+}
+
+function isNumeric(character) {
+  return !isNaN(character)
+}
+
+function isAlphabetic(character) {
+  return /^[a-zA-Z]+$/.test(character)
 }
