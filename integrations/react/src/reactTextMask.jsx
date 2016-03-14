@@ -1,12 +1,11 @@
 import React, {PropTypes} from 'react'
-import {getSelection, setSelection} from 'react/lib/ReactInputSelection'
 import {
   conformToMask,
   convertMaskToPlaceholder,
   adjustCaretPosition
 } from '../../../core/src/index.js'
 
-export default React.createClass({
+export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired
   },
@@ -38,7 +37,7 @@ export default React.createClass({
         currentCaretPosition: this.state.currentCaretPosition
       })
 
-      setSelection(this.refs.inputElement, {start: caretPosition, end: caretPosition})
+      this.refs.inputElement.setSelectionRange(caretPosition, caretPosition, 'none')
     }
   },
 
@@ -52,7 +51,7 @@ export default React.createClass({
     return (
       <input
         {...props}
-        type="text"
+        type={props.type || 'text'}
         onChange={onChange}
         value={value}
         placeholder={placeholder}
@@ -65,7 +64,7 @@ export default React.createClass({
     const state = {
       conformToMaskResults: conformToMask(event.target.value, this.props.mask),
       previousValue: this.state.conformToMaskResults.output || this.state.previousValue,
-      currentCaretPosition: getSelection(this.refs.inputElement).start
+      currentCaretPosition: this.refs.inputElement.selectionStart
     }
 
     this.setState(state)
@@ -75,3 +74,11 @@ export default React.createClass({
     }
   },
 })
+
+export default MaskedInput
+
+export {
+  conformToMask,
+  convertMaskToPlaceholder,
+  adjustCaretPosition
+} from '../../../core/src/index.js'

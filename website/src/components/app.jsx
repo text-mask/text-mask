@@ -7,6 +7,7 @@ import classnames from 'classnames'
 import NavBar from './navBar.jsx'
 import ReactGettingStarted from './react.gettingStarted.jsx'
 import CoreGettingStarted from './core.gettingStarted.jsx'
+import VanillaGettingStarted from './vanilla.gettingStarted.jsx'
 import {Router, Route, IndexRoute, Link, hashHistory} from 'react-router'
 
 const App = React.createClass({
@@ -64,6 +65,7 @@ const AppWithRoutes = React.createClass({
           <IndexRoute component={Homepage}/>
           <Route path="/react" component={ReactGettingStarted}/>
           <Route path="/core" component={CoreGettingStarted}/>
+          <Route path="/vanilla" component={VanillaGettingStarted}/>
         </Route>
       </Router>
     )

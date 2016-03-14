@@ -1,5 +1,5 @@
 import React from 'react'
-import MaskedTextInput from '../../../integrations/react/src/MaskedTextInput.jsx'
+import MaskedInput from '../../../integrations/react/src/reactTextMask.jsx'
 import classnames from 'classnames'
 import demoStyles from './demo.scss'
 import {maskingCharactersWithDescription, maskingCharacters} from '../../../core/src/constants.js'
@@ -54,8 +54,8 @@ const Demo = React.createClass({
                 htmlFor="maskedInput">Masked input</label>
 
               <div className="col-sm-9">
-                <MaskedTextInput
-                  ref="maskedTextInput"
+                <MaskedInput
+                  ref="maskedInput"
                   mask={mask}
                   className="form-control"
                   id="maskedInput"
@@ -133,7 +133,7 @@ const Demo = React.createClass({
   onSelectMask({target: {value: selectValue}}) {
     if (selectValue !== 'custom'){
       this.changeMask(this.findChoice('value', selectValue).mask)
-      this.refs.maskedTextInput.refs.inputElement.focus()
+      this.refs.maskedInput.refs.inputElement.focus()
     } else {
       this.refs.mask.value = ''
       this.refs.mask.focus()

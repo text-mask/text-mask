@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import sinon from 'sinon'
 import ReactTestUtils from 'react-addons-test-utils'
-import MaskedTextInput from '../src/MaskedTextInput.jsx'
+import MaskedInput from '../src/reactTextMask.jsx'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from '../../../core/test/testParameters.js'
 
@@ -11,30 +11,30 @@ import _ from 'lodash'
 
 const expect = chai.expect
 
-describe('MaskedTextInput', () => {
+describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
     expect(() => ReactTestUtils.renderIntoDocument(
-      <MaskedTextInput mask="111-111"/>
+      <MaskedInput mask="111-111"/>
     )).not.to.throw()
   })
 
   it('renders a single input element', () => {
-    const maskedTextInput = ReactTestUtils.renderIntoDocument(
-      <MaskedTextInput mask="111-111"/>
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput mask="111-111"/>
     )
 
     expect(
-      () => ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+      () => ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     ).not.to.throw()
   })
 
   describe('input change', () => {
     it('calls user provided `onChange` if it exists', () => {
       const userOnChange = sinon.spy()
-      const maskedTextInput = ReactTestUtils.renderIntoDocument(
-        <MaskedTextInput mask="111-111" onChange={userOnChange}/>
+      const maskedInput = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="111-111" onChange={userOnChange}/>
       )
-      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
       input.value = '2___-___'
       input.selectionStart = 1
@@ -46,30 +46,30 @@ describe('MaskedTextInput', () => {
     })
 
     it('adjusts the position of the caret correctly when it updates', () => {
-      const maskedTextInput = ReactTestUtils.renderIntoDocument(
-        <MaskedTextInput mask="(11)"/>
+      const maskedInput = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="(11)"/>
       )
-      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
       input.value = '(2_)'
       input.selectionStart = 1
       input.selectionEnd = 1
 
-      maskedTextInput.refs.inputElement.focus()
+      maskedInput.refs.inputElement.focus()
 
       ReactTestUtils.Simulate.change(input)
 
       expect([
-        maskedTextInput.refs.inputElement.selectionStart,
-        maskedTextInput.refs.inputElement.selectionEnd
+        maskedInput.refs.inputElement.selectionStart,
+        maskedInput.refs.inputElement.selectionEnd
       ]).to.deep.equal([2,2])
     })
 
     it('does not attempt to update the position of the caret when the input is not focused', () => {
-      const maskedTextInput = ReactTestUtils.renderIntoDocument(
-        <MaskedTextInput mask="(11)"/>
+      const maskedInput = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="(11)"/>
       )
-      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
       input.value = '(2_)'
       input.selectionStart = 1
@@ -78,16 +78,16 @@ describe('MaskedTextInput', () => {
       ReactTestUtils.Simulate.change(input)
 
       expect([
-        maskedTextInput.refs.inputElement.selectionStart,
-        maskedTextInput.refs.inputElement.selectionEnd
+        maskedInput.refs.inputElement.selectionStart,
+        maskedInput.refs.inputElement.selectionEnd
       ]).to.deep.equal([1, 1])
     })
   })
 
   it('never sets the value of the input to empty mask', () => {
-    const maskedTextInput = ReactTestUtils.renderIntoDocument(<MaskedTextInput mask="(11)"/>)
+    const maskedInput = ReactTestUtils.renderIntoDocument(<MaskedInput mask="(11)"/>)
 
-    const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
     input.value = '(__)'
 
@@ -114,17 +114,17 @@ describe('MaskedTextInput', () => {
         description: JSON.stringify(test),
 
         body: () => {
-          const maskedTextInput = ReactTestUtils.renderIntoDocument(
-            <MaskedTextInput mask={test.input.mask} />
+          const maskedInput = ReactTestUtils.renderIntoDocument(
+            <MaskedInput mask={test.input.mask} />
           )
 
-          const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedTextInput, 'input')
+          const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
           input.value = test.input.startingInputFieldValue
           input.selectionStart = 0
           input.selectionEnd = 0
 
-          maskedTextInput.refs.inputElement.focus()
+          maskedInput.refs.inputElement.focus()
 
           ReactTestUtils.Simulate.change(input)
 
@@ -132,14 +132,14 @@ describe('MaskedTextInput', () => {
           input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-          maskedTextInput.refs.inputElement.focus()
+          maskedInput.refs.inputElement.focus()
 
           ReactTestUtils.Simulate.change(input)
 
           expect([
             input.value,
-            maskedTextInput.refs.inputElement.selectionStart,
-            maskedTextInput.refs.inputElement.selectionEnd
+            maskedInput.refs.inputElement.selectionStart,
+            maskedInput.refs.inputElement.selectionEnd
           ]).to.deep.equal([
             test.output.conformedInputFieldValue,
             test.output.adjustedCaretPosition,

@@ -1,0 +1,12 @@
+{
+  "name": "@msafi/vanilla-text-mask",
+  "version": "0.3.8",
+  "description": "JavaScript function that makes input HTML element accept mask pattern",
+  "main": "dist/textMask.js",
+  "author": "M.K. Safi <msafi@msafi.com>",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/msafi/text-mask/issues"
+  },
+  "homepage": "https://github.com/msafi/text-mask/integrations/vanilla/#readme"
+}

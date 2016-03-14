@@ -1,4 +1,4 @@
-# Text Mask for React
+# React Input Mask
 
 ## Getting started
 
@@ -12,20 +12,20 @@ Then, require it and use it.
 
 ```js
 var React = require('react')
-var MaskedTextInput = require('@msafi/react-text-mask')
+var MaskedInput = require('@msafi/react-text-mask')
 
 var MyComponent = React.createClass({
   render() {
     return (
       <div>
-        <MaskedTextInput mask="(111) 111-1111" />
+        <MaskedInput mask="(111) 111-1111" />
       </div>
     )
   }
 })
 ```
 
-`<MaskedTextInput/>` is fully compatible with `<input type="text"/>` element. So, you can
+`<MaskedInput/>` is fully compatible with `<input/>` element. So, you can
 pass to it CSS classes, a placeholder attribute, or whatever.
 
 For example, the following works:

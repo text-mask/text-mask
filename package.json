@@ -2,18 +2,24 @@
   "name": "@msafi/text-mask",
   "version": "0.0.0",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "npm run core:build && npm run integrations:react:build && npm run website:build",
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
-    "test": "npm run core:test && npm run integrations:react:test",
+    "test": "npm run core:test && npm run react:test && npm run vanilla:test",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive",
-    "integrations:react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive --watch",
-    "integrations:react:test": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive",
-    "integrations:react:build": "./node_modules/.bin/webpack -p --config integrations/react/webpack.buildReactIntegration.js"
+    "react:watch": "./node_modules/.bin/webpack --watch --config integrations/react/webpack.buildReactIntegration.js",
+    "react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive --watch",
+    "react:test": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive",
+    "react:build": "./node_modules/.bin/webpack -p --config integrations/react/webpack.buildReactIntegration.js",
+    "react:publish": "sh integrations/react/publish.sh",
+    "vanilla:watch": "./node_modules/.bin/webpack --watch --config integrations/vanilla/webpack.buildVanillaIntegration.js",
+    "vanilla:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./integrations/vanilla/test/setup.js --recursive --watch",
+    "vanilla:test": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./integrations/react/test/setup.js --recursive",
+    "vanilla:build": "./node_modules/.bin/webpack -p --config integrations/vanilla/webpack.buildVanillaIntegration.js",
+    "vanilla:publish": "sh integrations/vanilla/publish.sh"
   },
   "repository": {
     "type": "git",
@@ -54,8 +60,5 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
-  },
-  "dependencies": {
-    "diff": "^2.2.1"
   }
 }

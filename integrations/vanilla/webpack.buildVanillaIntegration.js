@@ -5,11 +5,11 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-  entry: path.join(__dirname, './src/reactTextMask.jsx'),
+  entry: path.join(__dirname, './src/vanillaTextMask.js'),
 
   module: {
     loaders: [
-      {test: /\.jsx?$/, loaders: ['babel-loader']}
+      {test: /\.js$/, loaders: ['babel-loader']}
     ]
   },
 
@@ -21,7 +21,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.jsx', '.js']
+    extensions: ['', '.js']
   },
 
   plugins: [
@@ -38,22 +38,5 @@ module.exports = {
     new StatsPlugin('stats.json', {
       chunkModules: true
     })
-  ],
-
-  externals: [
-    {
-      "react": {
-        root: "React",
-        commonjs2: "react",
-        commonjs: "react",
-        amd: "react"
-      },
-      "react/lib/ReactInputSelection": {
-        root: "react/lib/ReactInputSelection",
-        commonjs2: "react/lib/ReactInputSelection",
-        commonjs: "react/lib/ReactInputSelection",
-        amd: "react/lib/ReactInputSelection"
-      }
-    }
   ]
 }
