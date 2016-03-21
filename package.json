@@ -21,7 +21,7 @@
     "vanilla:test": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./integrations/react/test/setup.js --recursive",
     "vanilla:build": "./node_modules/.bin/webpack -p --config integrations/vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:publish": "sh integrations/vanilla/publish.sh",
-    "git:done": "git checkout gh-pages && git merge master && git checkout master && git push -u master gh-pages"
+    "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master && git push origin gh-pages"
   },
   "repository": {
     "type": "git",
