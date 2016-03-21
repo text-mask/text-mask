@@ -10,6 +10,7 @@
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive",
+    "core:publish": "sh core/publish.sh",
     "react:watch": "./node_modules/.bin/webpack --watch --config integrations/react/webpack.buildReactIntegration.js",
     "react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive --watch",
     "react:test": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./integrations/react/test/setup.js --recursive",
