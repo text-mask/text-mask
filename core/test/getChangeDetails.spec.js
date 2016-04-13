@@ -1,4 +1,3 @@
-import {diffChars} from 'diff'
 import chai from 'chai'
 import getChangeDetails from '../src/getChangeDetails.js'
 import dynamicTests from 'mocha-dynamic-tests'

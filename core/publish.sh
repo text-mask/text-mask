@@ -9,6 +9,8 @@ fi
 
 npm run core:build
 
+npm run core:verify
+
 cd ./core
 
 npm version $version

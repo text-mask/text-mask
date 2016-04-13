@@ -1,8 +1,14 @@
+import packageJson from '../package.json'
+import requireForTest from '../../../common/requireForTest.js'
 import chai from 'chai'
-import maskInput from '../src/vanillaTextMask.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from '../../../core/test/testParameters.js'
 import _ from 'lodash'
+
+const maskInput = requireForTest(
+  __dirname + '/../src/vanillaTextMask.js',
+  require(`../${packageJson.main}`).default
+)
 
 const expect = chai.expect
 

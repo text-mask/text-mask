@@ -1,13 +1,17 @@
+import packageJson from '../package.json'
+import requireForTest from '../../../common/requireForTest.js'
 import chai from 'chai'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import sinon from 'sinon'
+import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
-import MaskedInput from '../src/reactTextMask.jsx'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from '../../../core/test/testParameters.js'
 
-import _ from 'lodash'
+const MaskedInput = requireForTest(
+  __dirname + '/../src/reactTextMask.jsx',
+  require(`../${packageJson.main}`).default
+)
 
 const expect = chai.expect
 
