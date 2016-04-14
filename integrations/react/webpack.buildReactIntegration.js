@@ -1,5 +1,3 @@
-'use strict';
-
 var StatsPlugin = require('stats-webpack-plugin')
 var webpack = require('webpack')
 var path = require('path')
@@ -42,17 +40,17 @@ module.exports = {
 
   externals: [
     {
-      "react": {
-        root: "React",
-        commonjs2: "react",
-        commonjs: "react",
-        amd: "react"
+      'react': {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
       },
-      "react/lib/ReactInputSelection": {
-        root: "react/lib/ReactInputSelection",
-        commonjs2: "react/lib/ReactInputSelection",
-        commonjs: "react/lib/ReactInputSelection",
-        amd: "react/lib/ReactInputSelection"
+      'react/lib/ReactInputSelection': {
+        root: 'react/lib/ReactInputSelection',
+        commonjs2: 'react/lib/ReactInputSelection',
+        commonjs: 'react/lib/ReactInputSelection',
+        amd: 'react/lib/ReactInputSelection'
       }
     }
   ]

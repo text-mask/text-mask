@@ -9,6 +9,8 @@ fi
 
 npm run react:build
 
+npm run react:verify
+
 cd ./integrations/react
 
 npm version $version

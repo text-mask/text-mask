@@ -1,8 +1,14 @@
+import packageJson from '../package.json'
+import requireForTest from '../../common/requireForTest.js'
 import chai from 'chai'
-import adjustCaretPosition from '../src/adjustCaretPosition.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from './testParameters.js'
 import _ from 'lodash'
+
+const adjustCaretPosition = requireForTest(
+  __dirname + '/../src/adjustCaretPosition.js',
+  require(`../${packageJson.main}`).adjustCaretPosition
+)
 
 const expect = chai.expect
 
@@ -109,10 +115,10 @@ describe('adjustCaretPosition', () => {
       description: `for previousInput: ${
         JSON.stringify(test.input)
         } and conformToMaskResults: ${JSON.stringify({
-        input: test.input.userModifiedInputFieldValue,
-        output: test.output.conformedInputFieldValue,
-        mask: test.input.mask
-      })}, it knows to adjust the caret to '${
+          input: test.input.userModifiedInputFieldValue,
+          output: test.output.conformedInputFieldValue,
+          mask: test.input.mask
+        })}, it knows to adjust the caret to '${
         test.output.adjustedCaretPosition
       }'`,
 

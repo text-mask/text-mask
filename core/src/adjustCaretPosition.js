@@ -29,11 +29,9 @@ export default function adjustCaretPosition({
 
   // is addition...
   if (isDeletion === false) {
-
     // if previous input and conformToMaskResults.output are exactly the same, it means
     // adjustCaretPosition was called after conformToMask rejected a character
     if (previousInput === conformToMaskResults.output) {
-
       // in that case, revert movement of the caret
       return currentCaretPosition - 1
 
@@ -68,11 +66,9 @@ export default function adjustCaretPosition({
 
   // is deletion...
   } else if (isDeletion === true) {
-
     // if previous input and conformed string are the same, it means adjustCaretPosition is called
     // because the user is pressing the backspace to move the caret back
     if (previousInput === conformToMaskResults.output) {
-
       // if the caret is at a placeholder character position, it's okay to keep it where it is
       if (placeholder[currentCaretPosition] === placeholderCharacter) {
         return currentCaretPosition

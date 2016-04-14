@@ -9,6 +9,8 @@ fi
 
 npm run vanilla:build
 
+npm run vanilla:verify
+
 cd ./integrations/vanilla
 
 npm version $version
