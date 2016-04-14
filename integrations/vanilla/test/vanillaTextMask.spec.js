@@ -38,7 +38,7 @@ describe('inputMask', () => {
       expect([
         inputElement.selectionStart,
         inputElement.selectionEnd
-      ]).to.deep.equal([2,2])
+      ]).to.deep.equal([2, 2])
     })
 
     it('does not attempt to update the position of the caret when the input is not focused', () => {

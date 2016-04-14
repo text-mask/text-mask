@@ -12,7 +12,7 @@ export function convertMaskToPlaceholder(mask = '') {
   }).join('')
 }
 
-export function getDelimiters(mask ='') {
+export function getDelimiters(mask = '') {
   return tokenize(mask).reduce((accumulator, character) => {
     if (maskingCharacters.indexOf(character) === -1 && accumulator.indexOf(character) === -1) {
       accumulator.push(character)

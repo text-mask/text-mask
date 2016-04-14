@@ -1,0 +1,3 @@
+**/dist/*.js
+**/static/*.js
+node_modules/

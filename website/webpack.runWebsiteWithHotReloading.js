@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 var coreLoaders = require('../core/webpack.buildCore.js').module.loaders
 
 module.exports = {
@@ -34,11 +34,11 @@ module.exports = {
       ]
     }, {
       test: /\.md/,
-      loaders: ["html-loader", "markdown-loader"]
+      loaders: ['html-loader', 'markdown-loader']
     }, {
       // Process website/src/styles.scss as a regular Sass file
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"],
+      loaders: ['style', 'css', 'sass'],
       include: path.join(__dirname, '../website/src/styles.scss')
     }, {
       // Process all Sass files other than website/src/styles.scss as CSS Modules
@@ -53,4 +53,4 @@ module.exports = {
       loader: 'file'
     }].concat(coreLoaders)
   }
-};
+}

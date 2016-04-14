@@ -1,7 +1,5 @@
-'use strict';
-
-var StatsPlugin = require('stats-webpack-plugin');
-var webpack = require('webpack');
+var StatsPlugin = require('stats-webpack-plugin')
+var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {

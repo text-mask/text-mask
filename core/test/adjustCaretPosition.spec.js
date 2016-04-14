@@ -115,10 +115,10 @@ describe('adjustCaretPosition', () => {
       description: `for previousInput: ${
         JSON.stringify(test.input)
         } and conformToMaskResults: ${JSON.stringify({
-        input: test.input.userModifiedInputFieldValue,
-        output: test.output.conformedInputFieldValue,
-        mask: test.input.mask
-      })}, it knows to adjust the caret to '${
+          input: test.input.userModifiedInputFieldValue,
+          output: test.output.conformedInputFieldValue,
+          mask: test.input.mask
+        })}, it knows to adjust the caret to '${
         test.output.adjustedCaretPosition
       }'`,
 
