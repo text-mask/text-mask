@@ -6,7 +6,10 @@ module.exports = {
   entry: path.join(__dirname, './src/angular2TextMask.ts'),
 
   module: {
-    loaders: [{test: /\.ts/, loaders: ['ts-loader'], exclude: /node_modules/}]
+    loaders: [
+      {test: /\.ts/, loaders: ['ts-loader']},
+      {test: /\.js/, loaders: ['babel-loader']}
+    ]
   },
 
   output: {

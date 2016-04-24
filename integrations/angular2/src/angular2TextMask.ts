@@ -55,3 +55,9 @@ export default class MaskedInput {
     this.inputElement.setSelectionRange(caretPosition, caretPosition)
   }
 }
+
+export {
+  conformToMask,
+  convertMaskToPlaceholder,
+  adjustCaretPosition
+} from '../../../core/src/index'
