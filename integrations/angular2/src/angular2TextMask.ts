@@ -4,7 +4,7 @@ import {
   adjustCaretPosition
 } from '../../../core/src/index'
 
-import {Directive, ElementRef, Input, HostListener} from 'angular2/core';
+import {Directive, ElementRef, Input, HostListener} from 'angular2/core'
 
 @Directive({
   selector: 'input[text-mask]'
@@ -12,31 +12,26 @@ import {Directive, ElementRef, Input, HostListener} from 'angular2/core';
 
 export default class MaskedInput {
   private inputElement: HTMLInputElement
-  private previousValue: string = ''
-  private conformToMaskResults: {
-    output: string
-  } = {output: ''}
+  private previousValue = ''
+  private conformToMaskResults: {output: ''}
   private currentCaretPosition: number = null
 
-  @Input('text-mask') textMaskConfig: {
-    mask: string,
-    placeholder: string
-  }
+  @Input('text-mask') textMaskConfig = {mask: ''}
 
   constructor(el: ElementRef) {
     this.inputElement = el.nativeElement
   }
 
   ngOnInit() {
-    this.onChange('')
+    this.onChange()
   }
 
   ngOnChanges() {
-    this.onChange('')
+    this.onChange()
   }
 
-  @HostListener("input", ["$event.target.value"])
-  onChange(updatedValue: string) {
+  @HostListener('input', ['$event.target.value'])
+  onChange(updatedValue = '') {
     this.previousValue = this.conformToMaskResults.output || this.previousValue
     this.conformToMaskResults = conformToMask(updatedValue, this.textMaskConfig.mask)
     this.currentCaretPosition = this.inputElement.selectionStart
@@ -46,6 +41,7 @@ export default class MaskedInput {
     this.inputElement.value = (this.conformToMaskResults.output !== this.inputElement.placeholder) ?
       this.conformToMaskResults.output :
       ''
+
     const caretPosition = adjustCaretPosition({
       previousInput: this.previousValue,
       conformToMaskResults: this.conformToMaskResults,
