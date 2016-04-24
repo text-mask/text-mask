@@ -30,6 +30,7 @@
     "vanilla:verify": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./common/domSetup.js --recursive --verify",
 
     "angular2:example": "./node_modules/.bin/webpack-dev-server --content-base integrations/angular2/example --config integrations/angular2/example/webpack.buildAngular2Example.js",
+    "angular2:watch": "./node_modules/.bin/webpack --watch --config integrations/angular2/webpack.buildAngular2Integration.js",
 
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master && git push origin gh-pages",
     "ci": "npm run test && npm run core:verify && npm run react:verify && npm run vanilla:verify",
@@ -79,7 +80,7 @@
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1",
 
-    "angular2": "^2.0.0-beta.13",
+    "angular2": "^2.0.0-beta.15",
     "es6-shim": "^0.35.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
