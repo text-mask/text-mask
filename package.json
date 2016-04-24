@@ -6,24 +6,31 @@
   "scripts": {
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
+
     "test": "npm run lint && npm run core:test && npm run react:test && npm run vanilla:test",
+
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive",
     "core:publish": "sh core/publish.sh",
     "core:verify": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --verify",
+
     "react:watch": "./node_modules/.bin/webpack --watch --config integrations/react/webpack.buildReactIntegration.js",
     "react:tdd": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./common/domSetup.js --recursive --watch",
     "react:test": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./common/domSetup.js --recursive",
     "react:build": "./node_modules/.bin/webpack -p --config integrations/react/webpack.buildReactIntegration.js",
     "react:publish": "sh integrations/react/publish.sh",
     "react:verify": "./node_modules/.bin/mocha --compilers jsx:babel-core/register integrations/react/test --require ./common/domSetup.js --recursive --verify",
+
     "vanilla:watch": "./node_modules/.bin/webpack --watch --config integrations/vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./common/domSetup.js --recursive --watch",
     "vanilla:test": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./common/domSetup.js --recursive",
     "vanilla:build": "./node_modules/.bin/webpack -p --config integrations/vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:publish": "sh integrations/vanilla/publish.sh",
     "vanilla:verify": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/vanilla/test --require ./common/domSetup.js --recursive --verify",
+
+    "angular2:example": "./node_modules/.bin/webpack-dev-server --content-base integrations/angular2/example --config integrations/angular2/example/webpack.buildAngular2Example.js",
+
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master && git push origin gh-pages",
     "ci": "npm run test && npm run core:verify && npm run react:verify && npm run vanilla:verify",
     "lint": "./node_modules/.bin/eslint ."
@@ -70,6 +77,16 @@
     "testdom": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+
+    "angular2": "^2.0.0-beta.13",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "^0.6.6",
+    "ts-loader": "^0.8.1",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12",
+    "es6-promise": "^3.0.2"
   }
 }
