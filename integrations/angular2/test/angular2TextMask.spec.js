@@ -1,0 +1,99 @@
+import 'reflect-metadata';
+
+import packageJson from '../package.json'
+import requireForTest from '../../../common/requireForTest.js'
+import chai from 'chai'
+import _ from 'lodash'
+import dynamicTests from 'mocha-dynamic-tests'
+import testParameters from '../../../core/test/testParameters.js'
+
+const MaskedInput = requireForTest(
+  __dirname + '/../dist/textMask.js',
+  require(`../${packageJson.main}`)
+).default
+
+const expect = chai.expect
+
+describe('MaskedInput', () => {
+  let inputElement
+
+  beforeEach(() => {
+    inputElement = document.createElement('input')
+  })
+
+  it('does not throw when instantiated', () => {
+    expect(() => {
+      new MaskedInput({nativeElement: inputElement})
+    }).not.to.throw();
+  })
+
+  describe('input change', () => {
+    it('adjusts the position of the caret correctly when it updates', () => {
+      const maskedInput = new MaskedInput({nativeElement: inputElement})
+
+      maskedInput.textMaskConfig.mask = '(111)'
+
+      inputElement.selectionStart = 0
+      inputElement.selectionEnd = 0
+
+      maskedInput.onChange('2')
+
+      expect([
+        inputElement.value,
+        inputElement.selectionStart,
+        inputElement.selectionEnd
+      ]).to.deep.equal(['(2__)', 2, 2])
+    })
+  })
+
+  it('never sets the value of the input to empty mask', () => {
+    const maskedInput = new MaskedInput({nativeElement: inputElement})
+
+    maskedInput.textMaskConfig.mask = '(11)'
+
+    maskedInput.onChange('(__)')
+
+    expect(inputElement.value).to.equal('')
+  })
+
+  dynamicTests(
+    _.filter(
+      testParameters,
+      (testParameter) => {
+        return !(
+          _.isArray(testParameter.skips) && (
+            _.includes(testParameter.skips, 'adjustCaretPosition') ||
+            _.includes(testParameter.skips, 'integrations:react')
+          )
+        )
+      }
+    ),
+
+    (test) => {
+      return {
+        description: JSON.stringify(test),
+
+        body: () => {
+          const maskedInput = new MaskedInput({nativeElement: inputElement})
+
+          maskedInput.textMaskConfig.mask = test.input.mask
+
+          inputElement.value = test.input.startingInputFieldValue
+
+          maskedInput.onChange(test.input.userModifiedInputFieldValue)
+
+          inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+          inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
+          expect([
+            inputElement.value,
+            inputElement.selectionStart,
+          ]).to.deep.equal([
+            test.output.conformedInputFieldValue,
+            test.output.adjustedCaretPosition,
+          ])
+        }
+      }
+    }
+  )
+})

@@ -9,11 +9,10 @@ import {Directive, ElementRef, Input, HostListener} from 'angular2/core'
 @Directive({
   selector: 'input[text-mask]'
 })
-
 export default class MaskedInput {
   private inputElement: HTMLInputElement
   private previousValue = ''
-  private conformToMaskResults: {output: ''}
+  private conformToMaskResults = {output: ''}
   private currentCaretPosition: number = null
 
   @Input('text-mask') textMaskConfig = {mask: ''}
@@ -32,7 +31,11 @@ export default class MaskedInput {
 
   @HostListener('input', ['$event.target.value'])
   onChange(updatedValue = '') {
-    this.previousValue = this.conformToMaskResults.output || this.previousValue
+    this.previousValue = (
+      this.conformToMaskResults.output ||
+      this.previousValue ||
+      this.inputElement.value
+    )
     this.conformToMaskResults = conformToMask(updatedValue, this.textMaskConfig.mask)
     this.currentCaretPosition = this.inputElement.selectionStart
 
