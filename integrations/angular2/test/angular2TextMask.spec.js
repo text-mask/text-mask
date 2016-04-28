@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+import 'reflect-metadata'
 
 import packageJson from '../package.json'
 import requireForTest from '../../../common/requireForTest.js'
@@ -23,8 +23,10 @@ describe('MaskedInput', () => {
 
   it('does not throw when instantiated', () => {
     expect(() => {
-      new MaskedInput({nativeElement: inputElement})
-    }).not.to.throw();
+      const maskedInput = new MaskedInput({nativeElement: inputElement})
+
+      return maskedInput
+    }).not.to.throw()
   })
 
   describe('input change', () => {

@@ -16,7 +16,8 @@
     "navigator": false,
     "window": false,
     "it": true,
-    "describe": true
+    "describe": true,
+    "beforeEach": true
   },
   "plugins": [
     "standard",

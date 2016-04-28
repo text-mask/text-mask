@@ -1,5 +1,5 @@
 import packageJson from '../package.json'
-import requireForTest from '../../../common/requireForTest.js'
+import isVerify from '../../../common/isVerify.js'
 import chai from 'chai'
 import React from 'react'
 import sinon from 'sinon'
@@ -8,10 +8,9 @@ import ReactTestUtils from 'react-addons-test-utils'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from '../../../core/test/testParameters.js'
 
-const MaskedInput = requireForTest(
-  __dirname + '/../src/reactTextMask.jsx',
-  require(`../${packageJson.main}`)
-).default
+const MaskedInput = (isVerify()) ?
+  require(`../${packageJson.main}`).default :
+  require('../src/reactTextMask.jsx').default
 
 const expect = chai.expect
 

@@ -7,6 +7,7 @@
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "npm run lint && npm run core:test && npm run react:test && npm run vanilla:test",
+    "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive",
@@ -28,7 +29,7 @@
     "angular2:watch": "./node_modules/.bin/webpack --watch --config integrations/angular2/webpack.buildAngular2Integration.js",
     "angular2:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register integrations/angular2/test --require ./common/domSetup.js --recursive --watch",
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master && git push origin gh-pages",
-    "ci": "npm run test && npm run core:verify && npm run react:verify && npm run vanilla:verify",
+    "ci": "npm run test && npm run verify",
     "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
