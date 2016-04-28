@@ -1,16 +1,15 @@
 import 'reflect-metadata'
 
 import packageJson from '../package.json'
-import requireForTest from '../../../common/requireForTest.js'
+import isVerify from '../../../common/isVerify.js'
 import chai from 'chai'
 import _ from 'lodash'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters from '../../../common/testParameters.js'
 
-const MaskedInput = requireForTest(
-  __dirname + '/../dist/textMask.js',
-  require(`../${packageJson.main}`)
-).default
+const MaskedInput = (isVerify()) ?
+  require(`../${packageJson.main}`).default :
+  require('../dist/textMask.js').default
 
 const expect = chai.expect
 
