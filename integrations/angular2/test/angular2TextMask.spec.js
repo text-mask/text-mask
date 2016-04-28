@@ -78,12 +78,19 @@ describe('MaskedInput', () => {
 
           maskedInput.textMaskConfig.mask = test.input.mask
 
-          inputElement.value = test.input.startingInputFieldValue
+          maskedInput.previousValue = test.input.startingInputFieldValue
 
-          maskedInput.onChange(test.input.userModifiedInputFieldValue)
+          // It's impossible to set selectionStart and selectionEnd to a value
+          // that is shorter than the than the string in `value`. That's why this
+          // ensures that the string in `value` is long enough. It adds a random string to it
+          // to ensure not fool the test assertion which actually expects the correct
+          // result in `value`
+          inputElement.value = test.input.userModifiedInputFieldValue + 'HAHAHAHAHA'
 
           inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
+          maskedInput.onChange(test.input.userModifiedInputFieldValue)
 
           expect([
             inputElement.value,

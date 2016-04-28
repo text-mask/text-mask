@@ -33,17 +33,20 @@ export default class MaskedInput {
   onChange(updatedValue = '') {
     this.previousValue = (
       this.conformToMaskResults.output ||
-      this.previousValue ||
-      this.inputElement.value
+      this.previousValue
     )
+
     this.conformToMaskResults = conformToMask(updatedValue, this.textMaskConfig.mask)
     this.currentCaretPosition = this.inputElement.selectionStart
 
-    this.inputElement.placeholder = this.inputElement.placeholder ||
+    this.inputElement.placeholder = (
+      this.inputElement.placeholder ||
       convertMaskToPlaceholder(this.textMaskConfig.mask)
-    this.inputElement.value = (this.conformToMaskResults.output !== this.inputElement.placeholder) ?
-      this.conformToMaskResults.output :
-      ''
+    )
+
+    this.inputElement.value = (
+      this.conformToMaskResults.output !== this.inputElement.placeholder
+    ) ? this.conformToMaskResults.output : ''
 
     const caretPosition = adjustCaretPosition({
       previousInput: this.previousValue,

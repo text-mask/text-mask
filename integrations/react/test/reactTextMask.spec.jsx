@@ -10,8 +10,8 @@ import testParameters from '../../../core/test/testParameters.js'
 
 const MaskedInput = requireForTest(
   __dirname + '/../src/reactTextMask.jsx',
-  require(`../${packageJson.main}`).default
-)
+  require(`../${packageJson.main}`)
+).default
 
 const expect = chai.expect
 
