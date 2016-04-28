@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from '../../../core/test/testParameters.js'
+import testParameters from '../../../common/testParameters.js'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :

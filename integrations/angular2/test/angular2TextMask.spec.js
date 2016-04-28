@@ -5,7 +5,7 @@ import requireForTest from '../../../common/requireForTest.js'
 import chai from 'chai'
 import _ from 'lodash'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from '../../../core/test/testParameters.js'
+import testParameters from '../../../common/testParameters.js'
 
 const MaskedInput = requireForTest(
   __dirname + '/../dist/textMask.js',

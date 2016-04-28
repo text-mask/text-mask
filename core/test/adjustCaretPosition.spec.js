@@ -2,7 +2,7 @@ import packageJson from '../package.json'
 import isVerify from '../../common/isVerify.js'
 import chai from 'chai'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from './testParameters.js'
+import testParameters from './../../common/testParameters.js'
 import _ from 'lodash'
 
 const adjustCaretPosition = (isVerify()) ?
