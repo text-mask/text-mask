@@ -1,14 +1,13 @@
 import packageJson from '../package.json'
-import requireForTest from '../../../common/requireForTest.js'
+import isVerify from '../../../common/isVerify.js'
 import chai from 'chai'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from '../../../core/test/testParameters.js'
+import testParameters from '../../../common/testParameters.js'
 import _ from 'lodash'
 
-const maskInput = requireForTest(
-  __dirname + '/../src/vanillaTextMask.js',
-  require(`../${packageJson.main}`).default
-)
+const maskInput = (isVerify()) ?
+  require(`../${packageJson.main}`).default :
+  require('../src/vanillaTextMask.js').default
 
 const expect = chai.expect
 

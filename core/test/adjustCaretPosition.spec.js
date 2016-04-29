@@ -1,14 +1,13 @@
 import packageJson from '../package.json'
-import requireForTest from '../../common/requireForTest.js'
+import isVerify from '../../common/isVerify.js'
 import chai from 'chai'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from './testParameters.js'
+import testParameters from './../../common/testParameters.js'
 import _ from 'lodash'
 
-const adjustCaretPosition = requireForTest(
-  __dirname + '/../src/adjustCaretPosition.js',
-  require(`../${packageJson.main}`).adjustCaretPosition
-)
+const adjustCaretPosition = (isVerify()) ?
+  require(`../${packageJson.main}`).adjustCaretPosition :
+  require('../src/adjustCaretPosition.js').default
 
 const expect = chai.expect
 

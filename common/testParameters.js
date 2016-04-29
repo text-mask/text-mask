@@ -893,6 +893,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(123) 3',
     adjustedCaretPosition: 7,
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',

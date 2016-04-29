@@ -11,5 +11,6 @@
   "homepage": "https://github.com/msafi/text-mask/integrations/react/#readme",
   "peerDependencies": {
     "react": "^0.14.6"
-  }
+  },
+  "keywords": ["react", "react-component", "text mask", "input mask", "string mask", "input formatting", "text formatting", "string formatting"]
 }

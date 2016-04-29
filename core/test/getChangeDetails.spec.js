@@ -1,7 +1,7 @@
 import chai from 'chai'
 import getChangeDetails from '../src/getChangeDetails.js'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from './testParameters.js'
+import testParameters from './../../common/testParameters.js'
 import _ from 'lodash'
 
 const expect = chai.expect

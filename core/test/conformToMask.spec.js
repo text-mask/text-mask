@@ -1,13 +1,12 @@
 import packageJson from '../package.json'
-import requireForTest from '../../common/requireForTest.js'
+import isVerify from '../../common/isVerify.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import chai from 'chai'
-import testParameters from './testParameters.js'
+import testParameters from './../../common/testParameters.js'
 
-const conformToMask = requireForTest(
-  __dirname + '/../src/conformToMask.js',
-  require(`../${packageJson.main}`).conformToMask
-)
+const conformToMask = (isVerify()) ?
+  require(`../${packageJson.main}`).conformToMask :
+  require('../src/conformToMask.js').default
 
 const expect = chai.expect
 

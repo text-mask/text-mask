@@ -5,7 +5,7 @@
 First, install it.
 
 ```
-npm i @msafi/vanilla-input-mask --save
+npm i @msafi/vanilla-text-mask --save
 ```
 
 Then, use it as follows:

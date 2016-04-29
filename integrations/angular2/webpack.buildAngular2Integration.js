@@ -3,11 +3,12 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-  entry: path.join(__dirname, './src/reactTextMask.jsx'),
+  entry: path.join(__dirname, './src/angular2TextMask.ts'),
 
   module: {
     loaders: [
-      {test: /\.jsx?$/, loaders: ['babel-loader']}
+      {test: /\.ts/, loaders: ['ts-loader']},
+      {test: /\.js/, loaders: ['babel-loader']}
     ]
   },
 
@@ -19,7 +20,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.jsx', '.js']
+    extensions: ['', '.ts', '.js']
   },
 
   plugins: [
@@ -39,13 +40,10 @@ module.exports = {
   ],
 
   externals: [
-    {
-      'react': {
-        root: 'React',
-        commonjs2: 'react',
-        commonjs: 'react',
-        amd: 'react'
-      }
-    }
+    'angular2/core',
+    'es6-shim',
+    'es6-promise',
+    'zone.js/dist/zone',
+    'reflect-metadata'
   ]
 }
