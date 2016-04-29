@@ -1,6 +1,5 @@
 import React from 'react'
 import reactReadMe from '../../../integrations/react/README.md'
-import classnames from 'classnames'
 
 const ReactGettingStarted = React.createClass({
   render() {

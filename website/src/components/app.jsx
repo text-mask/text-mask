@@ -8,6 +8,7 @@ import NavBar from './navBar.jsx'
 import ReactGettingStarted from './react.gettingStarted.jsx'
 import CoreGettingStarted from './core.gettingStarted.jsx'
 import VanillaGettingStarted from './vanilla.gettingStarted.jsx'
+import Angular2GettingStarted from './angular2.gettingStarted.jsx'
 import {Router, Route, IndexRoute, Link, hashHistory} from 'react-router'
 
 const App = React.createClass({
@@ -64,6 +65,7 @@ const AppWithRoutes = React.createClass({
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
           <Route path="/react" component={ReactGettingStarted}/>
+          <Route path="/angular2" component={Angular2GettingStarted}/>
           <Route path="/core" component={CoreGettingStarted}/>
           <Route path="/vanilla" component={VanillaGettingStarted}/>
         </Route>
