@@ -18,7 +18,7 @@ To see Text Mask in action, [checkout the website](https://msafi.github.io/text-
 ## Installation and usage
 
 * [React](https://msafi.github.io/text-mask/#/react)
-* [Angular2](https://msafi.github.io/text-mask/#/angular2)
+* [Angular 2](https://msafi.github.io/text-mask/#/angular2)
 * [Vanilla JS](https://msafi.github.io/text-mask/#/vanilla)
 
 ## Masking characters
