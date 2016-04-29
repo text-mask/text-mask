@@ -89,5 +89,6 @@
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1",
     "zone.js": "^0.6.6"
-  }
+  },
+  "keywords": ["text mask", "input mask", "string mask", "input formatting", "text formatting", "string formatting"]
 }
