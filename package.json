@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/msafi/text-mask#readme",
   "devDependencies": {
-    "angular2": "^2.0.0-beta.15",
+    "angular2": "^2.0.0-beta.17",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
@@ -76,7 +76,7 @@
     "react-hot-loader": "^1.3.0",
     "react-router": "^2.0.0",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "^5.0.0-beta.6",
     "sass-loader": "^3.1.2",
     "sinon": "^1.17.3",
     "stats-webpack-plugin": "^0.3.0",
@@ -91,5 +91,12 @@
     "webpack-dev-server": "^1.14.1",
     "zone.js": "^0.6.6"
   },
-  "keywords": ["text mask", "input mask", "string mask", "input formatting", "text formatting", "string formatting"]
+  "keywords": [
+    "text mask",
+    "input mask",
+    "string mask",
+    "input formatting",
+    "text formatting",
+    "string formatting"
+  ]
 }

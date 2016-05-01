@@ -13,11 +13,34 @@ const MaskedInput = (isVerify()) ?
 
 const expect = chai.expect
 
+const longString = new Array(100).join('#')
+
 describe('MaskedInput', () => {
   let inputElement
+  let ngModel
+  let modelValue = ''
 
   beforeEach(() => {
     inputElement = document.createElement('input')
+
+    // It's impossible to set `inputElement.selectionStart` and `inputElement.selectionEnd`
+    // to a value that is shorter than `inputElement.value`. And in our tests, we do not test
+    // `inputElement.value` directly. We test through `ngModel`, so `inputElement.value` stays
+    // empty in our tests, which prevents us from setting caret position.
+    //
+    // Setting `inputElement.value` to this long string allows us to set and test caret
+    // position adjustments
+    inputElement.value = longString
+
+    modelValue = ''
+
+    ngModel = {
+      valueAccessor: {
+        writeValue(_value) {
+          modelValue = _value
+        }
+      }
+    }
   })
 
   it('does not throw when instantiated', () => {
@@ -29,32 +52,45 @@ describe('MaskedInput', () => {
   })
 
   describe('input change', () => {
-    it('adjusts the position of the caret correctly when it updates', () => {
-      const maskedInput = new MaskedInput({nativeElement: inputElement})
+    it('updates the model correctly', () => {
+      const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
       maskedInput.textMaskConfig.mask = '(111)'
 
       inputElement.selectionStart = 0
       inputElement.selectionEnd = 0
 
-      maskedInput.onChange('2')
+      maskedInput.onInput('2')
+
+      expect(modelValue).to.equal('(2__)')
+    })
+
+    it('adjusts the position of the caret correctly when it updates', () => {
+      const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
+
+      maskedInput.textMaskConfig.mask = '(111)'
+
+      inputElement.selectionStart = 0
+      inputElement.selectionEnd = 0
+
+      maskedInput.onInput('2')
 
       expect([
-        inputElement.value,
         inputElement.selectionStart,
         inputElement.selectionEnd
-      ]).to.deep.equal(['(2__)', 2, 2])
+      ]).to.deep.equal([2, 2])
     })
   })
 
-  it('never sets the value of the input to empty mask', () => {
-    const maskedInput = new MaskedInput({nativeElement: inputElement})
+  it('never sets the value of the input to equal the placeholder', () => {
+    const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
+    maskedInput.placeholder = '(__)'
     maskedInput.textMaskConfig.mask = '(11)'
 
-    maskedInput.onChange('(__)')
+    maskedInput.onInput('(__)')
 
-    expect(inputElement.value).to.equal('')
+    expect(modelValue).to.equal('')
   })
 
   dynamicTests(
@@ -64,7 +100,7 @@ describe('MaskedInput', () => {
         return !(
           _.isArray(testParameter.skips) && (
             _.includes(testParameter.skips, 'adjustCaretPosition') ||
-            _.includes(testParameter.skips, 'integrations:react')
+            _.includes(testParameter.skips, 'integrations:angular2')
           )
         )
       }
@@ -75,26 +111,19 @@ describe('MaskedInput', () => {
         description: JSON.stringify(test),
 
         body: () => {
-          const maskedInput = new MaskedInput({nativeElement: inputElement})
+          const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
           maskedInput.textMaskConfig.mask = test.input.mask
 
           maskedInput.previousValue = test.input.startingInputFieldValue
 
-          // It's impossible to set selectionStart and selectionEnd to a value
-          // that is shorter than the than the string in `value`. That's why this
-          // ensures that the string in `value` is long enough. It adds a random string to it
-          // to ensure not fool the test assertion which actually expects the correct
-          // result in `value`
-          inputElement.value = test.input.userModifiedInputFieldValue + 'HAHAHAHAHA'
-
           inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-          maskedInput.onChange(test.input.userModifiedInputFieldValue)
+          maskedInput.onInput(test.input.userModifiedInputFieldValue)
 
           expect([
-            inputElement.value,
+            modelValue,
             inputElement.selectionStart,
           ]).to.deep.equal([
             test.output.conformedInputFieldValue,
