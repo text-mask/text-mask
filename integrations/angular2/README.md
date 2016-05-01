@@ -4,13 +4,13 @@
 
 First, install it.
 
-```
+```bash
 npm i @msafi/angular2-text-mask --save
 ```
 
 Then, require it and use it:
 
-```js
+```typescript
 import 'es6-shim';
 import 'es6-promise';
 import 'zone.js/dist/zone';

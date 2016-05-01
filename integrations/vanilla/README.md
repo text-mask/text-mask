@@ -4,7 +4,7 @@
 
 First, install it.
 
-```
+```bash
 npm i @msafi/vanilla-text-mask --save
 ```
 
@@ -27,4 +27,5 @@ Then, use it as follows:
     element: myInput,
     mask: phoneMask
   })
+</script>
 ```

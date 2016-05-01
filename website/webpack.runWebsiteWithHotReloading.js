@@ -34,7 +34,7 @@ module.exports = {
       ]
     }, {
       test: /\.md/,
-      loaders: ['html-loader', 'markdown-loader']
+      loaders: ['html-loader', 'highlight-loader', 'markdown-loader']
     }, {
       // Process website/src/styles.scss as a regular Sass file
       test: /\.scss$/,
