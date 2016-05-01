@@ -41,6 +41,7 @@ module.exports = {
 
   externals: [
     'angular2/core',
+    'angular2/common',
     'es6-shim',
     'es6-promise',
     'zone.js/dist/zone',

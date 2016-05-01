@@ -23,12 +23,13 @@ import MaskedInput from '@msafi/angular2-text-mask'
 @Component({
   selector: 'app',
   templateUrl: `
-    <input [text-mask]="{mask: '(111) 111 1111'}" type="text"/>
+    <input [textMask]="{mask: '(111) 111 1111'}" [(ngModel)]="myModel" type="text"/>
   `,
   directives: [MaskedInput]
 })
-
-export class AppComponent {}
+export class AppComponent {
+  private myModel = ''
+}
 
 bootstrap(AppComponent);
 ```

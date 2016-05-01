@@ -13,7 +13,6 @@ import MaskedInput from '../src/angular2TextMask'
   templateUrl: 'app.html',
   directives: [MaskedInput]
 })
-
 export class AppComponent {
   private mask = '(111) 111 1111'
   private myModel = ''
