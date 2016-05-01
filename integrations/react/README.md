@@ -47,3 +47,7 @@ For a working example, check out the source code of
 ## Source code
 
 The source code for Text Mask React integration is [available here](https://github.com/msafi/text-mask/tree/master/integrations/react).
+
+## License
+
+Public domain - [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/)

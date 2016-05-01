@@ -35,3 +35,7 @@ Character | Description
 
 For support or questions, please
 [file an issue](https://github.com/msafi/text-mask/issues).
+
+## License
+
+Public domain - [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/)
