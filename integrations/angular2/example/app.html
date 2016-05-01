@@ -8,7 +8,8 @@
           <div class="col-sm-10">
             <input
               id="1"
-              [text-mask]="{mask: mask}"
+              [(ngModel)]="stuff"
+              [textMask]="{mask: mask}"
               type="text"
               class="form-control"
             />
@@ -30,6 +31,10 @@
           </div>
         </div>
       </form>
+
+      <pre>
+        {{stuff}}
+      </pre>
     </div>
   </div>
 </div>

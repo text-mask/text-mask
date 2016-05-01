@@ -37,7 +37,7 @@ describe('MaskedInput', () => {
       inputElement.selectionStart = 0
       inputElement.selectionEnd = 0
 
-      maskedInput.onChange('2')
+      maskedInput.onInput('2')
 
       expect([
         inputElement.value,
@@ -52,7 +52,7 @@ describe('MaskedInput', () => {
 
     maskedInput.textMaskConfig.mask = '(11)'
 
-    maskedInput.onChange('(__)')
+    maskedInput.onInput('(__)')
 
     expect(inputElement.value).to.equal('')
   })
@@ -91,7 +91,7 @@ describe('MaskedInput', () => {
           inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-          maskedInput.onChange(test.input.userModifiedInputFieldValue)
+          maskedInput.onInput(test.input.userModifiedInputFieldValue)
 
           expect([
             inputElement.value,

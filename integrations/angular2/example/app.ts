@@ -5,7 +5,8 @@ import 'reflect-metadata';
 
 import {bootstrap} from 'angular2/platform/browser'
 import {Component} from 'angular2/core';
-import MaskedInput from '../dist/textMask'
+import MaskedInput from '../src/angular2TextMask'
+// import MaskedInput from '../dist/textMask'
 
 @Component({
   selector: 'app',
@@ -15,6 +16,7 @@ import MaskedInput from '../dist/textMask'
 
 export class AppComponent {
   private mask = '(111) 111 1111'
+  private stuff = ''
 
   onMaskChange(event) {
     this.mask = event.target.value
