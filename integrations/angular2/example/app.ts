@@ -16,7 +16,7 @@ import MaskedInput from '../src/angular2TextMask'
 
 export class AppComponent {
   private mask = '(111) 111 1111'
-  private stuff = ''
+  private myModel = ''
 
   onMaskChange(event) {
     this.mask = event.target.value
