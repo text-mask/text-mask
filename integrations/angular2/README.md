@@ -4,13 +4,13 @@
 
 First, install it.
 
-```
+```bash
 npm i @msafi/angular2-text-mask --save
 ```
 
 Then, require it and use it:
 
-```js
+```typescript
 import 'es6-shim';
 import 'es6-promise';
 import 'zone.js/dist/zone';
@@ -33,3 +33,16 @@ export class AppComponent {
 
 bootstrap(AppComponent);
 ```
+
+## Example
+
+You can see a working example in
+[this folder](https://github.com/msafi/text-mask/tree/master/integrations/angular2/example).
+
+## Source code
+
+The source code for Angular 2 Text Mask is [available here](https://github.com/msafi/text-mask/tree/master/integrations/angular2).
+
+## License
+
+Public domain - [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/)

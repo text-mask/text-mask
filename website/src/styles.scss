@@ -14,7 +14,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 }
 
 .container .text-muted {
@@ -28,6 +28,19 @@ body {
 
 code {
   font-size: 80%;
+}
+
+pre {
+  border: none;
+}
+
+.hljs {
+  background-color: #f7f7f7;
+}
+
+.markdown h1, .markdown h2 {
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid #eee;
 }
 
 @media (min-width: 768px) {
