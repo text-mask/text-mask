@@ -1,6 +1,6 @@
 {
   "name": "@msafi/text-mask-core",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Core of https://github.com/msafi/text-mask",
   "main": "dist/textMaskCore.js",
   "author": "M.K. Safi <msafi@msafi.com>",
@@ -9,5 +9,12 @@
     "url": "https://github.com/msafi/text-mask/issues"
   },
   "homepage": "https://github.com/msafi/text-mask/core/#readme",
-  "keywords": ["text mask", "input mask", "string mask", "input formatting", "text formatting", "string formatting"]
+  "keywords": [
+    "text mask",
+    "input mask",
+    "string mask",
+    "input formatting",
+    "text formatting",
+    "string formatting"
+  ]
 }
