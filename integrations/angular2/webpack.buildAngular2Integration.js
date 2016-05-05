@@ -40,11 +40,20 @@ module.exports = {
   ],
 
   externals: [
-    'angular2/core',
-    'angular2/common',
-    'es6-shim',
-    'es6-promise',
-    'zone.js/dist/zone',
-    'reflect-metadata'
+    {
+      'angular2/core': {
+        root: ['ng', 'core'],
+        commonjs: 'angular2/core',
+        commonjs2: 'angular2/core',
+        amd: 'angular2/core'
+      },
+
+      'angular2/common': {
+        root: ['ng', 'common'],
+        commonjs: 'angular2/common',
+        commonjs2: 'angular2/common',
+        amd: 'angular2/common'
+      }
+    }
   ]
 }
