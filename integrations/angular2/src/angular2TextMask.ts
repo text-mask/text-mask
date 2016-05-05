@@ -15,7 +15,7 @@ import {NgModel} from 'angular2/common'
     '(keyup)': 'updateModel($event.target.value)'
   }
 })
-export default class MaskedInput {
+export default class MaskedInputDirective {
   private inputElement:HTMLInputElement
   private previousValue = ''
   private conformToMaskResults = {output: ''}
@@ -71,6 +71,8 @@ export default class MaskedInput {
     this.model.viewToModelUpdate(userInput)
   }
 }
+
+export {MaskedInputDirective as Directive}
 
 export {
   conformToMask,
