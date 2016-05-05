@@ -39,7 +39,7 @@ module.exports = {
     })
   ],
 
-  externals:[
+  externals: [
     {
       'angular2/core': {
         root: ['ng', 'core'],

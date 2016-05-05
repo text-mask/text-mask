@@ -36,8 +36,14 @@ bootstrap(AppComponent);
 
 ## Example
 
+### TypeScript
+
 You can see a working example in
 [this folder](https://github.com/msafi/text-mask/tree/master/integrations/angular2/example).
+
+### Plain JavaScript
+
+For a plain JavaScript example, you can check out [this Plunk](http://plnkr.co/edit/QImy7qOVZTmTM8ftiB84?p=preview).
 
 ## Source code
 
