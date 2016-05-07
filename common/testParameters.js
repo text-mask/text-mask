@@ -210,7 +210,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
-    userModifiedInputFieldValue: '5',
+    userModifiedInputFieldValue: '5(___) ___-____',
     mask: '(111) 111-1111',
     caretPositionAfterInputFieldValueChange: 1,
   },
@@ -380,7 +380,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
 }, {
   input: {
     startingInputFieldValue: '(___) ___/____',
-    userModifiedInputFieldValue: '5',
+    userModifiedInputFieldValue: '5(___) ___/____',
     mask: '(111) 111/1111',
     caretPositionAfterInputFieldValueChange: 1,
   },
@@ -389,9 +389,10 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(5__) ___/____',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1,
-  }
+  },
 
-  //only: true
+  // only: true
+  // skip: true
 }, {
   input: {
     startingInputFieldValue: '3333',

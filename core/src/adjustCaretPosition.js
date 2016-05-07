@@ -25,7 +25,6 @@ export default function adjustCaretPosition({
 
   // is addition...
   if (isDeletion === false) {
-
     if (
       // if previous input and conformToMaskResults.output are exactly the same, it means
       // adjustCaretPosition was called after conformToMask rejected a character
