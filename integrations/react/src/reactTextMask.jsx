@@ -47,10 +47,12 @@ export const MaskedInput = React.createClass({
     )
   },
 
-  onChange({target: {value: userInput}}) {
+  onChange(event) {
+    const {target: {value: userInput}} = event
     const {props: {mask}, state: {placeholder, conformedInput: previousConformedInput}} = this
     const conformToMaskResults = conformToMask(userInput, mask)
     const {output: conformedInput} = conformToMaskResults
+
     const adjustedCaretPosition = adjustCaretPosition({
       previousInput: previousConformedInput,
       conformToMaskResults,

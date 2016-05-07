@@ -527,7 +527,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 6,
   },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -821,18 +821,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '82/93/8474',
     adjustedCaretPosition: 10,
-  },
-}, {
-  input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '777',
-    mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 3
-  },
-
-  output: {
-    conformedInputFieldValue: '(777) ___-____',
-    adjustedCaretPosition: 6,
   },
 }, {
   input: {
