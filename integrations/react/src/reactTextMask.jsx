@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react'
 import {
   conformToMask,
   convertMaskToPlaceholder,
-  adjustCaretPosition
+  adjustCaretPosition,
+  safeSetSelection
 } from '../../../core/src/index.js'
 
 export const MaskedInput = React.createClass({
@@ -10,26 +11,22 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.string.isRequired
   },
 
-  getInitialState({newMask = this.props.mask} = {}) {
+  getInitialState({mask = this.props.mask} = {}) {
     return {
       conformedInput: '',
       adjustedCaretPosition: 0,
-      placeholder: convertMaskToPlaceholder(newMask)
+      placeholder: convertMaskToPlaceholder(mask)
     }
   },
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.mask !== this.props.mask) {
-      this.setState(this.getInitialState({newMask: nextProps.mask}))
+      this.setState(this.getInitialState({mask: nextProps.mask}))
     }
   },
 
   componentDidUpdate() {
-    this.refs.inputElement.setSelectionRange(
-      this.state.adjustedCaretPosition,
-      this.state.adjustedCaretPosition,
-      'none'
-    )
+    safeSetSelection(this.refs.inputElement, this.state.adjustedCaretPosition)
   },
 
   render() {

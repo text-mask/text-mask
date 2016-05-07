@@ -43,6 +43,7 @@ describe('MaskedInput', () => {
       input.selectionStart = 1
       input.selectionEnd = 1
 
+      maskedInput.refs.inputElement.focus()
       ReactTestUtils.Simulate.change(input)
 
       expect(userOnChange.called).to.equal(true)
@@ -78,11 +79,13 @@ describe('MaskedInput', () => {
     input.value = '(__)'
     input.selectionStart = 0
 
+    maskedInput.refs.inputElement.focus()
     ReactTestUtils.Simulate.change(input)
 
     input.value = '__)'
     input.selectionStart = 0
 
+    maskedInput.refs.inputElement.focus()
     ReactTestUtils.Simulate.change(input)
 
     expect(input.value).to.equal('')
@@ -120,6 +123,7 @@ describe('MaskedInput', () => {
           // That is, input starts with empty value. We cannot change it from that to empty value
           // because it already is empty.
           if (input.value.length > 0) {
+            maskedInput.refs.inputElement.focus()
             ReactTestUtils.Simulate.change(input)
           }
 
@@ -127,6 +131,7 @@ describe('MaskedInput', () => {
           input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
+          maskedInput.refs.inputElement.focus()
           ReactTestUtils.Simulate.change(input)
 
           expect([
