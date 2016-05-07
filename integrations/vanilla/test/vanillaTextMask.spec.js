@@ -58,7 +58,7 @@ describe('inputMask', () => {
     })
   })
 
-  it('does not set the value of the input to empty mask', () => {
+  it('sets the value to empty if conformed input is placeholder and caret is at 0', () => {
     const inputElement = document.createElement('input')
 
     maskInput({
@@ -67,6 +67,13 @@ describe('inputMask', () => {
     })
 
     inputElement.value = '(__)'
+    inputElement.selectionStart = 0
+
+    inputElement.oninput()
+
+    inputElement.value = '__)'
+    inputElement.selectionStart = 0
+
     inputElement.oninput()
 
     expect(inputElement.value).to.equal('')
@@ -99,7 +106,10 @@ describe('inputMask', () => {
 
           inputElement.focus()
           inputElement.value = test.input.startingInputFieldValue
-          inputElement.oninput()
+
+          if (inputElement.value.length > 0) {
+            inputElement.oninput()
+          }
 
           inputElement.value = test.input.userModifiedInputFieldValue
           inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange

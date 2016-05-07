@@ -1,7 +1,8 @@
 import {
   conformToMask,
   convertMaskToPlaceholder,
-  adjustCaretPosition
+  adjustCaretPosition,
+  safeSetSelection
 } from '../../../core/src/index'
 
 import {Directive, ElementRef, Input} from 'angular2/core'
@@ -16,11 +17,9 @@ import {NgModel} from 'angular2/common'
   }
 })
 export default class MaskedInputDirective {
+  private conformedInput:string
+  private placeholder:string
   private inputElement:HTMLInputElement
-  private previousValue = ''
-  private conformToMaskResults = {output: ''}
-  private currentCaretPosition:number = null
-  private placeholder = ''
 
   @Input('textMask') textMaskConfig = {mask: ''}
 
@@ -28,47 +27,48 @@ export default class MaskedInputDirective {
     this.inputElement = el.nativeElement
   }
 
-  ngOnChanges() {
-    this.placeholder = convertMaskToPlaceholder(this.textMaskConfig.mask)
-    this.model.valueAccessor.writeValue('')
+  ngOnInit({mask = this.textMaskConfig.mask} = {}) {
+    this.conformedInput = ''
+    this.placeholder = convertMaskToPlaceholder(mask)
   }
 
-  conformUserInputToMask(userInput = '') {
-    this.conformToMaskResults = conformToMask(userInput, this.textMaskConfig.mask)
-    this.currentCaretPosition = this.inputElement.selectionStart
+  ngOnChanges({textMaskConfig}) {
+    const {
+      currentValue: {mask: currentMask},
+      previousValue: {mask: previousMask}
+    } = textMaskConfig
 
-    return this.conformToMaskResults.output
-  }
-
-  adjustCaretPositionAfterUserInput() {
-    const caretPosition = adjustCaretPosition({
-      previousInput: this.previousValue,
-      conformToMaskResults: this.conformToMaskResults,
-      currentCaretPosition: this.currentCaretPosition
-    })
-
-    this.previousValue = (
-      this.conformToMaskResults.output ||
-      this.previousValue
-    )
-
-    this.inputElement.setSelectionRange(caretPosition, caretPosition)
+    if (currentMask !== previousMask) {
+      this.ngOnInit({mask: currentMask})
+      this.model.valueAccessor.writeValue('')
+    }
   }
 
   onInput(userInput = '') {
-    const conformedString = this.conformUserInputToMask(userInput)
+    const {textMaskConfig: {mask}, placeholder, conformedInput: previousConformedInput} = this
+    const conformToMaskResults = conformToMask(userInput, mask)
+    const {output: conformedInput} = conformToMaskResults
+    
+    const adjustedCaretPosition = adjustCaretPosition({
+      previousInput: previousConformedInput,
+      conformToMaskResults,
+      currentCaretPosition: this.inputElement.selectionStart
+    })
 
-    if (conformedString === this.placeholder) {
-      this.model.valueAccessor.writeValue('')
-    } else {
-      this.model.valueAccessor.writeValue(conformedString)
-    }
+    const finalConformedInput = (
+      conformedInput === placeholder &&
+      adjustedCaretPosition === 0
+    ) ? '' : conformedInput
 
-    this.adjustCaretPositionAfterUserInput()
+    this.conformedInput = finalConformedInput
+
+    this.model.valueAccessor.writeValue(finalConformedInput)
+
+    safeSetSelection(this.inputElement, adjustedCaretPosition)
   }
 
-  updateModel(userInput) {
-    this.model.viewToModelUpdate(userInput)
+  updateModel(conformedUserInput) {
+    this.model.viewToModelUpdate(conformedUserInput)
   }
 }
 

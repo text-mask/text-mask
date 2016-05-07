@@ -69,7 +69,7 @@
     "jsdom": "^8.0.2",
     "lodash": "^4.0.0",
     "markdown-loader": "^0.1.7",
-    "mocha": "^2.3.4",
+    "mocha": "^2.4.5",
     "mocha-dynamic-tests": "^1.1.1",
     "node-sass": "^3.4.2",
     "react": "^0.14.7",

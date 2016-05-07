@@ -43,6 +43,7 @@ describe('MaskedInput', () => {
       input.selectionStart = 1
       input.selectionEnd = 1
 
+      maskedInput.refs.inputElement.focus()
       ReactTestUtils.Simulate.change(input)
 
       expect(userOnChange.called).to.equal(true)
@@ -67,33 +68,24 @@ describe('MaskedInput', () => {
         maskedInput.refs.inputElement.selectionEnd
       ]).to.deep.equal([2,2])
     })
-
-    it('does not attempt to update the position of the caret when the input is not focused', () => {
-      const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="(11)"/>
-      )
-      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
-
-      input.value = '(2_)'
-      input.selectionStart = 1
-      input.selectionEnd = 1
-
-      ReactTestUtils.Simulate.change(input)
-
-      expect([
-        maskedInput.refs.inputElement.selectionStart,
-        maskedInput.refs.inputElement.selectionEnd
-      ]).to.deep.equal([1, 1])
-    })
   })
 
-  it('never sets the value of the input to empty mask', () => {
+  it('sets the value of the input to empty if it conformed input equals placeholder and ' +
+     'the caret is at position 0', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(<MaskedInput mask="(11)"/>)
 
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
     input.value = '(__)'
+    input.selectionStart = 0
 
+    maskedInput.refs.inputElement.focus()
+    ReactTestUtils.Simulate.change(input)
+
+    input.value = '__)'
+    input.selectionStart = 0
+
+    maskedInput.refs.inputElement.focus()
     ReactTestUtils.Simulate.change(input)
 
     expect(input.value).to.equal('')
@@ -127,16 +119,19 @@ describe('MaskedInput', () => {
           input.selectionStart = 0
           input.selectionEnd = 0
 
-          maskedInput.refs.inputElement.focus()
-
-          ReactTestUtils.Simulate.change(input)
+          // It's unrealistic to trigger change when there's no starting user input
+          // That is, input starts with empty value. We cannot change it from that to empty value
+          // because it already is empty.
+          if (input.value.length > 0) {
+            maskedInput.refs.inputElement.focus()
+            ReactTestUtils.Simulate.change(input)
+          }
 
           input.value = test.input.userModifiedInputFieldValue
           input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
           maskedInput.refs.inputElement.focus()
-
           ReactTestUtils.Simulate.change(input)
 
           expect([

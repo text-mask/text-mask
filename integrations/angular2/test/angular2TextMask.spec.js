@@ -60,6 +60,7 @@ describe('MaskedInput', () => {
       inputElement.selectionStart = 0
       inputElement.selectionEnd = 0
 
+      inputElement.focus()
       maskedInput.onInput('2')
 
       expect(modelValue).to.equal('(2__)')
@@ -73,6 +74,7 @@ describe('MaskedInput', () => {
       inputElement.selectionStart = 0
       inputElement.selectionEnd = 0
 
+      inputElement.focus()
       maskedInput.onInput('2')
 
       expect([
@@ -82,13 +84,18 @@ describe('MaskedInput', () => {
     })
   })
 
-  it('never sets the value of the input to equal the placeholder', () => {
+  it('sets the value of the input to empty if it conformed input equals placeholder and ' +
+     'the caret is at position 0', () => {
     const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
     maskedInput.placeholder = '(__)'
     maskedInput.textMaskConfig.mask = '(11)'
 
-    maskedInput.onInput('(__)')
+    maskedInput.conformedInput = '(__)'
+    inputElement.selectionStart = 0
+
+    inputElement.focus()
+    maskedInput.onInput('__)')
 
     expect(modelValue).to.equal('')
   })
@@ -115,11 +122,12 @@ describe('MaskedInput', () => {
 
           maskedInput.textMaskConfig.mask = test.input.mask
 
-          maskedInput.previousValue = test.input.startingInputFieldValue
+          maskedInput.conformedInput = test.input.startingInputFieldValue
 
           inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
           inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
+          inputElement.focus()
           maskedInput.onInput(test.input.userModifiedInputFieldValue)
 
           expect([

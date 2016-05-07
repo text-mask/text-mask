@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react'
 import {
   conformToMask,
   convertMaskToPlaceholder,
-  adjustCaretPosition
+  adjustCaretPosition,
+  safeSetSelection
 } from '../../../core/src/index.js'
 
 export const MaskedInput = React.createClass({
@@ -10,50 +11,33 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.string.isRequired
   },
 
-  getInitialState() {
+  getInitialState({mask = this.props.mask} = {}) {
     return {
-      previousValue: '',
-      conformToMaskResults: {},
-      currentCaretPosition: null
+      conformedInput: '',
+      adjustedCaretPosition: 0,
+      placeholder: convertMaskToPlaceholder(mask)
     }
   },
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.mask !== this.props.mask) {
-      this.setState(this.getInitialState())
+      this.setState(this.getInitialState({mask: nextProps.mask}))
     }
   },
 
   componentDidUpdate() {
-
-    // Check that inputElement has focus
-    if (this.refs.inputElement === document.activeElement) {
-
-      // If setSelection is called while inputElement doesn't have focus, it's gonna steal focus,
-      // which is not what we want here.
-      const caretPosition = adjustCaretPosition({
-        previousInput: this.state.previousValue,
-        conformToMaskResults: this.state.conformToMaskResults,
-        currentCaretPosition: this.state.currentCaretPosition
-      })
-
-      this.refs.inputElement.setSelectionRange(caretPosition, caretPosition, 'none')
-    }
+    safeSetSelection(this.refs.inputElement, this.state.adjustedCaretPosition)
   },
 
   render() {
-    const {props, state, onChange} = this
-    const placeholder = props.placeholder || convertMaskToPlaceholder(this.props.mask)
-    const value = (state.conformToMaskResults.output !== placeholder) ?
-      state.conformToMaskResults.output :
-      ''
+    const {props, state: {placeholder, conformedInput}, onChange} = this
 
     return (
       <input
         {...props}
         type={props.type || 'text'}
         onChange={onChange}
-        value={value}
+        value={conformedInput}
         placeholder={placeholder}
         ref="inputElement"
       />
@@ -61,13 +45,25 @@ export const MaskedInput = React.createClass({
   },
 
   onChange(event) {
-    const state = {
-      conformToMaskResults: conformToMask(event.target.value, this.props.mask),
-      previousValue: this.state.conformToMaskResults.output || this.state.previousValue,
-      currentCaretPosition: this.refs.inputElement.selectionStart
-    }
+    const {target: {value: userInput}} = event
+    const {props: {mask}, state: {placeholder, conformedInput: previousConformedInput}} = this
+    const conformToMaskResults = conformToMask(userInput, mask)
+    const {output: conformedInput} = conformToMaskResults
 
-    this.setState(state)
+    const adjustedCaretPosition = adjustCaretPosition({
+      previousInput: previousConformedInput,
+      conformToMaskResults,
+      currentCaretPosition: this.refs.inputElement.selectionStart
+    })
+    const finalConformedInput = (
+      conformedInput === placeholder &&
+      adjustedCaretPosition === 0
+    ) ? '' : conformedInput
+
+    this.setState({
+      conformedInput: finalConformedInput,
+      adjustedCaretPosition
+    })
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)

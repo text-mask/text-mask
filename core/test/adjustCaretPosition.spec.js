@@ -27,24 +27,28 @@ describe('adjustCaretPosition', () => {
   it('sets the caret back in order to prevent it from moving when the change ' +
      'has not actually modified the output and the operation is not deletion', () => {
     expect(adjustCaretPosition({
-      previousInput: '(___) ___-____',
-      conformToMaskResults: {
-        input: '(___) ___-____',
-        output: '(___) ___-____',
-        mask: '(111) 111-1111'
-      },
-      currentCaretPosition: 5
-    })).to.equal(4)
-
-    expect(adjustCaretPosition({
       previousInput: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
-        input: '(123) ___-____',
+        input: '(123) ___-f____',
         mask: '(111) 111-1111'
       },
-      currentCaretPosition: 10
-    })).to.equal(9)
+      currentCaretPosition: 11
+    })).to.equal(10)
+  })
+
+  it('moves the caret to the nearest placeholder character if the previous input and new ' +
+     'conformed output are the same but the reverted position is not a ' +
+     'placeholder character', () => {
+    expect(adjustCaretPosition({
+      previousInput: '(___)      ___-____',
+      conformToMaskResults: {
+        input: '(___))      ___-____',
+        output: '(___)      ___-____',
+        mask: '(111)      111-1111'
+      },
+      currentCaretPosition: 5
+    })).to.equal(11)
   })
 
   it('knows to move the caret back when the previousInput and conformToMaskResults output ' +

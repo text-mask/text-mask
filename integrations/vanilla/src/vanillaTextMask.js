@@ -1,41 +1,43 @@
 import {
   conformToMask,
   convertMaskToPlaceholder,
-  adjustCaretPosition
+  adjustCaretPosition,
+  safeSetSelection
 } from '../../../core/src/index.js'
 
 export function maskInput({element, mask}) {
   const state = {
-    previousValue: '',
-    conformToMaskResults: {},
-    currentCaretPosition: null
+    conformedInput: '',
+    placeholder: element.placeholder || convertMaskToPlaceholder(mask)
   }
 
-  updateInput()
+  element.placeholder = state.placeholder
+  element.value = state.conformedInput
+  safeSetSelection(element, 0)
+
   element.oninput = updateInput
 
   function updateInput() {
-    state.previousValue = state.conformToMaskResults.output || state.previousValue
-    state.conformToMaskResults = conformToMask(element.value, mask)
-    state.currentCaretPosition = element.selectionStart
+    const userInput = element.value
+    const {placeholder, conformedInput: previousConformedInput} = state
+    const conformToMaskResults = conformToMask(userInput, mask)
+    const {output: conformedInput} = conformToMaskResults
 
-    const placeholder = element.placeholder || convertMaskToPlaceholder(mask)
-    const value = (state.conformToMaskResults.output !== placeholder) ?
-      state.conformToMaskResults.output :
-      ''
+    const adjustedCaretPosition = adjustCaretPosition({
+      previousInput: previousConformedInput,
+      conformToMaskResults,
+      currentCaretPosition: element.selectionStart
+    })
 
-    element.value = value
-    element.placeholder = placeholder
+    const finalConformedInput = (
+      conformedInput === placeholder &&
+      adjustedCaretPosition === 0
+    ) ? '' : conformedInput
 
-    if (element === document.activeElement) {
-      const caretPosition = adjustCaretPosition({
-        previousInput: state.previousValue,
-        conformToMaskResults: state.conformToMaskResults,
-        currentCaretPosition: state.currentCaretPosition
-      })
+    state.conformedInput = finalConformedInput
 
-      element.setSelectionRange(caretPosition, caretPosition, 'none')
-    }
+    element.value = finalConformedInput
+    safeSetSelection(element, adjustedCaretPosition)
   }
 }
 

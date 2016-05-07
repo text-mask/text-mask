@@ -17,25 +17,41 @@ export default function adjustCaretPosition({
   // First determine if the operation is deletion or addition to know whether we will be
   // seeking to move the caret forward or back.
   const isDeletion = (
-    // If previous input is the placeholder, then any change to it is addition.
-    previousInput !== placeholder &&
-    (
-      // if the conformed string or the input to be conformed is smaller than
-      // previous input, then the operation is deletion.
-      (conformToMaskResults.output.length < previousInput.length) ||
-      (conformToMaskResults.input.length < previousInput.length)
-    )
+    // if the conformed string or the input to be conformed is smaller than
+    // previous input, then the operation is deletion.
+    (conformToMaskResults.output.length < previousInput.length) ||
+    (conformToMaskResults.input.length < previousInput.length)
   )
 
   // is addition...
   if (isDeletion === false) {
-    // if previous input and conformToMaskResults.output are exactly the same, it means
-    // adjustCaretPosition was called after conformToMask rejected a character
-    if (previousInput === conformToMaskResults.output) {
-      // in that case, revert movement of the caret
-      return currentCaretPosition - 1
+    if (
+      // if previous input and conformToMaskResults.output are exactly the same, it means
+      // adjustCaretPosition was called after conformToMask rejected a character
+      previousInput === conformToMaskResults.output ||
 
-    // previous input is different from conformToMaskResults.output, so we need to do some work
+      conformToMaskResults.output === placeholder
+    ) {
+      // in that case, revert movement of the caret
+      // return currentCaretPosition - 1
+      const revertedPosition = currentCaretPosition - 1
+
+      // If the reverted position is a placeholder position, keep it there
+      if (placeholder[revertedPosition] === placeholderCharacter) {
+        return revertedPosition
+
+        // Otherwise, seek forward for the closest placeholder character
+        // This way Text Mask allows the user to enter a non-accepted character
+        // like a mask delimiter and move to the next placeholder
+      } else {
+        for (let i = revertedPosition + 1; i < placeholder.length; i++) {
+          if (placeholder[i] === placeholderCharacter) {
+            return i
+          }
+        }
+      }
+
+      // previous input is different from conformToMaskResults.output, so we need to do some work
     } else {
       const changeDetails = getChangeDetails(
         previousInput || placeholder,
