@@ -7,57 +7,66 @@ import {
 } from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function conformToMask(userInput = '', mask = '') {
+export default function conformToMask(userInput = '', mask = '', options = {}) {
   const placeholder = convertMaskToPlaceholder(mask)
   const maskDelimiters = getDelimiters(mask)
+  const {guided = false} = options
 
   let numberOfPendingUserInputCharacters = userInput.length
+  const output = tokenize(placeholder).map((characterInPlaceholder, index) => {
+
+    // if current character is a placeholder character, that means we could potentially
+    // place user input in it. So, if we still have pending user tokens, let's do it!
+    if (
+      characterInPlaceholder === placeholderCharacter &&
+      numberOfPendingUserInputCharacters > 0
+    ) {
+      // Let's loop through the remaining user input characters to find out what
+      // should go in the current placeholder position
+      for (
+        let i = userInput.length - numberOfPendingUserInputCharacters;
+        i < userInput.length;
+        i++
+      ) {
+        // Pull user character to potentially map it to the current
+        // placeholder position.
+        const userInputCharacter = userInput[i]
+
+        numberOfPendingUserInputCharacters--
+
+        if (
+          // is the character in the user input a placeholder character?
+        userInputCharacter === placeholderCharacter ||
+
+        // or, are we sure the character is not part of the mask
+        // delimiters and that it is an acceptable character?
+        (
+          maskDelimiters.indexOf(userInputCharacter) === -1 &&
+          isAcceptableCharacter(userInputCharacter, mask[index]) === true
+        )
+        ) {
+          // if so, map it to a potentially transformed character!
+          return potentiallyTransformCharacter(userInputCharacter, mask[index])
+        }
+      }
+    } else {
+      // if the current character is not placeholder or we don't have any more user input
+      // characters to assign, then just return the same current character
+      if (numberOfPendingUserInputCharacters === 0 && guided === false) {
+        return ''
+      }
+
+      return characterInPlaceholder
+    }
+  }).join('')
 
   return {
     input: userInput,
     mask: mask,
 
     // Go through the placeholder to determine what to place in it
-    output: tokenize(placeholder).map((characterInPlaceholder, index) => {
-      // if current character is a placeholder character, that means we could potentially
-      // place user input in it. So, if we still have pending user tokens, let's do it!
-      if (
-        characterInPlaceholder === placeholderCharacter &&
-        numberOfPendingUserInputCharacters > 0
-      ) {
-        // Let's loop through the remaining user input characters to find out what
-        // should go in the current placeholder position
-        for (
-          let i = userInput.length - numberOfPendingUserInputCharacters;
-          i < userInput.length;
-          i++
-        ) {
-          // Pull user character to potentially map it to the current
-          // placeholder position.
-          const userInputCharacter = userInput[i]
+    output,
 
-          numberOfPendingUserInputCharacters--
-
-          if (
-            // is the character in the user input a placeholder character?
-            userInputCharacter === placeholderCharacter ||
-
-            // or, are we sure the character is not part of the mask
-            // delimiters and that it is an acceptable character?
-            (
-              maskDelimiters.indexOf(userInputCharacter) === -1 &&
-              isAcceptableCharacter(userInputCharacter, mask[index]) === true
-            )
-          ) {
-            // if so, map it to a potentially transformed character!
-            return potentiallyTransformCharacter(userInputCharacter, mask[index])
-          }
-        }
-      }
-
-      // if the current character is not placeholder or we don't have any more user input
-      // characters to assign, then just return the same current character
-      return characterInPlaceholder
-    }).join('')
+    options,
   }
 }

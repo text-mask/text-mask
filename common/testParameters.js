@@ -971,3 +971,39 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 4,
   },
 }])
+
+
+export const guidedMode = [{
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '('
+  },
+
+  output: {
+    conformedInputFieldValue: '(',
+    adjustedCaretPosition: 1
+  }
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '2',
+  },
+
+  output: {
+    conformedInputFieldValue: '(2',
+    adjustedCaretPosition: 2
+  }
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(2',
+    userModifiedInputFieldValue: '(23'
+  },
+
+  output: {
+    conformedInputFieldValue: '(23',
+    adjustedCaretPosition: 3
+  }
+}]
