@@ -8,13 +8,12 @@ import {
 export function maskInput({element, mask}) {
   const state = {
     conformedInput: '',
-    adjustedCaretPosition: 0,
     placeholder: element.placeholder || convertMaskToPlaceholder(mask)
   }
 
   element.placeholder = state.placeholder
   element.value = state.conformedInput
-  safeSetSelection(element, state.adjustedCaretPosition)
+  safeSetSelection(element, 0)
 
   element.oninput = updateInput
 
@@ -36,7 +35,6 @@ export function maskInput({element, mask}) {
     ) ? '' : conformedInput
 
     state.conformedInput = finalConformedInput
-    state.adjustedCaretPosition = adjustedCaretPosition
 
     element.value = finalConformedInput
     safeSetSelection(element, adjustedCaretPosition)

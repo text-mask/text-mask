@@ -37,7 +37,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(12_) _',
     adjustedCaretPosition: 2
-  }
+  },
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
