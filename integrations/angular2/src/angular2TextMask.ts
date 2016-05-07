@@ -58,11 +58,7 @@ export default class MaskedInputDirective {
   onInput(userInput = '') {
     const conformedString = this.conformUserInputToMask(userInput)
 
-    if (conformedString === this.placeholder) {
-      this.model.valueAccessor.writeValue('')
-    } else {
-      this.model.valueAccessor.writeValue(conformedString)
-    }
+    this.model.valueAccessor.writeValue(conformedString)
 
     this.adjustCaretPositionAfterUserInput()
   }
