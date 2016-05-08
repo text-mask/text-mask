@@ -8,20 +8,11 @@ export default function adjustCaretPosition({
   currentCaretPosition = 0
 }) {
   // ensure sane argument values
-  conformToMaskResults.input = conformToMaskResults.input || ''
-  conformToMaskResults.output = conformToMaskResults.output || ''
-  conformToMaskResults.mask = conformToMaskResults.mask || ''
-  conformToMaskResults.options = conformToMaskResults.options || {}
-
-  const guided = conformToMaskResults.options.guided
-
+  const {input = '', output = '', mask = '', options = {}} = conformToMaskResults
+  const {guided = false} = options
   const placeholder = convertMaskToPlaceholder(conformToMaskResults.mask)
 
-  // First determine if the operation is deletion or addition to know whether we will be
-  // seeking to move the caret forward or back.
   const isDeletion = (
-    // if the conformed string or the input to be conformed is smaller than
-    // previous input, then the operation is deletion.
     (conformToMaskResults.output.length < previousInput.length) ||
     (conformToMaskResults.input.length < previousInput.length)
   )
@@ -30,9 +21,9 @@ export default function adjustCaretPosition({
   if (isDeletion === false) {
     if (
       // if previous input and conformToMaskResults.output are exactly the same, it means
-      // adjustCaretPosition was called after conformToMask rejected a character
-      previousInput === conformToMaskResults.output ||
-      conformToMaskResults.output === placeholder
+    // adjustCaretPosition was called after conformToMask rejected a character
+    previousInput === conformToMaskResults.output ||
+    conformToMaskResults.output === placeholder
     ) {
       // in that case, revert movement of the caret
       // return currentCaretPosition - 1
@@ -98,7 +89,7 @@ export default function adjustCaretPosition({
     // the caret at the end of the conformed string
     return conformToMaskResults.output.length
 
-  // is deletion...
+    // is deletion...
   } else if (isDeletion === true) {
     // if previous input and conformed string are the same, it means adjustCaretPosition is called
     // because the user is pressing the backspace to move the caret back
@@ -116,7 +107,7 @@ export default function adjustCaretPosition({
         }
       }
 
-    // the user has actually deleted a character, so we need to do some work
+      // the user has actually deleted a character, so we need to do some work
     } else {
       const changeDetails = getChangeDetails(
         previousInput,
