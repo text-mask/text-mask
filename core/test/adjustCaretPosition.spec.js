@@ -109,8 +109,38 @@ describe('adjustCaretPosition', () => {
     })).to.equal(4)
   })
 
+  dynamicTests(
+    _.filter(testParameters, (testParameter) => {
+      return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
+    }),
+
+    (test) => ({
+      description: `for previousInput: ${
+        JSON.stringify(test.input)
+        } and conformToMaskResults: ${JSON.stringify({
+          input: test.input.userModifiedInputFieldValue,
+          output: test.output.conformedInputFieldValue,
+          mask: test.input.mask
+        })}, it knows to adjust the caret to '${
+        test.output.adjustedCaretPosition
+      }'`,
+
+      body: () => {
+        expect(adjustCaretPosition({
+          previousInput: test.input.startingInputFieldValue,
+          conformToMaskResults: {
+            input: test.input.userModifiedInputFieldValue,
+            output: test.output.conformedInputFieldValue,
+            mask: test.input.mask
+          },
+          currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
+        })).to.equal(test.output.adjustedCaretPosition)
+      }
+    })
+  )
+  
   // dynamicTests(
-  //   _.filter(testParameters, (testParameter) => {
+  //   _.filter(unguidedMode, (testParameter) => {
   //     return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
   //   }),
   //
@@ -131,44 +161,14 @@ describe('adjustCaretPosition', () => {
   //         conformToMaskResults: {
   //           input: test.input.userModifiedInputFieldValue,
   //           output: test.output.conformedInputFieldValue,
-  //           mask: test.input.mask
+  //           mask: test.input.mask,
+  //           options: {guided: true}
   //         },
   //         currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
   //       })).to.equal(test.output.adjustedCaretPosition)
   //     }
   //   }),
+  //
+  //   {only: true}
   // )
-  
-  dynamicTests(
-    _.filter(unguidedMode, (testParameter) => {
-      return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
-    }),
-  
-    (test) => ({
-      description: `for previousInput: ${
-        JSON.stringify(test.input)
-        } and conformToMaskResults: ${JSON.stringify({
-          input: test.input.userModifiedInputFieldValue,
-          output: test.output.conformedInputFieldValue,
-          mask: test.input.mask
-        })}, it knows to adjust the caret to '${
-        test.output.adjustedCaretPosition
-      }'`,
-  
-      body: () => {
-        expect(adjustCaretPosition({
-          previousInput: test.input.startingInputFieldValue,
-          conformToMaskResults: {
-            input: test.input.userModifiedInputFieldValue,
-            output: test.output.conformedInputFieldValue,
-            mask: test.input.mask,
-            options: {guided: true}
-          },
-          currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
-        })).to.equal(test.output.adjustedCaretPosition)
-      }
-    }),
-
-    {only: true}
-  )
 })

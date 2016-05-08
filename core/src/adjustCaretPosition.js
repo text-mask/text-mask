@@ -31,8 +31,7 @@ export default function adjustCaretPosition({
     if (
       // if previous input and conformToMaskResults.output are exactly the same, it means
       // adjustCaretPosition was called after conformToMask rejected a character
-      previousInput === conformToMaskResults.output ||
-      conformToMaskResults.output === placeholder
+      previousInput === conformToMaskResults.output
     ) {
       // in that case, revert movement of the caret
       // return currentCaretPosition - 1
