@@ -1,7 +1,7 @@
 export default function getChangeDetails(originalStr = '', newStr = '') {
   const details = {
-    indexOfFirstChange: null,
-    indexOfLastChange: null,
+    indexOfFirstChange: 0,
+    indexOfLastChange: newStr.length,
     numberOfChanges: 0
   }
 

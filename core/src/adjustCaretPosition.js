@@ -11,6 +11,9 @@ export default function adjustCaretPosition({
   conformToMaskResults.input = conformToMaskResults.input || ''
   conformToMaskResults.output = conformToMaskResults.output || ''
   conformToMaskResults.mask = conformToMaskResults.mask || ''
+  conformToMaskResults.options = conformToMaskResults.options || {}
+
+  const guided = conformToMaskResults.options.guided
 
   const placeholder = convertMaskToPlaceholder(conformToMaskResults.mask)
 
@@ -29,7 +32,6 @@ export default function adjustCaretPosition({
       // if previous input and conformToMaskResults.output are exactly the same, it means
       // adjustCaretPosition was called after conformToMask rejected a character
       previousInput === conformToMaskResults.output ||
-
       conformToMaskResults.output === placeholder
     ) {
       // in that case, revert movement of the caret
@@ -54,9 +56,29 @@ export default function adjustCaretPosition({
       // previous input is different from conformToMaskResults.output, so we need to do some work
     } else {
       const changeDetails = getChangeDetails(
-        previousInput || placeholder,
+        previousInput,
         conformToMaskResults.output
       )
+
+      if (guided === false) {
+        if (currentCaretPosition === conformToMaskResults.input.length) {
+          return conformToMaskResults.output.length
+        } else {
+          if (placeholder[currentCaretPosition] === placeholderCharacter) {
+
+            console.log('changeDetails', changeDetails)
+
+            return currentCaretPosition
+          } else {
+            for (let i = currentCaretPosition; i < placeholder.length; i++) {
+              if (placeholder[i] === placeholderCharacter) {
+                return i + 1
+              }
+            }
+          }
+          // return currentCaretPosition
+        }
+      }
 
       // if the index of the last changed character is ahead of current caret position by more
       // than one, then an ambiguous change happened.

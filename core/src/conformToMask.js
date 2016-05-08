@@ -67,6 +67,6 @@ export default function conformToMask(userInput = '', mask = '', options = {}) {
     // Go through the placeholder to determine what to place in it
     output,
 
-    options,
+    options: {guided},
   }
 }
