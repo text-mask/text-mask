@@ -7,36 +7,75 @@ export default function adjustCaretPosition({
   conformToMaskResults = {},
   currentCaretPosition = 0
 }) {
-  // ensure sane argument values
   const {input = '', output = '', mask = '', options = {}} = conformToMaskResults
-  const {guided = false} = options
-  const placeholder = convertMaskToPlaceholder(conformToMaskResults.mask)
+  const {guide = false} = options
+  const placeholder = convertMaskToPlaceholder(mask)
+  const isAddition = !(output.length < previousInput.length || input.length < previousInput.length)
 
-  const isDeletion = (
-    (conformToMaskResults.output.length < previousInput.length) ||
-    (conformToMaskResults.input.length < previousInput.length)
-  )
+  if (guide === false) {
+    if (currentCaretPosition === input.length) {
+      return output.length
+    } else {
+      if (placeholder[currentCaretPosition] === placeholderCharacter) {
+        return currentCaretPosition
+      } else {
+        for (let i = currentCaretPosition; i < placeholder.length; i--) {
+          if (placeholder[i] === placeholderCharacter) {
+            return i
+          }
+        }
+      }
+    }
+  }
 
   if (previousInput === output) {
-    const newPosition = (isDeletion === false) ?
-      currentCaretPosition - 1 :
+    const newPosition = (isAddition) ?
+    currentCaretPosition - 1 :
       currentCaretPosition
 
     if (placeholder[newPosition] === placeholderCharacter) {
       return newPosition
     } else {
-      // i < placeholder.length
-      // i > 0
+      if (isAddition) {
+        for (let i = newPosition + 1; i < placeholder.length; i++) {
+          if (placeholder[i] === placeholderCharacter) {
+            return i
+          }
+        }
+      } else {
+        for (let i = newPosition; i > 0; i--) {
+          if (placeholder[i] === placeholderCharacter) {
+            return i + 1
+          }
+        }
+      }
+    }
+  } else {
+    const changeDetails = getChangeDetails(previousInput || placeholder, output)
+    const indexOfChange = changeDetails[(isAddition) ? 'indexOfLastChange' : 'indexOfFirstChange']
 
-      for (
-        let i = newPosition;
-        i > 0;
-        i--
-      ) {
-        return (isDeletion === false) ? i : i + 1
+    if ((indexOfChange - currentCaretPosition) > 1) {
+      return currentCaretPosition
+    }
+
+    if (isAddition) {
+      for (let i = indexOfChange + 1; i < placeholder.length; i++) {
+        if (placeholder[i] === placeholderCharacter) {
+          return i
+        }
+      }
+    } else {
+      if (placeholder[currentCaretPosition - 1] === placeholderCharacter) {
+        return currentCaretPosition
+      }
+
+      for (let i = indexOfChange - 1; i > 0; i--) {
+        if (placeholder[i] === placeholderCharacter) {
+          return i + 1 // it should be immediately after the next placeholder character
+        }
       }
     }
   }
 
-
+  return (isAddition) ? output.length : 0
 }

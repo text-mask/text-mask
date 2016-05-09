@@ -26,6 +26,17 @@ export function tokenize(string = '') {
   return string.split('')
 }
 
+export function contains(array, needle) {
+  return array.indexOf(needle) !== -1
+}
+
+const asLongAs = (i, iterable, isReverse) => (isReverse) ? i >= 0 : i < iterable.length
+export function loop(iterable, startingPosition, callback, isReverse = false) {
+  for (let i = startingPosition; asLongAs(i, iterable, isReverse); i = (isReverse) ? i-- : i++) {
+    callback(iterable[i], i)
+  }
+}
+
 export function isAcceptableCharacter(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.numeric:
@@ -58,7 +69,7 @@ export function potentiallyTransformCharacter(character = '', maskingCharacter) 
 }
 
 function isNumeric(character) {
-  return !isNaN(character)
+  return !isNaN(character) && character !== ' '
 }
 
 function isAlphabetic(character) {
