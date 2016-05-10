@@ -65,6 +65,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 9
   },
 
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(1__) ___-3___',
@@ -977,10 +978,38 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: 'M2J ___',
     adjustedCaretPosition: 4,
   },
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(1__)',
+    userModifiedInputFieldValue: '(21__)',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(21_)',
+    adjustedCaretPosition: 2,
+  },
+
+  only: true
+}, {
+  input: {
+    mask: '(111) 111',
+    startingInputFieldValue: '(323) ___',
+    userModifiedInputFieldValue: '(3243) ___',
+    caretPositionAfterInputFieldValueChange: 4
+  },
+
+  output: {
+    conformedInputFieldValue: '(324) 3__',
+    adjustedCaretPosition: 6,
+  },
+
+  // only: true
 }])
 
 
-export const unguidedMode = _.filter((t) => t.only ,[{
+export const unguidedMode = _.filter((t) => t ,[{
   input: {
     mask: '(111)',
     startingInputFieldValue: '',
@@ -993,7 +1022,7 @@ export const unguidedMode = _.filter((t) => t.only ,[{
     adjustedCaretPosition: 1
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     mask: '(111)',
@@ -1006,6 +1035,8 @@ export const unguidedMode = _.filter((t) => t.only ,[{
     conformedInputFieldValue: '(2',
     adjustedCaretPosition: 2
   },
+
+  // only: true
 }, {
   input: {
     mask: '(111)',
@@ -1017,7 +1048,9 @@ export const unguidedMode = _.filter((t) => t.only ,[{
   output: {
     conformedInputFieldValue: '(23',
     adjustedCaretPosition: 3
-  }
+  },
+
+  // only: true
 }, {
   input: {
     mask: '(111)',
@@ -1045,7 +1078,7 @@ export const unguidedMode = _.filter((t) => t.only ,[{
     adjustedCaretPosition: 7
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     mask: '(111)',
@@ -1118,5 +1151,17 @@ export const unguidedMode = _.filter((t) => t.only ,[{
   output: {
     conformedInputFieldValue: '(987) 656-5493',
     adjustedCaretPosition: 11
+  },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(',
+    userModifiedInputFieldValue: '',
+    caretPositionAfterInputFieldValueChange: 0
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
   },
 }])

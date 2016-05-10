@@ -1,11 +1,14 @@
 export default function getChangeDetails(originalStr = '', newStr = '') {
   const details = {
-    indexOfFirstChange: 0,
-    indexOfLastChange: newStr.length,
+    indexOfFirstChange: null,
+    indexOfLastChange: null,
     numberOfChanges: 0
   }
 
-  for (let i = 0; i < originalStr.length; i++) {
+  // const longestLength = (originalStr.length > newStr.length) ? originalStr.length : newStr.length
+  const longestLength = originalStr.length
+
+  for (let i = 0; i < longestLength; i++) {
     if (originalStr[i] !== newStr[i]) {
       if (details.indexOfFirstChange === null) {
         details.indexOfFirstChange = i
