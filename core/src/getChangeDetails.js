@@ -5,8 +5,8 @@ export default function getChangeDetails(originalStr = '', newStr = '') {
     numberOfChanges: 0
   }
 
-  // const longestLength = (originalStr.length > newStr.length) ? originalStr.length : newStr.length
-  const longestLength = originalStr.length
+  const longestLength = (originalStr.length > newStr.length) ? originalStr.length : newStr.length
+  // const longestLength = originalStr.length
 
   for (let i = 0; i < longestLength; i++) {
     if (originalStr[i] !== newStr[i]) {

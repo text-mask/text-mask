@@ -8,17 +8,18 @@ export default function adjustCaretPosition({
   currentCaretPosition = 0
 }) {
   const {
-    input: conformToMaskInput = '',
-    output: currentInput = '',
+    input: unconformedInput = '',
+    output: conformedInput = '',
     mask = '',
     config = {}
   } = conformToMaskResults
   const {guide = true} = config
   const placeholder = convertMaskToPlaceholder(mask)
   const isAddition = !(
-    currentInput.length < previousInput.length ||
-    conformToMaskInput.length < previousInput.length
+    conformedInput.length < previousInput.length ||
+    unconformedInput.length < previousInput.length
   )
+  const {numberOfChanges} = getChangeDetails(previousInput, conformedInput)
 
   // if (guide === false) {
   //   if (currentCaretPosition === input.length) {
@@ -37,19 +38,27 @@ export default function adjustCaretPosition({
   // }
 
   const newPosition = (isAddition) ?
-    currentCaretPosition - 1 :
+    currentCaretPosition - (previousInput === conformedInput) ? 1 : 0 :
     currentCaretPosition
+  const base = (numberOfChanges > 1) ? conformedInput : placeholder
+  // const base = conformedInput
+
+  console.log('numberOfChanges', numberOfChanges)
+
+  // if (placeholder[newPosition] === placeholderCharacter) {
+  //   return newPosition
+  // }
 
   if (isAddition) {
-    for (let i = newPosition + 1; i < placeholder.length; i++) {
-      if (placeholder[i] === placeholderCharacter) {
-        return i + 1
+    for (let i = newPosition; i < base.length; i++) {
+      if (base[i] === placeholderCharacter) {
+        return i
       }
     }
   } else {
     for (let i = newPosition; i > 0; i--) {
-      if (placeholder[i] === placeholderCharacter) {
-        return i + 1
+      if (base[i] === placeholderCharacter) {
+        return i
       }
     }
   }
@@ -73,7 +82,7 @@ export default function adjustCaretPosition({
   //   }
   // }
 
-  return newPosition
+  // return newPosition
 
   // if (previousInput === currentInput) {
   //   const newPosition = (isAddition) ?
@@ -136,7 +145,7 @@ export default function adjustCaretPosition({
   //   }
   // }
 
-  return (isAddition) ? currentInput.length : 0
+  return (isAddition) ? conformedInput.length : 0
 }
 
 
