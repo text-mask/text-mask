@@ -127,12 +127,15 @@ describe('adjustCaretPosition', () => {
 
       body: () => {
         expect(adjustCaretPosition({
-          previousInput: test.input.startingInputFieldValue,
+          previousConformedInput: test.input.startingInputFieldValue,
           conformToMaskResults: {
-            input: test.input.userModifiedInputFieldValue,
             output: test.output.conformedInputFieldValue,
-            mask: test.input.mask,
-            config: {guide: true}
+            meta: {
+              input: test.input.userModifiedInputFieldValue,
+              mask: test.input.mask,
+              guide: true,
+              containsRejectedCharacter: test.input.containsRejectedCharacter
+            }
           },
           currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
         })).to.equal(test.output.adjustedCaretPosition)

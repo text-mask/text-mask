@@ -30,13 +30,6 @@ export function contains(array, needle) {
   return array.indexOf(needle) !== -1
 }
 
-const asLongAs = (i, iterable, isReverse) => (isReverse) ? i >= 0 : i < iterable.length
-export function loop(iterable, startingPosition, callback, isReverse = false) {
-  for (let i = startingPosition; asLongAs(i, iterable, isReverse); i = (isReverse) ? i-- : i++) {
-    callback(iterable[i], i)
-  }
-}
-
 export function isAcceptableCharacter(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.numeric:
@@ -74,4 +67,16 @@ function isNumeric(character) {
 
 function isAlphabetic(character) {
   return /^[a-zA-Z]+$/.test(character)
+}
+
+export function getFirstChange(stringOne, stringTwo) {
+  const longestLength = (stringOne.length > stringTwo.length) ? stringOne.length : stringTwo.length
+
+  for (let i = 0; i < longestLength; i++) {
+    if (stringOne[i] !== stringTwo[i]) {
+      return i
+    }
+  }
+
+  return null
 }
