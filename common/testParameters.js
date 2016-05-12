@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
 
-export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U1U'*/, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => t.only, [{
   input: {
     startingInputFieldValue: '(___)',
     userModifiedInputFieldValue: '(3___)',
@@ -39,6 +40,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(12_) _',
     adjustedCaretPosition: 3
   },
+  
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -189,7 +192,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(505) ___-____',
     adjustedCaretPosition: 4,
-  }
+  },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(505) ___-____',
@@ -283,9 +288,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(449) 5',
     adjustedCaretPosition: 7,
     indexOfLastAddedCharacter: 6
-  }
+  },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -788,6 +793,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 4,
     indexOfLastAddedCharacter: 3
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -892,6 +899,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '___ ___',
     adjustedCaretPosition: 0,
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -1018,6 +1027,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(1__)',
     adjustedCaretPosition: 2,
   },
+
+  // only: true
 }, {
   input: {
     mask: '(111) 111-1111',
@@ -1155,8 +1166,8 @@ export const unguidedMode = _.filter((t) => t ,[{
 }, {
   input: {
     mask: '(111) 11',
-    startingInputFieldValue: '(987) 6',
-    userModifiedInputFieldValue: '(9875) 6',
+    startingInputFieldValue: '(987) 6_',
+    userModifiedInputFieldValue: '(9875) 6_',
     caretPositionAfterInputFieldValueChange: 5
   },
 
@@ -1164,6 +1175,8 @@ export const unguidedMode = _.filter((t) => t ,[{
     conformedInputFieldValue: '(987) 56',
     adjustedCaretPosition: 7
   },
+
+  // only: true
 }, {
   input: {
     mask: '(111) 111-1111',

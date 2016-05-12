@@ -142,35 +142,38 @@ describe('adjustCaretPosition', () => {
       }
     })
   )
+  
+  dynamicTests(
+    _.filter(unguidedMode, (testParameter) => {
+      return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
+    }),
 
-  // dynamicTests(
-  //   _.filter(unguidedMode, (testParameter) => {
-  //     return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
-  //   }),
-  //
-  //   (test) => ({
-  //     description: `for previousInput: ${
-  //       JSON.stringify(test.input)
-  //       } and conformToMaskResults: ${JSON.stringify({
-  //         input: test.input.userModifiedInputFieldValue,
-  //         output: test.output.conformedInputFieldValue,
-  //         mask: test.input.mask
-  //       })}, it knows to adjust the caret to '${
-  //       test.output.adjustedCaretPosition
-  //     }'`,
-  //
-  //     body: () => {
-  //       expect(adjustCaretPosition({
-  //         previousInput: test.input.startingInputFieldValue,
-  //         conformToMaskResults: {
-  //           input: test.input.userModifiedInputFieldValue,
-  //           output: test.output.conformedInputFieldValue,
-  //           mask: test.input.mask,
-  //           options: {guided: true}
-  //         },
-  //         currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
-  //       })).to.equal(test.output.adjustedCaretPosition)
-  //     }
-  //   })
-  // )
+    (test) => ({
+      description: `for previousInput: ${
+        JSON.stringify(test.input)
+        } and conformToMaskResults: ${JSON.stringify({
+          input: test.input.userModifiedInputFieldValue,
+          output: test.output.conformedInputFieldValue,
+          mask: test.input.mask
+        })}, it knows to adjust the caret to '${
+        test.output.adjustedCaretPosition
+      }'`,
+
+      body: () => {
+        expect(adjustCaretPosition({
+          previousConformedInput: test.input.startingInputFieldValue,
+          conformToMaskResults: {
+            output: test.output.conformedInputFieldValue,
+            meta: {
+              input: test.input.userModifiedInputFieldValue,
+              mask: test.input.mask,
+              guide: false,
+              containsRejectedCharacter: test.input.containsRejectedCharacter
+            }
+          },
+          currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
+        })).to.equal(test.output.adjustedCaretPosition)
+      }
+    })
+  )
 })
