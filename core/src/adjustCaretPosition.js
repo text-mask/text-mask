@@ -16,8 +16,8 @@ export default function adjustCaretPosition({
   const indexOfFirstChange = getFirstChange(previousConformedInput, rawInput)
   const isMultiCharChange = Math.abs(previousConformedInput.length - rawInput.length) > 1
   const isAmbiguousChange = (indexOfFirstChange - currentCaretPosition) > 1
-  const possiblyHasRejectedChar = previousConformedInput === conformedInput
-  const baseForComparison = (isMultiCharChange) ? conformedInput : placeholder
+  const hasRejectedCharacter = previousConformedInput === conformedInput
+  const baseTargetForCaretPlacement = (isMultiCharChange) ? conformedInput : placeholder
   const isCharInsertedInNonPlaceholderIndex = (placeholder[indexOfFirstChange] !== placeholderChar)
 
   let startingSearchIndex = currentCaretPosition
@@ -26,30 +26,28 @@ export default function adjustCaretPosition({
     startingSearchIndex = currentCaretPosition
   } else if (isMultiCharChange) {
     startingSearchIndex = 0
+  } else if (isAddition && hasRejectedCharacter) {
+    startingSearchIndex--
   } else if (isAddition) {
-    if (possiblyHasRejectedChar) {
-      startingSearchIndex--
-    } else {
-      for (let i = currentCaretPosition; i < placeholder.length; i++) {
-        if (placeholder[i] === placeholderChar) {
-          startingSearchIndex = i + (isCharInsertedInNonPlaceholderIndex ? 1 : 0)
-          break
-        }
+    for (let i = currentCaretPosition; i < placeholder.length; i++) {
+      if (placeholder[i] === placeholderChar) {
+        startingSearchIndex = i + (isCharInsertedInNonPlaceholderIndex ? 1 : 0)
+        break
       }
     }
   }
 
   if (isAddition) {
-    for (let i = startingSearchIndex; i < baseForComparison.length; i++) {
-      if (baseForComparison[i] === placeholderChar) {
+    for (let i = startingSearchIndex; i < baseTargetForCaretPlacement.length; i++) {
+      if (baseTargetForCaretPlacement[i] === placeholderChar) {
         return (i > conformedInput.length) ? conformedInput.length : i
       }
     }
   } else {
     for (let i = startingSearchIndex; i > 0; i--) {
       if (
-        baseForComparison[i] === placeholderChar ||
-        baseForComparison[i - 1] === placeholderChar
+        baseTargetForCaretPlacement[i] === placeholderChar ||
+        baseTargetForCaretPlacement[i - 1] === placeholderChar
       ) {
         return i
       }
