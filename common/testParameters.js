@@ -1,6 +1,8 @@
 import _ from 'lodash/fp'
 
+
 export default _.filter((t) => t, [{
+// export default _.filter((t) => false, [{
 // export default _.filter((t) => t.only, [{
   input: {
     startingInputFieldValue: '(___)',
@@ -234,7 +236,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 1
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     startingInputFieldValue: '(000) ___-____',
@@ -290,7 +292,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 6
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -1041,10 +1043,43 @@ export default _.filter((t) => t, [{
     conformedInputFieldValue: '(290) 383-039_',
     adjustedCaretPosition: 8
   },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(___) ___-____',
+    adjustedCaretPosition: 1
+  },
+
+  only: true
 }])
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const unguidedMode = _.filter((t) => false ,[{
 export const unguidedMode = _.filter((t) => t ,[{
+// export const unguidedMode = _.filter((t) => t.only ,[{
   input: {
     mask: '(111)',
     startingInputFieldValue: '',
@@ -1126,6 +1161,8 @@ export const unguidedMode = _.filter((t) => t ,[{
     conformedInputFieldValue: '(1',
     adjustedCaretPosition: 2
   },
+
+  // only: true
 }, {
   input: {
     mask: '(111)',
@@ -1176,7 +1213,7 @@ export const unguidedMode = _.filter((t) => t ,[{
     adjustedCaretPosition: 7
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     mask: '(111) 111-1111',
