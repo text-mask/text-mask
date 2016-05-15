@@ -1072,6 +1072,20 @@ export default _.filter((t) => t, [{
   },
 
   // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(1__) ___-____',
+    userModifiedInputFieldValue: '(__) ___-____',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(___) ___-____',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
 }])
 
 
@@ -1253,4 +1267,18 @@ export const unguidedMode = _.filter((t) => t ,[{
     conformedInputFieldValue: '',
     adjustedCaretPosition: 0
   },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(1',
+    userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+
+  only: true
 }])

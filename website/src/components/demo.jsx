@@ -2,7 +2,6 @@ import React from 'react'
 import MaskedInput from '../../../integrations/react/src/reactTextMask.jsx'
 import classnames from 'classnames'
 import demoStyles from './demo.scss'
-import {maskingCharactersWithDescription, maskingCharacters} from '../../../core/src/constants.js'
 
 const Demo = React.createClass({
   getInitialState() {
@@ -32,6 +31,8 @@ const Demo = React.createClass({
       mask: '',
 
       selectedChoice: 0,
+
+      guide: true
     }
 
     initialState.mask = initialState.choices[initialState.selectedChoice].mask
@@ -40,7 +41,9 @@ const Demo = React.createClass({
   },
 
   render() {
-    const {mask} = this.state
+    const {mask, guide} = this.state
+
+    console.log('guide', guide)
 
     return (
       <div>
@@ -57,7 +60,7 @@ const Demo = React.createClass({
                 <MaskedInput
                   ref="maskedInput"
                   mask={mask}
-                  guide={true}
+                  guide={guide}
                   className="form-control"
                   id="maskedInput"
                 />
@@ -69,57 +72,44 @@ const Demo = React.createClass({
                 htmlFor="mask"
                 className="col-sm-3 control-label">Mask</label>
 
-              <div className="col-sm-5">
-                <input
-                  ref="mask"
-                  type="text"
-                  onChange={this.onMaskChange}
-                  value={mask}
-                  className={classnames('form-control', demoStyles.mask)}
-                  id="mask"
-                />
-              </div>
-
               <div className="col-sm-4">
-                <select className="form-control" onChange={this.onSelectMask} ref="maskSelect">
+                <select className="form-control" onChange={this.onDropdownListMaskSelect} ref="maskSelect">
                   {this.state.choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
                   })}
                   <option value="custom">Custom</option>
                 </select>
               </div>
+
+              <div className="col-sm-5">
+                <input
+                  ref="mask"
+                  type="text"
+                  onChange={this.onManualMaskChange}
+                  value={mask}
+                  className={classnames('form-control', demoStyles.mask)}
+                  id="mask"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="guide" className="col-sm-3 control-label">Guide</label>
+
+              <div className="col-sm-2">
+                <select className="form-control" onChange={this.changeGuide} ref="maskSelect">
+                  <option value="on">On</option>
+                  <option value="off">Off</option>
+                </select>
+              </div>
             </div>
           </form>
-        </div>
-
-        <div>
-          <table className="table table-striped table-bordered">
-            <caption>Masking characters</caption>
-            <thead>
-            <tr>
-              <th>Character</th>
-              <th>Description</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {maskingCharacters.map((maskingCharacter, index) => {
-              return (
-                <tr key={index}>
-                  <td><code>{maskingCharacter}</code></td>
-                  <td>{maskingCharactersWithDescription[maskingCharacter]}</td>
-                </tr>
-              )
-            })}
-            </tbody>
-
-          </table>
         </div>
       </div>
     )
   },
 
-  onMaskChange({target: {value: mask}}) {
+  onManualMaskChange({target: {value: mask}}) {
     const choice = this.findChoice('mask', mask)
 
     if (choice !== undefined) {
@@ -128,21 +118,22 @@ const Demo = React.createClass({
       this.refs.maskSelect.value = 'custom'
     }
 
-    this.changeMask(mask)
+    this.setState({mask})
+    this.refs.maskedInput.refs.inputElement.focus()
   },
 
-  onSelectMask({target: {value: selectValue}}) {
+  onDropdownListMaskSelect({target: {value: selectValue}}) {
     if (selectValue !== 'custom'){
-      this.changeMask(this.findChoice('value', selectValue).mask)
-      this.refs.maskedInput.refs.inputElement.focus()
+      this.setState({mask: this.findChoice('value', selectValue).mask})
     } else {
       this.refs.mask.value = ''
       this.refs.mask.focus()
     }
   },
 
-  changeMask(mask) {
-    this.setState({mask})
+  changeGuide({target: {value: guideValue}}) {
+    this.setState({guide: guideValue === 'on'})
+    this.refs.maskedInput.refs.inputElement.focus()
   },
 
   findChoice(name, value) {

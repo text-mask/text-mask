@@ -15,9 +15,8 @@ describe.only('conformToMask', () => {
     unguidedMode,
 
     (test) => ({
-      description: `for userInput '${
-        test.input.userModifiedInputFieldValue
-      }' and mask '${test.input.mask}', outputs '${test.output.conformedInputFieldValue}'`,
+      description: `for input ${JSON.stringify(test.input)}, ` +
+      `it outputs '${test.output.conformedInputFieldValue}'`,
 
       body: () => {
         expect(conformToMask(
@@ -33,9 +32,8 @@ describe.only('conformToMask', () => {
     testParameters,
 
     (test) => ({
-      description: `for userInput ${
-        test.input.userModifiedInputFieldValue
-      } and mask ${test.input.mask}, outputs ${test.output.conformedInputFieldValue}`,
+      description: `for input ${JSON.stringify(test.input)}, ` +
+      `it outputs '${test.output.conformedInputFieldValue}'`,
 
       body: () => {
         expect(conformToMask(

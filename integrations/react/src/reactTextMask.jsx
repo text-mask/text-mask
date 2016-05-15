@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import _ from 'lodash'
 import {
   conformToMask,
   convertMaskToPlaceholder,
@@ -53,6 +52,8 @@ export const MaskedInput = React.createClass({
       state: {placeholder, conformedInput: previousConformedInput}
     } = this
 
+    console.log('guide', guide)
+
     const conformToMaskResults = conformToMask(
       userInput,
       mask,
@@ -65,8 +66,6 @@ export const MaskedInput = React.createClass({
       conformToMaskResults,
       currentCaretPosition: this.refs.inputElement.selectionStart
     })
-
-    console.log('adjustedCaretPosition', adjustedCaretPosition)
 
     const finalConformedInput = (
       conformedInput === placeholder &&

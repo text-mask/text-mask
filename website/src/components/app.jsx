@@ -2,6 +2,7 @@ import React from 'react'
 import gettingStarted from '../markdowns/gettingStarted.md'
 import whyTextMask from '../markdowns/whyTextMask.md'
 import Demo from './demo.jsx'
+import Features from './features.jsx'
 import style from './app.scss'
 import classnames from 'classnames'
 import NavBar from './navBar.jsx'
@@ -43,6 +44,8 @@ const Homepage = React.createClass({
           dangerouslySetInnerHTML={{__html: gettingStarted}}
         ></div>
 
+        <Features/>
+        
         <hr/>
 
         <Demo/>

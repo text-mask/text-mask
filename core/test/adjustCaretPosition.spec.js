@@ -132,7 +132,7 @@ describe('adjustCaretPosition', () => {
     }),
 
     (test) => ({
-      description: `for previousInput: ${
+      description: `for input: ${
         JSON.stringify(test.input)
         } and conformToMaskResults: ${JSON.stringify({
           input: test.input.userModifiedInputFieldValue,
@@ -166,7 +166,7 @@ describe('adjustCaretPosition', () => {
     }),
 
     (test) => ({
-      description: `for previousInput: ${
+      description: `for input: ${
         JSON.stringify(test.input)
         } and conformToMaskResults: ${JSON.stringify({
           input: test.input.userModifiedInputFieldValue,

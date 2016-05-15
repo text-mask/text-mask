@@ -8,7 +8,7 @@ import {placeholderCharacter} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   const placeholder = convertMaskToPlaceholder(mask)
-  const {guide = false, previousUserInput} = config
+  const {guide = true, previousUserInput} = config
   const suppressGuide = guide === false && previousUserInput !== undefined
   const userInputArr = tokenize(userInput)
   const isAddition = suppressGuide && !(userInput.length < previousUserInput.length)
@@ -59,7 +59,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       }
     }
 
-    if (suppressGuide && !isAddition) {
+    if (suppressGuide && isAddition === false) {
       let indexOfLastFilledPlaceholderCharacter = null
 
       // Find the last filled placeholder position and substring from there
@@ -74,6 +74,8 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
       if (indexOfLastFilledPlaceholderCharacter !== null) {
         conformedString = conformedString.substr(0, indexOfLastFilledPlaceholderCharacter + 1)
+      } else {
+        conformedString = ''
       }
     }
   }

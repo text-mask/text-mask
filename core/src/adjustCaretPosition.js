@@ -101,20 +101,27 @@ export default function adjustCaretPosition({
         i === baseTargetForCaretPlacement.length
       ) {
         // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
-        // positioning in `guide === false` mode. There are a few edge cases which are solved by this.
-        // To see what happens without it, uncomment the line below and run the test suite
+        // positioning in `guide === false` mode. There are a few edge cases which are
+        // solved by this. To see what happens without it, uncomment the line below and run
+        // the test suite
 
         // return i
         return (i > conformedInput.length) ? conformedInput.length : i
       }
     }
   } else {
-    for (let i = startingSearchIndex; i > 0; i--) {
+    for (let i = startingSearchIndex; i >= 0; i--) {
       // If we're deleting, we stop the caret right before the placeholder character.
       // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
       // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
       // right after the first `6`
-      if (baseTargetForCaretPlacement[i - 1] === placeholderChar) {
+      if (
+        baseTargetForCaretPlacement[i - 1] === placeholderChar ||
+
+        // This is the beginning of the target. We cannot move any further.
+        // Let's put the caret there.
+        i === 0
+      ) {
         return i
       }
     }
