@@ -1,4 +1,4 @@
-import {convertMaskToPlaceholder, getFirstChange} from './utilities.js'
+import {convertMaskToPlaceholder, getIndexOfFirstChange} from './utilities.js'
 import {placeholderCharacter as placeholderChar} from './constants.js'
 
 export default function adjustCaretPosition({
@@ -12,7 +12,7 @@ export default function adjustCaretPosition({
   const {input: rawInput = '', mask = ''} = meta
 
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
-  const indexOfFirstChange = getFirstChange(previousConformedInput, rawInput)
+  const indexOfFirstChange = getIndexOfFirstChange(previousConformedInput, rawInput)
 
   // When user modifies string from (444) 444-44__ to (444) 444-444_ while caret is at position
   // 2, `indexOfChange` would be 12. This is what I call ambiguous change
@@ -91,30 +91,32 @@ export default function adjustCaretPosition({
   // the base in which to look for the caret position, whether `placeholder` or `conformedInput`.
   //
   // Now, if `isAddition`, we seek forward. Otherwise we seek back.
-  for (
-    let i = startingSearchIndex;
-    (isAddition ? i <= baseTargetForCaretPlacement.length : i > 0);
-    (isAddition ? i++ : i--)
-  ) {
-    if (
-      // We've found a placeholder character. We can put the caret there.
-      baseTargetForCaretPlacement[i] === placeholderChar ||
+  if (isAddition) {
+    for (let i = startingSearchIndex; i <= baseTargetForCaretPlacement.length; i++) {
+      if (
+        // If we're adding, we can position the caret at the next placeholder character.
+        baseTargetForCaretPlacement[i] === placeholderChar ||
 
-      // This is the end of the target. We can move any further. Let's put the caret there.
-      i === baseTargetForCaretPlacement.length ||
+        // This is the end of the target. We cannot move any further. Let's put the caret there.
+        i === baseTargetForCaretPlacement.length
+      ) {
+        // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
+        // positioning in `guide === false` mode. There are a few edge cases which are solved by this.
+        // To see what happens without it, uncomment the line below and run the test suite
 
-      // When user is deleting, it is OK to stop the caret at a non-placeholder position.
+        // return i
+        return (i > conformedInput.length) ? conformedInput.length : i
+      }
+    }
+  } else {
+    for (let i = startingSearchIndex; i > 0; i--) {
+      // If we're deleting, we stop the caret right before the placeholder character.
       // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
-      // modifies input to `(456 86`. That is, they deleted the `)`, it's okay, to place the caret
-      // right after the `6`
-      (isAddition === false && baseTargetForCaretPlacement[i - 1] === placeholderChar)
-    ) {
-      // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
-      // positioning in `guide === false` mode. There are a few edge cases which are solved by this.
-      // To see what happens without it, uncomment the line below and run the test suite
-
-      // return i
-      return (i > conformedInput.length) ? conformedInput.length : i
+      // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
+      // right after the first `6`
+      if (baseTargetForCaretPlacement[i - 1] === placeholderChar) {
+        return i
+      }
     }
   }
 }

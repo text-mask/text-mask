@@ -66,7 +66,7 @@ export default _.filter((t) => t, [{
 
   output: {
     conformedInputFieldValue: '(1__) ___-____',
-    adjustedCaretPosition: 10
+    adjustedCaretPosition: 9
   },
 
   // only: true
@@ -272,7 +272,7 @@ export default _.filter((t) => t, [{
 
   output: {
     conformedInputFieldValue: '(124) _',
-    adjustedCaretPosition: 6,
+    adjustedCaretPosition: 4,
     indexOfFirstRemovedCharacter: 6
   },
 
@@ -291,7 +291,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 6
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -1055,6 +1055,20 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(___) ___-____',
     adjustedCaretPosition: 1
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(395) 834-____',
+    userModifiedInputFieldValue: '(395) 34-____',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '(395) 34_-____',
+    adjustedCaretPosition: 4
   },
 
   // only: true

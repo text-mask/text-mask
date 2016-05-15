@@ -69,7 +69,7 @@ function isAlphabetic(character) {
   return /^[a-zA-Z]+$/.test(character)
 }
 
-export function getFirstChange(stringOne, stringTwo) {
+export function getIndexOfFirstChange(stringOne, stringTwo) {
   const longestLength = (stringOne.length > stringTwo.length) ? stringOne.length : stringTwo.length
 
   for (let i = 0; i < longestLength; i++) {

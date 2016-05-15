@@ -1,7 +1,6 @@
 import {
   convertMaskToPlaceholder,
   tokenize,
-  getDelimiters,
   isAcceptableCharacter,
   potentiallyTransformCharacter,
 } from './utilities.js'
