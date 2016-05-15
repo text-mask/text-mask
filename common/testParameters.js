@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 
-
 export default _.filter((t) => t, [{
 // export default _.filter((t) => false, [{
 // export default _.filter((t) => t.only, [{
@@ -236,7 +235,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 1
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(000) ___-____',
@@ -674,6 +673,8 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 0,
     indexOfFirstRemovedCharacter: 1
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -1056,7 +1057,7 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 1
   },
 
-  only: true
+  // only: true
 }])
 
 
@@ -1077,8 +1078,8 @@ export default _.filter((t) => t, [{
 
 
 
-// export const unguidedMode = _.filter((t) => false ,[{
 export const unguidedMode = _.filter((t) => t ,[{
+// export const unguidedMode = _.filter((t) => false ,[{
 // export const unguidedMode = _.filter((t) => t.only ,[{
   input: {
     mask: '(111)',
@@ -1213,7 +1214,7 @@ export const unguidedMode = _.filter((t) => t ,[{
     adjustedCaretPosition: 7
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     mask: '(111) 111-1111',

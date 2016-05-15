@@ -57,7 +57,7 @@ const Demo = React.createClass({
                 <MaskedInput
                   ref="maskedInput"
                   mask={mask}
-                  guide={true}
+                  guide={false}
                   className="form-control"
                   id="maskedInput"
                 />
