@@ -15,7 +15,7 @@ IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and
 
 ### Guide mode
 
-Guide mode lets the user type while displaying placeholder characters and the mask itself
+Guide mode prints out placeholder characters and the mask itself as the user types
 
 <p align="center">
 <img src="assets/guideMode.gif"/>
@@ -23,7 +23,8 @@ Guide mode lets the user type while displaying placeholder characters and the ma
 
 ### No-guide mode
 
-No-guide mode doesn't print out placeholder characters and fills the mask as the user types
+No-guide mode doesn't print out placeholder characters and only adds mask characters when the
+user reaches them
 
 <p align="center">
 <img src="assets/noGuideMode.gif"/>
@@ -39,7 +40,10 @@ Character | Description
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
 
-And it supports pasting and browser auto-fill
+### Other features
+
+* Supports pasting
+* Supports browser auto-fill
 
 ## Live demo
 
