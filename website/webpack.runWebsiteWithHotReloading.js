@@ -33,9 +33,6 @@ module.exports = {
         path.join(__dirname, '../integrations/react/')
       ]
     }, {
-      test: /\.md/,
-      loaders: ['html-loader', 'highlight-loader', 'markdown-loader']
-    }, {
       // Process website/src/styles.scss as a regular Sass file
       test: /\.scss$/,
       loaders: ['style', 'css', 'sass'],

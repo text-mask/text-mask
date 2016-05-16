@@ -1,16 +1,8 @@
 import React from 'react'
-import gettingStarted from '../markdowns/gettingStarted.md'
-import whyTextMask from '../markdowns/whyTextMask.md'
 import Demo from './demo.jsx'
-import Features from './features.jsx'
 import style from './app.scss'
-import classnames from 'classnames'
 import NavBar from './navBar.jsx'
-import ReactGettingStarted from './react.gettingStarted.jsx'
-import CoreGettingStarted from './core.gettingStarted.jsx'
-import VanillaGettingStarted from './vanilla.gettingStarted.jsx'
-import Angular2GettingStarted from './angular2.gettingStarted.jsx'
-import {Router, Route, IndexRoute, Link, hashHistory} from 'react-router'
+import classnames from 'classnames'
 
 const App = React.createClass({
   render() {
@@ -19,7 +11,7 @@ const App = React.createClass({
         <NavBar/>
 
         <div className={classnames(style.mainContainer, 'container')}>
-          {this.props.children}
+          <Demo/>
         </div>
 
         <footer className={style.footer}>
@@ -35,46 +27,4 @@ const App = React.createClass({
   }
 })
 
-const Homepage = React.createClass({
-  render() {
-    return (
-      <span>
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={{__html: gettingStarted}}
-        ></div>
-
-        <Features/>
-        
-        <hr/>
-
-        <Demo/>
-
-        <hr/>
-
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={{__html: whyTextMask}}
-        ></div>
-      </span>
-    );
-  }
-})
-
-const AppWithRoutes = React.createClass({
-  render() {
-    return (
-      <Router history={hashHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute component={Homepage}/>
-          <Route path="/react" component={ReactGettingStarted}/>
-          <Route path="/angular2" component={Angular2GettingStarted}/>
-          <Route path="/core" component={CoreGettingStarted}/>
-          <Route path="/vanilla" component={VanillaGettingStarted}/>
-        </Route>
-      </Router>
-    )
-  }
-})
-
-export default AppWithRoutes
+export default App

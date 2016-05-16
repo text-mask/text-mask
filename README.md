@@ -7,23 +7,23 @@ any user input, as they type, to a given mask pattern. For example:
 
 With mask `(111) 111-1111` and user input `5845739`, the output would be `(584) 573-9___`
 
-## Demo
-
-To see Text Mask in action, [checkout the website](https://msafi.github.io/text-mask/).
-
 ## Features
 
-### Guided mode
+### Expected to work with...
 
-Guided mode lets the user type while displaying placeholder characters and the mask itself
+IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
 
-![Guided mode](assets/guidedMode.gif)
+### Guide mode
 
-### Unguided mode
+Guide mode lets the user type while displaying placeholder characters and the mask itself
 
-Unguided mode naturally fills the mask as the user types
+![Guided mode](assets/guideMode.gif)
 
-![Unguided mode](assets/unguidedMode.gif)
+### No-guide mode
+
+No-guide mode hides placeholder characters and naturally fills the mask as the user types
+
+![Unguided mode](assets/noGuideMode.gif)
 
 ### Masking characters
 
@@ -35,15 +35,15 @@ Character | Description
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
 
-### Expected to work with...
+## Live demo
 
-IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
+To see Text Mask in action, [checkout the demo page](https://msafi.github.io/text-mask/).
 
 ## Installation and usage
 
-* [React](https://msafi.github.io/text-mask/#/react)
-* [Angular 2](https://msafi.github.io/text-mask/#/angular2)
-* [Vanilla JS](https://msafi.github.io/text-mask/#/vanilla)
+* [React](integrations/react)
+* [Angular 2](integrations/angular2)
+* [Vanilla JS](integrations/vanilla)
 
 ## Support
 

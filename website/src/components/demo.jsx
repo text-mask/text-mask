@@ -46,7 +46,12 @@ const Demo = React.createClass({
 
     return (
       <div>
-        <h2 id="demo">Demo</h2>
+        <h3>Demo</h3>
+        
+        <p>
+          This is just a demo of the Text Mask library. For more information about
+          installation, usage, and documentation, see the GitHub page.
+        </p>
 
         <div className="well">
           <form className="form-horizontal">
