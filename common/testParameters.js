@@ -1086,6 +1086,20 @@ export default _.filter((t) => t, [{
   },
 
   // only: true
+}, {
+  input: {
+    mask: 'U1U 1U1',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '5',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '___ ___',
+    adjustedCaretPosition: 0
+  },
+
+  only: true
 }])
 
 
@@ -1106,8 +1120,8 @@ export default _.filter((t) => t, [{
 
 
 
-export const unguidedMode = _.filter((t) => t ,[{
-// export const unguidedMode = _.filter((t) => false ,[{
+// export const unguidedMode = _.filter((t) => t ,[{
+export const unguidedMode = _.filter((t) => false ,[{
 // export const unguidedMode = _.filter((t) => t.only ,[{
   input: {
     mask: '(111)',

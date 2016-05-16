@@ -35,7 +35,10 @@ export default function adjustCaretPosition({
   // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
   // same as the original `previousConformedInput`. We handle this case differently for caret
   // positioning.
-  const possiblyHasRejectedChar = isAddition && previousConformedInput === conformedInput
+  const possiblyHasRejectedChar = isAddition && (
+    previousConformedInput === conformedInput ||
+    conformedInput === placeholder
+  )
 
   // There's an edge case when the user enters the first character of the mask and it's a mask
   // delimiter. For example, mask (111) 111-1111, and user enters `(`. In this case, the
