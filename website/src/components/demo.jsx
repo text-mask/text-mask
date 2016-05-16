@@ -5,45 +5,44 @@ import demoStyles from './demo.scss'
 
 const Demo = React.createClass({
   getInitialState() {
-    const initialState = {
+    return {
       choices: [{
         value: 'usPhoneNumber',
         name: 'US phone number',
-        mask: '(111) 111-1111'
+        mask: '(111) 111-1111',
+        placeholder: '(555) 495-3947'
       }, {
         value: 'canadianPostalCode',
         name: 'Canadian postal code',
-        mask: 'U1U U1U'
+        mask: 'U1U 1U1',
+        placeholder: 'K1A 0B2'
       }, {
         value: 'date',
         name: 'Date',
-        mask: '11/11/1111'
+        mask: '11/11/1111',
+        placeholder: '25/09/1970'
       }, {
         value: 'fiveDigitNumber',
         name: 'Five digit number (zip code)',
-        mask: '11111'
+        mask: '11111',
+        placeholder: '94303'
       }, {
         value: 'threeLetterMonth',
         name: 'Three letter month name',
-        mask: 'ULL'
+        mask: 'ULL',
+        placeholder: 'Mar'
       }],
-
-      mask: '',
 
       selectedChoice: 0,
 
-      guide: true
+      guide: false
     }
-
-    initialState.mask = initialState.choices[initialState.selectedChoice].mask
-
-    return initialState
   },
 
   render() {
-    const {mask, guide} = this.state
-
-    console.log('guide', guide)
+    const {guide, choices, selectedChoice} = this.state
+    const mask = choices[selectedChoice].mask
+    const placeholder = guide === false ? `Example ${choices[selectedChoice].placeholder}`  : ''
 
     return (
       <div>
@@ -58,6 +57,7 @@ const Demo = React.createClass({
 
               <div className="col-sm-9">
                 <MaskedInput
+                  placeholder={placeholder}
                   ref="maskedInput"
                   mask={mask}
                   guide={guide}
@@ -73,7 +73,10 @@ const Demo = React.createClass({
                 className="col-sm-3 control-label">Mask</label>
 
               <div className="col-sm-4">
-                <select className="form-control" onChange={this.onDropdownListMaskSelect} ref="maskSelect">
+                <select
+                  className="form-control"
+                  onChange={this.onDropdownListMaskSelect}
+                  ref="maskSelect">
                   {this.state.choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
                   })}
@@ -124,7 +127,7 @@ const Demo = React.createClass({
 
   onDropdownListMaskSelect({target: {value: selectValue}}) {
     if (selectValue !== 'custom'){
-      this.setState({mask: this.findChoice('value', selectValue).mask})
+      this.setState({selectedChoice: this.findChoice('value', selectValue)})
     } else {
       this.refs.mask.value = ''
       this.refs.mask.focus()
@@ -137,7 +140,7 @@ const Demo = React.createClass({
   },
 
   findChoice(name, value) {
-    return this.state.choices.find((choice) => {
+    return this.state.choices.findIndex((choice) => {
       return choice[name] === value
     })
   }

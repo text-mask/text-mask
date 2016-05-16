@@ -7,21 +7,25 @@ any user input, as they type, to a given mask pattern. For example:
 
 With mask `(111) 111-1111` and user input `5845739`, the output would be `(584) 573-9___`
 
-## Expected to work with...
-
-IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
-
 ## Demo
 
 To see Text Mask in action, [checkout the website](https://msafi.github.io/text-mask/).
 
-## Installation and usage
+## Features
 
-* [React](https://msafi.github.io/text-mask/#/react)
-* [Angular 2](https://msafi.github.io/text-mask/#/angular2)
-* [Vanilla JS](https://msafi.github.io/text-mask/#/vanilla)
+### Guided mode
 
-## Masking characters
+Guided mode lets the user type while displaying placeholder characters and the mask itself
+
+![Guided mode](assets/guidedMode.gif)
+
+### Unguided mode
+
+Unguided mode naturally fills the mask as the user types
+
+![Unguided mode](assets/unguidedMode.gif)
+
+### Masking characters
 
 Character | Description
 --- | ---
@@ -30,6 +34,16 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+
+### Expected to work with...
+
+IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
+
+## Installation and usage
+
+* [React](https://msafi.github.io/text-mask/#/react)
+* [Angular 2](https://msafi.github.io/text-mask/#/angular2)
+* [Vanilla JS](https://msafi.github.io/text-mask/#/vanilla)
 
 ## Support
 

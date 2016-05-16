@@ -21,7 +21,10 @@ export const MaskedInput = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.mask !== this.props.mask) {
+    if (
+      nextProps.mask !== this.props.mask ||
+      nextProps.guide !== this.props.guide
+    ) {
       this.setState(this.getInitialState({mask: nextProps.mask}))
     }
   },
@@ -32,6 +35,7 @@ export const MaskedInput = React.createClass({
 
   render() {
     const {props, state: {placeholder, conformedInput}, onChange} = this
+    const {placeholder: originalPlaceholder} = props
 
     return (
       <input
@@ -39,7 +43,7 @@ export const MaskedInput = React.createClass({
         type={props.type || 'text'}
         onChange={onChange}
         value={conformedInput}
-        placeholder={placeholder}
+        placeholder={originalPlaceholder || placeholder}
         ref="inputElement"
       />
     )
@@ -51,8 +55,6 @@ export const MaskedInput = React.createClass({
       props: {mask, guide},
       state: {placeholder, conformedInput: previousConformedInput}
     } = this
-
-    console.log('guide', guide)
 
     const conformToMaskResults = conformToMask(
       userInput,
