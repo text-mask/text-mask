@@ -5,7 +5,7 @@ import demoStyles from './demo.scss'
 
 const Demo = React.createClass({
   getInitialState() {
-    return {
+    const initialState = {
       choices: [{
         value: 'usPhoneNumber',
         name: 'US phone number',
@@ -35,19 +35,25 @@ const Demo = React.createClass({
 
       selectedChoice: 0,
 
-      guide: false
+      guide: false,
     }
+
+    initialState.mask = initialState.choices[initialState.selectedChoice].mask
+
+    return initialState
   },
 
   render() {
-    const {guide, choices, selectedChoice} = this.state
-    const mask = choices[selectedChoice].mask
-    const placeholder = guide === false ? `Example ${choices[selectedChoice].placeholder}`  : ''
+    const {guide, choices, selectedChoice, mask} = this.state
+    const {maskSelect} = this.refs
+    const placeholder = (
+      guide === false && (maskSelect === undefined || maskSelect.value !== 'custom')
+    ) ? `Example ${choices[selectedChoice].placeholder}`  : ''
 
     return (
       <div>
         <h3>Demo</h3>
-        
+
         <p>
           This is just a demo of the Text Mask library. For more information about
           installation, usage, and documentation, see the GitHub page.
@@ -80,7 +86,7 @@ const Demo = React.createClass({
               <div className="col-sm-4">
                 <select
                   className="form-control"
-                  onChange={this.onDropdownListMaskSelect}
+                  onChange={this.onDropDownListMaskSelect}
                   ref="maskSelect">
                   {this.state.choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
@@ -105,9 +111,9 @@ const Demo = React.createClass({
               <label htmlFor="guide" className="col-sm-3 control-label">Guide</label>
 
               <div className="col-sm-2">
-                <select className="form-control" onChange={this.changeGuide} ref="maskSelect">
-                  <option value="on">On</option>
+                <select className="form-control" onChange={this.changeGuide} ref="guideSelect">
                   <option value="off">Off</option>
+                  <option value="on">On</option>
                 </select>
               </div>
             </div>
@@ -118,30 +124,44 @@ const Demo = React.createClass({
   },
 
   onManualMaskChange({target: {value: mask}}) {
-    const choice = this.findChoice('mask', mask)
+    const {state: {choices}, refs: {maskSelect}} = this
+    const selectedChoice = this.findChoice('mask', mask)
+    const choice = choices[selectedChoice]
 
     if (choice !== undefined) {
-      this.refs.maskSelect.value = choice.value
+      maskSelect.value = choice.value
     } else {
-      this.refs.maskSelect.value = 'custom'
+      maskSelect.value = 'custom'
     }
 
-    this.setState({mask})
-    this.refs.maskedInput.refs.inputElement.focus()
+    this.setState({mask, selectedChoice})
   },
 
-  onDropdownListMaskSelect({target: {value: selectValue}}) {
+  onDropDownListMaskSelect({target: {value: selectValue}}) {
+    const {
+      state: {choices},
+      refs: {maskedInput: {refs: {inputElement}}, mask},
+      findChoice
+    } = this
+
     if (selectValue !== 'custom'){
-      this.setState({selectedChoice: this.findChoice('value', selectValue)})
+      const selectedChoice = findChoice('value', selectValue)
+
+      this.setState({selectedChoice, mask: choices[selectedChoice].mask})
+
+      inputElement.focus()
     } else {
-      this.refs.mask.value = ''
-      this.refs.mask.focus()
+      mask.value = ''
+      mask.focus()
     }
   },
 
   changeGuide({target: {value: guideValue}}) {
+    const {refs: {maskedInput: {refs: {inputElement}}}} = this
+
     this.setState({guide: guideValue === 'on'})
-    this.refs.maskedInput.refs.inputElement.focus()
+
+    inputElement.focus()
   },
 
   findChoice(name, value) {
