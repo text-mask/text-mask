@@ -33,7 +33,6 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       if (characterInPlaceholder === placeholderCharacter) {
         // We have user characters that we need to map
         if (userInputArr.length > 0) {
-
           // Loop through, potentially, the entire user input to find a suitable
           // character to put in the placeholder position
           while (userInputArr.length > 0) {

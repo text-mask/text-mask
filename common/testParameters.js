@@ -41,7 +41,7 @@ export default _.filter((t) => t, [{
     conformedInputFieldValue: '(12_) _',
     adjustedCaretPosition: 3
   },
-  
+
   // only: true
 }, {
   input: {
@@ -718,7 +718,6 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 5,
   },
 
-
   skips: [
     'adjustCaretPosition' // won't fix
   ]
@@ -1102,27 +1101,14 @@ export default _.filter((t) => t, [{
   only: true
 }])
 
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const unguidedMode = _.filter((t) => t ,[{
-export const unguidedMode = _.filter((t) => false ,[{
-// export const unguidedMode = _.filter((t) => t.only ,[{
+export const unguidedMode = _.filter((t) => t, [{
+// export const unguidedMode = _.filter((t) => false, [{
+// export const unguidedMode = _.filter((t) => t.only, [{
   input: {
     mask: '(111)',
     startingInputFieldValue: '',

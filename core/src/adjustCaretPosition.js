@@ -88,7 +88,7 @@ export default function adjustCaretPosition({
       }
     }
   }
-  
+
   // At this point, we have determined a reasonable index from which we can begin searching for
   // the correct caret position and we've put it in `startingSearchIndex`. And we've determined
   // the base in which to look for the caret position, whether `placeholder` or `conformedInput`.

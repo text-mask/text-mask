@@ -45,10 +45,6 @@ You can see a working example in
 
 For a plain JavaScript example, you can check out [this Plunk](http://plnkr.co/edit/QImy7qOVZTmTM8ftiB84?p=preview).
 
-## Source code
-
-The source code for Angular 2 Text Mask is [available here](https://github.com/msafi/text-mask/tree/master/integrations/angular2).
-
 ## License
 
-Public domain - [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/)
+Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
