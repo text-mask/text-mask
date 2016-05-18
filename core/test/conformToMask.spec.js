@@ -41,7 +41,7 @@ describe('conformToMask', () => {
           expect(conformToMask(
             test.input.userModifiedInputFieldValue,
             test.input.mask,
-            {guide: false, previousUserInput: test.input.startingInputFieldValue}
+            {guide: false, previousConformedInput: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
         }
       })

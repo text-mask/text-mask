@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {convertMaskToPlaceholder} from '../core/src/utilities.js'
 
 export default _.filter((t) => t, [{
 // export default _.filter((t) => false, [{
@@ -304,9 +305,9 @@ export default _.filter((t) => t, [{
     conformedInputFieldValue: '(__4) ___-____',
     adjustedCaretPosition: 6,
     indexOfLastAddedCharacter: 3
-  }
+  },
 
-  //only: true
+  only: true
 }, {
   input: {
     startingInputFieldValue: '1__',
@@ -1294,3 +1295,17 @@ export const noGuideMode = _.filter((t) => t, [{
 
   only: true
 }])
+
+export function transformTestForComponent(test) {
+  const {
+    input: {mask},
+    output: {conformedInputFieldValue, adjustedCaretPosition}
+  } = test
+
+  return {
+    conformedInputFieldValue: (
+      conformedInputFieldValue === convertMaskToPlaceholder(mask) &&
+      adjustedCaretPosition === 0
+    ) ? '' : conformedInputFieldValue
+  }
+}

@@ -8,10 +8,10 @@ import {placeholderCharacter} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   const placeholder = convertMaskToPlaceholder(mask)
-  const {guide = true, previousUserInput} = config
-  const suppressGuide = guide === false && previousUserInput !== undefined
+  const {guide = true, previousConformedInput} = config
+  const suppressGuide = guide === false && previousConformedInput !== undefined
   const userInputArr = tokenize(userInput)
-  const isAddition = suppressGuide && !(userInput.length < previousUserInput.length)
+  const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
 
   let conformedString = ''
 

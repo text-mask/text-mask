@@ -60,7 +60,7 @@ export const MaskedInput = React.createClass({
     const conformToMaskResults = conformToMask(
       userInput,
       mask,
-      (guide === false) ? {guide: false, previousUserInput: previousConformedInput} : {}
+      (guide === false) ? {guide: false, previousConformedInput} : {}
     )
     const {output: conformedInput} = conformToMaskResults
 

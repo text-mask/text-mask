@@ -6,7 +6,10 @@ import sinon from 'sinon'
 import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters, {noGuideMode} from '../../../common/testParameters.js'
+import testParameters, {
+  noGuideMode, 
+  transformTestForComponent
+} from '../../../common/testParameters.js'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
@@ -93,60 +96,121 @@ describe('MaskedInput', () => {
     expect(input.value).to.equal('')
   })
 
-  dynamicTests(
-    _.filter(
-      testParameters,
-      (testParameter) => {
-        return !(
-          _.isArray(testParameter.skips) && (
-            _.includes(testParameter.skips, 'adjustCaretPosition') ||
-            _.includes(testParameter.skips, 'integrations:react')
+  describe('Guide mode', () => {
+    dynamicTests(
+      _.filter(
+        testParameters,
+        (testParameter) => {
+          return !(
+            _.isArray(testParameter.skips) && (
+              _.includes(testParameter.skips, 'adjustCaretPosition') ||
+              _.includes(testParameter.skips, 'integrations:react')
+            )
           )
-        )
-      }
-    ),
+        }
+      ),
 
-    (test) => {
-      return {
-        description: JSON.stringify(test),
+      (test) => {
+        return {
+          description: JSON.stringify(test),
 
-        body: () => {
-          const maskedInput = ReactTestUtils.renderIntoDocument(
-            <MaskedInput mask={test.input.mask} guide={true}/>
-          )
+          body: () => {
+            const maskedInput = ReactTestUtils.renderIntoDocument(
+              <MaskedInput mask={test.input.mask} guide={true}/>
+            )
 
-          const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+            const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
-          input.value = test.input.startingInputFieldValue
-          input.selectionStart = 0
-          input.selectionEnd = 0
+            maskedInput.state.conformedInput = test.input.startingInputFieldValue
+            input.selectionStart = 0
+            input.selectionEnd = 0
 
-          // It's unrealistic to trigger change when there's no starting user input
-          // That is, input starts with empty value. We cannot change it from that to empty value
-          // because it already is empty.
-          if (input.value.length > 0) {
+            // It's unrealistic to trigger change when there's no starting user input
+            // That is, input starts with empty value. We cannot change it from that to empty value
+            // because it already is empty.
+            if (input.value.length > 0) {
+              maskedInput.refs.inputElement.focus()
+              ReactTestUtils.Simulate.change(input)
+            }
+
+            input.value = test.input.userModifiedInputFieldValue
+            input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+            input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
             maskedInput.refs.inputElement.focus()
             ReactTestUtils.Simulate.change(input)
+
+            expect([
+              input.value,
+              maskedInput.refs.inputElement.selectionStart,
+              maskedInput.refs.inputElement.selectionEnd
+            ]).to.deep.equal([
+              transformTestForComponent(test).conformedInputFieldValue,
+              test.output.adjustedCaretPosition,
+              test.output.adjustedCaretPosition
+            ])
           }
-
-          input.value = test.input.userModifiedInputFieldValue
-          input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
-          input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
-
-          maskedInput.refs.inputElement.focus()
-          ReactTestUtils.Simulate.change(input)
-
-          expect([
-            input.value,
-            maskedInput.refs.inputElement.selectionStart,
-            maskedInput.refs.inputElement.selectionEnd
-          ]).to.deep.equal([
-            test.output.conformedInputFieldValue,
-            test.output.adjustedCaretPosition,
-            test.output.adjustedCaretPosition
-          ])
         }
       }
-    }
-  )
+    )
+  })
+
+  describe('No guide mode', () => {
+    dynamicTests(
+      _.filter(
+        noGuideMode,
+        (testParameter) => {
+          return !(
+            _.isArray(testParameter.skips) && (
+              _.includes(testParameter.skips, 'adjustCaretPosition') ||
+              _.includes(testParameter.skips, 'integrations:react')
+            )
+          )
+        }
+      ),
+
+      (test) => {
+        return {
+          description: JSON.stringify(test),
+
+          body: () => {
+            const maskedInput = ReactTestUtils.renderIntoDocument(
+              <MaskedInput mask={test.input.mask} guide={false}/>
+            )
+
+            const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+
+            maskedInput.state.conformedInput = test.input.startingInputFieldValue
+            input.selectionStart = 0
+            input.selectionEnd = 0
+
+            // It's unrealistic to trigger change when there's no starting user input
+            // That is, input starts with empty value. We cannot change it from that to empty value
+            // because it already is empty.
+            if (input.value.length > 0) {
+              maskedInput.refs.inputElement.focus()
+              ReactTestUtils.Simulate.change(input)
+            }
+
+            input.value = test.input.userModifiedInputFieldValue
+            input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+            input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
+            maskedInput.refs.inputElement.focus()
+            ReactTestUtils.Simulate.change(input)
+
+            expect([
+              input.value,
+              maskedInput.refs.inputElement.selectionStart,
+              maskedInput.refs.inputElement.selectionEnd
+            ]).to.deep.equal([
+              transformTestForComponent(test).conformedInputFieldValue,
+              test.output.adjustedCaretPosition,
+              test.output.adjustedCaretPosition
+            ])
+          }
+        }
+      }
+    )
+  })
 })
