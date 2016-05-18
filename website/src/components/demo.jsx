@@ -49,17 +49,20 @@ const Demo = React.createClass({
     const placeholder = (
       guide === false && (maskSelect === undefined || maskSelect.value !== 'custom')
     ) ? `Example ${choices[selectedChoice].placeholder}`  : ''
+    const githubLink = "https://github.com/msafi/text-mask/#text-mask"
 
     return (
       <div>
-        <h3>Demo</h3>
+        <p>
+          <img src="./assets/logo.png" alt="Text Mask" width="331" height="67" />
+        </p>
 
         <p>
           This is just a demo of the Text Mask library. For more information about
-          installation, usage, and documentation, see the GitHub page.
+          installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
         </p>
 
-        <div className="well">
+        <div>
           <form className="form-horizontal">
             <div className="form-group">
               <label

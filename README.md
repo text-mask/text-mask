@@ -1,4 +1,4 @@
-# Text Mask
+# <img src="assets/logo.png" alt="Text Mask"/>
 
 [![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
 

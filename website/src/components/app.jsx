@@ -8,8 +8,6 @@ const App = React.createClass({
   render() {
     return (
       <div>
-        <NavBar/>
-
         <div className={classnames(style.mainContainer, 'container')}>
           <Demo/>
         </div>
