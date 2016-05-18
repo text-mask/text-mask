@@ -49,7 +49,7 @@ const Demo = React.createClass({
     const placeholder = (
       guide === false && (maskSelect === undefined || maskSelect.value !== 'custom')
     ) ? `Example ${choices[selectedChoice].placeholder}`  : ''
-    const githubLink = "https://github.com/msafi/text-mask/#text-mask"
+    const githubLink = "https://github.com/msafi/text-mask/tree/unguided-mode#readme"
 
     return (
       <div>

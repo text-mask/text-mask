@@ -1,4 +1,4 @@
-# ![Text Mask](assets/logo.png)
+# [![Text Mask](assets/logo.png)](https://github.com/msafi/text-mask/tree/unguided-mode#readme)
 
 [![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
 
