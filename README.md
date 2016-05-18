@@ -1,4 +1,4 @@
-# [![Text Mask](assets/logo.png)](https://github.com/msafi/text-mask/tree/unguided-mode#readme)
+# [![Text Mask](assets/logo.png)](https://github.com/msafi/text-mask/#readme)
 
 [![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
 
@@ -51,9 +51,9 @@ To see Text Mask in action, [checkout the demo page](https://msafi.github.io/tex
 
 ## Installation and usage
 
-* [React](integrations/react)
-* [Angular 2](integrations/angular2)
-* [Vanilla JS](integrations/vanilla)
+* [React](integrations/react#readme)
+* [Angular 2](integrations/angular2#readme)
+* [Vanilla JS](integrations/vanilla#readme)
 
 ## Support
 
