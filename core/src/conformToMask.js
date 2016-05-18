@@ -38,7 +38,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
           while (userInputArr.length > 0) {
             const userInputCharacter = userInputArr.shift()
 
-            if (userInputCharacter === placeholderCharacter) {
+            if (userInputCharacter === placeholderCharacter && suppressGuide !== true) {
               conformedString += placeholderCharacter
               continue placeholderLoop
             } else if (isAcceptableCharacter(userInputCharacter, mask[i])) {

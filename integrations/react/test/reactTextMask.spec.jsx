@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from '../../../common/testParameters.js'
+import testParameters, {noGuideMode} from '../../../common/testParameters.js'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
@@ -17,13 +17,13 @@ const expect = chai.expect
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
     expect(() => ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask="111-111"/>
+      <MaskedInput mask="111-111" guide={true}/>
     )).not.to.throw()
   })
 
   it('renders a single input element', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask="111-111"/>
+      <MaskedInput mask="111-111" guide={true}/>
     )
 
     expect(
@@ -35,7 +35,7 @@ describe('MaskedInput', () => {
     it('calls user provided `onChange` if it exists', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" onChange={userOnChange}/>
+        <MaskedInput mask="111-111" onChange={userOnChange} guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -51,7 +51,7 @@ describe('MaskedInput', () => {
 
     it('adjusts the position of the caret correctly when it updates', () => {
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="(11)"/>
+        <MaskedInput mask="(11)" guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -72,7 +72,9 @@ describe('MaskedInput', () => {
 
   it('sets the value of the input to empty if it conformed input equals placeholder and ' +
      'the caret is at position 0', () => {
-    const maskedInput = ReactTestUtils.renderIntoDocument(<MaskedInput mask="(11)"/>)
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput mask="(11)" guide={true}/>
+    )
 
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -110,7 +112,7 @@ describe('MaskedInput', () => {
 
         body: () => {
           const maskedInput = ReactTestUtils.renderIntoDocument(
-            <MaskedInput mask={test.input.mask} />
+            <MaskedInput mask={test.input.mask} guide={true}/>
           )
 
           const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')

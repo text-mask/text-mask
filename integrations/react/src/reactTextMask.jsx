@@ -8,7 +8,8 @@ import {
 
 export const MaskedInput = React.createClass({
   propTypes: {
-    mask: PropTypes.string.isRequired
+    mask: PropTypes.string.isRequired,
+    guide: PropTypes.bool
   },
 
   getInitialState({mask = this.props.mask} = {}) {

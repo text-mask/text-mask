@@ -1097,8 +1097,6 @@ export default _.filter((t) => t, [{
     conformedInputFieldValue: '___ ___',
     adjustedCaretPosition: 0
   },
-
-  only: true
 }])
 
 //####################################################################################
@@ -1106,9 +1104,9 @@ export default _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
-export const unguidedMode = _.filter((t) => t, [{
-// export const unguidedMode = _.filter((t) => false, [{
-// export const unguidedMode = _.filter((t) => t.only, [{
+export const noGuideMode = _.filter((t) => t, [{
+// export const noGuideMode = _.filter((t) => false, [{
+// export const noGuideMode = _.filter((t) => t.only, [{
   input: {
     mask: '(111)',
     startingInputFieldValue: '',
@@ -1272,6 +1270,20 @@ export const unguidedMode = _.filter((t) => t, [{
     mask: '(111) 111-1111',
     startingInputFieldValue: '(1',
     userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '__/__',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '_',
     caretPositionAfterInputFieldValueChange: 1
   },
 

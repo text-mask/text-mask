@@ -2,7 +2,7 @@ import packageJson from '../package.json'
 import isVerify from '../../common/isVerify.js'
 import chai from 'chai'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters, {unguidedMode} from './../../common/testParameters.js'
+import testParameters, {noGuideMode} from './../../common/testParameters.js'
 import _ from 'lodash'
 
 const adjustCaretPosition = (isVerify()) ?
@@ -161,7 +161,7 @@ describe('adjustCaretPosition', () => {
   )
 
   dynamicTests(
-    _.filter(unguidedMode, (testParameter) => {
+    _.filter(noGuideMode, (testParameter) => {
       return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
     }),
 

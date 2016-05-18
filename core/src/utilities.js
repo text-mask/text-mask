@@ -43,8 +43,11 @@ export function isAcceptableCharacter(character = '', maskingCharacter) {
     case maskingCharactersEnums.alphanumeric:
       return isNumeric(character) || isAlphabetic(character)
 
-    default:
+    case maskingCharactersEnums.any:
       return true
+
+    default:
+      return false
   }
 }
 
