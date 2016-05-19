@@ -16,7 +16,6 @@ export const MaskedInput = React.createClass({
     return {
       conformedInput: '',
       adjustedCaretPosition: 0,
-      previousCaretPosition: 0,
       placeholder: convertMaskToPlaceholder(mask)
     }
   },
@@ -60,7 +59,7 @@ export const MaskedInput = React.createClass({
     const conformToMaskResults = conformToMask(
       userInput,
       mask,
-      (guide === false) ? {guide: false, previousConformedInput} : {}
+      (guide === false) ? {guide, previousConformedInput} : {}
     )
     const {output: conformedInput} = conformToMaskResults
 

@@ -5,13 +5,14 @@ import {
   safeSetSelection
 } from '../../../core/src/index.js'
 
-export function maskInput({element, mask}) {
+export function maskInput({element, mask, guide}) {
   const state = {
     conformedInput: '',
-    placeholder: element.placeholder || convertMaskToPlaceholder(mask)
+    adjustedCaretPosition: 0,
+    placeholder: convertMaskToPlaceholder(mask)
   }
 
-  element.placeholder = state.placeholder
+  element.placeholder = element.placeholder || state.placeholder
   element.value = state.conformedInput
   safeSetSelection(element, 0)
 
@@ -20,11 +21,15 @@ export function maskInput({element, mask}) {
   function updateInput() {
     const userInput = element.value
     const {placeholder, conformedInput: previousConformedInput} = state
-    const conformToMaskResults = conformToMask(userInput, mask)
+    const conformToMaskResults = conformToMask(
+      userInput,
+      mask,
+      (guide === false) ? {guide, previousConformedInput} : {}
+    )
     const {output: conformedInput} = conformToMaskResults
 
     const adjustedCaretPosition = adjustCaretPosition({
-      previousInput: previousConformedInput,
+      previousConformedInput,
       conformToMaskResults,
       currentCaretPosition: element.selectionStart
     })
@@ -39,6 +44,8 @@ export function maskInput({element, mask}) {
     element.value = finalConformedInput
     safeSetSelection(element, adjustedCaretPosition)
   }
+
+  return state // Returned to facilitate testing
 }
 
 export default maskInput
