@@ -1,7 +1,7 @@
 import './styles.scss'
 import ReactDOM from 'react-dom'
 import React from 'react';
-import MaskedInput from '../../integrations/react/src/reactTextMask.jsx'
+import MaskedInput from '../../react/src/reactTextMask.jsx'
 import classnames from 'classnames'
 import appStyles from './app.scss'
 
