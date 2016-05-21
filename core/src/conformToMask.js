@@ -1,63 +1,90 @@
 import {
   convertMaskToPlaceholder,
   tokenize,
-  getDelimiters,
   isAcceptableCharacter,
-  potentiallyTransformCharacter
+  potentiallyTransformCharacter,
 } from './utilities.js'
 import {placeholderCharacter} from './constants.js'
 
-export default function conformToMask(userInput = '', mask = '') {
+export default function conformToMask(userInput = '', mask = '', config = {}) {
   const placeholder = convertMaskToPlaceholder(mask)
-  const maskDelimiters = getDelimiters(mask)
+  const {guide = true, previousConformedInput} = config
+  const suppressGuide = guide === false && previousConformedInput !== undefined
+  const userInputArr = tokenize(userInput)
+  const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
 
-  let numberOfPendingUserInputCharacters = userInput.length
+  let conformedString = ''
 
-  return {
-    input: userInput,
-    mask: mask,
+  // We have 3 possible types of characters in user input
+  // 1. Mask delimiter
+  // 2. Accepted character for particular placeholder position
+  // 3. Unaccepted character for particular placeholder position
 
-    // Go through the placeholder to determine what to place in it
-    output: tokenize(placeholder).map((characterInPlaceholder, index) => {
-      // if current character is a placeholder character, that means we could potentially
-      // place user input in it. So, if we still have pending user tokens, let's do it!
-      if (
-        characterInPlaceholder === placeholderCharacter &&
-        numberOfPendingUserInputCharacters > 0
-      ) {
-        // Let's loop through the remaining user input characters to find out what
-        // should go in the current placeholder position
-        for (
-          let i = userInput.length - numberOfPendingUserInputCharacters;
-          i < userInput.length;
-          i++
-        ) {
-          // Pull user character to potentially map it to the current
-          // placeholder position.
-          const userInputCharacter = userInput[i]
+  // We have 2 possible types of characters in placeholder
+  // 1. Mask delimiter
+  // 2. Placeholder character
 
-          numberOfPendingUserInputCharacters--
+  // If character in placeholder is a placeholder character, look for a character from user
+  // input to map it to.
+  if (userInput !== '') {
+    placeholderLoop: for (let i = 0; i < placeholder.length; i++) {
+      const characterInPlaceholder = placeholder[i]
 
-          if (
-            // is the character in the user input a placeholder character?
-            userInputCharacter === placeholderCharacter ||
+      if (characterInPlaceholder === placeholderCharacter) {
+        // We have user characters that we need to map
+        if (userInputArr.length > 0) {
+          // Loop through, potentially, the entire user input to find a suitable
+          // character to put in the placeholder position
+          while (userInputArr.length > 0) {
+            const userInputCharacter = userInputArr.shift()
 
-            // or, are we sure the character is not part of the mask
-            // delimiters and that it is an acceptable character?
-            (
-              maskDelimiters.indexOf(userInputCharacter) === -1 &&
-              isAcceptableCharacter(userInputCharacter, mask[index]) === true
-            )
-          ) {
-            // if so, map it to a potentially transformed character!
-            return potentiallyTransformCharacter(userInputCharacter, mask[index])
+            if (userInputCharacter === placeholderCharacter && suppressGuide !== true) {
+              conformedString += placeholderCharacter
+              continue placeholderLoop
+            } else if (isAcceptableCharacter(userInputCharacter, mask[i])) {
+              conformedString += potentiallyTransformCharacter(userInputCharacter, mask[i])
+              continue placeholderLoop
+            }
           }
+        }
+
+        if (suppressGuide) {
+          break
+        }
+
+        conformedString += characterInPlaceholder
+      } else {
+        conformedString += characterInPlaceholder
+      }
+    }
+
+    if (suppressGuide && isAddition === false) {
+      let indexOfLastFilledPlaceholderCharacter = null
+
+      // Find the last filled placeholder position and substring from there
+      for (let i = 0; i < conformedString.length; i++) {
+        if (
+          placeholder[i] === placeholderCharacter &&
+          conformedString[i] !== placeholderCharacter
+        ) {
+          indexOfLastFilledPlaceholderCharacter = i
         }
       }
 
-      // if the current character is not placeholder or we don't have any more user input
-      // characters to assign, then just return the same current character
-      return characterInPlaceholder
-    }).join('')
+      if (indexOfLastFilledPlaceholderCharacter !== null) {
+        conformedString = conformedString.substr(0, indexOfLastFilledPlaceholderCharacter + 1)
+      } else {
+        conformedString = ''
+      }
+    }
+  }
+
+  return {
+    output: conformedString,
+    meta: {
+      input: userInput,
+      mask: mask,
+      guide
+    }
   }
 }

@@ -35,6 +35,7 @@ For example, the following works:
   mask="11111"
   className="form-control"
   placeholder="Enter zip code"
+  guide={false}
   id="my-input-id"
 />
 ```
@@ -44,10 +45,6 @@ For example, the following works:
 For a working example, check out the source code of
 [this HTML file](https://msafi.github.io/text-mask/integrations/react/example.html).
 
-## Source code
-
-The source code for React Text Mask is [available here](https://github.com/msafi/text-mask/tree/master/integrations/react).
-
 ## License
 
-Public domain - [CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/)
+Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

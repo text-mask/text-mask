@@ -8,7 +8,8 @@ import {
 
 export const MaskedInput = React.createClass({
   propTypes: {
-    mask: PropTypes.string.isRequired
+    mask: PropTypes.string.isRequired,
+    guide: PropTypes.bool
   },
 
   getInitialState({mask = this.props.mask} = {}) {
@@ -20,7 +21,10 @@ export const MaskedInput = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.mask !== this.props.mask) {
+    if (
+      nextProps.mask !== this.props.mask ||
+      nextProps.guide !== this.props.guide
+    ) {
       this.setState(this.getInitialState({mask: nextProps.mask}))
     }
   },
@@ -31,6 +35,7 @@ export const MaskedInput = React.createClass({
 
   render() {
     const {props, state: {placeholder, conformedInput}, onChange} = this
+    const {placeholder: originalPlaceholder} = props
 
     return (
       <input
@@ -38,7 +43,7 @@ export const MaskedInput = React.createClass({
         type={props.type || 'text'}
         onChange={onChange}
         value={conformedInput}
-        placeholder={placeholder}
+        placeholder={originalPlaceholder || placeholder}
         ref="inputElement"
       />
     )
@@ -46,15 +51,24 @@ export const MaskedInput = React.createClass({
 
   onChange(event) {
     const {target: {value: userInput}} = event
-    const {props: {mask}, state: {placeholder, conformedInput: previousConformedInput}} = this
-    const conformToMaskResults = conformToMask(userInput, mask)
+    const {
+      props: {mask, guide},
+      state: {placeholder, conformedInput: previousConformedInput}
+    } = this
+
+    const conformToMaskResults = conformToMask(
+      userInput,
+      mask,
+      (guide === false) ? {guide, previousConformedInput} : {}
+    )
     const {output: conformedInput} = conformToMaskResults
 
     const adjustedCaretPosition = adjustCaretPosition({
-      previousInput: previousConformedInput,
+      previousConformedInput,
       conformToMaskResults,
       currentCaretPosition: this.refs.inputElement.selectionStart
     })
+
     const finalConformedInput = (
       conformedInput === placeholder &&
       adjustedCaretPosition === 0

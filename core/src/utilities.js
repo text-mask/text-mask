@@ -26,6 +26,10 @@ export function tokenize(string = '') {
   return string.split('')
 }
 
+export function contains(array, needle) {
+  return array.indexOf(needle) !== -1
+}
+
 export function isAcceptableCharacter(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.numeric:
@@ -39,8 +43,11 @@ export function isAcceptableCharacter(character = '', maskingCharacter) {
     case maskingCharactersEnums.alphanumeric:
       return isNumeric(character) || isAlphabetic(character)
 
-    default:
+    case maskingCharactersEnums.any:
       return true
+
+    default:
+      return false
   }
 }
 
@@ -58,9 +65,21 @@ export function potentiallyTransformCharacter(character = '', maskingCharacter) 
 }
 
 function isNumeric(character) {
-  return !isNaN(character)
+  return !isNaN(character) && character !== ' '
 }
 
 function isAlphabetic(character) {
   return /^[a-zA-Z]+$/.test(character)
+}
+
+export function getIndexOfFirstChange(stringOne, stringTwo) {
+  const longestLength = (stringOne.length > stringTwo.length) ? stringOne.length : stringTwo.length
+
+  for (let i = 0; i < longestLength; i++) {
+    if (stringOne[i] !== stringTwo[i]) {
+      return i
+    }
+  }
+
+  return null
 }

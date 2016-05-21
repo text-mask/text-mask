@@ -1,135 +1,132 @@
-import {convertMaskToPlaceholder} from './utilities.js'
-import {placeholderCharacter} from './constants.js'
-import getChangeDetails from './getChangeDetails.js'
+import {convertMaskToPlaceholder, getIndexOfFirstChange} from './utilities.js'
+import {placeholderCharacter as placeholderChar} from './constants.js'
 
 export default function adjustCaretPosition({
-  previousInput = '',
+  previousConformedInput = '',
   conformToMaskResults = {},
-  currentCaretPosition = 0
+  currentCaretPosition = 0,
 }) {
-  // ensure sane argument values
-  conformToMaskResults.input = conformToMaskResults.input || ''
-  conformToMaskResults.output = conformToMaskResults.output || ''
-  conformToMaskResults.mask = conformToMaskResults.mask || ''
+  if (currentCaretPosition === 0) { return 0 }
 
-  const placeholder = convertMaskToPlaceholder(conformToMaskResults.mask)
+  const {output: conformedInput = '', meta = {}} = conformToMaskResults
+  const {input: rawInput = '', mask = ''} = meta
 
-  // First determine if the operation is deletion or addition to know whether we will be
-  // seeking to move the caret forward or back.
-  const isDeletion = (
-    // if the conformed string or the input to be conformed is smaller than
-    // previous input, then the operation is deletion.
-    (conformToMaskResults.output.length < previousInput.length) ||
-    (conformToMaskResults.input.length < previousInput.length)
+  // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
+  const indexOfFirstChange = getIndexOfFirstChange(previousConformedInput, rawInput)
+
+  // When user modifies string from (444) 444-44__ to (444) 444-444_ while caret is at position
+  // 2, `indexOfChange` would be 12. This is what I call ambiguous change
+  const isAmbiguousChange = (indexOfFirstChange - currentCaretPosition) > 1
+
+  // If the change is ambiguous. Our best bet is to keep the caret where it is.
+  if (isAmbiguousChange) { return currentCaretPosition }
+
+  // Convert mask (111) 111-1111 to (___) ___-___.
+  const placeholder = convertMaskToPlaceholder(mask)
+
+  // True when user tries to delete a character from input. Like, (438) 394-4938 to (38) 394-4938
+  const isAddition = !(rawInput.length < previousConformedInput.length)
+
+  // This is true when user has entered more than one character per iteration. This only happens
+  // if user has pasted into the input field.
+  const isPaste = Math.abs(previousConformedInput.length - rawInput.length) > 1
+
+  // For a mask like (111), if the `previousConformedInput` is (1__) and user attempts to enter
+  // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
+  // same as the original `previousConformedInput`. We handle this case differently for caret
+  // positioning.
+  const possiblyHasRejectedChar = isAddition && (
+    previousConformedInput === conformedInput ||
+    conformedInput === placeholder
   )
 
-  // is addition...
-  if (isDeletion === false) {
-    if (
-      // if previous input and conformToMaskResults.output are exactly the same, it means
-      // adjustCaretPosition was called after conformToMask rejected a character
-      previousInput === conformToMaskResults.output ||
+  // There's an edge case when the user enters the first character of the mask and it's a mask
+  // delimiter. For example, mask (111) 111-1111, and user enters `(`. In this case, the
+  // `previousConformedInput` would be empty string and conformedInput would be `(___) ___-____`
+  // This case is treated differently in caret positioning.
+  const onlyEnteredAMaskDelimiter = previousConformedInput === '' && conformedInput === placeholder
 
-      conformToMaskResults.output === placeholder
-    ) {
-      // in that case, revert movement of the caret
-      // return currentCaretPosition - 1
-      const revertedPosition = currentCaretPosition - 1
+  // If operation is paste, that is input goes from (___) ___-___ to (650) 333-3__ in one change,
+  // we want to find the next suitable caret position in the `conformedInput` string. Otherwise,
+  // we always want to use the `placeholder` for our target for caret placement.
+  const baseTargetForCaretPlacement = (isPaste) ? conformedInput : placeholder
 
-      // If the reverted position is a placeholder position, keep it there
-      if (placeholder[revertedPosition] === placeholderCharacter) {
-        return revertedPosition
+  // This is true when user attempts to insert a character in a non-placeholder position.
+  // For example, for mask (111) 111-1111, if the user tries to enter a character 5 at position 0
+  // which is before the first `(`, this flag would be `true`.
+  const isCharInsertedInNonPlaceholderIndex = placeholder[indexOfFirstChange] !== placeholderChar
 
-        // Otherwise, seek forward for the closest placeholder character
-        // This way Text Mask allows the user to enter a non-accepted character
-        // like a mask delimiter and move to the next placeholder
-      } else {
-        for (let i = revertedPosition + 1; i < placeholder.length; i++) {
-          if (placeholder[i] === placeholderCharacter) {
-            return i
-          }
-        }
-      }
+  // We can reasonably expect that we will adjust the caret position starting from the
+  // original/current caret position
+  let startingSearchIndex = currentCaretPosition
 
-      // previous input is different from conformToMaskResults.output, so we need to do some work
-    } else {
-      const changeDetails = getChangeDetails(
-        previousInput || placeholder,
-        conformToMaskResults.output
+  // Else if the operation is paste, we start from the beginning of the `conformedInput` string
+  // and look for the next sensible caret position, which is where a `placeholderChar` would be
+  if (isPaste) {
+    startingSearchIndex = 0
+
+  // Else if it has rejected character, we wanna go back a step and start searching from
+  // there because the caret will have advanced after entering the rejected character
+  } else if (possiblyHasRejectedChar) {
+    startingSearchIndex--
+
+  // Else if none of the conditions above is true, and the operation is addition, let's start the
+  // search from the first `placeholderChar` position.
+  } else if (isAddition) {
+    for (let i = currentCaretPosition; i < placeholder.length; i++) {
+      const needsAdjustmentByOne = (
+        isCharInsertedInNonPlaceholderIndex &&
+        onlyEnteredAMaskDelimiter === false
       )
 
-      // if the index of the last changed character is ahead of current caret position by more
-      // than one, then an ambiguous change happened.
-      // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was last added.
-      // In that case, just return the current caret position unmodified.
-      if ((changeDetails.indexOfLastChange - currentCaretPosition) > 1) {
-        return currentCaretPosition
-      }
-
-      // otherwise, starting at the position right after the last added character, seek the next
-      // placeholder where we can position the caret
-      for (let i = changeDetails.indexOfLastChange + 1; i < placeholder.length; i++) {
-        if (placeholder[i] === placeholderCharacter) {
-          return i
-        }
+      if (placeholder[i] === placeholderChar) {
+        // So, we found the next `placeholderChar`. But we need to adjust by `1` if the user
+        // made their change in a none-placeholder character position and if that change is not
+        // just a mask delimiter.
+        startingSearchIndex = i + (needsAdjustmentByOne ? 1 : 0)
+        break
       }
     }
+  }
 
-    // If the previous for-loop couldn't find a placeholder in which to position the caret, that
-    // means there isn't a placeholder after the index of the last character, so just position
-    // the caret at the end of the conformed string
-    return conformToMaskResults.output.length
+  // At this point, we have determined a reasonable index from which we can begin searching for
+  // the correct caret position and we've put it in `startingSearchIndex`. And we've determined
+  // the base in which to look for the caret position, whether `placeholder` or `conformedInput`.
+  //
+  // Now, if `isAddition`, we seek forward. Otherwise we seek back.
+  if (isAddition) {
+    for (let i = startingSearchIndex; i <= baseTargetForCaretPlacement.length; i++) {
+      if (
+        // If we're adding, we can position the caret at the next placeholder character.
+        baseTargetForCaretPlacement[i] === placeholderChar ||
 
-  // is deletion...
-  } else if (isDeletion === true) {
-    // if previous input and conformed string are the same, it means adjustCaretPosition is called
-    // because the user is pressing the backspace to move the caret back
-    if (previousInput === conformToMaskResults.output) {
-      // if the caret is at a placeholder character position, it's okay to keep it where it is
-      if (placeholder[currentCaretPosition] === placeholderCharacter) {
-        return currentCaretPosition
-      }
+        // This is the end of the target. We cannot move any further. Let's put the caret there.
+        i === baseTargetForCaretPlacement.length
+      ) {
+        // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
+        // positioning in `guide === false` mode. There are a few edge cases which are
+        // solved by this. To see what happens without it, uncomment the line below and run
+        // the test suite
 
-      // if the caret is anywhere that's not a placeholder character, seek back to the closest
-      // placeholder character and place the caret right after it.
-      for (let i = currentCaretPosition; i > 0; i--) {
-        if (placeholder[i] === placeholderCharacter) {
-          return i + 1 // It should be immediately after the next placeholder character
-        }
-      }
-
-    // the user has actually deleted a character, so we need to do some work
-    } else {
-      const changeDetails = getChangeDetails(
-        previousInput,
-        conformToMaskResults.output
-      )
-
-      // if the index of the last changed character is more than one position far from the current
-      // caret position, then an ambiguous change happened.
-      // I.e. (333) ___-____ => (333) 3__-____, so we don't know which character was removed.
-      // In that case, just return the current caret position unmodified.
-      if ((changeDetails.indexOfFirstChange - currentCaretPosition) > 1) {
-        return currentCaretPosition
-      }
-
-      // if the previous character in the placeholder is a placeholder character,
-      // it's okay to keep the caret at its current position
-      if (placeholder[currentCaretPosition - 1] === placeholderCharacter) {
-        return currentCaretPosition
-      }
-
-      // otherwise, starting at the index of the first removed character, seek back until we find
-      // a placeholder character at which to position the caret
-      for (let i = changeDetails.indexOfFirstChange - 1; i > 0; i--) {
-        if (placeholder[i] === placeholderCharacter) {
-          return i + 1 // it should be immediately after the next placeholder character
-        }
+        // return i
+        return (i > conformedInput.length) ? conformedInput.length : i
       }
     }
+  } else {
+    for (let i = startingSearchIndex; i >= 0; i--) {
+      // If we're deleting, we stop the caret right before the placeholder character.
+      // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
+      // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
+      // right after the first `6`
+      if (
+        baseTargetForCaretPlacement[i - 1] === placeholderChar ||
 
-    // if we sought back and couldn't find a placeholder character at which to position the caret
-    // we'd reach this point in the code. So, just place the caret at the beginning of the input
-    return 0
+        // This is the beginning of the target. We cannot move any further.
+        // Let's put the caret there.
+        i === 0
+      ) {
+        return i
+      }
+    }
   }
 }

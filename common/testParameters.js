@@ -1,6 +1,9 @@
 import _ from 'lodash/fp'
+import {convertMaskToPlaceholder} from '../core/src/utilities.js'
 
-export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U1U'*/, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => false, [{
+// export default _.filter((t) => t.only, [{
   input: {
     startingInputFieldValue: '(___)',
     userModifiedInputFieldValue: '(3___)',
@@ -12,7 +15,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(3__)',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1
-  }
+  },
+
 }, {
   input: {
     startingInputFieldValue: '___',
@@ -25,19 +29,21 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '1__',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 0
-  }
+  },
 }, {
   input: {
     startingInputFieldValue: '(12_) _',
     userModifiedInputFieldValue: '(12f_) _',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 3,
+    caretPositionAfterInputFieldValueChange: 4,
   },
 
   output: {
     conformedInputFieldValue: '(12_) _',
-    adjustedCaretPosition: 2
+    adjustedCaretPosition: 3
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -49,7 +55,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(1__) ___-____',
     adjustedCaretPosition: 2
-  }
+  },
+
 }, {
   input: {
     startingInputFieldValue: '(1__) ___-3___',
@@ -61,7 +68,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(1__) ___-____',
     adjustedCaretPosition: 9
-  }
+  },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(1__) ___-3___',
@@ -74,7 +83,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(12_) ___-_3__',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 11
-  }
+  },
+
 }, {
   input: {
     startingInputFieldValue: '(333) ___-____',
@@ -89,7 +99,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     indexOfLastAddedCharacter: 6
   },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(123) 948-____',
@@ -102,7 +112,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(123) 94_-____',
     adjustedCaretPosition: 8,
     indexOfFirstRemovedCharacter: 8
-  }
+  },
+
 }, {
   input: {
     startingInputFieldValue: '(__4) 444-____',
@@ -116,6 +127,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 7,
     indexOfFirstRemovedCharacter: 8
   },
+
 }, {
   // TODO: fix this test case. It currently results in 10!!!
   // perhaps pass caretPositionAfterInputFieldValueChange to getDiffIndex
@@ -131,8 +143,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 8,
     indexOfLastAddedCharacter: 8
   },
-
-  skip: true
 }, {
   input: {
     startingInputFieldValue: '(__4) 444-____',
@@ -144,7 +154,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(__4) 444-____',
     adjustedCaretPosition: 10,
-  }
+  },
 }, {
   input: {
     startingInputFieldValue: '(__4) 444-____',
@@ -156,7 +166,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(__4) 444-____',
     adjustedCaretPosition: 9
-  }
+  },
+
+  // only: true,
 }, {
   input: {
     startingInputFieldValue: '(__4) 444-____',
@@ -169,7 +181,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(__4) 44_-____',
     adjustedCaretPosition: 8,
     indexOfFirstRemovedCharacter: 8
-  }
+  },
+  // only: true,
 }, {
   input: {
     startingInputFieldValue: '(505) ___-____',
@@ -181,7 +194,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   output: {
     conformedInputFieldValue: '(505) ___-____',
     adjustedCaretPosition: 4,
-  }
+  },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(505) ___-____',
@@ -219,9 +234,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(5__) ___-____',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1
-  }
+  },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(000) ___-____',
@@ -250,9 +265,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   }
 }, {
   input: {
+    mask: '(111) 1',
     startingInputFieldValue: '(124) 3',
     userModifiedInputFieldValue: '(124) ',
-    mask: '(111) 1',
     caretPositionAfterInputFieldValueChange: 6,
   },
 
@@ -262,7 +277,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     indexOfFirstRemovedCharacter: 6
   },
 
-  stuff: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(449) _',
@@ -275,9 +290,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(449) 5',
     adjustedCaretPosition: 7,
     indexOfLastAddedCharacter: 6
-  }
+  },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___-____',
@@ -290,9 +305,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(__4) ___-____',
     adjustedCaretPosition: 6,
     indexOfLastAddedCharacter: 3
-  }
+  },
 
-  //only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '1__',
@@ -377,6 +392,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 6,
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '(___) ___/____',
@@ -392,7 +409,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
   },
 
   // only: true
-  // skip: true
 }, {
   input: {
     startingInputFieldValue: '3333',
@@ -421,23 +437,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 2,
     indexOfFirstRemovedCharacter: 2
   },
-
-  onlyConformToMask: true
-}, {
-  input: {
-    startingInputFieldValue: '(123) ___-____',
-    userModifiedInputFieldValue: '(123 ___-____',
-    mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 4
-  },
-
-  output: {
-    conformedInputFieldValue: '(12_) ___-____',
-    adjustedCaretPosition: 3,
-    indexOfFirstRemovedCharacter: 3
-  },
-
-  skip: true
 }, {
   input: {
     startingInputFieldValue: '__/__/____',
@@ -477,7 +476,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 6,
   },
 
-  //only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -540,11 +538,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '(777) 1__-____',
     adjustedCaretPosition: 7,
   },
-
-  skips: [
-    // Doesn't support pasting yet
-    'adjustCaretPosition'
-  ]
 }, {
   input: {
     startingInputFieldValue: '1_/__/____',
@@ -610,6 +603,10 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '__/32',
     adjustedCaretPosition: 5,
   },
+
+  skips: [
+    'adjustCaretPosition' // won't fix
+  ]
 }, {
   input: {
     startingInputFieldValue: '__/__/____',
@@ -649,6 +646,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 1,
     indexOfFirstRemovedCharacter: 6
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '__/2_',
@@ -662,11 +661,6 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 4
   },
-
-  skips: [
-    // TODO: known issue: doesn't support adjustCaretPosition for partially filled mask
-    'adjustCaretPosition'
-  ]
 }, {
   input: {
     startingInputFieldValue: '__/2_',
@@ -680,6 +674,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 0,
     indexOfFirstRemovedCharacter: 1
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -722,6 +718,10 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '__/22',
     adjustedCaretPosition: 5,
   },
+
+  skips: [
+    'adjustCaretPosition' // won't fix
+  ]
 }, {
   input: {
     startingInputFieldValue: '__/22',
@@ -796,6 +796,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 4,
     indexOfLastAddedCharacter: 3
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -809,7 +811,9 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 10,
   },
 
-  //only: true
+  skips: [
+    'adjustCaretPosition' // won't fix
+  ]
 }, {
   input: {
     startingInputFieldValue: '',
@@ -870,6 +874,8 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: '2_',
     adjustedCaretPosition: 1,
   },
+
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -897,7 +903,7 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     adjustedCaretPosition: 0,
   },
 
-  skips: ['adjustCaretPosition']
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -970,4 +976,338 @@ export default _.filter((testParameter) => testParameter/*.input.mask === 'U1U U
     conformedInputFieldValue: 'M2J ___',
     adjustedCaretPosition: 4,
   },
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(1__)',
+    userModifiedInputFieldValue: '(21__)',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(21_)',
+    adjustedCaretPosition: 2,
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111',
+    startingInputFieldValue: '(323) ___',
+    userModifiedInputFieldValue: '(3243) ___',
+    caretPositionAfterInputFieldValueChange: 4
+  },
+
+  output: {
+    conformedInputFieldValue: '(324) 3__',
+    adjustedCaretPosition: 6,
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(1__)',
+    userModifiedInputFieldValue: '(21__)',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(21_)',
+    adjustedCaretPosition: 2,
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '1',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(1__)',
+    adjustedCaretPosition: 2,
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(290) 382-3039',
+    userModifiedInputFieldValue: '(290) 38-3039',
+    caretPositionAfterInputFieldValueChange: 8
+  },
+
+  output: {
+    conformedInputFieldValue: '(290) 383-039_',
+    adjustedCaretPosition: 8
+  },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(___) ___-____',
+    adjustedCaretPosition: 1
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(395) 834-____',
+    userModifiedInputFieldValue: '(395) 34-____',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '(395) 34_-____',
+    adjustedCaretPosition: 4
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(1__) ___-____',
+    userModifiedInputFieldValue: '(__) ___-____',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(___) ___-____',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: 'U1U 1U1',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '5',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '___ ___',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
 }])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+export const noGuideMode = _.filter((t) => t, [{
+// export const noGuideMode = _.filter((t) => false, [{
+// export const noGuideMode = _.filter((t) => t.only, [{
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1,
+  },
+
+  output: {
+    conformedInputFieldValue: '(',
+    adjustedCaretPosition: 1
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '2',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '(2',
+    adjustedCaretPosition: 2
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(2',
+    userModifiedInputFieldValue: '(23',
+    caretPositionAfterInputFieldValueChange: 3
+  },
+
+  output: {
+    conformedInputFieldValue: '(23',
+    adjustedCaretPosition: 3
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(2',
+    userModifiedInputFieldValue: '(32',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(32',
+    adjustedCaretPosition: 2
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 1',
+    startingInputFieldValue: '(234)',
+    userModifiedInputFieldValue: '(234)5',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '(234) 5',
+    adjustedCaretPosition: 7
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(',
+    userModifiedInputFieldValue: '(1',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(1',
+    adjustedCaretPosition: 2
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111)',
+    startingInputFieldValue: '(23',
+    userModifiedInputFieldValue: '(423',
+    caretPositionAfterInputFieldValueChange: 2
+  },
+
+  output: {
+    conformedInputFieldValue: '(423)',
+    adjustedCaretPosition: 2
+  },
+
+}, {
+  input: {
+    mask: '(111) 11',
+    startingInputFieldValue: '(12',
+    userModifiedInputFieldValue: '(123',
+    caretPositionAfterInputFieldValueChange: 4
+  },
+
+  output: {
+    conformedInputFieldValue: '(123) ',
+    adjustedCaretPosition: 6
+  },
+}, {
+  input: {
+    mask: '(111) 11',
+    startingInputFieldValue: '(123) ',
+    userModifiedInputFieldValue: '(123)',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '(123',
+    adjustedCaretPosition: 4
+  },
+}, {
+  input: {
+    mask: '(111) 11',
+    startingInputFieldValue: '(987) 6_',
+    userModifiedInputFieldValue: '(9875) 6_',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '(987) 56',
+    adjustedCaretPosition: 7
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(987) 656-4938',
+    userModifiedInputFieldValue: '(987) 6565-4938',
+    caretPositionAfterInputFieldValueChange: 10
+  },
+
+  output: {
+    conformedInputFieldValue: '(987) 656-5493',
+    adjustedCaretPosition: 11
+  },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(',
+    userModifiedInputFieldValue: '',
+    caretPositionAfterInputFieldValueChange: 0
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+}, {
+  input: {
+    mask: '(111) 111-1111',
+    startingInputFieldValue: '(1',
+    userModifiedInputFieldValue: '(',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '__/__',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '_',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+
+  only: true
+}])
+
+export function transformTestForComponent(test) {
+  const {
+    input: {mask},
+    output: {conformedInputFieldValue, adjustedCaretPosition}
+  } = test
+
+  return {
+    conformedInputFieldValue: (
+      conformedInputFieldValue === convertMaskToPlaceholder(mask) &&
+      adjustedCaretPosition === 0
+    ) ? '' : conformedInputFieldValue
+  }
+}

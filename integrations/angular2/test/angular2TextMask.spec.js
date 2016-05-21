@@ -5,7 +5,10 @@ import isVerify from '../../../common/isVerify.js'
 import chai from 'chai'
 import _ from 'lodash'
 import dynamicTests from 'mocha-dynamic-tests'
-import testParameters from '../../../common/testParameters.js'
+import testParameters, {
+  noGuideMode,
+  transformTestForComponent
+} from '../../../common/testParameters.js'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
@@ -47,6 +50,8 @@ describe('MaskedInput', () => {
     expect(() => {
       const maskedInput = new MaskedInput({nativeElement: inputElement})
 
+      maskedInput.ngOnInit({mask: '(111)'})
+
       return maskedInput
     }).not.to.throw()
   })
@@ -55,7 +60,9 @@ describe('MaskedInput', () => {
     it('updates the model correctly', () => {
       const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
+      maskedInput.ngOnInit({mask: '(111)'})
       maskedInput.textMaskConfig.mask = '(111)'
+      maskedInput.textMaskConfig.guide = true
 
       inputElement.selectionStart = 0
       inputElement.selectionEnd = 0
@@ -69,10 +76,12 @@ describe('MaskedInput', () => {
     it('adjusts the position of the caret correctly when it updates', () => {
       const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
+      maskedInput.ngOnInit({mask: '(111)'})
       maskedInput.textMaskConfig.mask = '(111)'
+      maskedInput.textMaskConfig.guide = true
 
-      inputElement.selectionStart = 0
-      inputElement.selectionEnd = 0
+      inputElement.selectionStart = 1
+      inputElement.selectionEnd = 1
 
       inputElement.focus()
       maskedInput.onInput('2')
@@ -88,8 +97,10 @@ describe('MaskedInput', () => {
      'the caret is at position 0', () => {
     const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
+    maskedInput.ngOnInit({mask: '(11)'})
     maskedInput.placeholder = '(__)'
     maskedInput.textMaskConfig.mask = '(11)'
+    maskedInput.textMaskConfig.guide = true
 
     maskedInput.conformedInput = '(__)'
     inputElement.selectionStart = 0
@@ -100,45 +111,95 @@ describe('MaskedInput', () => {
     expect(modelValue).to.equal('')
   })
 
-  dynamicTests(
-    _.filter(
-      testParameters,
-      (testParameter) => {
-        return !(
-          _.isArray(testParameter.skips) && (
-            _.includes(testParameter.skips, 'adjustCaretPosition') ||
-            _.includes(testParameter.skips, 'integrations:angular2')
+  describe('Guide mode tests', () => {
+    dynamicTests(
+      _.filter(
+        testParameters,
+        (testParameter) => {
+          return !(
+            _.isArray(testParameter.skips) && (
+              _.includes(testParameter.skips, 'adjustCaretPosition') ||
+              _.includes(testParameter.skips, 'integrations:angular2')
+            )
           )
-        )
-      }
-    ),
+        }
+      ),
 
-    (test) => {
-      return {
-        description: JSON.stringify(test),
+      (test) => {
+        return {
+          description: JSON.stringify(test),
 
-        body: () => {
-          const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
+          body: () => {
+            const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
-          maskedInput.textMaskConfig.mask = test.input.mask
+            maskedInput.ngOnInit({mask: test.input.mask})
+            maskedInput.textMaskConfig.mask = test.input.mask
+            maskedInput.textMaskConfig.guide = true
 
-          maskedInput.conformedInput = test.input.startingInputFieldValue
+            maskedInput.conformedInput = test.input.startingInputFieldValue
 
-          inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
-          inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+            inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+            inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-          inputElement.focus()
-          maskedInput.onInput(test.input.userModifiedInputFieldValue)
+            inputElement.focus()
+            maskedInput.onInput(test.input.userModifiedInputFieldValue)
 
-          expect([
-            modelValue,
-            inputElement.selectionStart,
-          ]).to.deep.equal([
-            test.output.conformedInputFieldValue,
-            test.output.adjustedCaretPosition,
-          ])
+            expect([
+              modelValue,
+              inputElement.selectionStart,
+            ]).to.deep.equal([
+              transformTestForComponent(test).conformedInputFieldValue,
+              test.output.adjustedCaretPosition,
+            ])
+          }
         }
       }
-    }
-  )
+    )
+  })
+
+  describe('No guide mode tests', () => {
+    dynamicTests(
+      _.filter(
+        noGuideMode,
+        (testParameter) => {
+          return !(
+            _.isArray(testParameter.skips) && (
+              _.includes(testParameter.skips, 'adjustCaretPosition') ||
+              _.includes(testParameter.skips, 'integrations:angular2')
+            )
+          )
+        }
+      ),
+
+      (test) => {
+        return {
+          description: JSON.stringify(test),
+
+          body: () => {
+            const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
+
+            maskedInput.ngOnInit({mask: test.input.mask})
+            maskedInput.textMaskConfig.mask = test.input.mask
+            maskedInput.textMaskConfig.guide = false
+
+            maskedInput.conformedInput = test.input.startingInputFieldValue
+
+            inputElement.selectionStart = test.input.caretPositionAfterInputFieldValueChange
+            inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
+
+            inputElement.focus()
+            maskedInput.onInput(test.input.userModifiedInputFieldValue)
+
+            expect([
+              modelValue,
+              inputElement.selectionStart,
+            ]).to.deep.equal([
+              transformTestForComponent(test).conformedInputFieldValue,
+              test.output.adjustedCaretPosition,
+            ])
+          }
+        }
+      }
+    )
+  })
 })
