@@ -1,0 +1,102 @@
+<html>
+<head>
+  <title>Example of React Text Mask</title>
+
+  <style type="text/css">
+    body {
+      padding-top: 50px;
+    }
+
+    .starter-template {
+      padding: 40px 15px;
+      text-align: center;
+    }
+  </style>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container">
+  <div class="starter-template">
+    <div id="content"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+<script src="https://fb.me/react-0.14.7.js"></script>
+<script src="https://fb.me/react-dom-0.14.7.js"></script>
+<script src="dist/textMask.js"></script>
+<script type="text/jsx" id="babel">
+  // Note, in Node or with a bundler, you'd do something like
+  //
+  // import MaskedInput from '@msafi/react-text-mask'
+  //
+  // but in this index.html file we're accessing "textMask" as a global variable
+  // because it's exposed by the included script tag above.
+  const MaskedInput = textMask.MaskedInput
+
+  const Form = React.createClass({
+    getInitialState() {
+      return {}
+    },
+
+    render() {
+      return (
+        <form className="form-horizontal">
+          <div className="form-group">
+            <label htmlFor="1" className="col-sm-2 control-label">Masked input</label>
+
+            <div className="col-sm-10">
+              <MaskedInput
+                mask={this.state.mask || '(111) 111-1111'}
+                className="form-control"
+                id="1"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="2" className="col-sm-2 control-label">Mask</label>
+
+            <div className="col-sm-10">
+              <input
+                defaultValue="(111) 111-1111"
+                onChange={this.onMaskChange}
+                type="text"
+                className="form-control myMask"
+                id="2"
+                placeholder="Enter mask"
+              />
+            </div>
+          </div>
+        </form>
+      )
+    },
+
+    onMaskChange({target: {value: newMask}}) {
+      this.setState({mask: newMask})
+    }
+  })
+
+  ReactDOM.render(
+    <Form/>,
+    document.querySelector('#content')
+  )
+</script>
+
+
+<!-- DON'T CONCERN YOURSELF WITH THIS PART. IT IS USED TO TRANSPILE ES CODE IN THE BROWSER -->
+<script id="processedScript"></script>
+<script type="text/javascript">
+  var babelScript = document.querySelector('#babel').innerHTML
+  var processedScript = Babel.transform(babelScript, {presets: ['es2015', 'react']}).code
+
+  document.querySelector('#processedScript').innerHTML = processedScript
+</script>
+</body>
+</html>
+
+<!-- https://github.com/msafi/react-index-html -->

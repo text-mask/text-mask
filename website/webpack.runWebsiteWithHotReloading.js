@@ -30,7 +30,7 @@ module.exports = {
       loaders: ['react-hot', 'babel-loader'],
       include: [
         path.join(__dirname, '../website/src/'),
-        path.join(__dirname, '../integrations/react/')
+        path.join(__dirname, '../react/')
       ]
     }, {
       // Process website/src/styles.scss as a regular Sass file

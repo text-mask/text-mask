@@ -33,7 +33,7 @@ module.exports = {
       loaders: ['babel-loader'],
       include: [
         path.join(__dirname, 'src/'),
-        path.join(__dirname, '../integrations/react/src/'),
+        path.join(__dirname, '../react/src/'),
         path.join(__dirname, '../core/src'),
       ]
     }, {
