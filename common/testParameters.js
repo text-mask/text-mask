@@ -307,7 +307,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 3
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     startingInputFieldValue: '1__',
@@ -1098,6 +1098,8 @@ export default _.filter((t) => t, [{
     conformedInputFieldValue: '___ ___',
     adjustedCaretPosition: 0
   },
+
+  // only: true
 }])
 
 //####################################################################################

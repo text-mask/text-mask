@@ -11,7 +11,7 @@ import {NgModel} from 'angular2/common'
 @Directive({
   selector: 'input[textMask][ngModel]',
   host: {
-    '[placeholder]': 'placeholder',
+    '[placeholder]': 'originalPlaceholder',
     '(input)': 'onInput($event.target.value)',
     '(keyup)': 'updateModel($event.target.value)'
   }
@@ -19,9 +19,10 @@ import {NgModel} from 'angular2/common'
 export default class MaskedInputDirective {
   private conformedInput:string
   private placeholder:string
+  private originalPlaceholder:string
   private inputElement:HTMLInputElement
 
-  @Input('textMask') textMaskConfig = {mask: ''}
+  @Input('textMask') textMaskConfig = {mask: '', guide: true}
 
   constructor(el:ElementRef, public model:NgModel) {
     this.inputElement = el.nativeElement
@@ -30,27 +31,38 @@ export default class MaskedInputDirective {
   ngOnInit({mask = this.textMaskConfig.mask} = {}) {
     this.conformedInput = ''
     this.placeholder = convertMaskToPlaceholder(mask)
+    this.originalPlaceholder = this.originalPlaceholder || this.placeholder
   }
 
   ngOnChanges({textMaskConfig}) {
     const {
       currentValue: {mask: currentMask},
-      previousValue: {mask: previousMask}
+      previousValue: {mask: previousMask},
+      currentValue: {guide: currentGuide},
+      previousValue: {guide: previousGuide}
     } = textMaskConfig
 
-    if (currentMask !== previousMask) {
+    if (currentMask !== previousMask || currentGuide !== previousGuide) {
       this.ngOnInit({mask: currentMask})
       this.model.valueAccessor.writeValue('')
     }
   }
 
   onInput(userInput = '') {
-    const {textMaskConfig: {mask}, placeholder, conformedInput: previousConformedInput} = this
-    const conformToMaskResults = conformToMask(userInput, mask)
+    const {
+      textMaskConfig: {mask, guide},
+      placeholder, 
+      conformedInput: previousConformedInput
+    } = this
+    const conformToMaskResults = conformToMask(
+      userInput, 
+      mask,
+      (guide === false) ? {guide, previousConformedInput} : {}
+    )
     const {output: conformedInput} = conformToMaskResults
-    
+
     const adjustedCaretPosition = adjustCaretPosition({
-      previousInput: previousConformedInput,
+      previousConformedInput,
       conformToMaskResults,
       currentCaretPosition: this.inputElement.selectionStart
     })

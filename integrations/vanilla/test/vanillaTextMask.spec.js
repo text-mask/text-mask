@@ -39,7 +39,7 @@ describe('inputMask', () => {
       inputElement.value = '4'
       inputElement.selectionStart = 1
       inputElement.oninput()
-      
+
       expect([
         inputElement.selectionStart,
         inputElement.selectionEnd
