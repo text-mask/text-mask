@@ -51,9 +51,9 @@ To see Text Mask in action, [checkout the demo page](https://msafi.github.io/tex
 
 ## Installation and usage
 
-* [React](integrations/react#readme)
-* [Angular 2](integrations/angular2#readme)
-* [Vanilla JS](integrations/vanilla#readme)
+* [React](react#readme)
+* [Angular 2](angular2#readme)
+* [Vanilla JS](vanilla#readme)
 
 ## Support
 
