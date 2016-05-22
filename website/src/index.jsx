@@ -50,7 +50,7 @@ const App = React.createClass({
     const {maskSelect} = this.refs
     const placeholder = (
       guide === false && (maskSelect === undefined || maskSelect.value !== 'custom')
-    ) ? `Example ${choices[selectedChoice].placeholder}` : ''
+    ) ? `Example ${choices[selectedChoice].placeholder}` : undefined
     const githubLink = "https://github.com/msafi/text-mask/#readme"
 
     return (

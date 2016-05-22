@@ -34,16 +34,16 @@ export const MaskedInput = React.createClass({
   },
 
   render() {
-    const {props, state: {placeholder, conformedInput}, onChange} = this
-    const {placeholder: originalPlaceholder} = props
+    const {props, state: {placeholder: componentPlaceholder, conformedInput}, onChange} = this
+    const {placeholder = componentPlaceholder, type = 'text'} = props
 
     return (
       <input
         {...props}
-        type={props.type || 'text'}
+        type={type}
         onChange={onChange}
         value={conformedInput}
-        placeholder={originalPlaceholder || placeholder}
+        placeholder={placeholder}
         ref="inputElement"
       />
     )
@@ -74,10 +74,9 @@ export const MaskedInput = React.createClass({
       adjustedCaretPosition === 0
     ) ? '' : conformedInput
 
-    this.setState({
-      conformedInput: finalConformedInput,
-      adjustedCaretPosition
-    })
+    this.setState({conformedInput: finalConformedInput, adjustedCaretPosition})
+
+    event.target.value = finalConformedInput
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)

@@ -53,11 +53,10 @@ describe('MaskedInput', () => {
       expect(userOnChange.called).to.equal(true)
     })
     
-    it.only('calls user provided with correct value on event', () => {
+    it.only('calls user provided `onChange` with correct event value', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
         <MaskedInput mask="111-111" onChange={(e) => {
-          // Event was be recycled went sent to sinon so couldn't access e.target.value
           userOnChange(e)
           expect(e.target.value).to.equal('111-111');
         }} guide={true}/>
