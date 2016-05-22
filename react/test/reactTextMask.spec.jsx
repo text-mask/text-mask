@@ -47,8 +47,28 @@ describe('MaskedInput', () => {
       input.selectionEnd = 1
 
       maskedInput.refs.inputElement.focus()
+      
       ReactTestUtils.Simulate.change(input)
 
+      expect(userOnChange.called).to.equal(true)
+    })
+    
+    it.only('calls user provided with correct value on event', () => {
+      const userOnChange = sinon.spy()
+      const maskedInput = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="111-111" onChange={(e) => {
+          // Event was be recycled went sent to sinon so couldn't access e.target.value
+          userOnChange(e)
+          expect(e.target.value).to.equal('111-111');
+        }} guide={true}/>
+      )
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+
+      input.value = '111-1111'
+      input.selectionStart = 1
+      input.selectionEnd = 1
+
+      ReactTestUtils.Simulate.change(input)
       expect(userOnChange.called).to.equal(true)
     })
 
