@@ -40,7 +40,7 @@ For a working example, check out the source code of
 As you can see in the example above, you are passing an object to `textMask.maskInput(...)`.
 
 The object takes `element`, which is the `<input/>` element that you are masking. It also
-accepts other values which are [documented here](../componentDocumentation.md).
+accepts other values which are [documented here](../componentDocumentation.md#readme).
 
 ## License
 
