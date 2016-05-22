@@ -13,6 +13,8 @@ npm run react:verify
 
 cd ./react
 
-npm version $version
+generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
+
+git tag "react-${generatedNpmVersion}"

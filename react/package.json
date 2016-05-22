@@ -1,6 +1,6 @@
 {
   "name": "@msafi/react-text-mask",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "React input component that accepts mask pattern",
   "main": "dist/textMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",

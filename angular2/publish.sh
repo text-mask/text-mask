@@ -13,6 +13,8 @@ npm run angular2:verify
 
 cd ./angular2
 
-npm version $version
+generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
+
+git tag "angular2-${generatedNpmVersion}"
