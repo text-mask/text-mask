@@ -31,7 +31,9 @@ export default class MaskedInputDirective {
   ngOnInit({mask = this.textMaskConfig.mask} = {}) {
     this.conformedInput = ''
     this.placeholder = convertMaskToPlaceholder(mask)
-    this.originalPlaceholder = this.originalPlaceholder || this.placeholder
+    this.originalPlaceholder = (this.originalPlaceholder !== undefined) ?
+      this.originalPlaceholder :
+      this.placeholder
   }
 
   ngOnChanges({textMaskConfig}) {

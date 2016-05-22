@@ -12,7 +12,9 @@ export function maskInput({element, mask, guide}) {
     placeholder: convertMaskToPlaceholder(mask)
   }
 
-  element.placeholder = element.placeholder || state.placeholder
+  element.placeholder = (element.placeholder !== undefined) ?
+    element.placeholder :
+    state.placeholder
   element.value = state.conformedInput
   safeSetSelection(element, 0)
 
