@@ -1,6 +1,6 @@
 {
   "name": "@msafi/angular2-text-mask",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Angular 2 directive for input text masking",
   "main": "dist/textMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/msafi/text-mask/angular2/#readme",
   "peerDependencies": {
-    "angular2": "^2.0.0-beta.13"
+    "angular2": "*"
   },
   "keywords": [
     "angular2",
