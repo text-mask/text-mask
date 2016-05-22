@@ -12,22 +12,8 @@ export function convertMaskToPlaceholder(mask = '') {
   }).join('')
 }
 
-export function getDelimiters(mask = '') {
-  return tokenize(mask).reduce((accumulator, character) => {
-    if (maskingCharacters.indexOf(character) === -1 && accumulator.indexOf(character) === -1) {
-      accumulator.push(character)
-    }
-
-    return accumulator
-  }, [])
-}
-
 export function tokenize(string = '') {
   return string.split('')
-}
-
-export function contains(array, needle) {
-  return array.indexOf(needle) !== -1
 }
 
 export function isAcceptableCharacter(character = '', maskingCharacter) {
