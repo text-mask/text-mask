@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/msafi/text-mask/react/#readme",
   "peerDependencies": {
-    "react": "^0.14.6"
+    "react": "^0.14.0 || ^15.0.0"
   },
   "keywords": [
     "react",
