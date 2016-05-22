@@ -51,7 +51,7 @@ For a plain JavaScript example, you can check out
 As you can see in the example above, you are passing an object to the `textMask` directive.
 
 For more information about the values that the `textMask` object accepts, see
-the [documentation here](../componentDocumentation.md#readme).
+the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## License
 

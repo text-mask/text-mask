@@ -1,12 +1,16 @@
 {
   "name": "@msafi/react-text-mask",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "description": "React input component that accepts mask pattern",
   "main": "dist/textMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/msafi/text-mask/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msafi/text-mask.git"
   },
   "homepage": "https://github.com/msafi/text-mask/react/#readme",
   "peerDependencies": {

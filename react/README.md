@@ -47,8 +47,8 @@ For a working example, check out the source code of
 
 ## Documentation
 
-For more information about the `props` that you can pass to the component,
-the [documentation here](../componentDocumentation.md#readme).
+For more information about the `props` that you can pass to the component, see
+the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## License
 
