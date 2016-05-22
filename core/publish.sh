@@ -13,6 +13,8 @@ npm run core:verify
 
 cd ./core
 
-npm version $version
+generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
+
+git tag "core-${generatedNpmVersion}"
