@@ -53,7 +53,7 @@ describe('MaskedInput', () => {
       expect(userOnChange.called).to.equal(true)
     })
     
-    it.only('calls user provided `onChange` with correct event value', () => {
+    it('calls user provided `onChange` with correct event value', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
         <MaskedInput mask="111-111" onChange={(e) => {
@@ -69,6 +69,20 @@ describe('MaskedInput', () => {
 
       ReactTestUtils.Simulate.change(input)
       expect(userOnChange.called).to.equal(true)
+    })
+
+    it('allows the user to set an empty `placeholder` property', () => {
+      const maskedInputWithDefaultPlaceholder = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="111-111" guide={true}/>
+      )
+
+      expect(maskedInputWithDefaultPlaceholder.refs.inputElement.placeholder).to.equal('___-___')
+
+      const maskedInputWithEmptyPlaceholder = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="111-111" guide={true} placeholder=""/>
+      )
+
+      expect(maskedInputWithEmptyPlaceholder.refs.inputElement.placeholder).to.equal('')
     })
 
     it('adjusts the position of the caret correctly when it updates', () => {
