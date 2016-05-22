@@ -70,7 +70,7 @@ This function takes three arguments:
 
 * userInput (string): the string value that you want to conform to the mask
 * mask (string): the mask to which you want the string to conform. You can find
-[mask documentation here](./maskDocumentation.md).
+[mask documentation here](../componentDocumentation.md#readme).
 * config (object): optional config object. See below for details
 
 This function returns an object shaped as `{output: 'someConformedString', meta: {...}}'`.

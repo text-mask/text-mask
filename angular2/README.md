@@ -43,7 +43,15 @@ You can see a working example in
 
 ### Plain JavaScript
 
-For a plain JavaScript example, you can check out [this Plunk](http://plnkr.co/edit/QImy7qOVZTmTM8ftiB84?p=preview).
+For a plain JavaScript example, you can check out
+[this Plunk](http://plnkr.co/edit/QImy7qOVZTmTM8ftiB84?p=preview).
+
+## Documentation
+
+As you can see in the example above, you are passing an object to the `textMask` directive.
+
+For more information about the values that the `textMask` object accepts, see
+the [documentation here](../componentDocumentation.md#readme).
 
 ## License
 

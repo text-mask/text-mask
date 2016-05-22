@@ -45,6 +45,11 @@ For example, the following works:
 For a working example, check out the source code of
 [this HTML file](https://msafi.github.io/text-mask/react/example.html).
 
+## Documentation
+
+For more information about the `props` that you can pass to the component,
+the [documentation here](../componentDocumentation.md#readme).
+
 ## License
 
 Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

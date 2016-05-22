@@ -35,6 +35,13 @@ Then, use it as follows:
 For a working example, check out the source code of
 [this HTML file](https://msafi.github.io/text-mask/vanilla/example.html).
 
+## Documentation
+
+As you can see in the example above, you are passing an object to `textMask.maskInput(...)`.
+
+The object takes `element`, which is the `<input/>` element that you are masking. It also
+accepts other values which are [documented here](../componentDocumentation.md#readme).
+
 ## License
 
 Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

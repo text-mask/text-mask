@@ -7,6 +7,16 @@ any user input, as they type, to a given mask pattern. For example:
 
 With mask `(111) 111-1111` and user input `5845739`, the output would be `(584) 573-9___`
 
+## Live demo
+
+To see Text Mask in action, [checkout the demo page](https://msafi.github.io/text-mask/).
+
+## Installation and usage
+
+* [React](react#readme)
+* [Angular 2](angular2#readme)
+* [Vanilla JS](vanilla#readme)
+
 ## Features
 
 ### Expected to work with...
@@ -15,20 +25,20 @@ IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and
 
 ### Guide mode
 
-Guide mode prints out placeholder characters and the mask itself as the user types
-
 <p align="center">
 <img src="assets/guideMode.gif"/>
 </p>
 
-### No-guide mode
+Guide mode prints out placeholder characters and the mask itself as the user types
 
-No-guide mode doesn't print out placeholder characters and only adds mask characters when the
-user reaches them
+### No-guide mode
 
 <p align="center">
 <img src="assets/noGuideMode.gif"/>
 </p>
+
+No-guide mode doesn't print out placeholder characters and only adds mask characters when the
+user reaches them
 
 ### Masking characters
 
@@ -44,16 +54,6 @@ Character | Description
 
 * Supports pasting
 * Supports browser auto-fill
-
-## Live demo
-
-To see Text Mask in action, [checkout the demo page](https://msafi.github.io/text-mask/).
-
-## Installation and usage
-
-* [React](react#readme)
-* [Angular 2](angular2#readme)
-* [Vanilla JS](vanilla#readme)
 
 ## Support
 
