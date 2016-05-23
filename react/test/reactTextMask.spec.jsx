@@ -33,6 +33,17 @@ describe('MaskedInput', () => {
       () => ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     ).not.to.throw()
   })
+  
+  describe('input render', () => {
+    it('should handle an initial value', () => {
+      const maskedInput = ReactTestUtils.renderIntoDocument(
+        <MaskedInput mask="111-111" value="333-333" guide={true}/>
+      )
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+
+      expect(input.value).to.equal('333-333')
+    })
+  })
 
   describe('input change', () => {
     it('calls user provided `onChange` if it exists', () => {
