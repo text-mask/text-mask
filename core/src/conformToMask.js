@@ -10,14 +10,14 @@ import {placeholderCharacter} from './constants.js'
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
   const {guide = true, previousConformedInput} = config
-  
+
   // We will be iterating over each character in the placeholder and sort of fill it up
   // with user input
   const placeholder = convertMaskToPlaceholder(mask)
-  
+
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedInput !== undefined
-  
+
   // This is the user input that we will take characters from and map them to the placeholder
   const userInputArr = tokenize(userInput)
 

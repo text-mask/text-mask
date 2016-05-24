@@ -21,9 +21,11 @@
   },
   "plugins": [
     "standard",
-    "promise"
+    "promise",
+    "mocha"
   ],
   "rules": {
+    "mocha/no-exclusive-tests": 2,
     "accessor-pairs": 2,
     "arrow-spacing": [
       2,
