@@ -5,34 +5,11 @@ import {
 } from './constants.js'
 
 export function convertMaskToPlaceholder(mask = '') {
-  let escaping = false
-  let placeholder = ''
-
-  for (let i = 0; i < mask.length; i++) {
-    const character = mask[i]
-
-    if (character === '`' && escaping !== true) {
-      escaping = true
-      placeholder += ''
-      continue
-    }
-
-    if (escaping === true) {
-      escaping = false
-      placeholder += character
-      continue
-    }
-
-    placeholder += (maskingCharacters.indexOf(character) !== -1) ?
+  return tokenize(mask).map((character) => {
+    return (maskingCharacters.indexOf(character) !== -1) ?
       placeholderCharacter :
       character
-  }
-
-  return placeholder
-}
-
-export function unescapeMask(mask = '') {
-  return mask.replace(/`/g, '')
+  }).join('')
 }
 
 export function tokenize(string = '') {
