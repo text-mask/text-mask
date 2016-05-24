@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import {convertMaskToPlaceholder} from '../core/src/utilities.js'
 
-export default _.filter((t) => t, [{
+// export default _.filter((t) => t, [{
 // export default _.filter((t) => false, [{
-// export default _.filter((t) => t.only, [{
+export default _.filter((t) => t.only, [{
   input: {
     startingInputFieldValue: '(___)',
     userModifiedInputFieldValue: '(3___)',
@@ -1100,6 +1100,20 @@ export default _.filter((t) => t, [{
   },
 
   // only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '00 (___)',
+    userModifiedInputFieldValue: '00 (1___)',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (1__)',
+    adjustedCaretPosition: 5
+  },
+
+  only: true
 }])
 
 //####################################################################################
@@ -1292,6 +1306,70 @@ export const noGuideMode = _.filter((t) => t, [{
 
   output: {
     conformedInputFieldValue: '',
+    adjustedCaretPosition: 0
+  },
+
+  // only: true
+}])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+// export const allowMaskingCharacter = _.filter((t) => t, [{
+// export const allowMaskingCharacter = _.filter((t) => false, [{
+export const allowMaskingCharacter = _.filter((t) => t.only, [{
+  input: {
+    mask: '+`1 (111) 111-1111',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '2',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '+1 (2__) ___-____',
+    adjustedCaretPosition: 5
+  },
+
+}, {
+  input: {
+    mask: '+`1 (111) 111-1111',
+    startingInputFieldValue: '+1 (2__) ___-____',
+    userModifiedInputFieldValue: '+1 (24__) ___-____',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '+1 (24_) ___-____',
+    adjustedCaretPosition: 6
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '+`1 (111) 111-1111',
+    startingInputFieldValue: '+1 (249) 384-____',
+    userModifiedInputFieldValue: '+1 (249) 384-5____',
+    caretPositionAfterInputFieldValueChange: 14
+  },
+
+  output: {
+    conformedInputFieldValue: '+1 (249) 384-5___',
+    adjustedCaretPosition: 14
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '0`1 (1)',
+    startingInputFieldValue: '01 (2)',
+    userModifiedInputFieldValue: '1 (2)',
+    caretPositionAfterInputFieldValueChange: 0
+  },
+
+  output: {
+    conformedInputFieldValue: '01 (2)',
     adjustedCaretPosition: 0
   },
 
