@@ -169,14 +169,6 @@ describe('MaskedInput', () => {
             input.selectionStart = 0
             input.selectionEnd = 0
 
-            // It's unrealistic to trigger change when there's no starting user input
-            // That is, input starts with empty value. We cannot change it from that to empty value
-            // because it already is empty.
-            if (input.value.length > 0) {
-              maskedInput.refs.inputElement.focus()
-              ReactTestUtils.Simulate.change(input)
-            }
-
             input.value = test.input.userModifiedInputFieldValue
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
             input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
@@ -227,14 +219,6 @@ describe('MaskedInput', () => {
             maskedInput.state.conformedInput = test.input.startingInputFieldValue
             input.selectionStart = 0
             input.selectionEnd = 0
-
-            // It's unrealistic to trigger change when there's no starting user input
-            // That is, input starts with empty value. We cannot change it from that to empty value
-            // because it already is empty.
-            if (input.value.length > 0) {
-              maskedInput.refs.inputElement.focus()
-              ReactTestUtils.Simulate.change(input)
-            }
 
             input.value = test.input.userModifiedInputFieldValue
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
