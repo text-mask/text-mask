@@ -1,11 +1,11 @@
 import './styles.scss'
 import ReactDOM from 'react-dom'
-import React from 'react';
-import MaskedInput from '../../react/src/reactTextMask.jsx'
+import React from 'react'
+import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
 
-const App = React.createClass({
+const App = React.createClass({ // eslint-disable-line
   getInitialState() {
     const initialState = {
       choices: [{
@@ -51,17 +51,17 @@ const App = React.createClass({
     const placeholder = (
       guide === false && (maskSelect === undefined || maskSelect.value !== 'custom')
     ) ? `Example ${choices[selectedChoice].placeholder}` : undefined
-    const githubLink = "https://github.com/msafi/text-mask/#readme"
+    const githubLink = 'https://github.com/msafi/text-mask/#readme'
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
         <p>
           <img
-            src="./assets/logo.png"
-            alt="Text Mask"
-            className="img-responsive"
-            width="331"
-            height="67"/>
+            src='./assets/logo.png'
+            alt='Text Mask'
+            className='img-responsive'
+            width='331'
+            height='67'/>
         </p>
 
         <p>
@@ -71,60 +71,60 @@ const App = React.createClass({
         </p>
 
         <div>
-          <form className="form-horizontal">
-            <div className="form-group">
+          <form className='form-horizontal'>
+            <div className='form-group'>
               <label
-                className="col-sm-3 control-label"
-                htmlFor="maskedInput">Masked input</label>
+                className='col-sm-3 control-label'
+                htmlFor='maskedInput'>Masked input</label>
 
-              <div className="col-sm-9">
+              <div className='col-sm-9'>
                 <MaskedInput
                   placeholder={placeholder}
-                  ref="maskedInput"
+                  ref='maskedInput'
                   mask={mask}
                   guide={guide}
-                  className="form-control"
-                  id="maskedInput"
+                  className='form-control'
+                  id='maskedInput'
                 />
               </div>
             </div>
 
-            <div className="form-group row">
+            <div className='form-group row'>
               <label
-                htmlFor="mask"
-                className="col-sm-3 col-xs-12 control-label">Mask</label>
+                htmlFor='mask'
+                className='col-sm-3 col-xs-12 control-label'>Mask</label>
 
-              <div className="col-sm-4 col-xs-12">
+              <div className='col-sm-4 col-xs-12'>
                 <select
-                  className="form-control"
+                  className='form-control'
                   onChange={this.onDropDownListMaskSelect}
-                  ref="maskSelect">
+                  ref='maskSelect'>
                   {this.state.choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
                   })}
-                  <option value="custom">Custom</option>
+                  <option value='custom'>Custom</option>
                 </select>
               </div>
 
-              <div className="col-sm-5 col-xs-12">
+              <div className='col-sm-5 col-xs-12'>
                 <input
-                  ref="mask"
-                  type="text"
+                  ref='mask'
+                  type='text'
                   onChange={this.onManualMaskChange}
                   value={mask}
                   className={classnames('form-control', appStyles.mask)}
-                  id="mask"
+                  id='mask'
                 />
               </div>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="guide" className="col-sm-3 control-label">Guide</label>
+            <div className='form-group'>
+              <label htmlFor='guide' className='col-sm-3 control-label'>Guide</label>
 
-              <div className="col-sm-2">
-                <select className="form-control" onChange={this.changeGuide} ref="guideSelect">
-                  <option value="off">Off</option>
-                  <option value="on">On</option>
+              <div className='col-sm-2'>
+                <select className='form-control' onChange={this.changeGuide} ref='guideSelect'>
+                  <option value='off'>Off</option>
+                  <option value='on'>On</option>
                 </select>
               </div>
             </div>
@@ -190,4 +190,4 @@ const App = React.createClass({
 ReactDOM.render(
   <App />,
   document.getElementById('app')
-);
+)

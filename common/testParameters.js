@@ -1100,6 +1100,20 @@ export default _.filter((t) => t, [{
   },
 
   // only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '00 (___)',
+    userModifiedInputFieldValue: '00 (1___)',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (1__)',
+    adjustedCaretPosition: 5
+  },
+
+  only: true
 }])
 
 //####################################################################################
@@ -1295,7 +1309,7 @@ export const noGuideMode = _.filter((t) => t, [{
     adjustedCaretPosition: 0
   },
 
-  only: true
+  // only: true
 }])
 
 export function transformTestForComponent(test) {

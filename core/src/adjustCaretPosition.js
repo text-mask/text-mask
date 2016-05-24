@@ -24,7 +24,7 @@ export default function adjustCaretPosition({
   // Convert mask (111) 111-1111 to (___) ___-___.
   const placeholder = convertMaskToPlaceholder(mask)
 
-  // True when user tries to delete a character from input. Like, (438) 394-4938 to (38) 394-4938
+  // True when user tries to add a character. Like, (___) ___-____ to (4___) ___-____
   const isAddition = !(rawInput.length < previousConformedInput.length)
 
   // This is true when user has entered more than one character per iteration. This only happens
@@ -65,7 +65,7 @@ export default function adjustCaretPosition({
   if (isPaste) {
     startingSearchIndex = 0
 
-  // Else if it has rejected character, we wanna go back a step and start searching from
+  // If it has rejected character, we wanna go back a step and start searching from
   // there because the caret will have advanced after entering the rejected character
   } else if (possiblyHasRejectedChar) {
     startingSearchIndex--
