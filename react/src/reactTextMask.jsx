@@ -10,8 +10,8 @@ const getConformedMaskResults = (userInput, mask, guide, previousConformedInput)
   return conformToMask(userInput, mask, (guide === false) ? {guide, previousConformedInput} : {})
 }
 
-const getComponentState = ({ mask, guide, value } = {}) => {
-  const { output: conformedInput } = getConformedMaskResults(value, mask, guide, '')
+const getComponentState = ({mask, guide, value} = {}) => {
+  const {output: conformedInput} = getConformedMaskResults(value, mask, guide, '')
   const placeholder = convertMaskToPlaceholder(mask)
   const finalConformedInput = (
       conformedInput === placeholder
@@ -23,7 +23,6 @@ const getComponentState = ({ mask, guide, value } = {}) => {
     placeholder
   }
 }
-
 
 export const MaskedInput = React.createClass({
   propTypes: {

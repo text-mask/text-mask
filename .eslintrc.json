@@ -57,6 +57,7 @@
       "last"
     ],
     "constructor-super": 2,
+    "object-curly-spacing": [2, "never"],
     "curly": [
       2,
       "multi-line"
@@ -89,7 +90,7 @@
       }
     ],
     "jsx-quotes": [
-      2,
+      "error",
       "prefer-single"
     ],
     "key-spacing": [
@@ -273,10 +274,6 @@
     "yoda": [
       2,
       "never"
-    ],
-    "standard/object-curly-even-spacing": [
-      2,
-      "either"
     ],
     "standard/array-bracket-even-spacing": [
       2,
