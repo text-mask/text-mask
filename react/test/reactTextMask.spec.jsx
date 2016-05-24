@@ -1,17 +1,17 @@
 import packageJson from '../package.json'
 import isVerify from '../../common/isVerify.js'
 import chai from 'chai'
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import sinon from 'sinon'
 import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters, {
-  noGuideMode, 
+  noGuideMode,
   transformTestForComponent
 } from '../../common/testParameters.js'
 
-const MaskedInput = (isVerify()) ?
+const MaskedInput = (isVerify()) ? // eslint-disable-line
   require(`../${packageJson.main}`).default :
   require('../src/reactTextMask.jsx').default
 
@@ -20,24 +20,24 @@ const expect = chai.expect
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
     expect(() => ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask="111-111" guide={true}/>
+      <MaskedInput mask='111-111' guide={true}/>
     )).not.to.throw()
   })
 
   it('renders a single input element', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask="111-111" guide={true}/>
+      <MaskedInput mask='111-111' guide={true}/>
     )
 
     expect(
       () => ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     ).not.to.throw()
   })
-  
+
   describe('input render', () => {
     it('should handle an initial value', () => {
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" value="333-333" guide={true}/>
+        <MaskedInput mask='111-111' value='333-333' guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -49,7 +49,7 @@ describe('MaskedInput', () => {
     it('calls user provided `onChange` if it exists', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" onChange={userOnChange} guide={true}/>
+        <MaskedInput mask='111-111' onChange={userOnChange} guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -58,18 +58,18 @@ describe('MaskedInput', () => {
       input.selectionEnd = 1
 
       maskedInput.refs.inputElement.focus()
-      
+
       ReactTestUtils.Simulate.change(input)
 
       expect(userOnChange.called).to.equal(true)
     })
-    
+
     it('calls user provided `onChange` with correct event value', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" onChange={(e) => {
+        <MaskedInput mask='111-111' onChange={(e) => {
           userOnChange(e)
-          expect(e.target.value).to.equal('111-111');
+          expect(e.target.value).to.equal('111-111')
         }} guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
@@ -84,13 +84,13 @@ describe('MaskedInput', () => {
 
     it('allows the user to set an empty `placeholder` property', () => {
       const maskedInputWithDefaultPlaceholder = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" guide={true}/>
+        <MaskedInput mask='111-111' guide={true}/>
       )
 
       expect(maskedInputWithDefaultPlaceholder.refs.inputElement.placeholder).to.equal('___-___')
 
       const maskedInputWithEmptyPlaceholder = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="111-111" guide={true} placeholder=""/>
+        <MaskedInput mask='111-111' guide={true} placeholder=''/>
       )
 
       expect(maskedInputWithEmptyPlaceholder.refs.inputElement.placeholder).to.equal('')
@@ -98,7 +98,7 @@ describe('MaskedInput', () => {
 
     it('adjusts the position of the caret correctly when it updates', () => {
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask="(11)" guide={true}/>
+        <MaskedInput mask='(11)' guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -113,14 +113,14 @@ describe('MaskedInput', () => {
       expect([
         maskedInput.refs.inputElement.selectionStart,
         maskedInput.refs.inputElement.selectionEnd
-      ]).to.deep.equal([2,2])
+      ]).to.deep.equal([2, 2])
     })
   })
 
   it('sets the value of the input to empty if it conformed input equals placeholder and ' +
      'the caret is at position 0', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask="(11)" guide={true}/>
+      <MaskedInput mask='(11)' guide={true}/>
     )
 
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
@@ -168,14 +168,6 @@ describe('MaskedInput', () => {
             maskedInput.state.conformedInput = test.input.startingInputFieldValue
             input.selectionStart = 0
             input.selectionEnd = 0
-
-            // It's unrealistic to trigger change when there's no starting user input
-            // That is, input starts with empty value. We cannot change it from that to empty value
-            // because it already is empty.
-            if (input.value.length > 0) {
-              maskedInput.refs.inputElement.focus()
-              ReactTestUtils.Simulate.change(input)
-            }
 
             input.value = test.input.userModifiedInputFieldValue
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
@@ -227,14 +219,6 @@ describe('MaskedInput', () => {
             maskedInput.state.conformedInput = test.input.startingInputFieldValue
             input.selectionStart = 0
             input.selectionEnd = 0
-
-            // It's unrealistic to trigger change when there's no starting user input
-            // That is, input starts with empty value. We cannot change it from that to empty value
-            // because it already is empty.
-            if (input.value.length > 0) {
-              maskedInput.refs.inputElement.focus()
-              ReactTestUtils.Simulate.change(input)
-            }
 
             input.value = test.input.userModifiedInputFieldValue
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange

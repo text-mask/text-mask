@@ -21,9 +21,11 @@
   },
   "plugins": [
     "standard",
-    "promise"
+    "promise",
+    "mocha"
   ],
   "rules": {
+    "mocha/no-exclusive-tests": 2,
     "accessor-pairs": 2,
     "arrow-spacing": [
       2,
@@ -55,6 +57,7 @@
       "last"
     ],
     "constructor-super": 2,
+    "object-curly-spacing": [2, "never"],
     "curly": [
       2,
       "multi-line"
@@ -87,7 +90,7 @@
       }
     ],
     "jsx-quotes": [
-      2,
+      "error",
       "prefer-single"
     ],
     "key-spacing": [
@@ -271,10 +274,6 @@
     "yoda": [
       2,
       "never"
-    ],
-    "standard/object-curly-even-spacing": [
-      2,
-      "either"
     ],
     "standard/array-bracket-even-spacing": [
       2,

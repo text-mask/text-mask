@@ -7,7 +7,7 @@
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run angular2:test",
-    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build",
+    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build && npm run website:build",
     "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run angular2:verify",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:tdd": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --recursive --watch",
@@ -35,8 +35,8 @@
     "angular2:verify": "./node_modules/.bin/mocha --compilers js:babel-core/register angular2/test --require ./common/domSetup.js --recursive --verify",
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master && git push origin gh-pages",
     "ci": "npm run test && npm run verify",
-    "loud-lint": "./node_modules/.bin/eslint .",
-    "lint": "./node_modules/.bin/eslint . || true"
+    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
+    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx || true"
   },
   "repository": {
     "type": "git",
@@ -61,8 +61,9 @@
     "css-loader": "^0.23.1",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.35.0",
-    "eslint": "^2.7.0",
+    "eslint": "^2.10.2",
     "eslint-config-standard": "^5.1.0",
+    "eslint-plugin-mocha": "^2.2.0",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-standard": "^1.3.2",
     "file-loader": "^0.8.5",
