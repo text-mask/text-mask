@@ -10,24 +10,29 @@ const getConformedMaskResults = (userInput, mask, guide, previousConformedInput)
   return conformToMask(userInput, mask, (guide === false) ? {guide, previousConformedInput} : {})
 }
 
+const getComponentState = ({ mask, guide, value } = {}) => {
+  const { output: conformedInput } = getConformedMaskResults(value, mask, guide, '')
+  const placeholder = convertMaskToPlaceholder(mask)
+  const finalConformedInput = (
+      conformedInput === placeholder
+    ) ? '' : conformedInput
+
+  return {
+    conformedInput: finalConformedInput,
+    adjustedCaretPosition: 0,
+    placeholder
+  }
+}
+
+
 export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired,
     guide: PropTypes.bool
   },
 
-  getInitialState({ mask = this.props.mask, guide = this.props.guide } = {}) {
-    const { output: conformedInput } = getConformedMaskResults(this.props.value, mask, guide, '')
-    const placeholder = convertMaskToPlaceholder(mask)
-    const finalConformedInput = (
-      conformedInput === placeholder
-    ) ? '' : conformedInput
-
-    return {
-      conformedInput: finalConformedInput,
-      adjustedCaretPosition: 0,
-      placeholder
-    }
+  getInitialState() {
+    return getComponentState(this.props)
   },
 
   componentWillReceiveProps(nextProps) {
@@ -35,7 +40,7 @@ export const MaskedInput = React.createClass({
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide
     ) {
-      this.setState(this.getInitialState({mask: nextProps.mask, guide: nextProps.guide}))
+      this.setState(getComponentState(nextProps))
     }
   },
 
