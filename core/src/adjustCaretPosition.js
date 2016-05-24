@@ -24,7 +24,7 @@ export default function adjustCaretPosition({
   // Convert mask (111) 111-1111 to (___) ___-___.
   const placeholder = convertMaskToPlaceholder(mask)
 
-  // True when user tries to add a character. Like, (438) 394-4938 to (38) 394-4938
+  // True when user tries to add a character. Like, (___) ___-____ to (4___) ___-____
   const isAddition = !(rawInput.length < previousConformedInput.length)
 
   // This is true when user has entered more than one character per iteration. This only happens
