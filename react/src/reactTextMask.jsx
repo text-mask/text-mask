@@ -13,7 +13,9 @@ const getConformedMaskResults = (userInput, mask, guide, previousConformedInput)
 const getComponentState = ({ mask, guide, value } = {}) => {
   const { output: conformedInput } = getConformedMaskResults(value, mask, guide, '')
   const placeholder = convertMaskToPlaceholder(mask)
-  const finalConformedInput = (conformedInput === placeholder) ? '' : conformedInput
+  const finalConformedInput = (
+      conformedInput === placeholder
+    ) ? '' : conformedInput
 
   return {
     conformedInput: finalConformedInput,
@@ -57,7 +59,7 @@ export const MaskedInput = React.createClass({
         onChange={onChange}
         value={conformedInput}
         placeholder={placeholder}
-        ref="inputElement"
+        ref='inputElement'
       />
     )
   },
@@ -68,7 +70,7 @@ export const MaskedInput = React.createClass({
       props: {mask, guide},
       state: {placeholder, conformedInput: previousConformedInput}
     } = this
-    const currentCaretPosition = this.refs.inputElement.selectionStart
+
     const conformToMaskResults = getConformedMaskResults(
       userInput,
       mask,
@@ -80,8 +82,9 @@ export const MaskedInput = React.createClass({
     const adjustedCaretPosition = adjustCaretPosition({
       previousConformedInput,
       conformToMaskResults,
-      currentCaretPosition
+      currentCaretPosition: this.refs.inputElement.selectionStart
     })
+
     const finalConformedInput = (
       conformedInput === placeholder &&
       adjustedCaretPosition === 0
