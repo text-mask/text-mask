@@ -60,12 +60,12 @@ export default function adjustCaretPosition({
   // original/current caret position
   let startingSearchIndex = currentCaretPosition
 
-  // Else if the operation is paste, we start from the beginning of the `conformedInput` string
+  // If the operation is paste, we start from the beginning of the `conformedInput` string
   // and look for the next sensible caret position, which is where a `placeholderChar` would be
   if (isPaste) {
     startingSearchIndex = 0
 
-  // If it has rejected character, we wanna go back a step and start searching from
+  // Else if operation has rejected character, we wanna go back a step and start searching from
   // there because the caret will have advanced after entering the rejected character
   } else if (possiblyHasRejectedChar) {
     startingSearchIndex--
