@@ -55,20 +55,15 @@ export const MaskedInput = React.createClass({
       props: {mask, guide},
       state: {placeholder, conformedInput: previousConformedInput}
     } = this
-
-    const conformToMaskResults = conformToMask(
-      userInput,
-      mask,
-      (guide === false) ? {guide, previousConformedInput} : {}
-    )
+    const currentCaretPosition = this.refs.inputElement.selectionStart
+    const conformToMaskConfig = (guide === false) ? {guide, previousConformedInput} : {}
+    const conformToMaskResults = conformToMask(userInput, mask, conformToMaskConfig)
     const {output: conformedInput} = conformToMaskResults
-
     const adjustedCaretPosition = adjustCaretPosition({
       previousConformedInput,
       conformToMaskResults,
-      currentCaretPosition: this.refs.inputElement.selectionStart
+      currentCaretPosition
     })
-
     const finalConformedInput = (
       conformedInput === placeholder &&
       adjustedCaretPosition === 0

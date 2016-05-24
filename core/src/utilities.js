@@ -32,7 +32,7 @@ export function convertMaskToPlaceholder(mask = '') {
 }
 
 export function unescapeMask(mask = '') {
-  return mask.replace(/`./g, '`')
+  return mask.replace(/`/g, '')
 }
 
 export function tokenize(string = '') {

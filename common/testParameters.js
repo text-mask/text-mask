@@ -1332,7 +1332,6 @@ export const allowMaskingCharacter = _.filter((t) => t.only, [{
     adjustedCaretPosition: 5
   },
 
-  only: true
 }, {
   input: {
     mask: '+`1 (111) 111-1111',
@@ -1361,6 +1360,20 @@ export const allowMaskingCharacter = _.filter((t) => t.only, [{
   },
 
   // only: true
+}, {
+  input: {
+    mask: '0`1 (1)',
+    startingInputFieldValue: '01 (2)',
+    userModifiedInputFieldValue: '1 (2)',
+    caretPositionAfterInputFieldValueChange: 0
+  },
+
+  output: {
+    conformedInputFieldValue: '01 (2)',
+    adjustedCaretPosition: 0
+  },
+
+  only: true
 }])
 
 export function transformTestForComponent(test) {

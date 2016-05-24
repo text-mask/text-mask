@@ -24,6 +24,8 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   // In *no guide* mode, we need to know if the user is trying to add a character or not
   const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
 
+  const unescapedMask = unescapeMask(mask)
+
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below
   let conformedString = ''
@@ -54,10 +56,10 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          } else if (isAcceptableCharacter(userInputCharacter, mask[i])) {
+          } else if (isAcceptableCharacter(userInputCharacter, unescapedMask[i])) {
             // if it is accepted. We map it--performing any necessary transforming along the way,
             // like upper casing or lower casing.
-            conformedString += potentiallyTransformCharacter(userInputCharacter, mask[i])
+            conformedString += potentiallyTransformCharacter(userInputCharacter, unescapedMask[i])
 
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
