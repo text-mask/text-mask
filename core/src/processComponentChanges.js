@@ -1,5 +1,5 @@
-import adjustCaretPosition from './adjustCaretPosition'
-import conformToMask from './conformToMask'
+import adjustCaretPosition from './adjustCaretPosition.js'
+import conformToMask from './conformToMask.js'
 
 export default function processComponentChanges({
   userInput = '',
@@ -9,24 +9,16 @@ export default function processComponentChanges({
   guide = '',
   currentCaretPosition = 0
 }) {
-  const conformToMaskResults = conformToMask(
-    userInput,
-    mask,
-    (guide === false) ? {guide, previousConformedInput} : {}
-  )
+  const conformToMaskConfig = (guide === false) ? {guide, previousConformedInput} : {}
+  const conformToMaskResults = conformToMask(userInput, mask, conformToMaskConfig)
   const {output: conformToMaskOutput} = conformToMaskResults
   const adjustedCaretPosition = adjustCaretPosition({
     previousConformedInput,
     conformToMaskResults,
     currentCaretPosition
   })
-  const conformedInput = (
-    conformToMaskOutput === placeholder &&
-    adjustedCaretPosition === 0
-  ) ? '' : conformToMaskOutput
+  const valueShouldBeEmpty = conformToMaskOutput === placeholder && adjustedCaretPosition === 0
+  const conformedInput = (valueShouldBeEmpty) ? '' : conformToMaskOutput
 
-  return {
-    conformedInput,
-    adjustedCaretPosition
-  }
+  return {conformedInput, adjustedCaretPosition}
 }

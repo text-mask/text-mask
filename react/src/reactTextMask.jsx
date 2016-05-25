@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react'
-import {
-  convertMaskToPlaceholder,
-  safeSetSelection,
-  processComponentChanges
-} from '../../core/src/index.js'
+import {convertMaskToPlaceholder} from '../../core/src/utilities.js'
+import safeSetSelection from '../../core/src/safeSetSelection.js'
+import processComponentChanges from '../../core/src/processComponentChanges.js'
 
 const getComponentInitialState = (mask, inputValue) => {
   return {
@@ -59,10 +57,7 @@ export const MaskedInput = React.createClass({
       props: {mask, guide},
       state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
     } = this
-    const {
-      conformedInput,
-      adjustedCaretPosition
-    } = processComponentChanges({
+    const {conformedInput, adjustedCaretPosition} = processComponentChanges({
       userInput,
       placeholder,
       previousConformedInput,
@@ -83,8 +78,5 @@ export const MaskedInput = React.createClass({
 
 export default MaskedInput
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index.js'
+export {default as conformToMask} from '../../core/src/conformToMask.js'
+export {convertMaskToPlaceholder} from '../../core/src/utilities.js'

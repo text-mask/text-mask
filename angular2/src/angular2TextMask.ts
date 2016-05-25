@@ -1,8 +1,6 @@
-import {
-  convertMaskToPlaceholder,
-  safeSetSelection,
-  processComponentChanges
-} from '../../core/src/index'
+import {convertMaskToPlaceholder} from '../../core/src/utilities'
+import safeSetSelection from '../../core/src/safeSetSelection'
+import processComponentChanges from '../../core/src/processComponentChanges'
 
 import {Directive, ElementRef, Input} from 'angular2/core'
 import {NgModel} from 'angular2/common'
@@ -55,10 +53,7 @@ export default class MaskedInputDirective {
       placeholder, 
       conformedInput: previousConformedInput
     } = this
-    const {
-      adjustedCaretPosition,
-      conformedInput
-    } = processComponentChanges({
+    const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
       placeholder,
       previousConformedInput,
@@ -79,8 +74,5 @@ export default class MaskedInputDirective {
 
 export {MaskedInputDirective as Directive}
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index'
+export {default as conformToMask} from '../../core/src/conformToMask'
+export {convertMaskToPlaceholder} from '../../core/src/utilities'

@@ -1,8 +1,6 @@
-import {
-  convertMaskToPlaceholder,
-  safeSetSelection,
-  processComponentChanges
-} from '../../core/src/index.js'
+import {convertMaskToPlaceholder} from '../../core/src/utilities.js'
+import safeSetSelection from '../../core/src/safeSetSelection.js'
+import processComponentChanges from '../../core/src/processComponentChanges.js'
 
 export function maskInput({element, mask, guide}) {
   const state = {
@@ -22,10 +20,7 @@ export function maskInput({element, mask, guide}) {
   function updateInput() {
     const userInput = element.value
     const {placeholder, conformedInput: previousConformedInput} = state
-    const {
-      adjustedCaretPosition,
-      conformedInput
-    } = processComponentChanges({
+    const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
       placeholder,
       previousConformedInput,
@@ -44,8 +39,5 @@ export function maskInput({element, mask, guide}) {
 
 export default maskInput
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index.js'
+export {default as conformToMask} from '../../core/src/conformToMask.js'
+export {convertMaskToPlaceholder} from '../../core/src/utilities.js'
