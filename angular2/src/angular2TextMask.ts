@@ -1,8 +1,7 @@
 import {
-  conformToMask,
   convertMaskToPlaceholder,
-  adjustCaretPosition,
-  safeSetSelection
+  safeSetSelection,
+  processComponentChanges
 } from '../../core/src/index'
 
 import {Directive, ElementRef, Input} from 'angular2/core'
@@ -56,28 +55,20 @@ export default class MaskedInputDirective {
       placeholder, 
       conformedInput: previousConformedInput
     } = this
-    const conformToMaskResults = conformToMask(
-      userInput, 
-      mask,
-      (guide === false) ? {guide, previousConformedInput} : {}
-    )
-    const {output: conformedInput} = conformToMaskResults
-
-    const adjustedCaretPosition = adjustCaretPosition({
+    const {
+      adjustedCaretPosition,
+      conformedInput
+    } = processComponentChanges({
+      userInput,
+      placeholder,
       previousConformedInput,
-      conformToMaskResults,
+      mask,
+      guide,
       currentCaretPosition: this.inputElement.selectionStart
     })
 
-    const finalConformedInput = (
-      conformedInput === placeholder &&
-      adjustedCaretPosition === 0
-    ) ? '' : conformedInput
-
-    this.conformedInput = finalConformedInput
-
-    this.model.valueAccessor.writeValue(finalConformedInput)
-
+    this.conformedInput = conformedInput
+    this.model.valueAccessor.writeValue(conformedInput)
     safeSetSelection(this.inputElement, adjustedCaretPosition)
   }
 
