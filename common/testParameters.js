@@ -1113,7 +1113,47 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 5
   },
 
-  only: true
+  // only: true
+}, {
+  input: {
+    mask: '1111',
+    startingInputFieldValue: '3333',
+    userModifiedInputFieldValue: '2',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '2___',
+    adjustedCaretPosition: 1
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '//1111',
+    startingInputFieldValue: '//3333',
+    userModifiedInputFieldValue: '2',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '//2___',
+    adjustedCaretPosition: 3
+  },
+}, {
+  input: {
+    mask: '1111',
+    startingInputFieldValue: '3333',
+    userModifiedInputFieldValue: '23',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '23__',
+    adjustedCaretPosition: 1
+  },
+
+  // only: true
 }])
 
 //####################################################################################
