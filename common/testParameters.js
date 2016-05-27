@@ -1127,7 +1127,7 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 1
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     mask: '//1111',
