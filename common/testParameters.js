@@ -1441,7 +1441,6 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   },
 }])
 
-
 export function transformTestForComponent(test) {
   const {
     input: {mask},
