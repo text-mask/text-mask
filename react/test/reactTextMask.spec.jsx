@@ -37,7 +37,7 @@ describe('MaskedInput', () => {
   describe('input render', () => {
     it('should handle an initial value', () => {
       const maskedInput = ReactTestUtils.renderIntoDocument(
-        <MaskedInput mask='111-111' value='333-333' guide={true}/>
+        <MaskedInput mask='111-111' value='333333' guide={true}/>
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
@@ -102,9 +102,13 @@ describe('MaskedInput', () => {
       )
       const input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
+      maskedInput.state.conformedInput = ''
+      input.selectionStart = 0
+      input.selectionEnd = 0
+
       input.value = '(2_)'
-      input.selectionStart = 1
-      input.selectionEnd = 1
+      input.selectionStart = 4
+      input.selectionEnd = 4
 
       maskedInput.refs.inputElement.focus()
 

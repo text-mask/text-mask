@@ -1,25 +1,21 @@
 import React, {PropTypes} from 'react'
-import {convertMaskToPlaceholder} from '../../core/src/utilities.js'
-import safeSetSelection from '../../core/src/safeSetSelection.js'
-import processComponentChanges from '../../core/src/processComponentChanges.js'
-
-const getComponentInitialState = (mask, inputValue) => {
-  return {
-    conformedInput: inputValue,
-    adjustedCaretPosition: 0,
-    componentPlaceholder: convertMaskToPlaceholder(mask)
-  }
-}
+import {
+  processComponentChanges,
+  safeSetSelection,
+  getComponentInitialState
+} from '../../core/src/componentHelpers.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired,
     guide: PropTypes.bool,
-    value: PropTypes.string
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   },
 
   getInitialState() {
-    return getComponentInitialState(this.props.mask, this.props.value)
+    const {value: inputValue, mask, guide} = this.props
+
+    return getComponentInitialState({inputValue, mask, guide})
   },
 
   componentWillReceiveProps(nextProps) {
@@ -27,7 +23,9 @@ export const MaskedInput = React.createClass({
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide
     ) {
-      this.setState(getComponentInitialState(nextProps.mask, nextProps.value))
+      const {mask, value: inputValue, guide} = nextProps
+
+      this.setState(getComponentInitialState({mask, inputValue, guide}))
     }
   },
 
