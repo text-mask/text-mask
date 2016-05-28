@@ -1414,7 +1414,31 @@ export const acceptedCharInMask = _.filter((t) => t, [{
     adjustedCaretPosition: 8
   },
 
-  only: true
+  // only: true
+}, {
+  input: {
+    mask: '00 (111) 00 83 111 93 111',
+    startingInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
+    userModifiedInputFieldValue: '00 (344_) 00 83 ___ 93 ___',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (344) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 6
+  },
+}, {
+  input: {
+    mask: '00 (111) 00 83 111 93 111',
+    startingInputFieldValue: '00 (344) 00 83 ___ 93 ___',
+    userModifiedInputFieldValue: '00 (34) 00 83 ___ 93 ___',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 5
+  },
 }])
 
 
