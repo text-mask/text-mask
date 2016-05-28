@@ -108,6 +108,7 @@
       }
     ],
     "new-parens": 2,
+    "no-console": 2,
     "no-array-constructor": 2,
     "no-caller": 2,
     "no-class-assign": 2,

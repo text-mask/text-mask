@@ -34,7 +34,7 @@ export function maskInput({element, mask, guide}) {
     safeSetSelection(element, adjustedCaretPosition)
   }
 
-  return state // Return to facilitate testing
+  return state // Returned to facilitate testing
 }
 
 export default maskInput

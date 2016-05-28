@@ -51,8 +51,7 @@ function getSafeInputValue(inputValue) {
   } else if (inputValue === undefined || inputValue === null) {
     return ''
   } else {
-    console.log('Text Mask received', inputValue)
-    throw new Error(
-      'The `value` provided to Text Mask needs to be a string or a number.')
+    console.log('Text Mask received', inputValue) // eslint-disable-line
+    throw new Error('The `value` provided to Text Mask needs to be a string or a number.')
   }
 }
