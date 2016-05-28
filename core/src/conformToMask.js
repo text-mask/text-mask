@@ -21,6 +21,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
   const indexOfFirstChange = getIndexOfFirstChange(previousConformedInput, userInput)
 
+  // This tells us the number of edited characters and the direction in which they were edited (+/-)
   const numberOfEditedChars = userInput.length - previousConformedInput.length
 
   const userInputArr = tokenize(userInput)
@@ -79,9 +80,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          } else if (
-            isAcceptableChar(userInputChar, mask[i])
-          ) {
+          } else if (isAcceptableChar(userInputChar, mask[i])) {
             // if it is accepted. We map it--performing any necessary transforming along the way,
             // like upper casing or lower casing.
             conformedString += potentiallyTransformChar(userInputChar, mask[i])
