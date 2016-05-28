@@ -107,16 +107,6 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     // Else, the characterInPlaceholder is not a placeholderCharacter. That is, we cannot fill it
     // with user input. So we just map it to the final output
     } else {
-      // If characterInPlaceholder is the same as what is in the user input. We need to remove
-      // the character from the user input. The main reason is to avoid a situation where the
-      // placeholder is something like `00 (___) ___-____`. In this situation, if we don't
-      // remove the `0` characters as we do below, they will be mapped to placeholder characters
-      // by the loop above. So we'll have zeros in the placeholder AND in the conformed string.
-      // I.e. `00 (00_) ___-____`
-      // if (charInPlaceholder === userInput[i]) {
-      //   userInputArr.shift()
-      // }
-
       conformedString += charInPlaceholder
     }
   }
