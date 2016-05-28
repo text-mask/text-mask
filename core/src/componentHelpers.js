@@ -10,8 +10,7 @@ export function processComponentChanges({
   guide = '',
   currentCaretPosition = 0
 }) {
-  const conformToMaskConfig = (guide === false) ? {guide, previousConformedInput} : {}
-  const conformToMaskResults = conformToMask(userInput, mask, conformToMaskConfig)
+  const conformToMaskResults = conformToMask(userInput, mask, {previousConformedInput, guide})
   const {output: conformToMaskOutput} = conformToMaskResults
   const adjustedCaretPosition = adjustCaretPosition({
     previousConformedInput,

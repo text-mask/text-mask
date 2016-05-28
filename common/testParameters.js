@@ -797,7 +797,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 3
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -1113,7 +1113,7 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 5
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     mask: '1111',
@@ -1350,6 +1350,95 @@ export const noGuideMode = _.filter((t) => t, [{
   },
 
   // only: true
+}])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+export const acceptedCharInMask = _.filter((t) => t, [{
+// export const acceptedCharInMask = _.filter((t) => false, [{
+// export const acceptedCharInMask = _.filter((t) => t.only, [{
+  input: {
+    mask: '0 1 0 11',
+    startingInputFieldValue: '0 _ 0 __',
+    userModifiedInputFieldValue: '0 3_ 0 __',
+    caretPositionAfterInputFieldValueChange: 3
+  },
+
+  output: {
+    conformedInputFieldValue: '0 3 0 __',
+    adjustedCaretPosition: 3
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '0 1 0 11',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '0',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '0 _ 0 __',
+    adjustedCaretPosition: 2
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '00 (___)',
+    userModifiedInputFieldValue: '00 (1___)',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (1__)',
+    adjustedCaretPosition: 5
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '00 (234)',
+    caretPositionAfterInputFieldValueChange: 8
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (234)',
+    adjustedCaretPosition: 8
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '00 (111) 00 83 111 93 111',
+    startingInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
+    userModifiedInputFieldValue: '00 (344_) 00 83 ___ 93 ___',
+    caretPositionAfterInputFieldValueChange: 6
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (344) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 6
+  },
+}, {
+  input: {
+    mask: '00 (111) 00 83 111 93 111',
+    startingInputFieldValue: '00 (344) 00 83 ___ 93 ___',
+    userModifiedInputFieldValue: '00 (34) 00 83 ___ 93 ___',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 5
+  },
 }])
 
 export function transformTestForComponent(test) {
