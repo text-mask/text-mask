@@ -1357,9 +1357,9 @@ export const noGuideMode = _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
-// export const acceptedCharInMask = _.filter((t) => t, [{
+export const acceptedCharInMask = _.filter((t) => t, [{
 // export const acceptedCharInMask = _.filter((t) => false, [{
-export const acceptedCharInMask = _.filter((t) => t.only, [{
+// export const acceptedCharInMask = _.filter((t) => t.only, [{
   input: {
     mask: '0 1 0 11',
     startingInputFieldValue: '0 _ 0 __',
@@ -1372,7 +1372,7 @@ export const acceptedCharInMask = _.filter((t) => t.only, [{
     adjustedCaretPosition: 3
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     mask: '0 1 0 11',
@@ -1386,7 +1386,7 @@ export const acceptedCharInMask = _.filter((t) => t.only, [{
     adjustedCaretPosition: 2
   },
 
-  only: true
+  // only: true
 }, {
   input: {
     mask: '00 (111)',
@@ -1398,6 +1398,20 @@ export const acceptedCharInMask = _.filter((t) => t.only, [{
   output: {
     conformedInputFieldValue: '00 (1__)',
     adjustedCaretPosition: 5
+  },
+
+  // only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '00 (234)',
+    caretPositionAfterInputFieldValueChange: 8
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (234)',
+    adjustedCaretPosition: 8
   },
 
   only: true

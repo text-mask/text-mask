@@ -25,26 +25,29 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
   const userInputArr = tokenize(userInput)
 
-  // This is the first character the user entered that needs to be conformed to mask
-  const isFirstChar = userInput.length === 1
-
-
-  let jumpInUserInput = 0
-  for (let i = 0; i < placeholder.length; i++) {
-    const shouldJumpAheadInUserInput = i >= indexOfFirstChange && !isFirstChar
-    const userInputPointer = (
-      ((shouldJumpAheadInUserInput) ? i + numberOfEditedChars : i) - jumpInUserInput
-    )
-
-    if (placeholder[i] === userInputArr[userInputPointer] && userInputArr[userInputPointer] !== placeholderChar) {
-      userInputArr.splice(userInputPointer, 1)
-
-      jumpInUserInput++
-    }
-  }
-
   // In *no guide* mode, we need to know if the user is trying to add a character or not
   const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
+
+  // The loop below removes masking characters from user input. For example, for mask
+  // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
+  // would remove all characters but `234` from the `userInputArr`. The rest of the algorithm
+  // then would lay `234` on top of the available placeholder positions in the mask.
+  let numberOfSpliceOperations = 0
+  for (let i = 0; i < placeholder.length && userInputArr.length > 0; i++) {
+    const shouldJumpAheadInUserInput = i >= indexOfFirstChange && previousConformedInput !== ''
+    const userInputPointer = (
+      (shouldJumpAheadInUserInput ? i + numberOfEditedChars : i) - numberOfSpliceOperations
+    )
+
+    if (
+      placeholder[i] === userInputArr[userInputPointer] &&
+      userInputArr[userInputPointer] !== placeholderChar
+    ) {
+      userInputArr.splice(userInputPointer, 1)
+
+      numberOfSpliceOperations++
+    }
+  }
 
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below
