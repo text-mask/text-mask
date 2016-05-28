@@ -797,7 +797,7 @@ export default _.filter((t) => t, [{
     indexOfLastAddedCharacter: 3
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     startingInputFieldValue: '',
@@ -1113,7 +1113,7 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 5
   },
 
-  // only: true
+  only: true
 }, {
   input: {
     mask: '1111',
@@ -1351,6 +1351,58 @@ export const noGuideMode = _.filter((t) => t, [{
 
   // only: true
 }])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+// export const acceptedCharInMask = _.filter((t) => t, [{
+// export const acceptedCharInMask = _.filter((t) => false, [{
+export const acceptedCharInMask = _.filter((t) => t.only, [{
+  input: {
+    mask: '0 1 0 11',
+    startingInputFieldValue: '0 _ 0 __',
+    userModifiedInputFieldValue: '0 3_ 0 __',
+    caretPositionAfterInputFieldValueChange: 3
+  },
+
+  output: {
+    conformedInputFieldValue: '0 3 0 __',
+    adjustedCaretPosition: 3
+  },
+
+  only: true
+}, {
+  input: {
+    mask: '0 1 0 11',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '0',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '0 _ 0 __',
+    adjustedCaretPosition: 2
+  },
+
+  only: true
+}, {
+  input: {
+    mask: '00 (111)',
+    startingInputFieldValue: '00 (___)',
+    userModifiedInputFieldValue: '00 (1___)',
+    caretPositionAfterInputFieldValueChange: 5
+  },
+
+  output: {
+    conformedInputFieldValue: '00 (1__)',
+    adjustedCaretPosition: 5
+  },
+
+  only: true
+}])
+
 
 export function transformTestForComponent(test) {
   const {
