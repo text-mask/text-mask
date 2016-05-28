@@ -42,13 +42,14 @@ describe('MaskedInput', () => {
         writeValue(_value) {
           modelValue = _value
         }
-      }
+      },
+      viewToModelUpdate() {}
     }
   })
 
   it('does not throw when instantiated', () => {
     expect(() => {
-      const maskedInput = new MaskedInput({nativeElement: inputElement})
+      const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
       maskedInput.ngOnInit({mask: '(111)'})
 

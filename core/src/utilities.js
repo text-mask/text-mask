@@ -69,3 +69,11 @@ export function getIndexOfFirstChange(stringOne, stringTwo) {
 
   return null
 }
+
+export function isString(value) {
+  return typeof value === 'string' || value instanceof String
+}
+
+export function isNumber(value) {
+  return value && value.length === undefined && !isNaN(value)
+}

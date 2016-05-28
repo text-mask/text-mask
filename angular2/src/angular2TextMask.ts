@@ -1,9 +1,8 @@
 import {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition,
-  safeSetSelection
-} from '../../core/src/index'
+  processComponentChanges,
+  safeSetSelection,
+  getComponentInitialState
+} from '../../core/src/componentHelpers'
 
 import {Directive, ElementRef, Input} from 'angular2/core'
 import {NgModel} from 'angular2/common'
@@ -11,15 +10,13 @@ import {NgModel} from 'angular2/common'
 @Directive({
   selector: 'input[textMask][ngModel]',
   host: {
-    '[placeholder]': 'originalPlaceholder',
     '(input)': 'onInput($event.target.value)',
     '(keyup)': 'updateModel($event.target.value)'
   }
 })
 export default class MaskedInputDirective {
   private conformedInput:string
-  private placeholder:string
-  private originalPlaceholder:string
+  private componentPlaceholder:string
   private inputElement:HTMLInputElement
 
   @Input('textMask') textMaskConfig = {mask: '', guide: true}
@@ -28,12 +25,26 @@ export default class MaskedInputDirective {
     this.inputElement = el.nativeElement
   }
 
-  ngOnInit({mask = this.textMaskConfig.mask} = {}) {
-    this.conformedInput = ''
-    this.placeholder = convertMaskToPlaceholder(mask)
-    this.originalPlaceholder = (this.originalPlaceholder !== undefined) ?
-      this.originalPlaceholder :
-      this.placeholder
+  setComponentInitialState({inputValue, mask, guide}) {
+    const {conformedInput, componentPlaceholder} = getComponentInitialState({
+      inputValue,
+      mask,
+      guide
+    })
+
+    this.conformedInput = conformedInput
+    this.componentPlaceholder = componentPlaceholder
+
+    this.inputElement.placeholder = (this.inputElement.placeholder !== undefined) ?
+      this.inputElement.placeholder :
+      this.componentPlaceholder
+
+    this.model.valueAccessor.writeValue(conformedInput)
+    this.updateModel(conformedInput)
+  }
+
+  ngOnInit({mask, guide} = this.textMaskConfig) {
+    this.setComponentInitialState({inputValue: this.model.viewModel, mask, guide})
   }
 
   ngOnChanges({textMaskConfig}) {
@@ -45,39 +56,31 @@ export default class MaskedInputDirective {
     } = textMaskConfig
 
     if (currentMask !== previousMask || currentGuide !== previousGuide) {
-      this.ngOnInit({mask: currentMask})
-      this.model.valueAccessor.writeValue('')
+      this.setComponentInitialState({
+        inputValue: this.model.viewModel,
+        mask: currentMask,
+        guide: currentGuide
+      })
     }
   }
 
   onInput(userInput = '') {
     const {
       textMaskConfig: {mask, guide},
-      placeholder, 
+      componentPlaceholder: placeholder,
       conformedInput: previousConformedInput
     } = this
-    const conformToMaskResults = conformToMask(
-      userInput, 
-      mask,
-      (guide === false) ? {guide, previousConformedInput} : {}
-    )
-    const {output: conformedInput} = conformToMaskResults
-
-    const adjustedCaretPosition = adjustCaretPosition({
+    const {adjustedCaretPosition, conformedInput} = processComponentChanges({
+      userInput,
+      placeholder,
       previousConformedInput,
-      conformToMaskResults,
+      mask,
+      guide,
       currentCaretPosition: this.inputElement.selectionStart
     })
 
-    const finalConformedInput = (
-      conformedInput === placeholder &&
-      adjustedCaretPosition === 0
-    ) ? '' : conformedInput
-
-    this.conformedInput = finalConformedInput
-
-    this.model.valueAccessor.writeValue(finalConformedInput)
-
+    this.conformedInput = conformedInput
+    this.model.valueAccessor.writeValue(conformedInput)
     safeSetSelection(this.inputElement, adjustedCaretPosition)
   }
 
@@ -88,8 +91,5 @@ export default class MaskedInputDirective {
 
 export {MaskedInputDirective as Directive}
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index'
+export {default as conformToMask} from '../../core/src/conformToMask'
+export {convertMaskToPlaceholder} from '../../core/src/utilities'

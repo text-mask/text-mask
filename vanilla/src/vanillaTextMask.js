@@ -1,20 +1,17 @@
 import {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition,
+  processComponentChanges,
+  getComponentInitialState,
   safeSetSelection
-} from '../../core/src/index.js'
+} from '../../core/src/componentHelpers.js'
 
 export function maskInput({element, mask, guide}) {
-  const state = {
-    conformedInput: '',
-    adjustedCaretPosition: 0,
-    placeholder: convertMaskToPlaceholder(mask)
-  }
+  const {value: inputValue} = element
+  const state = getComponentInitialState({inputValue, mask, guide})
 
   element.placeholder = (element.placeholder !== undefined) ?
     element.placeholder :
-    state.placeholder
+    state.componentPlaceholder
+
   element.value = state.conformedInput
   safeSetSelection(element, 0)
 
@@ -22,28 +19,18 @@ export function maskInput({element, mask, guide}) {
 
   function updateInput() {
     const userInput = element.value
-    const {placeholder, conformedInput: previousConformedInput} = state
-    const conformToMaskResults = conformToMask(
+    const {componentPlaceholder: placeholder, conformedInput: previousConformedInput} = state
+    const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
-      mask,
-      (guide === false) ? {guide, previousConformedInput} : {}
-    )
-    const {output: conformedInput} = conformToMaskResults
-
-    const adjustedCaretPosition = adjustCaretPosition({
+      placeholder,
       previousConformedInput,
-      conformToMaskResults,
+      mask,
+      guide,
       currentCaretPosition: element.selectionStart
     })
 
-    const finalConformedInput = (
-      conformedInput === placeholder &&
-      adjustedCaretPosition === 0
-    ) ? '' : conformedInput
-
-    state.conformedInput = finalConformedInput
-
-    element.value = finalConformedInput
+    state.conformedInput = conformedInput
+    element.value = conformedInput
     safeSetSelection(element, adjustedCaretPosition)
   }
 
@@ -52,8 +39,5 @@ export function maskInput({element, mask, guide}) {
 
 export default maskInput
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index.js'
+export {default as conformToMask} from '../../core/src/conformToMask.js'
+export {convertMaskToPlaceholder} from '../../core/src/utilities.js'

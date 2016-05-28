@@ -1,37 +1,21 @@
 import React, {PropTypes} from 'react'
 import {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition,
-  safeSetSelection
-} from '../../core/src/index.js'
-
-const getConformedMaskResults = (userInput, mask, guide, previousConformedInput) => {
-  return conformToMask(userInput, mask, (guide === false) ? {guide, previousConformedInput} : {})
-}
-
-const getComponentState = ({mask, guide, value} = {}) => {
-  const {output: conformedInput} = getConformedMaskResults(value, mask, guide, '')
-  const placeholder = convertMaskToPlaceholder(mask)
-  const finalConformedInput = (
-      conformedInput === placeholder
-    ) ? '' : conformedInput
-
-  return {
-    conformedInput: finalConformedInput,
-    adjustedCaretPosition: 0,
-    placeholder
-  }
-}
+  processComponentChanges,
+  safeSetSelection,
+  getComponentInitialState
+} from '../../core/src/componentHelpers.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired,
-    guide: PropTypes.bool
+    guide: PropTypes.bool,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   },
 
   getInitialState() {
-    return getComponentState(this.props)
+    const {value: inputValue, mask, guide} = this.props
+
+    return getComponentInitialState({inputValue, mask, guide})
   },
 
   componentWillReceiveProps(nextProps) {
@@ -39,7 +23,9 @@ export const MaskedInput = React.createClass({
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide
     ) {
-      this.setState(getComponentState(nextProps))
+      const {mask, value: inputValue, guide} = nextProps
+
+      this.setState(getComponentInitialState({mask, inputValue, guide}))
     }
   },
 
@@ -48,7 +34,7 @@ export const MaskedInput = React.createClass({
   },
 
   render() {
-    const {props, state: {placeholder: componentPlaceholder, conformedInput}, onChange} = this
+    const {props, state: {componentPlaceholder, conformedInput}, onChange} = this
     const {placeholder = componentPlaceholder, type = 'text'} = props
 
     return (
@@ -67,31 +53,20 @@ export const MaskedInput = React.createClass({
     const {target: {value: userInput}} = event
     const {
       props: {mask, guide},
-      state: {placeholder, conformedInput: previousConformedInput}
+      state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
     } = this
-
-    const conformToMaskResults = getConformedMaskResults(
+    const {conformedInput, adjustedCaretPosition} = processComponentChanges({
       userInput,
+      placeholder,
+      previousConformedInput,
       mask,
       guide,
-      previousConformedInput
-    )
-    const {output: conformedInput} = conformToMaskResults
-
-    const adjustedCaretPosition = adjustCaretPosition({
-      previousConformedInput,
-      conformToMaskResults,
       currentCaretPosition: this.refs.inputElement.selectionStart
     })
 
-    const finalConformedInput = (
-      conformedInput === placeholder &&
-      adjustedCaretPosition === 0
-    ) ? '' : conformedInput
+    this.setState({conformedInput, adjustedCaretPosition})
 
-    this.setState({conformedInput: finalConformedInput, adjustedCaretPosition})
-
-    event.target.value = finalConformedInput
+    event.target.value = conformedInput
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
@@ -101,8 +76,5 @@ export const MaskedInput = React.createClass({
 
 export default MaskedInput
 
-export {
-  conformToMask,
-  convertMaskToPlaceholder,
-  adjustCaretPosition
-} from '../../core/src/index.js'
+export {default as conformToMask} from '../../core/src/conformToMask.js'
+export {convertMaskToPlaceholder} from '../../core/src/utilities.js'
