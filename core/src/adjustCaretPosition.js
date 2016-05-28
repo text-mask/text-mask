@@ -27,9 +27,20 @@ export default function adjustCaretPosition({
   // True when user tries to add a character. Like, (___) ___-____ to (4___) ___-____
   const isAddition = !(rawInput.length < previousConformedInput.length)
 
-  // This is true when user has entered more than one character per iteration. This only happens
-  // if user has pasted into the input field.
-  const isPaste = Math.abs(previousConformedInput.length - rawInput.length) > 1
+  // This is true when user has entered more than one character per iteration. This happens
+  // when user pastes or makes a selection and edits
+  const isMultiCharEdit = Math.abs(previousConformedInput.length - rawInput.length) > 1
+
+  // This is the first character the user entered that needs to be conformed to mask
+  const isFirstChar = rawInput.length === 1
+
+  // A partial multi-character edit happens when the user makes a partial selection in their
+  // input and edit that selection. That is going from `(123) 432-4348` to `() 432-4348` by
+  // selecting the first 3 digits and pressing backspace.
+  //
+  // Such cases can also happen when the user presses the backspace while holding down the ALT
+  // key.
+  const isPartialMultiCharEdit = isMultiCharEdit && !isAddition && !isFirstChar
 
   // For a mask like (111), if the `previousConformedInput` is (1__) and user attempts to enter
   // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
@@ -49,7 +60,9 @@ export default function adjustCaretPosition({
   // If operation is paste, that is input goes from (___) ___-___ to (650) 333-3__ in one change,
   // we want to find the next suitable caret position in the `conformedInput` string. Otherwise,
   // we always want to use the `placeholder` for our target for caret placement.
-  const baseTargetForCaretPlacement = (isPaste) ? conformedInput : placeholder
+  const baseTargetForCaretPlacement = (isMultiCharEdit || isFirstChar) ?
+    conformedInput :
+    placeholder
 
   // This is true when user attempts to insert a character in a non-placeholder position.
   // For example, for mask (111) 111-1111, if the user tries to enter a character 5 at position 0
@@ -60,9 +73,17 @@ export default function adjustCaretPosition({
   // original/current caret position
   let startingSearchIndex = currentCaretPosition
 
-  // If the operation is paste, we start from the beginning of the `conformedInput` string
-  // and look for the next sensible caret position, which is where a `placeholderChar` would be
-  if (isPaste) {
+  // This algorithm doesn't support all cases of multi-character edits, so we just return
+  // the current caret position.
+  //
+  // This works fine for most cases.
+  if (isPartialMultiCharEdit) {
+    return currentCaretPosition
+
+  // If the operation is a multi-char edit or this is the first character the user is entering,
+  // we start from the beginning of the `conformedInput` string and look for the next
+  // `placeholderChar` to place the caret at it
+  } else if (isMultiCharEdit || isFirstChar) {
     startingSearchIndex = 0
 
   // Else if operation has rejected character, we wanna go back a step and start searching from
@@ -75,8 +96,7 @@ export default function adjustCaretPosition({
   } else if (isAddition) {
     for (let i = currentCaretPosition; i < placeholder.length; i++) {
       const needsAdjustmentByOne = (
-        isCharInsertedInNonPlaceholderIndex &&
-        onlyEnteredAMaskDelimiter === false
+        isCharInsertedInNonPlaceholderIndex && !onlyEnteredAMaskDelimiter
       )
 
       if (placeholder[i] === placeholderChar) {
@@ -94,7 +114,7 @@ export default function adjustCaretPosition({
   // the base in which to look for the caret position, whether `placeholder` or `conformedInput`.
   //
   // Now, if `isAddition`, we seek forward. Otherwise we seek back.
-  if (isAddition) {
+  if (isAddition || isFirstChar) {
     for (let i = startingSearchIndex; i <= baseTargetForCaretPlacement.length; i++) {
       if (
         // If we're adding, we can position the caret at the next placeholder character.
@@ -104,7 +124,7 @@ export default function adjustCaretPosition({
         i === baseTargetForCaretPlacement.length
       ) {
         // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
-        // positioning in `guide === false` mode. There are a few edge cases which are
+        // positioning in `!guide` mode. There are a few edge cases which are
         // solved by this. To see what happens without it, uncomment the line below and run
         // the test suite
 
