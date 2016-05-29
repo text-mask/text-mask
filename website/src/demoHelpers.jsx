@@ -10,7 +10,7 @@ export const initialState = {
     value: 'usPhoneNumberWithCountryCode',
     name: 'US phone number with country code',
     mask: '+\\1 (111) 111-1111',
-    placeholder: '(555) 495-3947'
+    placeholder: '+1 (555) 495-3947'
   }, {
     value: 'canadianPostalCode',
     name: 'Canadian postal code',
