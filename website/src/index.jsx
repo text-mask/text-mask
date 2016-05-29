@@ -4,7 +4,7 @@ import React from 'react'
 import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx'
+import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
 
 const App = React.createClass({ // eslint-disable-line
   getInitialState() {
@@ -95,7 +95,7 @@ const App = React.createClass({ // eslint-disable-line
               <div className='col-sm-6'>
                 {guide === true && (
                   <select
-                    id="placeholderChar"
+                    id='placeholderChar'
                     className='form-control'
                     onChange={this.changePlaceholderChar}
                   >
@@ -105,7 +105,7 @@ const App = React.createClass({ // eslint-disable-line
                 ) || (
                   <select
                     disabled
-                    id="placeholderChar"
+                    id='placeholderChar'
                     className='form-control'
                     onChange={this.changePlaceholderChar}
                   >
