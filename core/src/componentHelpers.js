@@ -8,31 +8,38 @@ export function processComponentChanges({
   previousConformedInput = '',
   mask = '',
   guide = '',
-  currentCaretPosition = 0
+  currentCaretPosition = 0,
+  placeholderChar
 }) {
-  const conformToMaskResults = conformToMask(userInput, mask, {previousConformedInput, guide})
-  const {output: conformToMaskOutput} = conformToMaskResults
+  const conformToMaskResults = conformToMask(
+    userInput,
+    mask,
+    {previousConformedInput, guide, placeholderChar}
+  )
+  const {output: outputOfConformToMask} = conformToMaskResults
   const adjustedCaretPosition = adjustCaretPosition({
     previousConformedInput,
     conformToMaskResults,
-    currentCaretPosition
+    currentCaretPosition,
+    placeholderChar
   })
-  const valueShouldBeEmpty = conformToMaskOutput === placeholder && adjustedCaretPosition === 0
-  const conformedInput = (valueShouldBeEmpty) ? '' : conformToMaskOutput
+  const valueShouldBeEmpty = outputOfConformToMask === placeholder && adjustedCaretPosition === 0
+  const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
 
   return {conformedInput, adjustedCaretPosition}
 }
 
-export function getComponentInitialState({inputValue, mask, guide}) {
+export function getComponentInitialState({inputValue, mask, guide, placeholderChar}) {
   const safeInputValue = getSafeInputValue(inputValue)
   const needsToBeConformed = safeInputValue.length > 0
+  const {output: conformedInput} = (needsToBeConformed) ?
+    conformToMask(safeInputValue, mask, {guide, previousConformedInput: '', placeholderChar}) :
+    {output: ''}
 
   return {
-    conformedInput: (needsToBeConformed) ?
-      conformToMask(safeInputValue, mask, {guide, previousConformedInput: ''}).output :
-      '',
+    conformedInput,
     adjustedCaretPosition: 0,
-    componentPlaceholder: convertMaskToPlaceholder(mask)
+    componentPlaceholder: convertMaskToPlaceholder({mask, placeholderChar})
   }
 }
 

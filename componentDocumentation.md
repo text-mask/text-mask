@@ -4,6 +4,7 @@ Text Mask accepts the following values:
 
 * `mask` (string)
 * `guide` (boolean)
+* `placeholderCharacter` (string)
 
 ## `mask`
 
@@ -29,12 +30,31 @@ Character | Description
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
 
+##### Escaping a masking character
+
 To use a masking character as part of the mask, you need to escape it with `\`.
 
 &#x1F4CD; **Note**: most likely you will be specifying your mask in your JavaScript code,
 in a string. In that case you will need to double `\`.
 
 For example, US phone number with country code would look like `+\\1 (111) 111-1111`.
+
+## `placeholderCharacter`
+
+The placeholder character represents the fillable spot in the mask. The default placeholder
+character is underscore, `_`.
+
+For example, with mask `(111) 111-1111`, the user would fill out
+`(___) ___-____`.
+
+You can pass a different placeholder character. For example, the unicode character `U+2000` would
+make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character
+as `'\u2000'`.
+
+&#x1F4CD; **Note**: you cannot use a mask that has a placeholder character hard-coded in it. That
+is, since the default placeholder character is `_`, you cannot have a mask that looks like
+`_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
+in your mask.
 
 ## `guide`
 

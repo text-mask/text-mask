@@ -3,9 +3,7 @@
 [![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
 
 Text Mask let's you turn a plain `<input />`, into one that conforms
-any user input, as they type, to a given mask pattern. For example:
-
-With mask `(111) 111-1111` and user input `5845739`, the output would be `(584) 573-9___`
+any user input, as they type, to a given mask pattern.
 
 ## Live demo
 
@@ -22,6 +20,22 @@ To see Text Mask in action, [checkout the demo page](https://msafi.github.io/tex
 ### Expected to work with...
 
 IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
+
+### Masking characters
+
+Character | Description
+--- | ---
+`1` | Any number
+`A` | Any letter
+`?` | Any number or letter
+`U` | Any letter (will be transformed to uppercase)
+`L` | Any letter (will be transformed to lowercase)
+
+#### Escapable masking characters
+
+The mask also supports escaping, so you can use a masking character *within* the mask. For example,
+`+\1 (111) 111-1111` where the first `1` is not a masking character. For more information, see the
+[documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ### Guide mode
 
@@ -40,19 +54,12 @@ Guide mode prints out placeholder characters and the mask itself as the user typ
 No-guide mode doesn't print out placeholder characters and only adds mask characters when the
 user reaches them
 
-### Masking characters
+### Ability to customize placeholder character
 
-Character | Description
---- | ---
-`1` | Any number
-`A` | Any letter
-`?` | Any number or letter
-`U` | Any letter (will be transformed to uppercase)
-`L` | Any letter (will be transformed to lowercase)
-
-The mask also supports escaping, so you can use a masking character *within* the mask. For example,
-`+\1 (111) 111-1111`. For more information, see the
-[documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+You can change the placeholder character from `_` (underscore) to anything you want. For example,
+you can use the unicode character `U+2000` (`\u2000` in JavaScript), which is white space to
+create a mask that looks like
+`+1 (   )    -    ` for phone numbers, or `  /  /    ` for dates.
 
 ### Other features
 
@@ -60,10 +67,11 @@ The mask also supports escaping, so you can use a masking character *within* the
 * Supports browser auto-fill
 * It is small, around *3KB* gzipped
 
-## Support
+## For support, questions, or suggestions
 
-For support or questions, please
-[file an issue](https://github.com/msafi/text-mask/issues).
+Please
+[file an issue](https://github.com/msafi/text-mask/issues) or
+[tweet at me](https://twitter.com/msafi).
 
 ## License
 

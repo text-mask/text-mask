@@ -4,6 +4,8 @@ import chai from 'chai'
 import dynamicTests from 'mocha-dynamic-tests'
 import testParameters, {noGuideMode} from './../../common/testParameters.js'
 import _ from 'lodash'
+import {convertMaskToPlaceholder} from '../src/utilities'
+import {placeholderCharacter as placeholderChar} from '../src/constants'
 
 const adjustCaretPosition = (isVerify()) ?
   require(`../${packageJson.main}`).adjustCaretPosition :
@@ -18,7 +20,8 @@ describe('adjustCaretPosition', () => {
       conformToMaskResults: {
         output: '2938',
         meta: {
-          mask: '1111',
+          placeholder: convertMaskToPlaceholder({mask: '1111'}),
+          placeholderChar,
           input: '2938'
         }
       },
@@ -27,14 +30,15 @@ describe('adjustCaretPosition', () => {
   })
 
   it('sets the caret back in order to prevent it from moving when the change ' +
-     'has not actually modified the output and the operation is not deletion', () => {
+    'has not actually modified the output and the operation is not deletion', () => {
     expect(adjustCaretPosition({
       previousConformedInput: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
         meta: {
           input: '(123) ___-f____',
-          mask: '(111) 111-1111'
+          placeholder: convertMaskToPlaceholder({mask: '(111) 111-1111'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 11
@@ -42,15 +46,16 @@ describe('adjustCaretPosition', () => {
   })
 
   it('moves the caret to the nearest placeholder character if the previous input and new ' +
-     'conformed output are the same but the reverted position is not a ' +
-     'placeholder character', () => {
+    'conformed output are the same but the reverted position is not a ' +
+    'placeholder character', () => {
     expect(adjustCaretPosition({
       previousConformedInput: '(___)      ___-____',
       conformToMaskResults: {
         output: '(___)      ___-____',
         meta: {
           input: '(___))      ___-____',
-          mask: '(111)      111-1111'
+          placeholder: convertMaskToPlaceholder({mask: '(111)      111-1111'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 5
@@ -58,14 +63,15 @@ describe('adjustCaretPosition', () => {
   })
 
   it('knows to move the caret back when the previousInput and conformToMaskResults output ' +
-     'are identical but the operation is deletion', () => {
+    'are identical but the operation is deletion', () => {
     expect(adjustCaretPosition({
       previousConformedInput: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
         meta: {
           input: '(123 ___-____',
-          mask: '(111) 111-1111'
+          placeholder: convertMaskToPlaceholder({mask: '(111) 111-1111'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 4
@@ -73,14 +79,15 @@ describe('adjustCaretPosition', () => {
   })
 
   it('knows to move caret to the next mask area when the last character of the current part ' +
-     'has just been filled and the caret is at the end of the mask part', () => {
+    'has just been filled and the caret is at the end of the mask part', () => {
     expect(adjustCaretPosition({
       previousConformedInput: '(12_) _',
       conformToMaskResults: {
         output: '(123) _',
         meta: {
           input: '(123_) _',
-          mask: '(111) 1',
+          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 4
@@ -92,7 +99,8 @@ describe('adjustCaretPosition', () => {
         output: '(132) _',
         meta: {
           input: '(132_) 7',
-          mask: '(111) 1'
+          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 3
@@ -100,14 +108,15 @@ describe('adjustCaretPosition', () => {
   })
 
   it('knows to move caret to previous mask part when the first character of current part ' +
-     'has just been deleted and the caret is at the beginning of the mask part', () => {
+    'has just been deleted and the caret is at the beginning of the mask part', () => {
     expect(adjustCaretPosition({
       previousConformedInput: '(124) 3',
       conformToMaskResults: {
         output: '(124) _',
         meta: {
           input: '(124) ',
-          mask: '(111) 1'
+          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 6
@@ -119,7 +128,8 @@ describe('adjustCaretPosition', () => {
         output: '(12_) _',
         meta: {
           input: '(12_) ',
-          mask: '(111) 1'
+          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholderChar,
         }
       },
       currentCaretPosition: 6
@@ -129,14 +139,19 @@ describe('adjustCaretPosition', () => {
   describe('Guide mode', () => {
     dynamicTests(
       _.filter(testParameters, (testParameter) => {
-        return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
+        return !(
+          _.isArray(testParameter.skips) &&
+          _.includes(testParameter.skips, 'adjustCaretPosition')
+        )
       }),
 
       (test) => ({
         description: `for input: ${JSON.stringify(test.input)} and conformToMaskResults: ${
-          JSON.stringify({input: test.input.userModifiedInputFieldValue,
-          output: test.output.conformedInputFieldValue,
-          mask: test.input.mask
+          JSON.stringify({
+            input: test.input.userModifiedInputFieldValue,
+            output: test.output.conformedInputFieldValue,
+            placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+            placeholderChar,
           })}, it knows to adjust the caret to '${
           test.output.adjustedCaretPosition
           }'`,
@@ -148,8 +163,9 @@ describe('adjustCaretPosition', () => {
               output: test.output.conformedInputFieldValue,
               meta: {
                 input: test.input.userModifiedInputFieldValue,
-                mask: test.input.mask,
+                placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
                 guide: true,
+                placeholderChar
               }
             },
             currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
@@ -162,14 +178,19 @@ describe('adjustCaretPosition', () => {
   describe('No-guide mode', () => {
     dynamicTests(
       _.filter(noGuideMode, (testParameter) => {
-        return !(_.isArray(testParameter.skips) && _.includes(testParameter.skips, 'adjustCaretPosition'))
+        return !(
+          _.isArray(testParameter.skips) &&
+          _.includes(testParameter.skips, 'adjustCaretPosition')
+        )
       }),
 
       (test) => ({
         description: `for input: ${JSON.stringify(test.input)} and conformToMaskResults: ${
-          JSON.stringify({input: test.input.userModifiedInputFieldValue,
-          output: test.output.conformedInputFieldValue,
-          mask: test.input.mask
+          JSON.stringify({
+            input: test.input.userModifiedInputFieldValue,
+            output: test.output.conformedInputFieldValue,
+            placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+            placeholderChar
           })}, it knows to adjust the caret to '${
           test.output.adjustedCaretPosition
           }'`,
@@ -181,9 +202,9 @@ describe('adjustCaretPosition', () => {
               output: test.output.conformedInputFieldValue,
               meta: {
                 input: test.input.userModifiedInputFieldValue,
-                mask: test.input.mask,
+                placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
                 guide: false,
-                containsRejectedCharacter: test.input.containsRejectedCharacter
+                placeholderChar
               }
             },
             currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,

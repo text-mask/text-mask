@@ -1338,7 +1338,7 @@ export const noGuideMode = _.filter((t) => t, [{
   // only: true
 }, {
   input: {
-    mask: '__/__',
+    mask: '11/11',
     startingInputFieldValue: '',
     userModifiedInputFieldValue: '_',
     caretPositionAfterInputFieldValueChange: 1
@@ -1470,7 +1470,7 @@ export function transformTestForComponent(test) {
 
   return {
     conformedInputFieldValue: (
-      conformedInputFieldValue === convertMaskToPlaceholder(mask) &&
+      conformedInputFieldValue === convertMaskToPlaceholder({mask}) &&
       adjustedCaretPosition === 0
     ) ? '' : conformedInputFieldValue
   }

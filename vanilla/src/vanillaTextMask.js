@@ -4,9 +4,9 @@ import {
   safeSetSelection
 } from '../../core/src/componentHelpers.js'
 
-export function maskInput({element, mask, guide}) {
+export function maskInput({element, mask, guide, placeholderCharacter: placeholderChar}) {
   const {value: inputValue} = element
-  const state = getComponentInitialState({inputValue, mask, guide})
+  const state = getComponentInitialState({inputValue, mask, guide, placeholderChar})
 
   element.placeholder = (element.placeholder !== undefined) ?
     element.placeholder :
@@ -18,7 +18,7 @@ export function maskInput({element, mask, guide}) {
   element.oninput = updateInput
 
   function updateInput() {
-    const userInput = element.value
+    const {value: userInput, selectionStart: currentCaretPosition} = element
     const {componentPlaceholder: placeholder, conformedInput: previousConformedInput} = state
     const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
@@ -26,7 +26,8 @@ export function maskInput({element, mask, guide}) {
       previousConformedInput,
       mask,
       guide,
-      currentCaretPosition: element.selectionStart
+      placeholderChar,
+      currentCaretPosition
     })
 
     state.conformedInput = conformedInput

@@ -1,5 +1,4 @@
-import {convertMaskToPlaceholder, getIndexOfFirstChange} from './utilities.js'
-import {placeholderCharacter as placeholderChar} from './constants.js'
+import {getIndexOfFirstChange} from './utilities.js'
 
 export default function adjustCaretPosition({
   previousConformedInput = '',
@@ -9,7 +8,7 @@ export default function adjustCaretPosition({
   if (currentCaretPosition === 0) { return 0 }
 
   const {output: conformedInput = '', meta = {}} = conformToMaskResults
-  const {input: rawInput = '', mask = ''} = meta
+  const {input: rawInput = '', placeholderChar, placeholder} = meta
 
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
   const indexOfFirstChange = getIndexOfFirstChange(previousConformedInput, rawInput)
@@ -20,9 +19,6 @@ export default function adjustCaretPosition({
 
   // If the change is ambiguous. Our best bet is to keep the caret where it is.
   if (isAmbiguousChange) { return currentCaretPosition }
-
-  // Convert mask (111) 111-1111 to (___) ___-___.
-  const placeholder = convertMaskToPlaceholder(mask)
 
   // True when user tries to add a character. Like, (___) ___-____ to (4___) ___-____
   const isAddition = !(rawInput.length < previousConformedInput.length)
