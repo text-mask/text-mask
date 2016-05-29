@@ -58,6 +58,7 @@ The mask also supports escaping, so you can use masking character *in* the mask.
 
 * Supports pasting
 * Supports browser auto-fill
+* It is small, around *3KB* gzipped
 
 ## Support
 
