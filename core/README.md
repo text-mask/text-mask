@@ -83,14 +83,16 @@ which is documented below.
 
 The `config` object takes the following values
 
-* `guide` (boolean) (defaults to `true`): this tells `conformToMask` whether you want the conformed string to contain
-a guide or no. The `guide` is basically the placeholder character and the mask hard characters.
-For example, with mask `(111) 111-1111`, input `123` with `guide` set to `true` would return
-`(123) ___-____`. With `guide` set to `false`, it would return `(123) `. However, for *no guide*
-mode to work, you need to also pass `previousConformedInput` as a key of config as well.
-* `previousConformedInput` (string): this is the previous `output` of `conformToMask`. If you're
-calling `conformToMask` for the first time, pass this as an empty string. This key is only needed
-if you want to use the *no guide* mode (i.e. `guide === false`).
+* `guide` (boolean) (defaults to `true`): this tells `conformToMask` whether you want the conformed
+string to contain a guide or no. The `guide` is basically the placeholder character and the
+mask hard characters. For example, with mask `(111) 111-1111`, input `123` with `guide` set to
+`true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
+
+* `previousConformedInput` (string) (required): this is the previous `output` of `conformToMask`.
+If you're calling `conformToMask` for the first time, pass this as an empty string or `undefined`.
+
+* `placeholderCharacter` (string): for documentation on this key, [see this section of the component
+documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderCharacter).
 
 ```js
 const results = conformToMask('5554833902', '(111) 111-1111')
