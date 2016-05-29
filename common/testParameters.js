@@ -1441,6 +1441,27 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   },
 }])
 
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+export const allowMaskingCharInMask = _.filter((t) => t, [{
+// export const allowMaskingCharInMask = _.filter((t) => false, [{
+// export const allowMaskingCharInMask = _.filter((t) => t.only, [{
+  input: {
+    mask: '00\\1 (111) 111-1111',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: '9',
+    caretPositionAfterInputFieldValueChange: 1
+  },
+
+  output: {
+    conformedInputFieldValue: '001 (9__) ___-____',
+    adjustedCaretPosition: 6
+  },
+}])
+
 export function transformTestForComponent(test) {
   const {
     input: {mask},

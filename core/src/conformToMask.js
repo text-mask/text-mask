@@ -3,7 +3,8 @@ import {
   tokenize,
   isAcceptableCharacter as isAcceptableChar,
   potentiallyTransformCharacter as potentiallyTransformChar,
-  getIndexOfFirstChange
+  getIndexOfFirstChange,
+  unescapeMask
 } from './utilities.js'
 import {placeholderCharacter as placeholderChar} from './constants.js'
 
@@ -28,6 +29,13 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
   // In *no guide* mode, we need to know if the user is trying to add a character or not
   const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
+
+  // Unescaping a mask turns a mask like `+\1 (111) 111-1111` into `+  (111) 111-1111`. That is,
+  // it substituted an escaped character with empty white space. We do that because further down
+  // in the algorithm when we insert user input characters into the placeholder, we don't want the
+  // code to think that we can insert a numeric character in the `1` spot (which when unescaped
+  // stands for *any numeric character*).
+  const unescapedMask = unescapeMask(mask)
 
   // The loop below removes masking characters from user input. For example, for mask
   // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
@@ -80,10 +88,10 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          } else if (isAcceptableChar(userInputChar, mask[i])) {
+          } else if (isAcceptableChar(userInputChar, unescapedMask[i])) {
             // if it is accepted. We map it--performing any necessary transforming along the way,
             // like upper casing or lower casing.
-            conformedString += potentiallyTransformChar(userInputChar, mask[i])
+            conformedString += potentiallyTransformChar(userInputChar, unescapedMask[i])
 
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
