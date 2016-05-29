@@ -33,8 +33,13 @@ Character | Description
 
 #### Escapable masking characters
 
-The mask also supports escaping, so you can use a masking character *within* the mask. For example,
-`+\1 (111) 111-1111` where the first `1` is not a masking character. For more information, see the
+The mask also supports escaping, so you can use a masking character *within* the mask. For example
+
+```bash
++\1 (111) 111-1111
+```
+
+The first `1` is not a masking character but part of the mask. For more information, see the
 [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ### Guide mode
@@ -58,8 +63,13 @@ user reaches them
 
 You can change the placeholder character from `_` (underscore) to anything you want. For example,
 you can use the unicode character `U+2000` (`\u2000` in JavaScript), which is white space to
-create a mask that looks like
-`+1 (   )    -    ` for phone numbers, or `  /  /    ` for dates.
+create a mask for phone number that looks like
+
+`+1 (   )    -    `
+
+Or for date
+
+`  /  /    `
 
 ### Other features
 
