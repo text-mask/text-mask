@@ -14,6 +14,11 @@ const App = React.createClass({ // eslint-disable-line
         mask: '(111) 111-1111',
         placeholder: '(555) 495-3947'
       }, {
+        value: 'usPhoneNumberWithCountryCode',
+        name: 'US phone number with country code',
+        mask: '+\\1 (111) 111-1111',
+        placeholder: '(555) 495-3947'
+      }, {
         value: 'canadianPostalCode',
         name: 'Canadian postal code',
         mask: 'U1U 1U1',

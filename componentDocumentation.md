@@ -14,8 +14,8 @@ Text Mask accepts the following values:
 Description | Mask
 --- | ---
 US phone number | `(111) 111-1111`
+US phone number with country code | `+\1 (111) 111-1111`
 Canadian postal code | `U1U 1U1`
-
 
 ### Masking characters
 
@@ -28,6 +28,13 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+
+To use a masking character as part of the mask, you need to escape it with `\`.
+
+&#x1F4CD; **Note**: most likely you will be specifying your mask in your JavaScript code,
+in a string. In that case you will need to double `\`.
+
+For example, US phone number with country code would look like `+\\1 (111) 111-1111`.
 
 ## `guide`
 
