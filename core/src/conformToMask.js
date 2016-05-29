@@ -32,9 +32,9 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
   // Unescaping a mask turns a mask like `+\1 (111) 111-1111` into `+  (111) 111-1111`. That is,
   // it substituted an escaped character with empty white space. We do that because further down
-  // in the algorithm when we insert user input characters into the mask, we don't want want the
-  // code to think that we can insert into numeric character in the `1` spot (which when unescaped
-  // stands for any numeric character.
+  // in the algorithm when we insert user input characters into the placeholder, we don't want the
+  // code to think that we can insert a numeric character in the `1` spot (which when unescaped
+  // stands for *any numeric character*).
   const unescapedMask = unescapeMask(mask)
 
   // The loop below removes masking characters from user input. For example, for mask
