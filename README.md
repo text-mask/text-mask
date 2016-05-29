@@ -50,7 +50,7 @@ Character | Description
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
 
-The mask also supports escaping, so you can use masking character *in* the mask. For example,
+The mask also supports escaping, so you can use a masking character *within* the mask. For example,
 `+\1 (111) 111-1111`. For more information, see the
 [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
