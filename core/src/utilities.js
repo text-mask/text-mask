@@ -31,6 +31,10 @@ export function convertMaskToPlaceholder(mask = '') {
   return placeholder
 }
 
+export function unescapeMask(mask = '') {
+  return mask.replace(/\\./g, ' ')
+}
+
 export function tokenize(string = '') {
   return string.split('')
 }

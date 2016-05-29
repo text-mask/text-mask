@@ -1462,7 +1462,7 @@ export const allowMaskingCharInMask = _.filter((t) => t, [{
   },
 }])
 
-  export function transformTestForComponent(test) {
+export function transformTestForComponent(test) {
   const {
     input: {mask},
     output: {conformedInputFieldValue, adjustedCaretPosition}
