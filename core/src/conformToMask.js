@@ -6,15 +6,19 @@ import {
   getIndexOfFirstChange,
   unescapeMask
 } from './utilities.js'
-import {placeholderCharacter as placeholderChar} from './constants.js'
+import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
-  const {guide = true, previousConformedInput = ''} = config
+  const {
+    guide = true,
+    previousConformedInput = '',
+    placeholderChar = defaultPlaceholderChar
+  } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
   // with user input
-  const placeholder = convertMaskToPlaceholder(mask)
+  const placeholder = convertMaskToPlaceholder({mask, placeholderChar})
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedInput !== undefined
@@ -149,7 +153,9 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     meta: {
       input: userInput,
       mask: mask,
-      guide
+      guide,
+      placeholderChar,
+      placeholder
     }
   }
 }

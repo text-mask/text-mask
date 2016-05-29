@@ -1,10 +1,23 @@
 import {
   maskingCharactersEnums,
   maskingCharacters,
-  placeholderCharacter
+  placeholderCharacter as defaultPlaceholderChar
 } from './constants.js'
 
-export function convertMaskToPlaceholder(mask = '') {
+export function convertMaskToPlaceholder({
+  mask = '',
+  placeholderChar = defaultPlaceholderChar
+}) {
+  if (mask.indexOf(placeholderChar) !== -1) {
+    console.log('Text Mask received placeholder character: ', placeholderChar) // eslint-disable-line
+    console.log('Text Mask received mask: ', mask) // eslint-disable-line
+
+    throw new Error(
+      'Placeholder character must not be used as part of the mask. Please specify a character ' +
+      'that is not present in your mask as your placeholder character.'
+    )
+  }
+
   let escaping = false
   let placeholder = ''
 
@@ -24,7 +37,7 @@ export function convertMaskToPlaceholder(mask = '') {
     }
 
     placeholder += (maskingCharacters.indexOf(character) !== -1) ?
-      placeholderCharacter :
+      placeholderChar :
       character
   }
 

@@ -13,19 +13,20 @@ export const MaskedInput = React.createClass({
   },
 
   getInitialState() {
-    const {value: inputValue, mask, guide} = this.props
+    const {value: inputValue, mask, guide, placeholderCharacter: placeholderChar} = this.props
 
-    return getComponentInitialState({inputValue, mask, guide})
+    return getComponentInitialState({inputValue, mask, guide, placeholderChar})
   },
 
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.mask !== this.props.mask ||
-      nextProps.guide !== this.props.guide
+      nextProps.guide !== this.props.guide ||
+      nextProps.placeholderCharacter !== this.props.placeholderCharacter
     ) {
-      const {mask, value: inputValue, guide} = nextProps
+      const {mask, value: inputValue, guide, placeholderCharacter: placeholderChar} = nextProps
 
-      this.setState(getComponentInitialState({mask, inputValue, guide}))
+      this.setState(getComponentInitialState({mask, inputValue, guide, placeholderChar}))
     }
   },
 
@@ -52,7 +53,7 @@ export const MaskedInput = React.createClass({
   onChange(event) {
     const {target: {value: userInput}} = event
     const {
-      props: {mask, guide},
+      props: {mask, guide, placeholderCharacter: placeholderChar},
       state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
     } = this
     const {conformedInput, adjustedCaretPosition} = processComponentChanges({
@@ -61,6 +62,7 @@ export const MaskedInput = React.createClass({
       previousConformedInput,
       mask,
       guide,
+      placeholderChar,
       currentCaretPosition: this.refs.inputElement.selectionStart
     })
 

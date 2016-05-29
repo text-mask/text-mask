@@ -9,45 +9,37 @@ export function processComponentChanges({
   mask = '',
   guide = '',
   currentCaretPosition = 0,
-  placeholderCharacter
+  placeholderChar
 }) {
   const conformToMaskResults = conformToMask(
     userInput,
     mask,
-    {
-      previousConformedInput,
-      guide,
-      placeholderCharacter
-    })
-  const {output: conformToMaskOutput} = conformToMaskResults
+    {previousConformedInput, guide, placeholderChar}
+  )
+  const {output: outputOfConformToMask} = conformToMaskResults
   const adjustedCaretPosition = adjustCaretPosition({
     previousConformedInput,
-    conformToMaskResults
+    conformToMaskResults,
+    currentCaretPosition,
+    placeholderChar
   })
-  const valueShouldBeEmpty = conformToMaskOutput === placeholder && adjustedCaretPosition === 0
-  const conformedInput = (valueShouldBeEmpty) ? '' : conformToMaskOutput
+  const valueShouldBeEmpty = outputOfConformToMask === placeholder && adjustedCaretPosition === 0
+  const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
 
   return {conformedInput, adjustedCaretPosition}
 }
 
-export function getComponentInitialState({inputValue, mask, guide, placeholderCharacter}) {
+export function getComponentInitialState({inputValue, mask, guide, placeholderChar}) {
   const safeInputValue = getSafeInputValue(inputValue)
   const needsToBeConformed = safeInputValue.length > 0
+  const {output: conformedInput} = (needsToBeConformed) ?
+    conformToMask(safeInputValue, mask, {guide, previousConformedInput: '', placeholderChar}) :
+    {output: ''}
 
   return {
-    conformedInput: (needsToBeConformed) ?
-      conformToMask(
-        safeInputValue,
-        mask,
-        {
-          guide,
-          previousConformedInput: '',
-          placeholderCharacter
-        }
-      ).output :
-      '',
+    conformedInput,
     adjustedCaretPosition: 0,
-    componentPlaceholder: convertMaskToPlaceholder(mask, placeholderCharacter)
+    componentPlaceholder: convertMaskToPlaceholder({mask, placeholderChar})
   }
 }
 

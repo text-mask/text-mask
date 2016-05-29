@@ -1338,7 +1338,7 @@ export const noGuideMode = _.filter((t) => t, [{
   // only: true
 }, {
   input: {
-    mask: '__/__',
+    mask: '11/11',
     startingInputFieldValue: '',
     userModifiedInputFieldValue: '_',
     caretPositionAfterInputFieldValueChange: 1
