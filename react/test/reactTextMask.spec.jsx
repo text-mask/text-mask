@@ -57,8 +57,7 @@ describe('MaskedInput', () => {
       input.selectionStart = 1
       input.selectionEnd = 1
 
-      maskedInput.refs.inputElement.focus()
-
+      input.focus()
       ReactTestUtils.Simulate.change(input)
 
       expect(userOnChange.called).to.equal(true)
@@ -87,13 +86,15 @@ describe('MaskedInput', () => {
         <MaskedInput mask='111-111' guide={true}/>
       )
 
-      expect(maskedInputWithDefaultPlaceholder.refs.inputElement.placeholder).to.equal('___-___')
+      let input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInputWithDefaultPlaceholder, 'input')
+      expect(input.placeholder).to.equal('___-___')
 
       const maskedInputWithEmptyPlaceholder = ReactTestUtils.renderIntoDocument(
         <MaskedInput mask='111-111' guide={true} placeholder=''/>
       )
 
-      expect(maskedInputWithEmptyPlaceholder.refs.inputElement.placeholder).to.equal('')
+      input = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInputWithEmptyPlaceholder, 'input')
+      expect(input.placeholder).to.equal('')
     })
 
     it('adjusts the position of the caret correctly when it updates', () => {
@@ -110,13 +111,12 @@ describe('MaskedInput', () => {
       input.selectionStart = 4
       input.selectionEnd = 4
 
-      maskedInput.refs.inputElement.focus()
-
+      input.focus(input)
       ReactTestUtils.Simulate.change(input)
 
       expect([
-        maskedInput.refs.inputElement.selectionStart,
-        maskedInput.refs.inputElement.selectionEnd
+        input.selectionStart,
+        input.selectionEnd
       ]).to.deep.equal([2, 2])
     })
   })
@@ -132,13 +132,13 @@ describe('MaskedInput', () => {
     input.value = '(__)'
     input.selectionStart = 0
 
-    maskedInput.refs.inputElement.focus()
+    input.focus()
     ReactTestUtils.Simulate.change(input)
 
     input.value = '__)'
     input.selectionStart = 0
 
-    maskedInput.refs.inputElement.focus()
+    input.focus()
     ReactTestUtils.Simulate.change(input)
 
     expect(input.value).to.equal('')
@@ -177,13 +177,13 @@ describe('MaskedInput', () => {
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
             input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-            maskedInput.refs.inputElement.focus()
+            input.focus()
             ReactTestUtils.Simulate.change(input)
 
             expect([
               input.value,
-              maskedInput.refs.inputElement.selectionStart,
-              maskedInput.refs.inputElement.selectionEnd
+              input.selectionStart,
+              input.selectionEnd
             ]).to.deep.equal([
               transformTestForComponent(test).conformedInputFieldValue,
               test.output.adjustedCaretPosition,
@@ -228,13 +228,13 @@ describe('MaskedInput', () => {
             input.selectionStart = test.input.caretPositionAfterInputFieldValueChange
             input.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
-            maskedInput.refs.inputElement.focus()
+            input.focus()
             ReactTestUtils.Simulate.change(input)
 
             expect([
               input.value,
-              maskedInput.refs.inputElement.selectionStart,
-              maskedInput.refs.inputElement.selectionEnd
+              input.selectionStart,
+              input.selectionEnd
             ]).to.deep.equal([
               transformTestForComponent(test).conformedInputFieldValue,
               test.output.adjustedCaretPosition,
