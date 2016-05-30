@@ -16,6 +16,8 @@ const App = React.createClass({ // eslint-disable-line
   render() {
     const {guide, choices, placeholder, value, mask, placeholderChar} = this.state
 
+    const placeholderValue = guide ? undefined : placeholder
+
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
         <DemoTop/>
@@ -29,7 +31,7 @@ const App = React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
-                  placeholder={placeholder}
+                  placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   ref='maskedInput'
                   mask={mask}
