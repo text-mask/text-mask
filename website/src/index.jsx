@@ -14,13 +14,9 @@ const App = React.createClass({ // eslint-disable-line
   },
 
   render() {
-    const {guide, choices, selectedChoice, mask, placeholderChar} = this.state
-    const selectedChoiceObject = choices[selectedChoice] || {}
-    const {value: selectedChoiceValue} = selectedChoiceObject
-    const setPlaceholder = guide === false && selectedChoiceValue !== 'custom'
-    const placeholder = (setPlaceholder) ?
-      `Example ${choices[selectedChoice].placeholder}` :
-      undefined
+    const {guide, choices, placeholder, value, mask, placeholderChar} = this.state
+
+    const placeholderValue = guide ? undefined : placeholder
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -35,7 +31,7 @@ const App = React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
-                  placeholder={placeholder}
+                  placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   ref='maskedInput'
                   mask={mask}
@@ -54,13 +50,12 @@ const App = React.createClass({ // eslint-disable-line
               <div className='col-sm-4 col-xs-12'>
                 <select
                   className='form-control'
-                  value={selectedChoiceValue || 'custom'}
+                  value={value}
                   onChange={this.onDropDownListMaskSelect}
                   ref='maskSelect'>
-                  {this.state.choices.map((choice, index) => {
+                  {choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
                   })}
-                  <option value='custom'>Custom</option>
                 </select>
               </div>
 
@@ -123,22 +118,17 @@ const App = React.createClass({ // eslint-disable-line
   },
 
   onManualMaskChange({target: {value: mask}}) {
-    const selectedChoice = this.findChoice('mask', mask)
-    this.setState({mask, selectedChoice})
+    this.setState({mask})
   },
 
   onDropDownListMaskSelect({target: {value: selectValue}}) {
-    const {state: {choices}, refs: {mask}, findChoice} = this
-
-    if (selectValue !== 'custom') {
-      const selectedChoice = findChoice('value', selectValue)
-
-      this.setState({selectedChoice, mask: choices[selectedChoice].mask})
-      this.focusMaskedInput()
-    } else {
-      this.setState({selectedChoice: '', mask: ''})
-      mask.focus()
+    const {state: {choices}, findChoice} = this
+    const selectedChoice = findChoice('value', selectValue)
+    this.setState(Object.assign({}, choices[selectedChoice]))
+    if (selectValue === 'custom') {
+      return this.refs.mask.focus()
     }
+    this.focusMaskedInput()
   },
 
   changeGuide({target: {value: guide}}) {
@@ -152,9 +142,8 @@ const App = React.createClass({ // eslint-disable-line
   },
 
   focusMaskedInput() {
-    const {refs: {maskedInput: {refs: {inputElement}}}} = this
-
-    inputElement.focus()
+    const {refs: {maskedInput}} = this
+    ReactDOM.findDOMNoe(maskedInput).focus()
   },
 
   findChoice(name, value) {

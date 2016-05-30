@@ -31,6 +31,11 @@ export const initialState = {
     name: 'Three letter month name',
     mask: 'ULL',
     placeholder: 'Mar'
+  }, {
+    value: 'custom',
+    name: 'Custom',
+    mask: '',
+    placeholder: undefined
   }],
 
   selectedChoice: 0,

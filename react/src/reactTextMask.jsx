@@ -31,7 +31,7 @@ export const MaskedInput = React.createClass({
   },
 
   componentDidUpdate() {
-    safeSetSelection(this.refs.inputElement, this.state.adjustedCaretPosition)
+    safeSetSelection(this.inputElement, this.state.adjustedCaretPosition)
   },
 
   render() {
@@ -45,7 +45,7 @@ export const MaskedInput = React.createClass({
         onChange={onChange}
         value={conformedInput}
         placeholder={placeholder}
-        ref='inputElement'
+        ref={inputElement => (this.inputElement = inputElement)}
       />
     )
   },
@@ -63,7 +63,7 @@ export const MaskedInput = React.createClass({
       mask,
       guide,
       placeholderChar,
-      currentCaretPosition: this.refs.inputElement.selectionStart
+      currentCaretPosition: this.inputElement.selectionStart
     })
 
     this.setState({conformedInput, adjustedCaretPosition})
