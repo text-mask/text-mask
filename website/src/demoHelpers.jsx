@@ -35,7 +35,7 @@ export const initialState = {
     value: 'custom',
     name: 'Custom',
     mask: '',
-    placeholder: ''
+    placeholder: undefined
   }],
 
   selectedChoice: 0,
