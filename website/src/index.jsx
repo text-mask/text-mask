@@ -16,7 +16,6 @@ const App = React.createClass({ // eslint-disable-line
   render() {
     const {guide, choices, placeholder, value, mask, placeholderChar} = this.state
 
-
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
         <DemoTop/>
