@@ -23,7 +23,8 @@ export const MaskedInput = React.createClass({
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide ||
       nextProps.placeholderCharacter !== this.props.placeholderCharacter ||
-      (nextProps.value !== undefined && nextProps.value !== this.state.conformedInput)
+      nextProps.value !== undefined && nextProps.value !== this.state.conformedInput ||
+      this.props.value !== undefined && nextProps.value === undefined
     ) {
       const {mask, value: inputValue, guide, placeholderCharacter: placeholderChar} = nextProps
 
