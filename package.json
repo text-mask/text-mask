@@ -59,6 +59,7 @@
     "chai": "^3.4.1",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
+    "enzyme": "^2.3.0",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.35.0",
     "eslint": "^2.10.2",
