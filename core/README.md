@@ -28,7 +28,7 @@ Or if you're using Node.js or a bundler such as webpack or Browserify, you can r
 `textMaskCore` as such:
 
 ```js
-var textMaskCore = require('@msafi/text-mask-core')
+var textMaskCore = require('core-text-mask')
 ```
 
 ## How to use
