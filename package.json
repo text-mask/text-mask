@@ -1,6 +1,6 @@
 {
-  "name": "@msafi/text-mask",
-  "version": "0.0.0",
+  "name": "all-text-mask",
+  "version": "0.0.2",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {

@@ -11,7 +11,7 @@ and documented here as a separate module.
 To download the script, use npm.
 
 ```bash
-npm i @msafi/text-mask-core --save
+npm i core-text-mask --save
 ```
 
 ### Include it
@@ -19,7 +19,7 @@ npm i @msafi/text-mask-core --save
 After installing with npm, you could possibly do something like this from your `index.html`:
 
 ```html
-<script src="./node_modules/@msafi/text-mask-core/dist/textMaskCore.js"></script>
+<script src="./node_modules/core-text-mask/dist/textMaskCore.js"></script>
 ```
 
 Including this file in your source code will expose the global object `textMaskCore`.
@@ -28,7 +28,7 @@ Or if you're using Node.js or a bundler such as webpack or Browserify, you can r
 `textMaskCore` as such:
 
 ```js
-var textMaskCore = require('@msafi/text-mask-core')
+var textMaskCore = require('core-text-mask')
 ```
 
 ## How to use
