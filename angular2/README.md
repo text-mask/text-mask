@@ -5,7 +5,7 @@
 First, install it.
 
 ```bash
-npm i @msafi/angular2-text-mask --save
+npm i angular2-text-mask --save
 ```
 
 Then, require it and use it:
@@ -18,7 +18,7 @@ import 'reflect-metadata';
 
 import {bootstrap} from 'angular2/platform/browser'
 import {Component} from 'angular2/core';
-import MaskedInput from '@msafi/angular2-text-mask'
+import MaskedInput from 'angular2-text-mask'
 
 @Component({
   selector: 'app',
