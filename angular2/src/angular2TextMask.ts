@@ -1,11 +1,13 @@
+///<reference path="../typings/index.d.ts"/>
+
 import {
   processComponentChanges,
   safeSetSelection,
   getComponentInitialState
 } from '../../core/src/componentHelpers'
 
-import {Directive, ElementRef, Input} from 'angular2/core'
-import {NgModel} from 'angular2/common'
+import {Directive, ElementRef, Input} from '@angular/core'
+import {NgModel} from '@angular/common'
 
 @Directive({
   selector: 'input[textMask][ngModel]',

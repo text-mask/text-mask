@@ -7,7 +7,7 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.ts/, loaders: ['ts-loader']},
+      {test: /\.ts$/, loader: 'awesome-typescript-loader', query: {tsconfig: './angular2/tsconfig.json'}},
       {test: /\.js/, loaders: ['babel-loader']}
     ]
   },
@@ -29,10 +29,18 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
+      beautify: false,
+
+      mangle: {
         screw_ie8: true,
-        warnings: false
-      }
+        keep_fnames: true
+      },
+
+      compress: {
+        screw_ie8: true
+      },
+
+      comments: false
     }),
     new StatsPlugin('stats.json', {
       chunkModules: true
@@ -41,18 +49,18 @@ module.exports = {
 
   externals: [
     {
-      'angular2/core': {
+      '@angular/core': {
         root: ['ng', 'core'],
-        commonjs: 'angular2/core',
-        commonjs2: 'angular2/core',
-        amd: 'angular2/core'
+        commonjs: '@angular/core',
+        commonjs2: '@angular/core',
+        amd: '@angular/core'
       },
 
-      'angular2/common': {
+      '@angular/common': {
         root: ['ng', 'common'],
-        commonjs: 'angular2/common',
-        commonjs2: 'angular2/common',
-        amd: 'angular2/common'
+        commonjs: '@angular/common',
+        commonjs2: '@angular/common',
+        amd: '@angular/common'
       }
     }
   ]

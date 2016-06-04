@@ -10,8 +10,13 @@
     "noImplicitAny": false
   },
   "files": [
-    "../node_modules/angular2/typings/browser.d.ts"
+    "./src/**/*.ts",
+    "./example/**/*.ts",
+    "./typings/index.d.ts",
+    "./../core/**/*.ts"
   ],
-  "compileOnSave": false,
-  "buildOnSave": false
+  "awesomeTypescriptLoaderOptions": {
+    "resolveGlobs": true,
+    "forkChecker": true
+  }
 }
