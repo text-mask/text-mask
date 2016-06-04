@@ -13,9 +13,6 @@
     "url": "https://github.com/msafi/text-mask.git"
   },
   "homepage": "https://github.com/msafi/text-mask/angular2/#readme",
-  "peerDependencies": {
-    "angular2": "*"
-  },
   "keywords": [
     "angular2",
     "ng2",

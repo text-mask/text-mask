@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,8 +10,7 @@
     "noImplicitAny": false
   },
   "files": [
-    "../node_modules/angular2/typings/browser.d.ts"
-  ],
-  "compileOnSave": false,
-  "buildOnSave": false
+    "./../core/src/utilities.d.ts",
+    "./../core/src/conformToMask.d.ts"
+  ]
 }
