@@ -1,5 +1,5 @@
 {
-  "name": "@msafi/text-mask-core",
+  "name": "core-text-mask",
   "version": "0.8.0",
   "description": "Core of https://github.com/msafi/text-mask",
   "main": "dist/textMaskCore.js",
