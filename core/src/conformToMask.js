@@ -13,7 +13,16 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   const {
     guide = true,
     previousConformedInput = '',
-    placeholderChar = defaultPlaceholderChar
+    placeholderChar = defaultPlaceholderChar,
+    validator: customValidator = (a,b,c) => {
+      console.log('a', a)
+      console.log('b', b)
+      console.log('c', c)
+
+      return true
+    },
+    transformer: customTransformer = (char) => char,
+    skipCustomValidator = false
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -92,10 +101,23 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          } else if (isAcceptableChar(userInputChar, unescapedMask[i])) {
+          } else if (
+            (
+              skipCustomValidator ||
+              customValidator(
+                userInputChar,
+                i,
+                conformToMask(
+                  userInput,
+                  mask, Object.assign(config, {skipCustomValidator: true})).output)
+            ) &&
+            isAcceptableChar(userInputChar, unescapedMask[i])
+          ) {
             // if it is accepted. We map it--performing any necessary transforming along the way,
             // like upper casing or lower casing.
-            conformedString += potentiallyTransformChar(userInputChar, unescapedMask[i])
+            conformedString += customTransformer(
+              potentiallyTransformChar(userInputChar, unescapedMask[i])
+            )
 
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
