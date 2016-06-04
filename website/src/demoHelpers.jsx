@@ -38,7 +38,7 @@ export const initialState = {
     placeholder: undefined
   }],
 
-  selectedChoice: 0,
+  selectedChoice: 3,
 
   placeholderChar: '_',
 

@@ -8,13 +8,14 @@ export function processComponentChanges({
   previousConformedInput = '',
   mask = '',
   guide = '',
+  validator,
   currentCaretPosition = 0,
   placeholderChar
 }) {
   const conformToMaskResults = conformToMask(
     userInput,
     mask,
-    {previousConformedInput, guide, placeholderChar}
+    {previousConformedInput, guide, placeholderChar, validator}
   )
   const {output: outputOfConformToMask} = conformToMaskResults
   const adjustedCaretPosition = adjustCaretPosition({
@@ -29,11 +30,12 @@ export function processComponentChanges({
   return {conformedInput, adjustedCaretPosition}
 }
 
-export function getComponentInitialState({inputValue, mask, guide, placeholderChar}) {
+export function getComponentInitialState({inputValue, mask, validator, guide, placeholderChar}) {
   const safeInputValue = getSafeInputValue(inputValue)
   const needsToBeConformed = safeInputValue.length > 0
+  const conformToMaskConfig = {validator, guide, previousConformedInput: '', placeholderChar}
   const {output: conformedInput} = (needsToBeConformed) ?
-    conformToMask(safeInputValue, mask, {guide, previousConformedInput: '', placeholderChar}) :
+    conformToMask(safeInputValue, mask, conformToMaskConfig) :
     {output: ''}
 
   return {

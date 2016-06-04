@@ -4,7 +4,12 @@ import React from 'react'
 import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
+import {
+  initialState,
+  DemoTop,
+  DemoBottom,
+} from './demoHelpers.jsx' // eslint-disable-line
+import mmddyyyyValidator from '../../addons/mmddyyyyValidator.js'
 
 const App = React.createClass({ // eslint-disable-line
   getInitialState() {
@@ -33,6 +38,7 @@ const App = React.createClass({ // eslint-disable-line
                 <MaskedInput
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
+                  validator={mmddyyyyValidator}
                   ref='maskedInput'
                   mask={mask}
                   guide={guide}
@@ -143,7 +149,7 @@ const App = React.createClass({ // eslint-disable-line
 
   focusMaskedInput() {
     const {refs: {maskedInput}} = this
-    ReactDOM.findDOMNoe(maskedInput).focus()
+    ReactDOM.findDOMNode(maskedInput).focus()
   },
 
   findChoice(name, value) {

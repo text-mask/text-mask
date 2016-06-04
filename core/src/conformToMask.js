@@ -8,14 +8,14 @@ import {
 } from './utilities.js'
 import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
 
+const assign = Object.assign.bind(Object)
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
   const {
     guide = true,
     previousConformedInput = '',
     placeholderChar = defaultPlaceholderChar,
-    validator: isCustomValid,
-    skipCustomValidator = typeof isCustomValid !== 'function'
+    validator: isCustomValid
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -95,19 +95,18 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
           } else if (isAcceptableChar(userInputChar, unescapedMask[i])) {
-            let isAcceptedByCustomValidator = true
+            const requiresCustomValidation = typeof isCustomValid === 'function'
 
-            if (!skipCustomValidator) {
-              const {output} = conformToMask(
-                userInput,
-                mask,
-                Object.assign({}, {skipCustomValidator: true}, config)
-              )
+            let isAcceptedByCustomValidator = null
+
+            if (requiresCustomValidation) {
+              const recursiveCallConfig = assign({}, config, {validator: false})
+              const {output} = conformToMask(userInput, mask, recursiveCallConfig)
 
               isAcceptedByCustomValidator = isCustomValid(userInputChar, i, output)
             }
 
-            if (isAcceptedByCustomValidator) {
+            if (!requiresCustomValidation || isAcceptedByCustomValidator) {
               // if it is accepted. We map it--performing any necessary transforming along the way,
               // like upper casing or lower casing.
               conformedString += potentiallyTransformChar(userInputChar, unescapedMask[i])

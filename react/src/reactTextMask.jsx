@@ -13,9 +13,15 @@ export const MaskedInput = React.createClass({
   },
 
   getInitialState() {
-    const {value: inputValue, mask, guide, placeholderCharacter: placeholderChar} = this.props
+    const {
+      value: inputValue,
+      mask,
+      guide,
+      placeholderCharacter: placeholderChar,
+      validator
+    } = this.props
 
-    return getComponentInitialState({inputValue, mask, guide, placeholderChar})
+    return getComponentInitialState({inputValue, mask, validator, guide, placeholderChar})
   },
 
   componentWillReceiveProps(nextProps) {
@@ -24,11 +30,18 @@ export const MaskedInput = React.createClass({
       nextProps.guide !== this.props.guide ||
       nextProps.placeholderCharacter !== this.props.placeholderCharacter ||
       nextProps.value !== undefined && nextProps.value !== this.state.conformedInput ||
-      this.props.value !== undefined && nextProps.value === undefined
+      this.props.value !== undefined && nextProps.value === undefined ||
+      nextProps.validator !== this.props.validator
     ) {
-      const {mask, value: inputValue, guide, placeholderCharacter: placeholderChar} = nextProps
+      const {
+        mask,
+        value: inputValue,
+        guide,
+        placeholderCharacter: placeholderChar,
+        validator
+      } = nextProps
 
-      this.setState(getComponentInitialState({mask, inputValue, guide, placeholderChar}))
+      this.setState(getComponentInitialState({mask, validator, inputValue, guide, placeholderChar}))
     }
   },
 
@@ -55,7 +68,7 @@ export const MaskedInput = React.createClass({
   onChange(event) {
     const {target: {value: userInput}} = event
     const {
-      props: {mask, guide, placeholderCharacter: placeholderChar},
+      props: {mask, guide, placeholderCharacter: placeholderChar, validator},
       state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
     } = this
     const {conformedInput, adjustedCaretPosition} = processComponentChanges({
@@ -63,6 +76,7 @@ export const MaskedInput = React.createClass({
       placeholder,
       previousConformedInput,
       mask,
+      validator,
       guide,
       placeholderChar,
       currentCaretPosition: this.inputElement.selectionStart
