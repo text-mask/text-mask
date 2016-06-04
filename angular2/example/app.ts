@@ -26,4 +26,5 @@ class AppComponent {
   }
 }
 
+//noinspection TypeScriptValidateTypes
 bootstrap(AppComponent);
