@@ -4,3 +4,6 @@ node_js: "node"
 
 script:
   - npm run ci
+
+notifications:
+  email: false
