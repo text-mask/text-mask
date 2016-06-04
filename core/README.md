@@ -11,7 +11,7 @@ and documented here as a separate module.
 To download the script, use npm.
 
 ```bash
-npm i core-mask-core --save
+npm i core-text-mask --save
 ```
 
 ### Include it
@@ -19,7 +19,7 @@ npm i core-mask-core --save
 After installing with npm, you could possibly do something like this from your `index.html`:
 
 ```html
-<script src="./node_modules/core-mask-core/dist/textMaskCore.js"></script>
+<script src="./node_modules/core-text-mask/dist/textMaskCore.js"></script>
 ```
 
 Including this file in your source code will expose the global object `textMaskCore`.
