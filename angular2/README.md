@@ -16,8 +16,8 @@ import 'es6-promise';
 import 'zone.js/dist/zone';
 import 'reflect-metadata';
 
-import {bootstrap} from 'angular2/platform/browser'
-import {Component} from 'angular2/core';
+import {bootstrap} from '@angular/platform-browser-dynamic'
+import {Component} from '@angular/core';
 import MaskedInput from 'angular2-text-mask'
 
 @Component({
@@ -36,15 +36,8 @@ bootstrap(AppComponent);
 
 ## Example
 
-### TypeScript
-
 You can see a working example in
 [this folder](https://github.com/msafi/text-mask/tree/master/angular2/example).
-
-### Plain JavaScript
-
-For a plain JavaScript example, you can check out
-[this Plunk](http://plnkr.co/edit/QImy7qOVZTmTM8ftiB84?p=preview).
 
 ## Documentation
 

@@ -7,7 +7,7 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.ts/, loaders: ['awesome-typescript-loader']},
+      {test: /\.ts$/, loader: 'awesome-typescript-loader', query: {tsconfig: './angular2/tsconfig.json'}},
       {test: /\.js/, loaders: ['babel-loader']}
     ]
   },

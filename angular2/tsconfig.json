@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,7 +10,13 @@
     "noImplicitAny": false
   },
   "files": [
-    "./../core/src/utilities.d.ts",
-    "./../core/src/conformToMask.d.ts"
-  ]
+    "./src/**/*.ts",
+    "./example/**/*.ts",
+    "./typings/index.d.ts",
+    "./../core/**/*.ts"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "resolveGlobs": true,
+    "forkChecker": true
+  }
 }
