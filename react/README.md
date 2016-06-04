@@ -5,14 +5,14 @@
 First, install it.
 
 ```bash
-npm i @msafi/react-text-mask --save
+npm i react-text-mask --save
 ```
 
 Then, require it and use it.
 
 ```js
 var React = require('react')
-var MaskedInput = require('@msafi/react-text-mask')
+var MaskedInput = require('react-text-mask')
 
 var MyComponent = React.createClass({
   render() {
