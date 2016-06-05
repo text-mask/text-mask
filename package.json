@@ -6,9 +6,9 @@
   "scripts": {
     "website": "node ./website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
-    "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run angular2:test",
-    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build && npm run website:build",
-    "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run angular2:verify",
+    "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run angular2:test && npm run addons:test",
+    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build && npm run website:build && npm run addons:build",
+    "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run angular2:verify && npm run addons:verify",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --require ./common/testSetup.js --recursive",
     "core:tdd": "npm run core:test -- --watch",

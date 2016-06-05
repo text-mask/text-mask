@@ -1,4 +1,6 @@
-import createMmddyyyyValidator from '../src/createMmddyyyyValidator.js'
+const createMmddyyyyValidator = (isVerify()) ?
+  require(`../${packageJson.main}`).createMmddyyyyValidator :
+  require('../src/createMmddyyyyValidator.js').default
 
 describe('createMmddyyyyValidator', () => {
   let configuredMmddyyyyValidator = null
