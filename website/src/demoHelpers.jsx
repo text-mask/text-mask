@@ -1,5 +1,5 @@
 import React from 'react' // eslint-disable-line
-import mmddyyyyValidator from '../../addons/src/mmddyyyyValidator.js'
+import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
 
 export const initialState = {
   choices: [{
@@ -26,7 +26,7 @@ export const initialState = {
     value: 'birthDay',
     name: 'Birth day (validated)',
     mask: '11/11/1111',
-    validator: mmddyyyyValidator({
+    validator: createMmddyyyyValidator({
       minimumDate: '01/01/1900',
       maximumDate: (new Date()).toLocaleDateString('en-US', {
         day: '2-digit',
@@ -42,8 +42,8 @@ export const initialState = {
         <a
           className="alert-link"
           target="_blank"
-          href="https://github.com/msafi/text-mask/master/addons/src/mmddyyyyValidator.js">
-          mmddyyyyValidator
+          href="https://github.com/msafi/text-mask/master/addons/src/createMmddyyyyValidator.js">
+          createMmddyyyyValidator
         </a>, which needs to be installed separately as a
         {' '}
         <a
