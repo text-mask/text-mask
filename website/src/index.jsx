@@ -9,7 +9,6 @@ import {
   DemoTop,
   DemoBottom,
 } from './demoHelpers.jsx' // eslint-disable-line
-import mmddyyyyValidator from '../../addons/src/mmddyyyyValidator.js'
 
 const App = React.createClass({ // eslint-disable-line
   getInitialState() {

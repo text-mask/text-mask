@@ -1,4 +1,5 @@
 import React from 'react' // eslint-disable-line
+import mmddyyyyValidator from '../../addons/src/mmddyyyyValidator.js'
 
 export const initialState = {
   choices: [{
@@ -18,9 +19,15 @@ export const initialState = {
     placeholder: 'K1A 0B2'
   }, {
     value: 'date',
-    name: 'Date',
+    name: 'Unvalidated date',
     mask: '11/11/1111',
     placeholder: '25/09/1970'
+  }, {
+    value: 'birthDay',
+    name: 'Birth day (validated)',
+    mask: '11/11/1111',
+    validator: mmddyyyyValidator,
+    placeholder: 'Date between 1900 and now'
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',
@@ -38,7 +45,7 @@ export const initialState = {
     placeholder: undefined
   }],
 
-  selectedChoice: 3,
+  selectedChoice: 0,
 
   placeholderChar: '_',
 
