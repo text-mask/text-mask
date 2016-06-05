@@ -19,7 +19,7 @@ date.
 #### Usage
 
 ```js
-var createMmddyyyyValidator = require('text-mask-addons/dist/createMmddyyyyValidator')
+import createMmddyyyyValidator from 'text-mask-addons/dist/createMmddyyyyValidator'
 
 var mmddyyyyValidator = createMmddyyyyValidator({
   minimumDate: '01/01/1900',

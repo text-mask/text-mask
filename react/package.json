@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/msafi/text-mask.git"
   },
-  "homepage": "https://github.com/msafi/text-mask/react/#readme",
+  "homepage": "https://github.com/msafi/text-mask/tree/master/react/#readme",
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0"
   },
