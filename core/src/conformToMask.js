@@ -14,7 +14,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     guide = true,
     previousConformedInput = '',
     placeholderChar = defaultPlaceholderChar,
-    validator: isCustomValid
+    validator: isCustomValid = defaultValidator
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -94,25 +94,12 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
           } else if (isAcceptableChar(userInputChar, unescapedMask[i])) {
-            const requiresCustomValidation = typeof isCustomValid === 'function'
+            // if it is accepted. We map it--performing any necessary transforming along the way,
+            // like upper casing or lower casing.
+            conformedString += potentiallyTransformChar(userInputChar, unescapedMask[i])
 
-            let isAcceptedByCustomValidator = null
-
-            if (requiresCustomValidation) {
-              const recursiveCallConfig = Object.assign({}, config, {validator: false})
-              const {output} = conformToMask(userInput, mask, recursiveCallConfig)
-
-              isAcceptedByCustomValidator = isCustomValid(userInputChar, i, output)
-            }
-
-            if (!requiresCustomValidation || isAcceptedByCustomValidator) {
-              // if it is accepted. We map it--performing any necessary transforming along the way,
-              // like upper casing or lower casing.
-              conformedString += potentiallyTransformChar(userInputChar, unescapedMask[i])
-
-              // Since we've mapped this placeholder position. We move on to the next one.
-              continue placeholderLoop
-            }
+            // Since we've mapped this placeholder position. We move on to the next one.
+            continue placeholderLoop
           }
         }
       }
@@ -163,7 +150,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   }
 
   return {
-    output: conformedString,
+    output: isCustomValid(conformedString) ? conformedString : previousConformedInput,
     meta: {
       input: userInput,
       mask: mask,
@@ -172,4 +159,8 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       placeholder
     }
   }
+}
+
+function defaultValidator() {
+  return true
 }

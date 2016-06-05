@@ -1,56 +1,131 @@
-const monthsLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const parseNumber = (number) => parseInt(number, 10)
+const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-export default function mmddyyyyValidator(char, index, conformedUserInput) {
-  // 12/03/2039
+export default function mmddyyyyValidator(
+  conformedUserInput,
+  {minimumYear = 1200, maximumYear = (new Date()).getFullYear()} = {}
+) {
+  // 12/12/2000
+  const month1stDigit = parseDigit(conformedUserInput[0])
+  const month2ndDigit = parseDigit(conformedUserInput[1])
+  const day1stDigit = parseDigit(conformedUserInput[3])
+  const day2ndDigit = parseDigit(conformedUserInput[4])
+  const year1stDigit = parseDigit(conformedUserInput[6])
+  const year2ndDigit = parseDigit(conformedUserInput[7])
+  const year3rdDigit = parseDigit(conformedUserInput[8])
+  const year4thDigit = parseDigit(conformedUserInput[9])
 
-  const newDigit = Number(char)
-  const monthNumber = parseNumber(conformedUserInput.substr(0, 2))
-  const dayNumber = parseNumber(conformedUserInput.substr(3, 5))
-  const yearNumber = parseNumber(conformedUserInput.substr(6, 10))
+  const month = (
+    month1stDigit !== false &&
+    month2ndDigit !== false &&
+    combineDigits([month1stDigit, month2ndDigit])
+  )
+  const day = (
+    day1stDigit !== false &&
+    day2ndDigit !== false &&
+    combineDigits([day1stDigit, day2ndDigit])
+  )
+  const year = (
+    year1stDigit !== false &&
+    year2ndDigit !== false &&
+    year3rdDigit !== false &&
+    year4thDigit !== false &&
+    combineDigits([year1stDigit, year2ndDigit, year3rdDigit, year4thDigit])
+  )
 
-  const numberOfDaysInTheMonth = (monthNumber) ? monthsLengths[monthNumber - 1] : null
+  const digitsOrder = [
+    month1stDigit,
+    month2ndDigit,
+    day1stDigit,
+    day2ndDigit,
+    year1stDigit,
+    year2ndDigit,
+    year3rdDigit,
+    year4thDigit
+  ]
 
-  // Basic sanity
-  // Month 1st digit
-  if (index === 0) {
-    if (newDigit > 1) {
-      // Can't have a month number that begins with 2, 3, or 4, etc...
-      return false
+  let shouldNotSeeAnyMoreFilledDigits = false
+  let sawFilledDigit = false
+  for (let i = 0; i < digitsOrder.length; i++) {
+    const digit = digitsOrder[i]
+
+    if (digit !== false) {
+      if (shouldNotSeeAnyMoreFilledDigits === true) {
+        return false
+      }
+
+      sawFilledDigit = true
     }
 
-  // Month 2nd digit
-  } else if (index === 1) {
-     if (
-      // Can't have 2nd digit greater than 2, if first digit is 1.
-      conformedUserInput[0] === '1' && newDigit > 2 ||
+    if (digit === false && sawFilledDigit === true) {
+      shouldNotSeeAnyMoreFilledDigits = true
+    }
+  }
 
-      // Can't have 2nd digit less than 1 if 1st digit is 0
-      conformedUserInput[0] === '0' && newDigit < 1
+  if (month1stDigit > 1) {
+    return false
+  }
+
+  if (month !== false) {
+    if (month < 1 || month > 12) {
+      return false
+    }
+  }
+
+  if (day1stDigit !== false) {
+    const monthLength = numberOfDaysInEachMonth[month - 1]
+
+    if (day1stDigit > getDigit(monthLength, 0)) {
+      return false
+    }
+  }
+
+  if (day !== false) {
+    const monthLength = numberOfDaysInEachMonth[month - 1]
+
+    if (day < 1 || day > 31 || day > monthLength) {
+      return false
+    }
+  }
+
+  if (year1stDigit !== false) {
+    if (
+      year1stDigit < getDigit(minimumYear, 0) ||
+      year1stDigit > getDigit(maximumYear, 0)
     ) {
       return false
     }
+  }
 
-  // Day 1st digit
-  } else if (index === 3) {
-    if (dayNumber && numberOfDaysInTheMonth) {
-      return dayNumber <= numberOfDaysInTheMonth
-    } else if (newDigit > 3) {
-      // Can't have a day number that begins with 4, 5, or 6, etc...
+  if (year2ndDigit !== false) {
+    const yearDigits = [year1stDigit, year2ndDigit]
+
+    if (
+      combineDigits(yearDigits) < getDigits(minimumYear, [0,1]) ||
+      combineDigits(yearDigits) > getDigits(maximumYear, [0,1])
+    ) {
+      return false
+    }
+  }
+
+  if (year3rdDigit !== false) {
+    const yearDigits = [year1stDigit, year2ndDigit, year3rdDigit]
+
+    if (
+      combineDigits(yearDigits) < getDigits(minimumYear, [0, 1, 2]) ||
+      combineDigits(yearDigits) > getDigits(maximumYear, [0, 1, 2])
+    ) {
+      return false
+    }
+  }
+
+  if (year !== false) {
+    const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)
+
+    if (isLeapYear === false && month === 2 && day > 28) {
       return false
     }
 
-  // Day 2nd digit
-  } else if (index === 4) {
-    if (dayNumber && numberOfDaysInTheMonth) {
-      return dayNumber <= numberOfDaysInTheMonth
-    } else if (
-      // Can't have a 2nd digit less than 1 if 1st digit is 0
-      conformedUserInput[3] === '0' && newDigit < 1 ||
-
-      // Can't have a 2nd digit greater than 1 if 1st digit is 3
-      conformedUserInput[3] === '3' && newDigit > 1
-    ) {
+    if (year < minimumYear || year > maximumYear) {
       return false
     }
   }
@@ -58,28 +133,33 @@ export default function mmddyyyyValidator(char, index, conformedUserInput) {
   return true
 }
 
+const digitsNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const digitsStrings = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+const allDigits = digitsNumbers.concat(digitsStrings)
+function parseDigit(value) {
+  const digit = Number(allDigits.find((digit) => {
+    return digit === value
+  }))
 
-function isValidDate(dateString) {
-  // First check for the pattern
-  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
-    return false;
+  if (digit === undefined || isNaN(digit)) {
+    return false
+  } else {
+    return digit
+  }
+}
 
-  // Parse the date parts to integers
-  var parts = dateString.split("/");
-  var day = parseInt(parts[1], 10);
-  var month = parseInt(parts[0], 10);
-  var year = parseInt(parts[2], 10);
+function combineDigits(digits) {
+  return Number(digits.reduce((combinedDigits, digit) => {
+    combinedDigits += digit
 
-  // Check the ranges of month and year
-  if (year < 1000 || year > 3000 || month == 0 || month > 12)
-    return false;
+    return combinedDigits
+  }, ''))
+}
 
-  var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+function getDigit(number, index) {
+  return String(number)[index]
+}
 
-  // Adjust for leap years
-  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-    monthLength[1] = 29;
-
-  // Check the range of the day
-  return day > 0 && day <= monthLength[month - 1];
+function getDigits(number, digits) {
+  return combineDigits(digits.map((digit) => getDigit(number, digit)))
 }

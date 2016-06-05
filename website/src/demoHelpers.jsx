@@ -42,7 +42,7 @@ export const initialState = {
 
   placeholderChar: '_',
 
-  guide: false,
+  guide: true,
 }
 
 const githubLink = 'https://github.com/msafi/text-mask/#readme'
