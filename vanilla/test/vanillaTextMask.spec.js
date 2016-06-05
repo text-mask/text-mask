@@ -1,18 +1,12 @@
-import packageJson from '../package.json'
-import isVerify from '../../common/isVerify.js'
-import chai from 'chai'
-import dynamicTests from 'mocha-dynamic-tests'
 import testParameters, {
   transformTestForComponent,
   noGuideMode
 } from '../../common/testParameters.js'
-import _ from 'lodash'
+import packageJson from '../package.json'
 
 const maskInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
   require('../src/vanillaTextMask.js').default
-
-const expect = chai.expect
 
 describe('inputMask', () => {
   it('does not throw when instantiated', () => {

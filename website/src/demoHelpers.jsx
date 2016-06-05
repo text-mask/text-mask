@@ -1,4 +1,5 @@
 import React from 'react' // eslint-disable-line
+import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
 
 export const initialState = {
   choices: [{
@@ -18,9 +19,41 @@ export const initialState = {
     placeholder: 'K1A 0B2'
   }, {
     value: 'date',
-    name: 'Date',
+    name: 'Date (not validated)',
     mask: '11/11/1111',
     placeholder: '25/09/1970'
+  }, {
+    value: 'birthDay',
+    name: 'Birth day (validated)',
+    mask: '11/11/1111',
+    validator: createMmddyyyyValidator({
+      minimumDate: '01/01/1900',
+      maximumDate: (new Date()).toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
+    }),
+    placeholder: 'Date between 01/01/1900 and today',
+    help: (
+      <span>
+        This mask is validated with
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js'>
+          createMmddyyyyValidator
+        </a>, which needs to be installed separately as a
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/tree/master/addons'>
+          Text Mask addon
+        </a>.
+      </span>
+    )
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',

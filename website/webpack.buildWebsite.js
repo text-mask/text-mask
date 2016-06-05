@@ -35,6 +35,7 @@ module.exports = {
         path.join(__dirname, 'src/'),
         path.join(__dirname, '../react/src/'),
         path.join(__dirname, '../core/src'),
+        path.join(__dirname, '../addons/src'),
       ]
     }, {
       // Process website/src/styles.scss as a regular Sass file

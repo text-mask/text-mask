@@ -13,7 +13,8 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   const {
     guide = true,
     previousConformedInput = '',
-    placeholderChar = defaultPlaceholderChar
+    placeholderChar = defaultPlaceholderChar,
+    validator: isCustomValid = alwaysReturnTrue
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -149,7 +150,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   }
 
   return {
-    output: conformedString,
+    output: isCustomValid(conformedString) ? conformedString : previousConformedInput,
     meta: {
       input: userInput,
       mask: mask,
@@ -158,4 +159,8 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       placeholder
     }
   }
+}
+
+function alwaysReturnTrue() {
+  return true
 }

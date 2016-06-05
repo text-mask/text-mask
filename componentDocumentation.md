@@ -3,6 +3,7 @@
 Text Mask accepts the following values:
 
 * `mask` (string)
+* `validator` (function)
 * `guide` (boolean)
 * `placeholderCharacter` (string)
 
@@ -39,22 +40,25 @@ in a string. In that case you will need to double `\`.
 
 For example, US phone number with country code would look like `+\\1 (111) 111-1111`.
 
-## `placeholderCharacter`
+## `validator`
 
-The placeholder character represents the fillable spot in the mask. The default placeholder
-character is underscore, `_`.
+You can pass a validator to Text Mask. It should adhere to the following interface:
 
-For example, with mask `(111) 111-1111`, the user would fill out
-`(___) ___-____`.
+* Accepts `conformedUserInput` (string)
+* Returns `isValid` (boolean)
 
-You can pass a different placeholder character. For example, the unicode character `U+2000` would
-make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character
-as `'\u2000'`.
+The validator will be called whenever the user modifies the value in the component.
+The validator will receive one argument: *the conformed user input*.
+Given that argument, the validator should return either `true` or `false`. If it returns `false`
+the component will not update. If it returns `true` it will.
 
-&#x1F4CD; **Note**: you cannot use a mask that has a placeholder character hard-coded in it. That
-is, since the default placeholder character is `_`, you cannot have a mask that looks like
-`_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
-in your mask.
+Since the validator will receive the user input at every change, it should return `true` for
+partial values that could potentially develop into full valid values. For example, a date
+validator should return `true` for `conformedUserInput` that equals `1_/__/____`.
+
+For an example of a validator, see the code for
+[`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
+in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/).
 
 ## `guide`
 
@@ -79,3 +83,20 @@ mask characters.
 
 When `guide` is `false`, Text Mask doesn't print out placeholder characters and only adds mask
 characters when the user reaches them as they're typing.
+
+## `placeholderCharacter`
+
+The placeholder character represents the fillable spot in the mask. The default placeholder
+character is underscore, `_`.
+
+For example, with mask `(111) 111-1111`, the user would fill out
+`(___) ___-____`.
+
+You can pass a different placeholder character. For example, the unicode character `U+2000` would
+make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character
+as `'\u2000'`.
+
+&#x1F4CD; **Note**: you cannot use a mask that has a placeholder character hard-coded in it. That
+is, since the default placeholder character is `_`, you cannot have a mask that looks like
+`_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
+in your mask.

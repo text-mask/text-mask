@@ -17,7 +17,12 @@
     "window": false,
     "it": true,
     "describe": true,
-    "beforeEach": true
+    "beforeEach": true,
+    "expect": true,
+    "_": true,
+    "dynamicTests": true,
+    "isVerify": true,
+    "sinon": true
   },
   "plugins": [
     "standard",
