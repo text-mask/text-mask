@@ -3,7 +3,7 @@ const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 export default function createMmddyyyyValidator(
   {minimumDate = '', maximumDate = ''} = {}
 ) {
-  return function (conformedUserInput) {
+  return function(conformedUserInput) {
     const month1stDigit = parseDigit(conformedUserInput[0])
     const month2ndDigit = parseDigit(conformedUserInput[1])
     const day1stDigit = parseDigit(conformedUserInput[3])
@@ -104,8 +104,8 @@ export default function createMmddyyyyValidator(
       const yearDigits = [year1stDigit, year2ndDigit]
 
       if (
-        combineDigits(yearDigits) < getDigits(minimumYear, [0,1]) ||
-        combineDigits(yearDigits) > getDigits(maximumYear, [0,1])
+        combineDigits(yearDigits) < getDigits(minimumYear, [0, 1]) ||
+        combineDigits(yearDigits) > getDigits(maximumYear, [0, 1])
       ) {
         return false
       }
@@ -156,7 +156,8 @@ export default function createMmddyyyyValidator(
     }
 
     return true
-}}
+  }
+}
 
 const digitsNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const digitsStrings = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

@@ -2,6 +2,7 @@ import testParameters, {
   transformTestForComponent,
   noGuideMode
 } from '../../common/testParameters.js'
+import packageJson from '../package.json'
 
 const maskInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :

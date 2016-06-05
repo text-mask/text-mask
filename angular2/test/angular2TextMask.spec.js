@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-
+import packageJson from '../package.json'
 import testParameters, {
   noGuideMode,
   transformTestForComponent

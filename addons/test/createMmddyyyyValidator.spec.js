@@ -1,5 +1,5 @@
 const createMmddyyyyValidator = (isVerify()) ?
-  require(`../${packageJson.main}`).createMmddyyyyValidator :
+  require('../dist/createMmddyyyyValidator.js').default :
   require('../src/createMmddyyyyValidator.js').default
 
 describe('createMmddyyyyValidator', () => {

@@ -5,6 +5,7 @@ import testParameters, {
   noGuideMode,
   transformTestForComponent
 } from '../../common/testParameters.js'
+import packageJson from '../package.json'
 
 const MaskedInput = (isVerify()) ? // eslint-disable-line
   require(`../${packageJson.main}`).default :

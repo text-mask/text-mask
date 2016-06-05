@@ -4,11 +4,7 @@ import ReactDOM from 'react-dom'
 import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {
-  initialState,
-  DemoTop,
-  DemoBottom,
-} from './demoHelpers.jsx' // eslint-disable-line
+import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
@@ -80,9 +76,9 @@ export default React.createClass({ // eslint-disable-line
               </div>
             </div>
 
-            {help !== undefined && <div className="form-group row">
-              <div className="col-sm-9 col-sm-offset-3">
-                <p className="alert alert-info" style={{margin: 0}}>
+            {help !== undefined && <div className='form-group row'>
+              <div className='col-sm-9 col-sm-offset-3'>
+                <p className='alert alert-info' style={{margin: 0}}>
                   {help}
                 </p>
               </div>

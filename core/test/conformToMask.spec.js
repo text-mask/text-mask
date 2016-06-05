@@ -3,6 +3,7 @@ import testParameters, {
   acceptedCharInMask,
   allowMaskingCharInMask
 } from './../../common/testParameters.js'
+import packageJson from '../package.json'
 
 const conformToMask = (isVerify()) ?
   require(`../${packageJson.main}`).conformToMask :

@@ -1,6 +1,7 @@
 import testParameters, {noGuideMode} from './../../common/testParameters.js'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import {placeholderCharacter as placeholderChar} from '../src/constants'
+import packageJson from '../package.json'
 
 const adjustCaretPosition = (isVerify()) ?
   require(`../${packageJson.main}`).adjustCaretPosition :
