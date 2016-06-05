@@ -2,7 +2,7 @@ const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 export default function mmddyyyyValidator(
   conformedUserInput,
-  {minimumYear = 1200, maximumYear = (new Date()).getFullYear()} = {}
+  {minimumYear = -Infinity, maximumYear = Infinity} = {}
 ) {
   const month1stDigit = parseDigit(conformedUserInput[0])
   const month2ndDigit = parseDigit(conformedUserInput[1])
@@ -42,21 +42,16 @@ export default function mmddyyyyValidator(
     year4thDigit
   ]
 
-  let shouldNotSeeAnyMoreFilledDigits = false
-  let sawFilledDigit = false
+  let sawUnfilledDigit = false
   for (let i = 0; i < digitsOrder.length; i++) {
     const digit = digitsOrder[i]
 
-    if (digit !== false) {
-      if (shouldNotSeeAnyMoreFilledDigits === true) {
-        return false
-      }
-
-      sawFilledDigit = true
+    if (digit === false) {
+      sawUnfilledDigit = true
     }
 
-    if (digit === false && sawFilledDigit === true) {
-      shouldNotSeeAnyMoreFilledDigits = true
+    if (digit !== false && sawUnfilledDigit === true) {
+      return false
     }
   }
 
