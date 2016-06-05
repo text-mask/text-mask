@@ -34,7 +34,26 @@ export const initialState = {
         year: 'numeric'
       })
     }),
-    placeholder: 'Date between 01/01/1900 and today'
+    placeholder: 'Date between 01/01/1900 and today',
+    help: (
+      <span>
+        This mask is validated with
+        {' '}
+        <a
+          className="alert-link"
+          target="_blank"
+          href="https://github.com/msafi/text-mask/master/addons/src/mmddyyyyValidator.js">
+          mmddyyyyValidator
+        </a>, which needs to be installed separately as a
+        {' '}
+        <a
+          className="alert-link"
+          target="_blank"
+          href="https://github.com/msafi/text-mask/master/addons">
+          Text Mask addon
+        </a>.
+      </span>
+    )
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',

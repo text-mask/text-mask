@@ -1,5 +1,6 @@
 import './styles.scss'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
@@ -11,24 +12,19 @@ import {
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
-    return Object.assign(initialState, {
-      mask: initialState.choices[initialState.selectedChoice].mask
-    })
+    return Object.assign({}, initialState)
   },
 
   render() {
     const {
       guide,
       choices,
-      placeholder,
-      value,
-      mask,
       placeholderChar,
-      validator,
-      help
+      selectedChoice,
+      customMask,
     } = this.state
-
-    const placeholderValue = guide ? undefined : placeholder
+    const {mask: choiceMask, placeholder, help, validator, value} = choices[selectedChoice]
+    const placeholderValue = guide !== true ? placeholder : undefined
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -47,7 +43,7 @@ export default React.createClass({ // eslint-disable-line
                   placeholderCharacter={placeholderChar}
                   validator={validator}
                   ref='maskedInput'
-                  mask={mask}
+                  mask={customMask || choiceMask}
                   guide={guide}
                   className='form-control'
                   id='maskedInput'
@@ -64,7 +60,7 @@ export default React.createClass({ // eslint-disable-line
                 <select
                   className='form-control'
                   value={value}
-                  onChange={this.onDropDownListMaskSelect}
+                  onChange={this.onDropDownListChoiceSelect}
                   ref='maskSelect'>
                   {choices.map((choice, index) => {
                     return <option key={index} value={choice.value}>{choice.name}</option>
@@ -77,20 +73,20 @@ export default React.createClass({ // eslint-disable-line
                   ref='mask'
                   type='text'
                   onChange={this.onManualMaskChange}
-                  value={mask}
+                  value={customMask || choiceMask}
                   className={classnames('form-control', appStyles.mask)}
                   id='mask'
                 />
               </div>
             </div>
 
-            <div className="form-group row">
+            {help !== undefined && <div className="form-group row">
               <div className="col-sm-9 col-sm-offset-3">
                 <p className="alert alert-info" style={{margin: 0}}>
-                  Help!!
+                  {help}
                 </p>
               </div>
-            </div>
+            </div>}
 
             <div className='form-group'>
               <label htmlFor='guide' className='col-sm-3 control-label'>Guide</label>
@@ -138,17 +134,26 @@ export default React.createClass({ // eslint-disable-line
     )
   },
 
-  onManualMaskChange({target: {value: mask}}) {
-    this.setState({mask})
+  onManualMaskChange({target: {value: customMask}}) {
+    const selectedChoice = this.findChoice('mask', customMask)
+    const customChoice = this.findChoice('value', 'custom')
+    const finalSelectedChoice = (selectedChoice !== -1) ?
+      selectedChoice :
+      customChoice
+
+    this.setState({customMask, selectedChoice: finalSelectedChoice})
   },
 
-  onDropDownListMaskSelect({target: {value: selectValue}}) {
-    const {state: {choices}, findChoice} = this
+  onDropDownListChoiceSelect({target: {value: selectValue}}) {
+    const {findChoice} = this
     const selectedChoice = findChoice('value', selectValue)
-    this.setState(Object.assign({}, choices[selectedChoice]))
+
+    this.setState({selectedChoice, customMask: ''})
+
     if (selectValue === 'custom') {
       return this.refs.mask.focus()
     }
+
     this.focusMaskedInput()
   },
 
