@@ -1,17 +1,10 @@
-import packageJson from '../package.json'
-import isVerify from '../../common/isVerify.js'
-import chai from 'chai'
-import dynamicTests from 'mocha-dynamic-tests'
 import testParameters, {noGuideMode} from './../../common/testParameters.js'
-import _ from 'lodash'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import {placeholderCharacter as placeholderChar} from '../src/constants'
 
 const adjustCaretPosition = (isVerify()) ?
   require(`../${packageJson.main}`).adjustCaretPosition :
   require('../src/adjustCaretPosition.js').default
-
-const expect = chai.expect
 
 describe('adjustCaretPosition', () => {
   it('places the caret after the last change when operation is addition', () => {

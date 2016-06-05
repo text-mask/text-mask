@@ -1,7 +1,3 @@
-import packageJson from '../package.json'
-import isVerify from '../../common/isVerify.js'
-import dynamicTests from 'mocha-dynamic-tests'
-import chai from 'chai'
 import testParameters, {
   noGuideMode,
   acceptedCharInMask,
@@ -11,8 +7,6 @@ import testParameters, {
 const conformToMask = (isVerify()) ?
   require(`../${packageJson.main}`).conformToMask :
   require('../src/conformToMask.js').default
-
-const expect = chai.expect
 
 describe('conformToMask', () => {
   describe('Guide mode tests', () => {

@@ -1,12 +1,6 @@
-import packageJson from '../package.json'
-import isVerify from '../../common/isVerify.js'
-import chai from 'chai'
 import React from 'react' // eslint-disable-line
-import sinon from 'sinon'
-import _ from 'lodash'
 import ReactTestUtils from 'react-addons-test-utils'
 import {mount} from 'enzyme'
-import dynamicTests from 'mocha-dynamic-tests'
 import testParameters, {
   noGuideMode,
   transformTestForComponent
@@ -15,8 +9,6 @@ import testParameters, {
 const MaskedInput = (isVerify()) ? // eslint-disable-line
   require(`../${packageJson.main}`).default :
   require('../src/reactTextMask.jsx').default
-
-const expect = chai.expect
 
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
