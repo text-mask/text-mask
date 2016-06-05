@@ -58,7 +58,7 @@ validator should return `true` for `conformedUserInput` that equals `1_/__/____`
 
 For an example of a validator, see the code for
 [`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
-in [Text Mask Addons](https://github.com/msafi/text-mask/blob/master/addons/).
+in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/).
 
 ## `guide`
 

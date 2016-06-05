@@ -42,14 +42,14 @@ export const initialState = {
         <a
           className="alert-link"
           target="_blank"
-          href="https://github.com/msafi/text-mask/master/addons/src/createMmddyyyyValidator.js">
+          href="https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js">
           createMmddyyyyValidator
         </a>, which needs to be installed separately as a
         {' '}
         <a
           className="alert-link"
           target="_blank"
-          href="https://github.com/msafi/text-mask/master/addons">
+          href="https://github.com/msafi/text-mask/tree/master/addons">
           Text Mask addon
         </a>.
       </span>
