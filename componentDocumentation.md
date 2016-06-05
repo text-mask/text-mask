@@ -56,7 +56,9 @@ Since the validator will receive the user input at every change, it should retur
 partial values that could potentially develop into full valid values. For example, a date
 validator should return `true` for `conformedUserInput` that equals `1_/__/____`.
 
-For an example of a validator, see the code for `createMmddyyyyValidator` in Text Mask Addons.
+For an example of a validator, see the code for
+[`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
+in [Text Mask Addons](https://github.com/msafi/text-mask/blob/master/addons/).
 
 ## `guide`
 
