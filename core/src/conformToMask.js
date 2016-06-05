@@ -14,7 +14,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     guide = true,
     previousConformedInput = '',
     placeholderChar = defaultPlaceholderChar,
-    validator: isCustomValid = defaultValidator
+    validator: isCustomValid = alwaysReturnTrue
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -161,6 +161,6 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   }
 }
 
-function defaultValidator() {
+function alwaysReturnTrue() {
   return true
 }

@@ -131,14 +131,14 @@ const digitsNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const digitsStrings = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 const allDigits = digitsNumbers.concat(digitsStrings)
 function parseDigit(value) {
-  const digit = Number(allDigits.find((digit) => {
+  const digit = allDigits.find((digit) => {
     return digit === value
-  }))
+  })
 
-  if (isNaN(digit)) {
+  if (digit === undefined) {
     return false
   } else {
-    return digit
+    return Number(digit)
   }
 }
 
