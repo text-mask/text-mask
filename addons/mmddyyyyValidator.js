@@ -4,7 +4,6 @@ export default function mmddyyyyValidator(
   conformedUserInput,
   {minimumYear = 1200, maximumYear = (new Date()).getFullYear()} = {}
 ) {
-  // 12/12/2000
   const month1stDigit = parseDigit(conformedUserInput[0])
   const month2ndDigit = parseDigit(conformedUserInput[1])
   const day1stDigit = parseDigit(conformedUserInput[3])
@@ -141,7 +140,7 @@ function parseDigit(value) {
     return digit === value
   }))
 
-  if (digit === undefined || isNaN(digit)) {
+  if (isNaN(digit)) {
     return false
   } else {
     return digit
