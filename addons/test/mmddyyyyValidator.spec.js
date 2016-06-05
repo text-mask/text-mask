@@ -3,8 +3,10 @@ import mmddyyyyValidator from '../src/mmddyyyyValidator.js'
 describe('mmddyyyyValidator', () => {
   let configuredMmddyyyyValidator = null
 
-  it('needs to be configured with max and min years', () => {
-    configuredMmddyyyyValidator = mmddyyyyValidator({maximumYear: 2016, minimumYear: 1900})
+  it('needs to be configured with max and min dates', () => {
+    configuredMmddyyyyValidator = mmddyyyyValidator({
+      maximumDate: '08/31/2016', minimumYear: '01/01/1900'
+    })
   })
 
   it('takes conformed user input', () => {
@@ -26,11 +28,11 @@ describe('mmddyyyyValidator', () => {
     expect(configuredMmddyyyyValidator('02/_2/2001')).to.equal(false)
   })
 
-  it('accepts config for max year and min year', () => {
-    expect(mmddyyyyValidator({maximumYear: 2000})('02/01/2200')).to.equal(false)
-    expect(mmddyyyyValidator({maximumYear: 2200})('02/01/2200')).to.equal(true)
+  it('accepts config for max date and min date', () => {
+    expect(mmddyyyyValidator({maximumDate: '12/31/2000'})('02/01/2200')).to.equal(false)
+    expect(mmddyyyyValidator({maximumDate: '12/31/2200'})('02/01/2200')).to.equal(true)
 
-    expect(mmddyyyyValidator({minimumYear: 2199})('02/01/2198')).to.equal(false)
+    expect(mmddyyyyValidator({minimumDate: '12/31/2199'})('02/01/2198')).to.equal(false)
   })
 
   it('does not allow a month that starts > 1', () => {
@@ -61,7 +63,7 @@ describe('mmddyyyyValidator', () => {
   })
 
   it('validates every digit of the year against given max and min', () => {
-    const maxMinYears = {maximumYear: 2016, minimumYear: 1990}
+    const maxMinYears = {maximumDate: '12/31/2016', minimumDate: '01/01/1990'}
 
     expect(mmddyyyyValidator(maxMinYears)('02/24/3')).to.equal(false)
     expect(mmddyyyyValidator(maxMinYears)('02/24/2')).to.equal(true)
@@ -88,5 +90,13 @@ describe('mmddyyyyValidator', () => {
   it('only accepts leap year if given month is February and day is 29', () => {
     expect(configuredMmddyyyyValidator('02/29/2016')).to.equal(true)
     expect(configuredMmddyyyyValidator('02/29/2015')).to.equal(false)
+  })
+
+  it('confirms that the date is bigger than the minimum date and smaller than the ' +
+    'maximum date when user enters the last character', () => {
+    const maxMinYears = {minimumDate: '02/01/1990'}
+
+    expect(mmddyyyyValidator(maxMinYears)('01/24/199')).to.equal(true)
+    expect(mmddyyyyValidator(maxMinYears)('01/24/1990')).to.equal(false)
   })
 })

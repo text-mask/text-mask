@@ -1,7 +1,7 @@
-const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 export default function mmddyyyyValidator(
-  {minimumYear = -Infinity, maximumYear = Infinity} = {}
+  {minimumDate = '', maximumDate = ''} = {}
 ) {
   return function (conformedUserInput) {
     const month1stDigit = parseDigit(conformedUserInput[0])
@@ -12,6 +12,16 @@ export default function mmddyyyyValidator(
     const year2ndDigit = parseDigit(conformedUserInput[7])
     const year3rdDigit = parseDigit(conformedUserInput[8])
     const year4thDigit = parseDigit(conformedUserInput[9])
+
+    const last4DigitsOfMinimumDate = minimumDate.substr(6, 4)
+    const last4DigitsOfMaximumDate = maximumDate.substr(6, 4)
+
+    const minimumYear = (last4DigitsOfMinimumDate.length === 4) ?
+      Number(last4DigitsOfMinimumDate) :
+      -Infinity
+    const maximumYear = (last4DigitsOfMaximumDate.length === 4) ?
+      Number(last4DigitsOfMaximumDate) :
+      Infinity
 
     const month = (
       month1stDigit !== false &&
@@ -121,6 +131,27 @@ export default function mmddyyyyValidator(
 
       if (year < minimumYear || year > maximumYear) {
         return false
+      }
+    }
+
+    // Verify that full date is smaller than `maximumDate` and bigger than `minimumDate`
+    if (conformedUserInput.length > 9) {
+      const userInputDateObj = new Date(conformedUserInput)
+
+      if (maximumDate.length === 10) {
+        const maximumDateObj = new Date(maximumDate)
+
+        if (userInputDateObj > maximumDateObj) {
+          return false
+        }
+      }
+
+      if (minimumDate.length === 10) {
+        const minimumDateObj = new Date(minimumDate)
+
+        if (userInputDateObj < minimumDateObj) {
+          return false
+        }
       }
     }
 

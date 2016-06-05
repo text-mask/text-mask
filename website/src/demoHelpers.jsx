@@ -19,15 +19,22 @@ export const initialState = {
     placeholder: 'K1A 0B2'
   }, {
     value: 'date',
-    name: 'Unvalidated date',
+    name: 'Date (not validated)',
     mask: '11/11/1111',
     placeholder: '25/09/1970'
   }, {
     value: 'birthDay',
     name: 'Birth day (validated)',
     mask: '11/11/1111',
-    validator: mmddyyyyValidator,
-    placeholder: 'Date between 1900 and now'
+    validator: mmddyyyyValidator({
+      minimumDate: '01/01/1900',
+      maximumDate: (new Date()).toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
+    }),
+    placeholder: 'Date between 01/01/1900 and today'
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',
@@ -49,7 +56,7 @@ export const initialState = {
 
   placeholderChar: '_',
 
-  guide: true,
+  guide: false,
 }
 
 const githubLink = 'https://github.com/msafi/text-mask/#readme'

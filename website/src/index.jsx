@@ -18,7 +18,7 @@ const App = React.createClass({ // eslint-disable-line
   },
 
   render() {
-    const {guide, choices, placeholder, value, mask, placeholderChar} = this.state
+    const {guide, choices, placeholder, value, mask, placeholderChar, validator} = this.state
 
     const placeholderValue = guide ? undefined : placeholder
 
@@ -37,7 +37,7 @@ const App = React.createClass({ // eslint-disable-line
                 <MaskedInput
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
-                  validator={mmddyyyyValidator}
+                  validator={validator}
                   ref='maskedInput'
                   mask={mask}
                   guide={guide}
