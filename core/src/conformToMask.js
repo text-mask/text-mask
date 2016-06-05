@@ -8,7 +8,6 @@ import {
 } from './utilities.js'
 import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
 
-const assign = Object.assign.bind(Object)
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
   const {
@@ -100,7 +99,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
             let isAcceptedByCustomValidator = null
 
             if (requiresCustomValidation) {
-              const recursiveCallConfig = assign({}, config, {validator: false})
+              const recursiveCallConfig = Object.assign({}, config, {validator: false})
               const {output} = conformToMask(userInput, mask, recursiveCallConfig)
 
               isAcceptedByCustomValidator = isCustomValid(userInputChar, i, output)
