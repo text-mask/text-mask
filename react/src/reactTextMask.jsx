@@ -4,6 +4,7 @@ import {
   safeSetSelection,
   getComponentInitialState
 } from '../../core/src/componentHelpers.js'
+import conformToMask from '../../core/src/conformToMask.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
@@ -25,6 +26,8 @@ export const MaskedInput = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+    this.previousConformedInput = this.props.value
+
     if (
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide ||
@@ -53,10 +56,10 @@ export const MaskedInput = React.createClass({
   },
 
   render() {
-    const {props, state: {componentPlaceholder, conformedInput}, onChange} = this
-    const {placeholder = componentPlaceholder, type = 'text', value} = props
+    const {props, state: {componentPlaceholder, conformedInput}, onChange, previousConformedInput} = this
+    const {placeholder = componentPlaceholder, type = 'text', value, mask, guide, placeholderChar, validator} = props
 
-    const conformedValue = value !== undefined ? value : conformedInput
+    const conformedValue = value !== undefined ? (value === '' ? '' : conformToMask(value, mask, {previousConformedInput, guide, placeholderChar, validator}).output) : conformedInput
 
     return (
       <input
