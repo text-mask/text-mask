@@ -8,7 +8,7 @@ import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-di
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
-    return Object.assign({}, initialState)
+    return Object.assign({conformValue: ''}, initialState)
   },
 
   render() {
@@ -18,6 +18,7 @@ export default React.createClass({ // eslint-disable-line
       placeholderChar,
       selectedChoice,
       customMask,
+      conformValue,
     } = this.state
     const {mask: choiceMask, placeholder, help, validator, value} = choices[selectedChoice]
     const placeholderValue = guide !== true ? placeholder : undefined
@@ -38,6 +39,8 @@ export default React.createClass({ // eslint-disable-line
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   validator={validator}
+                  value={conformValue}
+                  onChange={e => this.setState({conformValue: e.target.value})}
                   ref='maskedInput'
                   mask={customMask || choiceMask}
                   guide={guide}
