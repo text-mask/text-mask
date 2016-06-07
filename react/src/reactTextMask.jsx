@@ -57,6 +57,7 @@ export const MaskedInput = React.createClass({
     const {placeholder = componentPlaceholder, type = 'text', value} = props
 
     const conformedValue = value !== undefined ? value : conformedInput
+
     return (
       <input
         {...props}
@@ -75,10 +76,12 @@ export const MaskedInput = React.createClass({
       props: {mask, guide, placeholderCharacter: placeholderChar, validator, value},
       state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
     } = this
+
+    const previousConformedInputNext = value !== undefined ? value : previousConformedInput
     const {conformedInput, adjustedCaretPosition} = processComponentChanges({
       userInput,
       placeholder,
-      previousConformedInput,
+      previousConformedInput: previousConformedInputNext,
       mask,
       validator,
       guide,
