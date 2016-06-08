@@ -1,3 +1,6 @@
+// This is a temporary file. I made it so that I can update React Text Mask without breaking
+// other components. I'll have to merge it back into the original `componentHelpers.js` later.
+
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'

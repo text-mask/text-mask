@@ -37,8 +37,7 @@ export const MaskedInput = React.createClass({
       props: {value = conformedInput, type = 'text', placeholder = componentPlaceholder},
     } = this
 
-    // const inputValue = ''
-    const inputValue = (value !== conformedInput) ?
+    const finalConformedInput = (value !== conformedInput) ?
       processComponentChanges(value, true).conformedInput :
       value
 
@@ -47,7 +46,7 @@ export const MaskedInput = React.createClass({
         {...props}
         type={type}
         onChange={onChange}
-        value={inputValue}
+        value={finalConformedInput}
         placeholder={placeholder}
         ref={inputElement => (this.inputElement = inputElement)}
       />
