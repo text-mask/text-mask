@@ -11,6 +11,10 @@ export default React.createClass({ // eslint-disable-line
     return Object.assign({}, initialState)
   },
 
+  componentWillUpdate() {
+    this.refs.maskedInput.resetState()
+  },
+
   render() {
     const {
       guide,
