@@ -12,7 +12,9 @@ export default React.createClass({ // eslint-disable-line
   },
 
   componentWillUpdate() {
-    this.refs.maskedInput.setState(this.refs.maskedInput.getInitialState())
+    const {refs: {maskedInput}} = this
+
+    maskedInput.setState(maskedInput.getInitialState())
   },
 
   render() {
