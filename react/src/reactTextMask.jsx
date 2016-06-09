@@ -9,13 +9,13 @@ export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired,
     guide: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    value: PropTypes.string
   },
 
   getInitialState() {
-    const {props: {mask, placeholderCharacter: placeholderChar}} = this
+    const {props: {mask, value, placeholderCharacter: placeholderChar}} = this
 
-    return getComponentInitialState({mask, placeholderChar})
+    return getComponentInitialState({mask, placeholderChar, value})
   },
 
   componentDidUpdate() {

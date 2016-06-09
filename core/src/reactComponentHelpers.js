@@ -35,7 +35,7 @@ export function processComponentChanges({
   return {conformedInput, adjustedCaretPosition}
 }
 
-export function getComponentInitialState({mask, placeholderChar, inputValue}) {
+export function getComponentInitialState({mask, placeholderChar, value: inputValue}) {
   if (inputValue !== undefined) {
     checkInputValueType(inputValue)
   }
