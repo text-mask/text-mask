@@ -1,64 +1,46 @@
 import React, {PropTypes} from 'react'
 import {
-  processComponentChanges,
+  processComponentChanges as processComponentChangesHelper,
   safeSetSelection,
   getComponentInitialState
-} from '../../core/src/componentHelpers.js'
+} from '../../core/src/reactComponentHelpers.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.string.isRequired,
     guide: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    value: PropTypes.string
   },
 
-  getInitialState() {
-    const {
-      value: inputValue,
-      mask,
-      guide,
-      placeholderCharacter: placeholderChar,
-      validator
-    } = this.props
+  componentWillMount() {
+    const {props: {mask, value, placeholderCharacter: placeholderChar}} = this
 
-    return getComponentInitialState({inputValue, mask, validator, guide, placeholderChar})
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.mask !== this.props.mask ||
-      nextProps.guide !== this.props.guide ||
-      nextProps.placeholderCharacter !== this.props.placeholderCharacter ||
-      nextProps.value !== undefined && nextProps.value !== this.state.conformedInput ||
-      this.props.value !== undefined && nextProps.value === undefined ||
-      nextProps.validator !== this.props.validator
-    ) {
-      const {
-        mask,
-        value: inputValue,
-        guide,
-        placeholderCharacter: placeholderChar,
-        validator
-      } = nextProps
-
-      this.setState(getComponentInitialState({mask, validator, inputValue, guide, placeholderChar}))
-    }
+    this.textMaskState = getComponentInitialState({mask, placeholderChar, value})
   },
 
   componentDidUpdate() {
-    safeSetSelection(this.inputElement, this.state.adjustedCaretPosition)
+    safeSetSelection(this.inputElement, this.textMaskState.adjustedCaretPosition)
   },
 
   render() {
-    const {props, state: {componentPlaceholder, conformedInput}, onChange} = this
-    const {placeholder = componentPlaceholder, type = 'text'} = props
+    const {
+      props, onChange, processComponentChanges,
+      textMaskState: {conformedInput, componentPlaceholder},
+      props: {value = conformedInput, type = 'text', placeholder = componentPlaceholder},
+    } = this
+
+    const finalConformedInput = (value !== conformedInput) ?
+      processComponentChanges(value, true).conformedInput :
+      value
+
+    this.textMaskState.conformedInput = finalConformedInput
 
     return (
       <input
         {...props}
         type={type}
         onChange={onChange}
-        value={conformedInput}
+        value={finalConformedInput}
         placeholder={placeholder}
         ref={inputElement => (this.inputElement = inputElement)}
       />
@@ -67,29 +49,45 @@ export const MaskedInput = React.createClass({
 
   onChange(event) {
     const {target: {value: userInput}} = event
+    const {processComponentChanges, props: {onChange}} = this
+    const {conformedInput, adjustedCaretPosition} = processComponentChanges(userInput)
+
+    this.textMaskState.conformedInput = conformedInput
+    this.textMaskState.adjustedCaretPosition = adjustedCaretPosition
+
+    this.forceUpdate()
+
+    // This ensures the user's onChange function receives the updated conformed string as value.
+    event.target.value = conformedInput
+
+    if (typeof onChange === 'function') {
+      onChange(event)
+    }
+  },
+
+  processComponentChanges(userInput, skipAdjustCaretPosition) {
     const {
+      inputElement,
       props: {mask, guide, placeholderCharacter: placeholderChar, validator},
-      state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput}
+      textMaskState: {conformedInput: previousConformedInput, componentPlaceholder}
     } = this
-    const {conformedInput, adjustedCaretPosition} = processComponentChanges({
+    const currentCaretPosition = (skipAdjustCaretPosition === true) ?
+      undefined :
+      inputElement.selectionStart
+
+    const {conformedInput, adjustedCaretPosition} = processComponentChangesHelper({
       userInput,
-      placeholder,
+      componentPlaceholder,
       previousConformedInput,
       mask,
       validator,
       guide,
       placeholderChar,
-      currentCaretPosition: this.inputElement.selectionStart
+      currentCaretPosition
     })
 
-    this.setState({conformedInput, adjustedCaretPosition})
-
-    event.target.value = conformedInput
-
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(event)
-    }
-  },
+    return {conformedInput, adjustedCaretPosition}
+  }
 })
 
 export default MaskedInput
