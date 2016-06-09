@@ -12,26 +12,28 @@ export const MaskedInput = React.createClass({
     value: PropTypes.string
   },
 
-  getInitialState() {
+  componentWillMount() {
     const {props: {mask, value, placeholderCharacter: placeholderChar}} = this
 
-    return getComponentInitialState({mask, placeholderChar, value})
+    this.textMaskState = getComponentInitialState({mask, placeholderChar, value})
   },
 
   componentDidUpdate() {
-    safeSetSelection(this.inputElement, this.state.adjustedCaretPosition)
+    safeSetSelection(this.inputElement, this.textMaskState.adjustedCaretPosition)
   },
 
   render() {
     const {
       props, onChange, processComponentChanges,
-      state: {conformedInput, componentPlaceholder},
+      textMaskState: {conformedInput, componentPlaceholder},
       props: {value = conformedInput, type = 'text', placeholder = componentPlaceholder},
     } = this
 
     const finalConformedInput = (value !== conformedInput) ?
       processComponentChanges(value, true).conformedInput :
       value
+
+    this.textMaskState.conformedInput = finalConformedInput
 
     return (
       <input
@@ -50,7 +52,10 @@ export const MaskedInput = React.createClass({
     const {processComponentChanges, props: {onChange}} = this
     const {conformedInput, adjustedCaretPosition} = processComponentChanges(userInput)
 
-    this.setState({conformedInput, adjustedCaretPosition})
+    this.textMaskState.conformedInput = conformedInput
+    this.textMaskState.adjustedCaretPosition = adjustedCaretPosition
+
+    this.forceUpdate()
 
     // This ensures the user's onChange function receives the updated conformed string as value.
     event.target.value = conformedInput
@@ -64,7 +69,7 @@ export const MaskedInput = React.createClass({
     const {
       inputElement,
       props: {mask, guide, placeholderCharacter: placeholderChar, validator},
-      state: {conformedInput: previousConformedInput, componentPlaceholder}
+      textMaskState: {conformedInput: previousConformedInput, componentPlaceholder}
     } = this
     const currentCaretPosition = (skipAdjustCaretPosition === true) ?
       undefined :
