@@ -4,6 +4,7 @@ import {
   safeSetSelection,
   getComponentInitialState
 } from '../../core/src/componentHelpers.js'
+import conformToMask from '../../core/src/conformToMask.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
@@ -25,28 +26,43 @@ export const MaskedInput = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (
+    const {
+      mask,
+      value: inputValue,
+      guide,
+      placeholderCharacter: placeholderChar,
+      validator
+    } = nextProps
+
+    const {
+      value: previousConformedInput
+    } = this.props
+
+    const valueChanged = (nextProps.value !== undefined && this.props.value !== nextProps.value)
+    const layoutPropsChange = (
       nextProps.mask !== this.props.mask ||
       nextProps.guide !== this.props.guide ||
       nextProps.placeholderCharacter !== this.props.placeholderCharacter ||
-      nextProps.value !== undefined && nextProps.value !== this.state.conformedInput ||
-      this.props.value !== undefined && nextProps.value === undefined ||
       nextProps.validator !== this.props.validator
-    ) {
-      const {
-        mask,
-        value: inputValue,
-        guide,
-        placeholderCharacter: placeholderChar,
-        validator
-      } = nextProps
+    )
 
+    // Controlled Input changes
+    if (valueChanged || layoutPropsChange) {
+      this.setState({
+        conformedInput: conformToMask(inputValue, mask, {previousConformedInput, guide, placeholderChar, validator}).output
+      })
+      if (layoutPropsChange) this.adjustedCaretPosition = 0
+      return
+    }
+
+    // Uncontrolled Input Changes
+    if (layoutPropsChange) {
       this.setState(getComponentInitialState({mask, validator, inputValue, guide, placeholderChar}))
     }
   },
 
   componentDidUpdate() {
-    safeSetSelection(this.inputElement, this.state.adjustedCaretPosition)
+    safeSetSelection(this.inputElement, this.adjustedCaretPosition)
   },
 
   render() {
@@ -82,7 +98,8 @@ export const MaskedInput = React.createClass({
       currentCaretPosition: this.inputElement.selectionStart
     })
 
-    this.setState({conformedInput, adjustedCaretPosition})
+    this.adjustedCaretPosition = adjustedCaretPosition
+    this.setState({conformedInput})
 
     event.target.value = conformedInput
 
