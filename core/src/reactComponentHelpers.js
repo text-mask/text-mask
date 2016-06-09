@@ -3,7 +3,7 @@
 
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
-import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
+import {convertMaskToPlaceholder, isString} from './utilities.js'
 
 export function processComponentChanges({
   userInput = '',

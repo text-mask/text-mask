@@ -12,28 +12,20 @@ export const MaskedInput = React.createClass({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   },
 
-  resetState() {
-    const {props: {mask, placeholderCharacter: placeholderChar}} = this
-    this.textMaskState = getComponentInitialState({mask, placeholderChar})
-    this.setState({conformedInput: ''})
-  },
-
   getInitialState() {
     const {props: {mask, placeholderCharacter: placeholderChar}} = this
-    this.textMaskState = getComponentInitialState({mask, placeholderChar})
 
-    return {conformedInput: ''}
+    return getComponentInitialState({mask, placeholderChar})
   },
 
   componentDidUpdate() {
-    safeSetSelection(this.inputElement, this.textMaskState.adjustedCaretPosition)
+    safeSetSelection(this.inputElement, this.state.adjustedCaretPosition)
   },
 
   render() {
     const {
       props, onChange, processComponentChanges,
-      textMaskState: {componentPlaceholder},
-      state: {conformedInput},
+      state: {conformedInput, componentPlaceholder},
       props: {value = conformedInput, type = 'text', placeholder = componentPlaceholder},
     } = this
 
@@ -55,15 +47,13 @@ export const MaskedInput = React.createClass({
 
   onChange(event) {
     const {target: {value: userInput}} = event
-    const {inputElement, textMaskState, processComponentChanges, props: {onChange}} = this
+    const {processComponentChanges, props: {onChange}} = this
     const {conformedInput, adjustedCaretPosition} = processComponentChanges(userInput)
 
-    this.setState({conformedInput})
-
-    textMaskState.adjustedCaretPosition = adjustedCaretPosition
+    this.setState({conformedInput, adjustedCaretPosition})
 
     // This ensures the user's onChange function receives the updated conformed string as value.
-    inputElement.value = conformedInput
+    event.target.value = conformedInput
 
     if (typeof onChange === 'function') {
       onChange(event)
@@ -74,8 +64,7 @@ export const MaskedInput = React.createClass({
     const {
       inputElement,
       props: {mask, guide, placeholderCharacter: placeholderChar, validator},
-      state: {conformedInput: previousConformedInput},
-      textMaskState: {componentPlaceholder}
+      state: {conformedInput: previousConformedInput, componentPlaceholder}
     } = this
     const currentCaretPosition = (skipAdjustCaretPosition === true) ?
       undefined :
