@@ -63,3 +63,5 @@ function getSafeInputValue(inputValue) {
     throw new Error('The `value` provided to Text Mask needs to be a string or a number.')
   }
 }
+
+export {convertMaskToPlaceholder}

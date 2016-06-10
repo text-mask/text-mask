@@ -35,6 +35,7 @@ export default React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
+                  key={selectedChoice}
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   validator={validator}
