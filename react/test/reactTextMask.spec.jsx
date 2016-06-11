@@ -98,39 +98,6 @@ describe('MaskedInput', () => {
       expect(input.value).to.equal('333-333')
     })
 
-    it('destroys internal value if controlled then becomes uncontrolled', () => {
-      const userOnChange = sinon.spy()
-
-      const maskedInput = mount(
-        <MaskedInput mask='111-111' value='222-222' onChange={userOnChange} guide={true}/>
-      )
-
-      let inputWrapper = maskedInput.find('input')
-      let input = inputWrapper.get(0)
-
-      expect(input.value).to.equal('222-222')
-
-      maskedInput.setProps({value: undefined})
-
-      expect(input.value).to.equal('')
-    })
-
-    it('destroys internal value if controlled then becomes an empty string value', () => {
-      const userOnChange = sinon.spy()
-
-      const maskedInput = mount(
-        <MaskedInput mask='111-111' value='222-222' onChange={userOnChange} guide={true}/>
-      )
-
-      let inputWrapper = maskedInput.find('input')
-      let input = inputWrapper.get(0)
-
-      expect(input.value).to.equal('222-222')
-
-      maskedInput.setProps({value: ''})
-
-      expect(input.value).to.equal('')
-    })
     it('calls user provided `onChange` with correct event value', () => {
       const userOnChange = sinon.spy()
       const maskedInput = ReactTestUtils.renderIntoDocument(
