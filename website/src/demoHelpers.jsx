@@ -49,7 +49,7 @@ export const initialState = {
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/tree/master/addons'>
+          href='https://github.com/msafi/text-mask/tree/master/addons/#readme'>
           Text Mask addon
         </a>.
       </span>

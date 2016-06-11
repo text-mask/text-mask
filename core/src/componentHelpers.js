@@ -4,7 +4,7 @@ import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
 
 export function processComponentChanges({
   userInput = '',
-  placeholder = '',
+  componentPlaceholder = '',
   previousConformedInput = '',
   mask = '',
   guide = '',
@@ -24,7 +24,10 @@ export function processComponentChanges({
     currentCaretPosition,
     placeholderChar
   })
-  const valueShouldBeEmpty = outputOfConformToMask === placeholder && adjustedCaretPosition === 0
+  const valueShouldBeEmpty = (
+    outputOfConformToMask === componentPlaceholder &&
+    adjustedCaretPosition === 0
+  )
   const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
 
   return {conformedInput, adjustedCaretPosition}

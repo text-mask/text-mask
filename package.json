@@ -39,7 +39,7 @@
     "angular2:example": "./node_modules/.bin/webpack-dev-server --content-base angular2/example --config angular2/example/webpack.buildAngular2Example.js",
     "angular2:watch": "./node_modules/.bin/webpack --watch --config angular2/webpack.buildAngular2Integration.js",
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master --tags && git push origin gh-pages",
-    "ci": "npm run test && npm run build && npm run verify",
+    "ci": "npm run loud-lint && npm run build && npm run verify",
     "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
     "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx || true"
   },

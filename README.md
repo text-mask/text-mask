@@ -73,9 +73,11 @@ Or for date
 
 ### Other features
 
+* Accepts [custom validator](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#validator)
 * Supports pasting
 * Supports browser auto-fill
 * It is small, around *3KB* gzipped
+* Has no dependencies
 
 ## For support, questions, or suggestions
 
