@@ -83,7 +83,7 @@ which is documented below.
 
 The `config` object takes the following values
 
-* `guide` (boolean) (defaults to `true`): this tells `conformToMask` whether you want the conformed
+* `guide` (boolean) (defaults to `true`) (required): this tells `conformToMask` whether you want the conformed
 string to contain a guide or no. The `guide` is basically the placeholder character and the
 mask hard characters. For example, with mask `(111) 111-1111`, input `123` with `guide` set to
 `true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
@@ -91,8 +91,13 @@ mask hard characters. For example, with mask `(111) 111-1111`, input `123` with 
 * `previousConformedInput` (string) (required): this is the previous `output` of `conformToMask`.
 If you're calling `conformToMask` for the first time, pass this as an empty string or `undefined`.
 
-* `placeholderCharacter` (string): for documentation on this key, [see this section of the component
+* `placeholderCharacter` (string) (optional): for documentation on this key, [see this section of the component
 documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderCharacter).
+
+* `validator` (function) (optional): this function will receive **one
+argument**, the conformed string. The function should **return a boolean**. If the function returned
+`true`, the `output` of `conformToMask` will be the newly conformed string. If the function returned
+`false`, the `output` of `conformToMask` will be the `previousConformedInput`
 
 ```js
 const results = conformToMask('5554833902', '(111) 111-1111')

@@ -21,15 +21,21 @@ export default class MaskedInputDirective {
   private componentPlaceholder:string
   private inputElement:HTMLInputElement
 
-  @Input('textMask') textMaskConfig = {mask: '', guide: true, placeholderCharacter: undefined}
+  @Input('textMask') textMaskConfig = {
+    mask: '',
+    guide: true,
+    placeholderCharacter: undefined,
+    validator: undefined
+  }
 
   constructor(el:ElementRef, public model:NgModel) {
     this.inputElement = el.nativeElement
   }
 
-  setComponentInitialState({inputValue, mask, guide, placeholderChar}) {
+  setComponentInitialState({inputValue, mask, guide, placeholderChar, validator}) {
     const {conformedInput, componentPlaceholder} = getComponentInitialState({
       inputValue,
+      validator,
       mask,
       guide,
       placeholderChar
@@ -46,8 +52,19 @@ export default class MaskedInputDirective {
     this.updateModel(conformedInput)
   }
 
-  ngOnInit({mask, guide, placeholderCharacter: placeholderChar} = this.textMaskConfig) {
-    this.setComponentInitialState({inputValue: this.model.viewModel, mask, guide, placeholderChar})
+  ngOnInit({
+    mask,
+    validator,
+    guide,
+    placeholderCharacter: placeholderChar
+  } = this.textMaskConfig) {
+    this.setComponentInitialState({
+      inputValue: this.model.viewModel,
+      validator,
+      mask,
+      guide,
+      placeholderChar
+    })
   }
 
   ngOnChanges({textMaskConfig}) {
@@ -55,12 +72,14 @@ export default class MaskedInputDirective {
       currentValue: {
         mask: currentMask,
         guide: currentGuide,
+        validator: currentValidator,
         placeholderCharacter: currentPlaceholderChar
       },
 
       previousValue: {
         mask: previousMask,
         guide: previousGuide,
+        validator: previousValidator,
         placeholderCharacter: previousPlaceholderChar
       },
     } = textMaskConfig
@@ -68,12 +87,14 @@ export default class MaskedInputDirective {
     if (
       currentMask !== previousMask ||
       currentGuide !== previousGuide ||
-      currentPlaceholderChar !== previousPlaceholderChar
+      currentPlaceholderChar !== previousPlaceholderChar,
+      currentValidator !== previousValidator
     ) {
       this.setComponentInitialState({
         inputValue: this.model.viewModel,
         mask: currentMask,
         guide: currentGuide,
+        validator: currentValidator,
         placeholderChar: currentPlaceholderChar
       })
     }
@@ -82,12 +103,12 @@ export default class MaskedInputDirective {
   onInput(userInput = '') {
     const {
       textMaskConfig: {mask, guide, placeholderCharacter: placeholderChar},
-      componentPlaceholder: placeholder,
+      componentPlaceholder,
       conformedInput: previousConformedInput
     } = this
     const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
-      placeholder,
+      componentPlaceholder,
       previousConformedInput,
       mask,
       guide,

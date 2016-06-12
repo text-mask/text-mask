@@ -87,13 +87,13 @@ export const MaskedInput = React.createClass({
   processComponentChanges(userInput, props) {
     const {
       inputElement,
-      state: {componentPlaceholder: placeholder, conformedInput: previousConformedInput},
+      state: {componentPlaceholder, conformedInput: previousConformedInput},
     } = this
     const {mask, validator, guide, placeholderCharacter: placeholderChar} = props
     const currentCaretPosition = inputElement.selectionStart
     const {conformedInput, adjustedCaretPosition} = processComponentChanges({
       userInput,
-      placeholder,
+      componentPlaceholder,
       previousConformedInput,
       mask,
       validator,
