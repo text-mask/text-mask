@@ -1,6 +1,6 @@
 {
   "name": "text-mask-all",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {
