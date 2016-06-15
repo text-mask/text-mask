@@ -1,5 +1,9 @@
 # Angular 2 Input Mask
 
+&#x1F6AB; **DISCLAIMER**: this module is experimental. I can't fully support it because I don't
+know how to use Angular 2. I would appreciate contributions to make a more robust and convenient
+Text Mask wrapper for Angular 2!
+
 ## Getting started
 
 First, install it.
