@@ -5,25 +5,16 @@ import {
 } from '../../core/src/componentHelpers.js'
 
 export function maskInput({
-  element,
+  inputElement,
   mask,
   guide,
   validator,
   placeholderCharacter: placeholderChar
 }) {
-  const {value: inputValue} = element
+  const {value: inputValue} = inputElement
   const state = getComponentInitialState({inputValue, mask, guide, placeholderChar})
-
-  element.placeholder = (element.placeholder !== '') ?
-    element.placeholder :
-    state.componentPlaceholder
-
-  element.value = state.conformedInput
-
-  element.addEventListener('input', updateInput)
-
-  function updateInput() {
-    const {value: userInput, selectionStart: currentCaretPosition} = element
+  const onInput = () => {
+    const {value: userInput, selectionStart: currentCaretPosition} = inputElement
     const {componentPlaceholder, conformedInput: previousConformedInput} = state
     const {adjustedCaretPosition, conformedInput} = processComponentChanges({
       userInput,
@@ -37,17 +28,25 @@ export function maskInput({
     })
 
     state.conformedInput = conformedInput
-    element.value = conformedInput
-    safeSetSelection(element, adjustedCaretPosition)
+    inputElement.value = conformedInput
+    safeSetSelection(inputElement, adjustedCaretPosition)
   }
+
+  inputElement.placeholder = (inputElement.placeholder !== '') ?
+    inputElement.placeholder :
+    state.componentPlaceholder
+
+  inputElement.value = state.conformedInput
+
+  inputElement.addEventListener('input', onInput)
 
   return {
     state,
 
-    update: updateInput,
+    update: onInput,
 
     destroy() {
-      element.removeEventListener('input', updateInput)
+      inputElement.removeEventListener('input', onInput)
     }
   }
 }

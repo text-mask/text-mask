@@ -13,7 +13,7 @@ export const MaskedInput = React.createClass({
     const {props: {mask, placeholderCharacter, guide, validator}} = this
 
     this.control = maskInput({
-      element: this.inputElement,
+      inputElement: this.inputElement,
       mask,
       placeholderCharacter,
       guide,
