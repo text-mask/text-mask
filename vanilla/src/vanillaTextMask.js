@@ -14,14 +14,13 @@ export function maskInput({
   const {value: inputValue} = element
   const state = getComponentInitialState({inputValue, mask, guide, placeholderChar})
 
-  element.placeholder = (element.placeholder !== undefined) ?
+  element.placeholder = (element.placeholder !== '') ?
     element.placeholder :
     state.componentPlaceholder
 
   element.value = state.conformedInput
-  safeSetSelection(element, 0)
 
-  element.oninput = updateInput
+  element.addEventListener('input', updateInput)
 
   function updateInput() {
     const {value: userInput, selectionStart: currentCaretPosition} = element
@@ -42,10 +41,15 @@ export function maskInput({
     safeSetSelection(element, adjustedCaretPosition)
   }
 
-  return state // Returned to facilitate testing
+  return {
+    state,
+
+    update: updateInput,
+
+    destroy() {
+      element.removeEventListener('input', updateInput)
+    }
+  }
 }
 
 export default maskInput
-
-export {default as conformToMask} from '../../core/src/conformToMask.js'
-export {convertMaskToPlaceholder} from '../../core/src/utilities.js'
