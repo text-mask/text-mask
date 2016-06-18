@@ -2,6 +2,8 @@ Thank you for your interest in contributing. We do need help!
 
 #### How the project is structured
 
+This repository contains a few different npm packages.
+
 Text Mask has framework **integration** for different frameworks, like React in `/react`
 and Angular in `/angular2`. Under the hood, these **integrations** are powered by the
 same **core** `/core`.
@@ -30,7 +32,7 @@ With that, you're almost ready to start hacking on Text Mask!
 
 To reach the HTTP server, load [http://localhost:3000](http://localhost:3000)
 
-`npm run angular2:tdd` will run the test suite at `angular2/test`.
+`npm run angular2:tdd` will run the test cases located in `angular2/test`.
 
 Both `npm run angular2:dev` and `npm run angular2:dev` will watch all relevant files for changes.
 When a change is detected, they will recompile and rebuild the code automatically.
@@ -48,8 +50,8 @@ Check out the scripts section of the root `package.json` to see the specific spe
 
 Since the core is required by all framework integrations, it is included in the development
 process of any framework integration. As mentioned earlier, doing something like
-`npm run angular2:dev` will allow you to develop both Angular 2 and core. But instead of running
-the Angular 2 test suite with `npm run angular2:tdd` you will wanna run the core's test suite with
+`npm run angular2:dev` will allow you to develop both Angular 2 and core. However, instead of running
+the Angular 2 test suite with `npm run angular2:tdd` you might wanna run the core's test suite with
 `npm run core:tdd`.
 
 #### What you see in `http://localhost:3000`
@@ -58,7 +60,23 @@ the Angular 2 test suite with `npm run angular2:tdd` you will wanna run the core
 
 If you wanna change any Text Mask configurations, you would do that from the code itself.
 
-#### It doesn't make sense!
+#### More details about folder structure
 
-If this doesn't make sense, sorry! If you would like to contribute, please file an issue or
+The folders that make up Text Mask are:
+
+```bash
+|- addons (npm package) (contains optionals addons/plugins for Text Mask)
+|- angular2 (npm package) (Angular 2 integration)
+|- assets  (contains pictures and other assets required by the GitHub project)
+|- common (contains test and setup files common to all framework integrations)
+|- core (npm package) (contains pure functions that power Text Mask)
+|- react (npm package) (React integration)
+|- vanilla (npm package) (Vanilla input component for Text Mask)
+|- website (contains the content of https://msafi.github.io/text-mask)
+```
+
+
+#### More help!!
+
+If you would like to contribute and need any help to get started, please file an issue or
 email me at msafi@msafi.com with any questions and I'd be happy to help.
