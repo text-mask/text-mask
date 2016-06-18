@@ -1,13 +1,13 @@
 ///<reference path="../typings/index.d.ts"/>
 
 import {Directive, ElementRef, Input} from '@angular/core'
-import {NgModel} from '@angular/common'
+import {NgControl} from '@angular/common'
 import maskInput from '../../vanilla/src/vanillaTextMask'
 
 @Directive({
   selector: 'input[textMask]',
   host: {
-    '(keyup)': 'updateModel($event.target.value)'
+    '(input)': 'onInput()'
   }
 })
 export default class MaskedInputDirective {
@@ -21,7 +21,7 @@ export default class MaskedInputDirective {
     validator: undefined
   }
 
-  constructor(inputElement: ElementRef, public model: NgModel) {
+  constructor(private inputElement: ElementRef, private ngControl: NgControl) {
     this.inputElement = inputElement.nativeElement
   }
 
@@ -34,15 +34,12 @@ export default class MaskedInputDirective {
       guide,
       placeholderCharacter,
       validator
-    })
+    }, false)
   }
 
-  ngOnDestroy() {
-    this.control.destroy()
-  }
-
-  updateModel(value) {
-    this.model.viewToModelUpdate(value)
+  onInput() {
+    this.control.update()
+    this.ngControl.viewToModelUpdate(this.inputElement.value)
   }
 }
 

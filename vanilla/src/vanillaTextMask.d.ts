@@ -1,1 +1,1 @@
-export default function maskInput(a:any):any
+export default function maskInput(a:any, b: boolean):any

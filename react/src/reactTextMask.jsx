@@ -18,17 +18,29 @@ export const MaskedInput = React.createClass({
       placeholderCharacter,
       guide,
       validator
-    })
+    }, false)
   },
 
-  componentWillUnmount() {
-    this.control.destroy()
+  componentDidUpdate() {
+    this.control.update(this.props.value)
   },
 
   render() {
     return (
-      <input {...this.props} ref={(inputElement) => (this.inputElement = inputElement)}/>
+      <input
+        {...this.props}
+        onChange={this.onChange}
+        ref={(inputElement) => (this.inputElement = inputElement)}
+      />
     )
+  },
+
+  onChange(event) {
+    this.control.update()
+
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(event)
+    }
   }
 })
 
