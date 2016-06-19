@@ -14,7 +14,7 @@ export default function createComponent({
 
   inputElement.placeholder = (inputElement.placeholder !== '') ?
     inputElement.placeholder :
-    state.componentPlaceholder
+    componentPlaceholder
 
   return {
     state,

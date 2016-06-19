@@ -37,7 +37,7 @@ how to get started:
 
 The next commands depend on the framework component you're interested in.
 
-Say you're interested in Angular 2 component. All you have to do is run...
+Say you're interested in Angular 2 component: all you have to do is run...
 
 `npm run angular2:dev`
 
@@ -80,7 +80,7 @@ If you wanna change any Text Mask configurations, you would do that from the cod
 The folders that make up Text Mask are:
 
 ```bash
-|- addons (npm package) (contains optionals addons/plugins for Text Mask)
+|- addons (npm package) (contains optional addons/plugins for Text Mask)
 |- angular2 (npm package) (Angular 2 component)
 |- assets  (contains pictures and other assets required by the GitHub project)
 |- common (contains test and setup files common to all framework integrations)
