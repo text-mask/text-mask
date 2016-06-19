@@ -53,13 +53,10 @@ When a change is detected, it will recompile and rebuild the code automatically.
 
 After you've made some changes, send a PR!
 
-##### How about other framework integrations?
+##### What are the commands for all the framework components?
 
-They all work the same way. If instead of Angular 2, you're interested in, say, React, you would do
-
-`npm run react:dev`
-
-Check out the scripts section of the root `package.json` to see the specific spellings.
+The pattern is like `npm run LIBRARY_NAME:dev`. Check out the scripts section of
+the root `package.json` to see the specific spellings.
 
 ##### How about running the code for the `core`?
 

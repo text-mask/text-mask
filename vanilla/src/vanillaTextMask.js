@@ -14,14 +14,15 @@ export function maskInput({
     validator,
     placeholderChar
   })
+  const inputHandler = ({target: {value}}) => control.update(value)
 
-  inputElement.addEventListener('input', control.update)
+  inputElement.addEventListener('input', inputHandler)
 
   return {
     control,
 
     destroy() {
-      inputElement.removeEventListener('input', control.update)
+      inputElement.removeEventListener('input', inputHandler)
     }
   }
 }

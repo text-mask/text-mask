@@ -4,7 +4,7 @@ module.exports = {
   entry: relative('./app.ts'),
   output: {
     path: __dirname,
-    filename: './dist/bundle.js'
+    filename: 'bundle.js'
   },
   resolve: {
     extensions: ['', '.js', '.ts']

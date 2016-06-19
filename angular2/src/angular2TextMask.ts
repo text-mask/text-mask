@@ -2,7 +2,7 @@
 
 import {Directive, ElementRef, Input} from '@angular/core'
 import {NgControl} from '@angular/common'
-import maskInput from '../../vanilla/src/vanillaTextMask'
+import createComponent from '../../core/src/createComponent'
 
 @Directive({
   selector: 'input[textMask]',
@@ -21,20 +21,20 @@ export default class MaskedInputDirective {
     validator: undefined
   }
 
-  constructor(private inputElement: ElementRef, private ngControl: NgControl) {
+  constructor(inputElement: ElementRef, private ngControl: NgControl) {
     this.inputElement = inputElement.nativeElement
   }
 
   ngOnInit() {
     const {mask, guide, placeholderCharacter, validator} = this.textMaskConfig
 
-    this.control = maskInput({
+    this.control = createComponent({
       inputElement: this.inputElement,
       mask,
       guide,
       placeholderCharacter,
       validator
-    }, false)
+    })
   }
 
   onInput() {
