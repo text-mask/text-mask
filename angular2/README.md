@@ -36,8 +36,15 @@ bootstrap(AppComponent);
 
 ## Example
 
-You can see a working example in
-[this folder](https://github.com/msafi/text-mask/tree/master/angular2/example).
+To see an example of the code running, follow these steps:
+
+1. Clone the repo, `git clone git@github.com:msafi/text-mask.git`
+1. `cd text-mask`
+1. `npm install`
+1. `npm run angular2:dev`
+1. Open [http://localhost:3000](http://localhost:3000)
+
+The code of the example is in [`angular2/example`](https://github.com/msafi/text-mask/tree/master/angular2/example).
 
 ## Documentation
 
@@ -45,6 +52,10 @@ As you can see in the example above, you are passing an object to the `textMask`
 
 For more information about the values that the `textMask` object accepts, see
 the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+
+## Contributing
+
+We would love some contributions! Check out [this document](https://github.com/msafi/text-mask/blob/master/contributing.md#readme) to get started.
 
 ## License
 

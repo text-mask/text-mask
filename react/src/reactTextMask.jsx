@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import maskInput from '../../vanilla/src/vanillaTextMask.js'
+import createComponent from '../../core/src/createComponent.js'
 
 export const MaskedInput = React.createClass({
   propTypes: {
@@ -10,15 +10,17 @@ export const MaskedInput = React.createClass({
   },
 
   componentDidMount() {
-    const {props: {mask, placeholderCharacter, guide, validator}} = this
+    const {props: {mask, placeholderCharacter, guide, validator, value}} = this
 
-    this.control = maskInput({
+    this.control = createComponent({
       inputElement: this.inputElement,
       mask,
       placeholderCharacter,
       guide,
       validator
-    }, false)
+    })
+
+    this.control.update(value)
   },
 
   componentDidUpdate() {

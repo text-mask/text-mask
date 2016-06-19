@@ -1,59 +1,28 @@
-import {
-  processComponentChanges,
-  getComponentInitialState,
-  safeSetSelection,
-} from '../../core/src/componentHelpers.js'
+import createComponent from '../../core/src/createComponent.js'
 
-export function maskInput(
-  {
+export function maskInput({
     inputElement,
     mask,
     guide,
     validator,
     placeholderCharacter: placeholderChar
-  },
-  registerEventListeners = true
-) {
-  const {value: inputValue} = inputElement
-  const state = getComponentInitialState({inputValue, mask, guide, placeholderChar})
-  const onInput = (value) => {
-    if (value === state.conformedInput) { return }
+}) {
+  const control = createComponent({
+    inputElement,
+    mask,
+    guide,
+    validator,
+    placeholderChar
+  })
+  const inputHandler = ({target: {value}}) => control.update(value)
 
-    const {value: userInput, selectionStart: currentCaretPosition} = inputElement
-    const {componentPlaceholder, conformedInput: previousConformedInput} = state
-    const {adjustedCaretPosition, conformedInput} = processComponentChanges({
-      userInput: value || userInput,
-      componentPlaceholder,
-      previousConformedInput,
-      validator,
-      mask,
-      guide,
-      placeholderChar,
-      currentCaretPosition
-    })
-
-    state.conformedInput = conformedInput
-    inputElement.value = conformedInput
-    safeSetSelection(inputElement, adjustedCaretPosition)
-  }
-
-  inputElement.placeholder = (inputElement.placeholder !== '') ?
-    inputElement.placeholder :
-    state.componentPlaceholder
-
-  inputElement.value = state.conformedInput
-
-  if (registerEventListeners === true) {
-    inputElement.addEventListener('input', onInput)
-  }
+  inputElement.addEventListener('input', inputHandler)
 
   return {
-    state,
-
-    update: onInput,
+    control,
 
     destroy() {
-      inputElement.removeEventListener('input', onInput)
+      inputElement.removeEventListener('input', inputHandler)
     }
   }
 }

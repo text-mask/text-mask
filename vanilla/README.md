@@ -20,11 +20,8 @@ Then, use it as follows:
   // Assuming you have an input element in your HTML with the class .myInput
   var myInput = document.querySelector('.myInput')
 
-  // You can set the placeholder of myInput
-  myInput.placeholder = textMask.convertMaskToPlaceholder(phoneMask)
-
   textMask.maskInput({
-    element: myInput,
+    inputElement: myInput,
     mask: phoneMask
   })
 </script>
@@ -32,8 +29,15 @@ Then, use it as follows:
 
 ## Example
 
-For a working example, check out the source code of
-[this HTML file](https://msafi.github.io/text-mask/vanilla/example.html).
+To see an example of the code running, follow these steps:
+
+1. Clone the repo, `git clone git@github.com:msafi/text-mask.git`
+1. `cd text-mask`
+1. `npm install`
+1. `npm run vanilla:dev`
+1. Open [http://localhost:3000](http://localhost:3000)
+
+The code of the example is in [`vanilla/example`](https://github.com/msafi/text-mask/tree/master/vanilla/example).
 
 ## Documentation
 
@@ -42,6 +46,10 @@ As you can see in the example above, you are passing an object to `textMask.mask
 The object takes `element`, which is the `<input/>` element that you are masking. It also
 accepts other values which are
 [documented here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+
+## Contributing
+
+We would love some contributions! Check out [this document](https://github.com/msafi/text-mask/blob/master/contributing.md#readme) to get started.
 
 ## License
 

@@ -4,7 +4,7 @@
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {
-    "website": "node ./website/server.js",
+    "website": "node website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run angular2:test && npm run addons:test",
     "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build && npm run website:build && npm run addons:build",
@@ -23,9 +23,11 @@
     "react:tdd": "npm run react:test -- --watch",
     "react:verify": "npm run react:test -- --verify",
     "react:watch": "./node_modules/.bin/webpack --watch --config react/webpack.buildReactIntegration.js",
+    "react:dev": "node react/example/server.js",
     "react:build": "./node_modules/.bin/webpack -p --config react/webpack.buildReactIntegration.js",
     "react:publish": "sh react/publish.sh",
     "vanilla:watch": "./node_modules/.bin/webpack --watch --config vanilla/webpack.buildVanillaIntegration.js",
+    "vanilla:dev": "./node_modules/.bin/webpack-dev-server --content-base vanilla/example --port 3000 --config vanilla/example/webpack.runVanillaExample.js",
     "vanilla:test": "./node_modules/.bin/mocha --compilers js:babel-core/register vanilla/test --require ./common/domSetup.js --recursive",
     "vanilla:tdd": "npm run vanilla:test -- --watch",
     "vanilla:verify": "npm run vanilla:test -- --verify",
@@ -36,12 +38,12 @@
     "angular2:tdd": "npm run angular2:test -- --watch",
     "angular2:verify": "npm run angular2:test -- --verify",
     "angular2:publish": "sh angular2/publish.sh",
-    "angular2:example": "./node_modules/.bin/webpack-dev-server --content-base angular2/example --config angular2/example/webpack.buildAngular2Example.js",
+    "angular2:dev": "./node_modules/.bin/webpack-dev-server --content-base angular2/example --port 3000 --config angular2/example/webpack.runAngular2Example.js",
     "angular2:watch": "./node_modules/.bin/webpack --watch --config angular2/webpack.buildAngular2Integration.js",
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master --tags && git push origin gh-pages",
     "ci": "npm run loud-lint && npm run build && npm run verify",
-    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
-    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx || true"
+    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix",
+    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix || true"
   },
   "repository": {
     "type": "git",
