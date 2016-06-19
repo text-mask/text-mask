@@ -21,6 +21,7 @@ export default React.createClass({ // eslint-disable-line
     } = this.state
     const {mask: choiceMask, placeholder, help, validator, value} = choices[selectedChoice]
     const placeholderValue = guide !== true ? placeholder : undefined
+    const maskedInputKey = JSON.stringify(this.state)
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -35,7 +36,7 @@ export default React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
-                  key={selectedChoice}
+                  key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   validator={validator}

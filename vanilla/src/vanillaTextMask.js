@@ -1,33 +1,28 @@
 import {
   processComponentChanges,
   getComponentInitialState,
-  safeSetSelection
+  safeSetSelection,
 } from '../../core/src/componentHelpers.js'
 
-export function maskInput({
-  element,
-  mask,
-  guide,
-  validator,
-  placeholderCharacter: placeholderChar
-}) {
-  const {value: inputValue} = element
+export function maskInput(
+  {
+    inputElement,
+    mask,
+    guide,
+    validator,
+    placeholderCharacter: placeholderChar
+  },
+  registerEventListeners = true
+) {
+  const {value: inputValue} = inputElement
   const state = getComponentInitialState({inputValue, mask, guide, placeholderChar})
+  const onInput = (value) => {
+    if (value === state.conformedInput) { return }
 
-  element.placeholder = (element.placeholder !== undefined) ?
-    element.placeholder :
-    state.componentPlaceholder
-
-  element.value = state.conformedInput
-  safeSetSelection(element, 0)
-
-  element.oninput = updateInput
-
-  function updateInput() {
-    const {value: userInput, selectionStart: currentCaretPosition} = element
+    const {value: userInput, selectionStart: currentCaretPosition} = inputElement
     const {componentPlaceholder, conformedInput: previousConformedInput} = state
     const {adjustedCaretPosition, conformedInput} = processComponentChanges({
-      userInput,
+      userInput: value || userInput,
       componentPlaceholder,
       previousConformedInput,
       validator,
@@ -38,14 +33,29 @@ export function maskInput({
     })
 
     state.conformedInput = conformedInput
-    element.value = conformedInput
-    safeSetSelection(element, adjustedCaretPosition)
+    inputElement.value = conformedInput
+    safeSetSelection(inputElement, adjustedCaretPosition)
   }
 
-  return state // Returned to facilitate testing
+  inputElement.placeholder = (inputElement.placeholder !== '') ?
+    inputElement.placeholder :
+    state.componentPlaceholder
+
+  inputElement.value = state.conformedInput
+
+  if (registerEventListeners === true) {
+    inputElement.addEventListener('input', onInput)
+  }
+
+  return {
+    state,
+
+    update: onInput,
+
+    destroy() {
+      inputElement.removeEventListener('input', onInput)
+    }
+  }
 }
 
 export default maskInput
-
-export {default as conformToMask} from '../../core/src/conformToMask.js'
-export {convertMaskToPlaceholder} from '../../core/src/utilities.js'

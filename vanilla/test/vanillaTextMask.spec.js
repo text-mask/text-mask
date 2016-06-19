@@ -13,7 +13,7 @@ describe('inputMask', () => {
     const inputElement = document.createElement('input')
 
     expect(() => maskInput({
-      element: inputElement,
+      inputElement,
       mask: '111',
       guide: true,
     })).not.to.throw()
@@ -23,8 +23,8 @@ describe('inputMask', () => {
     it('adjusts the position of the caret correctly when it updates', () => {
       const inputElement = document.createElement('input')
 
-      maskInput({
-        element: inputElement,
+      const maskedInput = maskInput({
+        inputElement,
         mask: '(111) 111-1111',
         guide: true,
       })
@@ -32,7 +32,7 @@ describe('inputMask', () => {
       inputElement.focus()
       inputElement.value = '4'
       inputElement.selectionStart = 1
-      inputElement.oninput()
+      maskedInput.update()
 
       expect([
         inputElement.selectionStart,
@@ -43,14 +43,14 @@ describe('inputMask', () => {
     it('does not attempt to update the position of the caret when the input is not focused', () => {
       const inputElement = document.createElement('input')
 
-      maskInput({
-        element: inputElement,
+      const maskedInput = maskInput({
+        inputElement,
         mask: '(111) 111-1111',
         guide: true,
       })
 
       inputElement.value = '4'
-      inputElement.oninput()
+      maskedInput.update()
 
       expect([
         inputElement.selectionStart,
@@ -62,8 +62,8 @@ describe('inputMask', () => {
   it('sets the value to empty if conformed input is placeholder and caret is at 0', () => {
     const inputElement = document.createElement('input')
 
-    maskInput({
-      element: inputElement,
+    const maskedInput = maskInput({
+      inputElement,
       mask: '(11)',
       guide: true,
     })
@@ -71,12 +71,12 @@ describe('inputMask', () => {
     inputElement.value = '(__)'
     inputElement.selectionStart = 0
 
-    inputElement.oninput()
+    maskedInput.update()
 
     inputElement.value = '__)'
     inputElement.selectionStart = 0
 
-    inputElement.oninput()
+    maskedInput.update()
 
     expect(inputElement.value).to.equal('')
   })
@@ -102,17 +102,17 @@ describe('inputMask', () => {
           body: () => {
             const inputElement = document.createElement('input')
 
-            const state = maskInput({
-              element: inputElement,
+            const maskedInput = maskInput({
+              inputElement,
               mask: test.input.mask,
               guide: true,
             })
 
             inputElement.focus()
-            state.conformedInput = test.input.startingInputFieldValue
+            maskedInput.state.conformedInput = test.input.startingInputFieldValue
 
             if (inputElement.value.length > 0) {
-              inputElement.oninput()
+              maskedInput.update()
             }
 
             inputElement.value = test.input.userModifiedInputFieldValue
@@ -120,7 +120,7 @@ describe('inputMask', () => {
             inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
             inputElement.focus()
-            inputElement.oninput()
+            maskedInput.update()
 
             expect([
               inputElement.value,
@@ -148,17 +148,17 @@ describe('inputMask', () => {
           body: () => {
             const inputElement = document.createElement('input')
 
-            const state = maskInput({
-              element: inputElement,
+            const maskedInput = maskInput({
+              inputElement,
               mask: test.input.mask,
               guide: false,
             })
 
             inputElement.focus()
-            state.conformedInput = test.input.startingInputFieldValue
+            maskedInput.state.conformedInput = test.input.startingInputFieldValue
 
             if (inputElement.value.length > 0) {
-              inputElement.oninput()
+              maskedInput.update()
             }
 
             inputElement.value = test.input.userModifiedInputFieldValue
@@ -166,7 +166,7 @@ describe('inputMask', () => {
             inputElement.selectionEnd = test.input.caretPositionAfterInputFieldValueChange
 
             inputElement.focus()
-            inputElement.oninput()
+            maskedInput.update()
 
             expect([
               inputElement.value,
