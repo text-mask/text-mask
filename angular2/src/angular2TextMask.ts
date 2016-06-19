@@ -26,13 +26,13 @@ export default class MaskedInputDirective {
   }
 
   ngOnInit() {
-    const {mask, guide, placeholderCharacter, validator} = this.textMaskConfig
+    const {mask, guide, placeholderCharacter: placeholderChar, validator} = this.textMaskConfig
 
     this.control = createComponent({
       inputElement: this.inputElement,
       mask,
       guide,
-      placeholderCharacter,
+      placeholderChar,
       validator
     })
   }
