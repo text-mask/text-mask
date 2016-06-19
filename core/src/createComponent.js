@@ -16,32 +16,34 @@ export default function createComponent({
     inputElement.placeholder :
     state.componentPlaceholder
 
-  function onInput(valueToConform = inputElement.value) {
-    if (valueToConform === state.conformedInput) { return }
+  return {
+    state,
 
-    const {selectionStart: currentCaretPosition} = inputElement
-    const {conformedInput: previousConformedInput} = state
-    const safeValueToConform = getSafeInputValue(valueToConform)
-    const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, validator}
-    const conformToMaskResults = conformToMask(safeValueToConform, mask, conformToMaskConfig)
-    const {output: outputOfConformToMask} = conformToMaskResults
-    const adjustedCaretPosition = adjustCaretPosition({
-      previousConformedInput,
-      conformToMaskResults,
-      currentCaretPosition,
-      placeholderChar
-    })
-    const valueShouldBeEmpty = (
-      outputOfConformToMask === componentPlaceholder && adjustedCaretPosition === 0
-    )
-    const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
+    update(valueToConform = inputElement.value) {
+      if (valueToConform === state.conformedInput) { return }
 
-    state.conformedInput = conformedInput
-    inputElement.value = conformedInput
-    safeSetSelection(inputElement, adjustedCaretPosition)
+      const {selectionStart: currentCaretPosition} = inputElement
+      const {conformedInput: previousConformedInput} = state
+      const safeValueToConform = getSafeInputValue(valueToConform)
+      const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, validator}
+      const conformToMaskResults = conformToMask(safeValueToConform, mask, conformToMaskConfig)
+      const {output: outputOfConformToMask} = conformToMaskResults
+      const adjustedCaretPosition = adjustCaretPosition({
+        previousConformedInput,
+        conformToMaskResults,
+        currentCaretPosition,
+        placeholderChar
+      })
+      const valueShouldBeEmpty = (
+        outputOfConformToMask === componentPlaceholder && adjustedCaretPosition === 0
+      )
+      const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
+
+      state.conformedInput = conformedInput
+      inputElement.value = conformedInput
+      safeSetSelection(inputElement, adjustedCaretPosition)
+    }
   }
-
-  return {state, update: onInput}
 }
 
 function safeSetSelection(element, selectionPosition) {
