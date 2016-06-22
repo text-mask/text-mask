@@ -16,4 +16,5 @@ import MaskedInput from '../src/angular2TextMask'
 })
 class AppComponent {}
 
+//noinspection TypeScriptValidateTypes
 bootstrap(AppComponent);
