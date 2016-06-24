@@ -9,7 +9,7 @@ export default function createInputElementTextMask({
   validator,
   placeholderChar
 }) {
-  const state = {conformedInput: ''}
+  const state = {previousConformedInput: ''}
   const componentPlaceholder = convertMaskToPlaceholder({mask, placeholderChar})
 
   inputElement.placeholder = (inputElement.placeholder !== '') ?
@@ -20,12 +20,13 @@ export default function createInputElementTextMask({
     state,
 
     update(valueToConform = inputElement.value) {
-      if (valueToConform === state.conformedInput) { return }
+      if (valueToConform === state.previousConformedInput) { return }
 
       const {selectionStart: currentCaretPosition} = inputElement
-      const {conformedInput: previousConformedInput} = state
+      const {previousConformedInput} = state
       const safeValueToConform = getSafeInputValue(valueToConform)
       const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, validator}
+
       const conformToMaskResults = conformToMask(safeValueToConform, mask, conformToMaskConfig)
       const {output: outputOfConformToMask} = conformToMaskResults
       const adjustedCaretPosition = adjustCaretPosition({
@@ -39,8 +40,8 @@ export default function createInputElementTextMask({
       )
       const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
 
-      state.conformedInput = conformedInput
       inputElement.value = conformedInput
+      state.previousConformedInput = conformedInput
       safeSetSelection(inputElement, adjustedCaretPosition)
     }
   }
