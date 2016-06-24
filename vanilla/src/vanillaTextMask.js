@@ -1,4 +1,4 @@
-import createComponent from '../../core/src/createComponent.js'
+import createInputElementTextMask from '../../core/src/createInputElementTextMask.js'
 
 export function maskInput({
     inputElement,
@@ -7,7 +7,7 @@ export function maskInput({
     validator,
     placeholderCharacter: placeholderChar
 }) {
-  const control = createComponent({
+  const control = createInputElementTextMask({
     inputElement,
     mask,
     guide,

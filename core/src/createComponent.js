@@ -2,7 +2,7 @@ import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
 
-export default function createComponent({
+export default function createInputElementTextMask({
   inputElement,
   mask,
   guide,

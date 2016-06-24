@@ -1,1 +1,1 @@
-export default function createComponent(a: any): any
+export default function createInputElementTextMask(a: any): any
