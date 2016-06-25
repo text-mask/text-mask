@@ -19,7 +19,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
 
   // We will be iterating over each character in the placeholder and sort of fill it up
   // with user input
-  const placeholder = convertMaskToPlaceholder({mask, placeholderChar})
+  const placeholder = convertMaskToPlaceholder(mask, placeholderChar)
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedInput !== undefined

@@ -30,7 +30,7 @@ describe('createTextMaskInputElement', () => {
 
     createTextMaskInputElement({inputElement, mask})
 
-    expect(inputElement.placeholder).to.equal(convertMaskToPlaceholder({mask}))
+    expect(inputElement.placeholder).to.equal(convertMaskToPlaceholder(mask))
   })
 
   it('leaves current placeholder as is if it exists', () => {

@@ -1,5 +1,7 @@
 # JavaScript Input Mask
 
+**Note:** IE9 is not supported in this module.
+
 ## Getting started
 
 First, install it.

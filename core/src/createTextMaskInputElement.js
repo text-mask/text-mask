@@ -10,7 +10,7 @@ export default function createTextMaskInputElement({
   placeholderChar
 }) {
   const state = {previousConformedInput: ''}
-  const componentPlaceholder = convertMaskToPlaceholder({mask, placeholderChar})
+  const componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
 
   inputElement.placeholder = (inputElement.placeholder !== '') ?
     inputElement.placeholder :
