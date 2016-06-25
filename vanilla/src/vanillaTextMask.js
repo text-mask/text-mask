@@ -1,4 +1,4 @@
-import createInputElementTextMask from '../../core/src/createInputElementTextMask.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
 
 export function maskInput({
     inputElement,
@@ -7,7 +7,7 @@ export function maskInput({
     validator,
     placeholderCharacter: placeholderChar
 }) {
-  const control = createInputElementTextMask({
+  const control = createTextMaskInputElement({
     inputElement,
     mask,
     guide,

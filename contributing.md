@@ -18,7 +18,7 @@ somebody wishes to use it.
 #### The relationship between Text Mask `core` and framework components
 
 Text Mask core has a function called
-[`createInputElementTextMask`](https://github.com/msafi/text-mask/blob/master/core/src/createInputElementTextMask.js),
+[`createTextMaskInputElement`](https://github.com/msafi/text-mask/blob/master/core/src/createTextMaskInputElement.js),
 which all framework components utilize.
 This function takes an input element and other text mask configurations and returns an object with
 `update` method. Framework components call the `update` method at different points in their life-cycles
