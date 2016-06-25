@@ -10,7 +10,7 @@
     "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run angular2:build && npm run website:build && npm run addons:build",
     "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run angular2:verify && npm run addons:verify",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
-    "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --require ./common/testSetup.js --recursive",
+    "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --require ./common/domSetup.js --recursive",
     "core:tdd": "npm run core:test -- --watch",
     "core:verify": "npm run core:test -- --verify",
     "core:publish": "sh core/publish.sh",
@@ -41,8 +41,8 @@
     "angular2:dev": "./node_modules/.bin/webpack-dev-server --content-base angular2/example --port 3000 --config angular2/example/webpack.runAngular2Example.js",
     "angular2:watch": "./node_modules/.bin/webpack --watch --config angular2/webpack.buildAngular2Integration.js",
     "git:done": "git checkout gh-pages && git merge master && git checkout master && git push origin master --tags && git push origin gh-pages",
-    "ci": "npm run loud-lint && npm run build && npm run verify",
-    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix",
+    "ci": "npm run test && npm run build && npm run verify",
+    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
     "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix || true"
   },
   "repository": {
@@ -69,6 +69,7 @@
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
+    "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "bootstrap-sass": "^3.3.6",
