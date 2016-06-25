@@ -61,7 +61,7 @@ function getSafeInputValue(inputValue) {
     return ''
   } else {
     throw new Error(
-      `The 'value' provided to Text Mask needs to be a string or a number. The value ` +
+      'The \'value\' provided to Text Mask needs to be a string or a number. The value ' +
       `received was:\n\n ${JSON.stringify(inputValue)}`
     )
   }

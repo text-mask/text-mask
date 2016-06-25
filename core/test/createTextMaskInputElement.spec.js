@@ -28,10 +28,7 @@ describe('createTextMaskInputElement', () => {
   it('sets a default placeholder if the input element does not have one', () => {
     const mask = '(111) 111-1111'
 
-    createTextMaskInputElement({
-      inputElement,
-      mask
-    })
+    createTextMaskInputElement({inputElement, mask})
 
     expect(inputElement.placeholder).to.equal(convertMaskToPlaceholder({mask}))
   })
@@ -65,24 +62,26 @@ describe('createTextMaskInputElement', () => {
       expect(inputElement.value).to.equal('(123) ___-____')
     })
 
-    it('does not conform given parameter if it is the same as the previousConformedInput', () => {
-      const conformToMaskSpy = sinon.spy(conformToMask)
-      const mask = '(111) 111-1111'
-      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+    if (!isVerify()) {
+      it('does not conform given parameter if it is the same as the previousConformedInput', () => {
+        const conformToMaskSpy = sinon.spy(conformToMask)
+        const mask = '(111) 111-1111'
+        const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
-      createTextMaskInputElement.__Rewire__('conformToMask', conformToMaskSpy)
+        createTextMaskInputElement.__Rewire__('conformToMask', conformToMaskSpy)
 
-      inputElement.value = '2'
-      textMaskControl.update()
+        inputElement.value = '2'
+        textMaskControl.update()
 
-      expect(inputElement.value).to.equal('(2__) ___-____')
-      expect(conformToMaskSpy.callCount).to.equal(1)
+        expect(inputElement.value).to.equal('(2__) ___-____')
+        expect(conformToMaskSpy.callCount).to.equal(1)
 
-      textMaskControl.update('(2__) ___-____')
-      expect(conformToMaskSpy.callCount).to.equal(1)
+        textMaskControl.update('(2__) ___-____')
+        expect(conformToMaskSpy.callCount).to.equal(1)
 
-      createTextMaskInputElement.__ResetDependency__('conformToMask')
-    })
+        createTextMaskInputElement.__ResetDependency__('conformToMask')
+      })
+    }
 
     it('works with a string', () => {
       const mask = '(111) 111-1111'
