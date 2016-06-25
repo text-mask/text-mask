@@ -40,6 +40,11 @@ For example, the following works:
 />
 ```
 
+## Documentation
+
+For more information about the `props` that you can pass to the component, see
+the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+
 ## Example
 
 To see an example of the code running, follow these steps:
@@ -51,11 +56,6 @@ To see an example of the code running, follow these steps:
 1. Open [http://localhost:3000](http://localhost:3000)
 
 The code of the example is in [`react/example`](https://github.com/msafi/text-mask/tree/master/react/example).
-
-## Documentation
-
-For more information about the `props` that you can pass to the component, see
-the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Contributing
 
