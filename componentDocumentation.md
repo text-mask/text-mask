@@ -3,9 +3,9 @@
 Text Mask accepts the following values:
 
 * [`mask`](#mask) (string)
-* `validator` (function)
-* `guide` (boolean)
-* `placeholderCharacter` (string)
+* [`validator`](#validator) (function)
+* [`guide`](#guide) (boolean)
+* [`placeholderCharacter`](#placeholderCharacter) (string)
 
 ## `mask`
 
