@@ -1,4 +1,3 @@
 {
-  "presets": ["es2015", "react"],
-  "plugins": ["babel-plugin-rewire"]
+  "presets": ["es2015", "react"]
 }

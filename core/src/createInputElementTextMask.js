@@ -26,7 +26,6 @@ export default function createInputElementTextMask({
       const {previousConformedInput} = state
       const safeValueToConform = getSafeInputValue(valueToConform)
       const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, validator}
-
       const conformToMaskResults = conformToMask(safeValueToConform, mask, conformToMaskConfig)
       const {output: outputOfConformToMask} = conformToMaskResults
       const adjustedCaretPosition = adjustCaretPosition({
@@ -61,7 +60,9 @@ function getSafeInputValue(inputValue) {
   } else if (inputValue === undefined || inputValue === null) {
     return ''
   } else {
-    console.log('Text Mask received', inputValue) // eslint-disable-line
-    throw new Error('The `value` provided to Text Mask needs to be a string or a number.')
+    throw new Error(
+      `The 'value' provided to Text Mask needs to be a string or a number. The value ` +
+      `received was:\n\n ${JSON.stringify(inputValue)}`
+    )
   }
 }

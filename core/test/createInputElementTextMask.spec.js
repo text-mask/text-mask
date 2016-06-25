@@ -1,3 +1,5 @@
+require('babel-core/register')({plugins: ['babel-plugin-rewire']})
+
 import packageJson from '../package.json'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import conformToMask from '../src/conformToMask.js'
@@ -6,18 +8,11 @@ const createInputElementTextMask = (isVerify()) ?
   require(`../${packageJson.main}`).createInputElementTextMask :
   require('../src/createInputElementTextMask.js').default
 
-describe.only('createInputElementTextMask', () => {
-  const sandbox = sinon.sandbox.create()
-
+describe('createInputElementTextMask', () => {
   let inputElement
-  let maskedInputElementControl
 
   beforeEach(() => {
     inputElement = document.createElement('input')
-  })
-
-  afterEach(() => {
-    sandbox.restore()
   })
 
   it('takes an inputElement and other Text Mask parameters and returns an object which ' +
@@ -46,10 +41,7 @@ describe.only('createInputElementTextMask', () => {
 
     inputElement.placeholder = 'hello'
 
-    createInputElementTextMask({
-      inputElement,
-      mask
-    })
+    createInputElementTextMask({inputElement, mask})
 
     expect(inputElement.placeholder).to.equal('hello')
   })
@@ -57,65 +49,100 @@ describe.only('createInputElementTextMask', () => {
   describe('`update` method', () => {
     it('conforms whatever value is in the input element to a mask', () => {
       const mask = '(111) 111-1111'
-
-      const textMaskControl = createInputElementTextMask({
-        inputElement,
-        mask
-      })
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
 
       inputElement.value = '2'
-
-      expect(inputElement.value).to.equal('2')
-
       textMaskControl.update()
-
       expect(inputElement.value).to.equal('(2__) ___-____')
     })
 
     it('accepts a string to conform and overrides whatever value is in the input element', () => {
       const mask = '(111) 111-1111'
-
-      const textMaskControl = createInputElementTextMask({
-        inputElement,
-        mask
-      })
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
 
       inputElement.value = '2'
-
-      expect(inputElement.value).to.equal('2')
-
       textMaskControl.update('123')
-
       expect(inputElement.value).to.equal('(123) ___-____')
     })
 
     it('does not conform given parameter if it is the same as the previousConformedInput', () => {
       const conformToMaskSpy = sinon.spy(conformToMask)
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
 
       createInputElementTextMask.__Rewire__('conformToMask', conformToMaskSpy)
 
-      const mask = '(111) 111-1111'
-
-      const textMaskControl = createInputElementTextMask({
-        inputElement,
-        mask
-      })
-
       inputElement.value = '2'
-
-      expect(inputElement.value).to.equal('2')
-
       textMaskControl.update()
 
       expect(inputElement.value).to.equal('(2__) ___-____')
-
       expect(conformToMaskSpy.callCount).to.equal(1)
 
       textMaskControl.update('(2__) ___-____')
-
       expect(conformToMaskSpy.callCount).to.equal(1)
 
       createInputElementTextMask.__ResetDependency__('conformToMask')
+    })
+
+    it('works with a string', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      textMaskControl.update('2')
+
+      expect(inputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('works with a number by coercing it into a string', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      textMaskControl.update(2)
+
+      expect(inputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('works with `undefined` and `null` by treating them as empty strings', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      textMaskControl.update(undefined)
+      expect(inputElement.value).to.equal('')
+
+      textMaskControl.update(null)
+      expect(inputElement.value).to.equal('')
+    })
+
+    it('throws if given a value that it cannot work with', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      expect(() => textMaskControl.update({})).to.throw()
+      expect(() => textMaskControl.update(() => 'howdy')).to.throw()
+      expect(() => textMaskControl.update([])).to.throw()
+    })
+
+    it('adjusts the caret position', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      inputElement.focus()
+      inputElement.value = '2'
+      inputElement.selectionStart = 1
+
+      textMaskControl.update()
+      expect(inputElement.selectionStart).to.equal(2)
+    })
+
+    it('does not adjust the caret position if the input element is not focused', () => {
+      const mask = '(111) 111-1111'
+      const textMaskControl = createInputElementTextMask({inputElement, mask})
+
+      inputElement.value = '2'
+      inputElement.selectionStart = 1
+
+      textMaskControl.update()
+      expect(inputElement.selectionStart).to.equal(0)
     })
   })
 })
