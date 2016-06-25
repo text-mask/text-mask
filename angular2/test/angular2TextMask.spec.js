@@ -3,7 +3,7 @@ import packageJson from '../package.json'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
-  require('../dist/textMask.js').default
+  require('../dist/angular2TextMask.js').default
 
 describe('MaskedInput', () => {
   let inputElement

@@ -14,8 +14,8 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, './dist'),
-    filename: 'textMask.js',
-    library: 'textMask',
+    filename: 'angular2TextMask.js',
+    library: 'angular2TextMask',
     libraryTarget: 'umd'
   },
 

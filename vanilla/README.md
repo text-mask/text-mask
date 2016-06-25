@@ -15,7 +15,7 @@ Then, use it as follows:
 ```html
 <script
   type="text/javascript"
-  src="./node_modules/vanilla-text-mask/dist/textMask.js"></script>
+  src="./node_modules/vanilla-text-mask/dist/vanillaTextMask.js"></script>
 <script type="text/javascript">
   var phoneMask = '(111) 111-1111'
 
@@ -43,7 +43,7 @@ The code of the example is in [`vanilla/example`](https://github.com/msafi/text-
 
 ## Documentation
 
-As you can see in the example above, you are passing an object to `textMask.maskInput(...)`.
+As you can see in the example above, you are passing an object to `vanillaTextMask.maskInput(...)`.
 
 The object takes `element`, which is the `<input/>` element that you are masking. It also
 accepts other values which are

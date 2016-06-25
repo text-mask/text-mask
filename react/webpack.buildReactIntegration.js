@@ -13,8 +13,8 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, './dist'),
-    filename: 'textMask.js',
-    library: 'textMask',
+    filename: 'reactTextMask.js',
+    library: 'reactTextMask',
     libraryTarget: 'umd'
   },
 

@@ -5,7 +5,7 @@ Text Mask accepts the following values:
 * [`mask`](#mask) (string)
 * [`validator`](#validator) (function)
 * [`guide`](#guide) (boolean)
-* [`placeholderCharacter`](#placeholderCharacter) (string)
+* [`placeholderCharacter`](#placeholdercharacter) (string)
 
 ## `mask`
 
