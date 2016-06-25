@@ -4,17 +4,13 @@ import {
   placeholderCharacter as defaultPlaceholderChar
 } from './constants.js'
 
-export function convertMaskToPlaceholder({
-  mask = '',
-  placeholderChar = defaultPlaceholderChar
-}) {
+export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPlaceholderChar) {
   if (mask.indexOf(placeholderChar) !== -1) {
-    console.log('Text Mask received placeholder character: ', placeholderChar) // eslint-disable-line
-    console.log('Text Mask received mask: ', mask) // eslint-disable-line
-
     throw new Error(
       'Placeholder character must not be used as part of the mask. Please specify a character ' +
-      'that is not present in your mask as your placeholder character.'
+      'that is not present in your mask as your placeholder character.\n\n' +
+      `The placeholder character that was received is: ${JSON.stringify(placeholderChar)}\n\n` +
+      `The mask that was received is: ${JSON.stringify(mask)}`
     )
   }
 

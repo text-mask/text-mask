@@ -1,9 +1,11 @@
+require('ts-node').register({project: './angular2/'}) // Allows us to load a TypeScript file
+
 import 'reflect-metadata'
 import packageJson from '../package.json'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
-  require('../dist/textMask.js').default
+  require('../src/angular2TextMask.ts').default
 
 describe('MaskedInput', () => {
   let inputElement

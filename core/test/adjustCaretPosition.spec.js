@@ -14,7 +14,7 @@ describe('adjustCaretPosition', () => {
       conformToMaskResults: {
         output: '2938',
         meta: {
-          placeholder: convertMaskToPlaceholder({mask: '1111'}),
+          placeholder: convertMaskToPlaceholder('1111'),
           placeholderChar,
           input: '2938'
         }
@@ -31,7 +31,7 @@ describe('adjustCaretPosition', () => {
         output: '(123) ___-____',
         meta: {
           input: '(123) ___-f____',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 111-1111'}),
+          placeholder: convertMaskToPlaceholder('(111) 111-1111'),
           placeholderChar,
         }
       },
@@ -48,7 +48,7 @@ describe('adjustCaretPosition', () => {
         output: '(___)      ___-____',
         meta: {
           input: '(___))      ___-____',
-          placeholder: convertMaskToPlaceholder({mask: '(111)      111-1111'}),
+          placeholder: convertMaskToPlaceholder('(111)      111-1111'),
           placeholderChar,
         }
       },
@@ -64,7 +64,7 @@ describe('adjustCaretPosition', () => {
         output: '(123) ___-____',
         meta: {
           input: '(123 ___-____',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 111-1111'}),
+          placeholder: convertMaskToPlaceholder('(111) 111-1111'),
           placeholderChar,
         }
       },
@@ -80,7 +80,7 @@ describe('adjustCaretPosition', () => {
         output: '(123) _',
         meta: {
           input: '(123_) _',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholder: convertMaskToPlaceholder('(111) 1'),
           placeholderChar,
         }
       },
@@ -93,7 +93,7 @@ describe('adjustCaretPosition', () => {
         output: '(132) _',
         meta: {
           input: '(132_) 7',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholder: convertMaskToPlaceholder('(111) 1'),
           placeholderChar,
         }
       },
@@ -109,7 +109,7 @@ describe('adjustCaretPosition', () => {
         output: '(124) _',
         meta: {
           input: '(124) ',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholder: convertMaskToPlaceholder('(111) 1'),
           placeholderChar,
         }
       },
@@ -122,7 +122,7 @@ describe('adjustCaretPosition', () => {
         output: '(12_) _',
         meta: {
           input: '(12_) ',
-          placeholder: convertMaskToPlaceholder({mask: '(111) 1'}),
+          placeholder: convertMaskToPlaceholder('(111) 1'),
           placeholderChar,
         }
       },
@@ -144,7 +144,7 @@ describe('adjustCaretPosition', () => {
           JSON.stringify({
             input: test.input.userModifiedInputFieldValue,
             output: test.output.conformedInputFieldValue,
-            placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+            placeholder: convertMaskToPlaceholder(test.input.mask),
             placeholderChar,
           })}, it knows to adjust the caret to '${
           test.output.adjustedCaretPosition
@@ -157,7 +157,7 @@ describe('adjustCaretPosition', () => {
               output: test.output.conformedInputFieldValue,
               meta: {
                 input: test.input.userModifiedInputFieldValue,
-                placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+                placeholder: convertMaskToPlaceholder(test.input.mask),
                 guide: true,
                 placeholderChar
               }
@@ -183,7 +183,7 @@ describe('adjustCaretPosition', () => {
           JSON.stringify({
             input: test.input.userModifiedInputFieldValue,
             output: test.output.conformedInputFieldValue,
-            placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+            placeholder: convertMaskToPlaceholder(test.input.mask),
             placeholderChar
           })}, it knows to adjust the caret to '${
           test.output.adjustedCaretPosition
@@ -196,7 +196,7 @@ describe('adjustCaretPosition', () => {
               output: test.output.conformedInputFieldValue,
               meta: {
                 input: test.input.userModifiedInputFieldValue,
-                placeholder: convertMaskToPlaceholder({mask: test.input.mask}),
+                placeholder: convertMaskToPlaceholder(test.input.mask),
                 guide: false,
                 placeholderChar
               }

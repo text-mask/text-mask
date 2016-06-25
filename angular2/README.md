@@ -40,6 +40,13 @@ export class AppComponent {
 bootstrap(AppComponent);
 ```
 
+## Documentation
+
+As you can see in the code above, you are passing an object to the `textMask` directive.
+
+For more information about the values that the `textMask` object accepts, see
+the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+
 ## Example
 
 To see an example of the code running, follow these steps:
@@ -51,13 +58,6 @@ To see an example of the code running, follow these steps:
 1. Open [http://localhost:3000](http://localhost:3000)
 
 The code of the example is in [`angular2/example`](https://github.com/msafi/text-mask/tree/master/angular2/example).
-
-## Documentation
-
-As you can see in the example above, you are passing an object to the `textMask` directive.
-
-For more information about the values that the `textMask` object accepts, see
-the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Contributing
 

@@ -2,7 +2,7 @@
   "name": "angular2-text-mask",
   "version": "0.9.1",
   "description": "Angular 2 directive for input text masking",
-  "main": "dist/textMask.js",
+  "main": "dist/angular2TextMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "CC0-1.0",
   "bugs": {

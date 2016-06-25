@@ -1470,7 +1470,7 @@ export function transformTestForComponent(test) {
 
   return {
     conformedInputFieldValue: (
-      conformedInputFieldValue === convertMaskToPlaceholder({mask}) &&
+      conformedInputFieldValue === convertMaskToPlaceholder(mask) &&
       adjustedCaretPosition === 0
     ) ? '' : conformedInputFieldValue
   }
