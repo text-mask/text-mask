@@ -102,7 +102,7 @@
     "stats-webpack-plugin": "^0.3.0",
     "style-loader": "^0.13.0",
     "testdom": "^2.0.0",
-    "ts-loader": "^0.8.1",
+    "ts-node": "^0.9.3",
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
     "url-loader": "^0.5.7",
