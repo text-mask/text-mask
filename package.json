@@ -4,6 +4,7 @@
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
   "main": "index.js",
   "scripts": {
+    "textMask:publish": "sh publish.sh",
     "website": "node website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
     "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run angular2:test && npm run addons:test",
