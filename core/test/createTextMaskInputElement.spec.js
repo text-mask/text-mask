@@ -212,6 +212,24 @@ describe('createTextMaskInputElement', () => {
 
         expect(onReject.callCount).to.equal(0)
       })
+
+      it('is not called when a character is rejected because it exceeds the mask length', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(233) 543-6543'
+        textMaskControl.update() // after this, value is (233) 543-6543
+
+        inputElement.value = '(233) 543-65435'
+        inputElement.selectionStart = '(233) 543-65435'.length
+        textMaskControl.update() // after this, value is (233) 543-6543
+
+        expect(onReject.callCount).to.equal(0)
+      })
     })
   })
 })

@@ -14,9 +14,9 @@ export default function createTextMaskInputElement({
   const state = {previousConformedInput: ''}
   const componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
 
-  inputElement.placeholder = (inputElement.placeholder !== '') ?
-    inputElement.placeholder :
-    componentPlaceholder
+  if (inputElement.placeholder === '') {
+    inputElement.setAttribute('placeholder', componentPlaceholder)
+  }
 
   return {
     state,
@@ -49,7 +49,8 @@ export default function createTextMaskInputElement({
       if (
         typeof onReject === 'function' &&
         conformedInput === previousConformedInput &&
-        isDeletion === false
+        isDeletion === false &&
+        currentCaretPosition <= mask.length
       ) {
         onReject()
       }
