@@ -34,10 +34,16 @@ export const initialState = {
         year: 'numeric'
       })
     }),
+    onRejectMessage: (
+      <span>
+        Please enter an actual calendar date between 01/01/1900 and today,
+        with the following format `mm/dd/yyyy`.
+      </span>
+    ),
     placeholder: 'Date between 01/01/1900 and today',
     help: (
       <span>
-        This mask is validated with
+        This mask configuration is validated with
         {' '}
         <a
           className='alert-link'
@@ -52,6 +58,17 @@ export const initialState = {
           href='https://github.com/msafi/text-mask/tree/master/addons/#readme'>
           Text Mask addon
         </a>.
+
+        <br/><br/>
+
+        It also uses the
+        {' '}<a
+          target='_blank'
+          href='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject'
+        >
+          <code>onReject</code>
+        </a>{' '}
+        callback to show a hint message when user enters a rejected character.
       </span>
     )
   }, {
@@ -73,9 +90,9 @@ export const initialState = {
 
   selectedChoice: 0,
 
-  placeholderChar: '_',
+  placeholderChar: '\u2000',
 
-  guide: false,
+  guide: true,
 }
 
 const githubLink = 'https://github.com/msafi/text-mask/#readme'

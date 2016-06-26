@@ -7,14 +7,16 @@ export default function createTextMaskInputElement({
   mask,
   guide,
   validator,
-  placeholderChar
+  placeholderChar,
+  onAccept,
+  onReject
 }) {
   const state = {previousConformedInput: ''}
   const componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
 
-  inputElement.placeholder = (inputElement.placeholder !== '') ?
-    inputElement.placeholder :
-    componentPlaceholder
+  if (inputElement.placeholder === '') {
+    inputElement.setAttribute('placeholder', componentPlaceholder)
+  }
 
   return {
     state,
@@ -38,6 +40,20 @@ export default function createTextMaskInputElement({
         outputOfConformToMask === componentPlaceholder && adjustedCaretPosition === 0
       )
       const conformedInput = (valueShouldBeEmpty) ? '' : outputOfConformToMask
+      const isDeletion = safeValueToConform.length < previousConformedInput.length
+
+      if (typeof onAccept === 'function' && conformedInput !== previousConformedInput) {
+        onAccept()
+      }
+
+      if (
+        typeof onReject === 'function' &&
+        conformedInput === previousConformedInput &&
+        isDeletion === false &&
+        currentCaretPosition <= mask.length
+      ) {
+        onReject()
+      }
 
       inputElement.value = conformedInput
       state.previousConformedInput = conformedInput
@@ -61,7 +77,7 @@ function getSafeInputValue(inputValue) {
     return ''
   } else {
     throw new Error(
-      'The \'value\' provided to Text Mask needs to be a string or a number. The value ' +
+      "The 'value' provided to Text Mask needs to be a string or a number. The value " +
       `received was:\n\n ${JSON.stringify(inputValue)}`
     )
   }

@@ -143,5 +143,93 @@ describe('createTextMaskInputElement', () => {
       textMaskControl.update()
       expect(inputElement.selectionStart).to.equal(0)
     })
+
+    describe('`onAccept` callback', () => {
+      it('is called when the updated value is different than the previous value', () => {
+        const mask = '(111) 111-1111'
+        const onAccept = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
+
+        inputElement.value = '2'
+
+        textMaskControl.update()
+
+        expect(onAccept.callCount).to.equal(1)
+      })
+
+      it('is not called when the updated value is the same as the previous value', () => {
+        const mask = '(111) 111-1111'
+        const onAccept = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(2B_) ___-____' // the 'B' will be rejected
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        expect(onAccept.callCount).to.equal(1)
+      })
+    })
+
+    describe('`onReject` callback', () => {
+      it('is called when the updated value is the same as the old value', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(2B_) ___-____' // the 'B' will be rejected
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        expect(onReject.callCount).to.equal(1)
+      })
+
+      it('is not called when the updated value is different than the previous value', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+
+        inputElement.value = '2'
+        textMaskControl.update()
+
+        expect(onReject.callCount).to.equal(0)
+      })
+
+      it('is not called when the operation is deletion, even if the current and previous ' +
+        'values are not different', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(2_) ___-____'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        expect(onReject.callCount).to.equal(0)
+      })
+
+      it('is not called when a character is rejected because it exceeds the mask length', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(233) 543-6543'
+        textMaskControl.update() // after this, value is (233) 543-6543
+
+        inputElement.value = '(233) 543-65435'
+        inputElement.selectionStart = '(233) 543-65435'.length
+        textMaskControl.update() // after this, value is (233) 543-6543
+
+        expect(onReject.callCount).to.equal(0)
+      })
+    })
   })
 })

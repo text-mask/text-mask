@@ -18,10 +18,24 @@ export default React.createClass({ // eslint-disable-line
       placeholderChar,
       selectedChoice,
       customMask,
+      rejectMessage,
     } = this.state
-    const {mask: choiceMask, placeholder, help, validator, value} = choices[selectedChoice]
+    const {
+      mask: choiceMask,
+      placeholder,
+      help,
+      validator,
+      value,
+      onRejectMessage,
+      onAcceptMessage
+    } = choices[selectedChoice]
     const placeholderValue = guide !== true ? placeholder : undefined
-    const maskedInputKey = JSON.stringify(this.state)
+    const maskedInputKey = JSON.stringify({
+      customMask,
+      selectedChoice,
+      placeholderChar,
+      guide
+    })
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -43,11 +57,23 @@ export default React.createClass({ // eslint-disable-line
                   ref='maskedInput'
                   mask={customMask || choiceMask}
                   guide={guide}
+                  onReject={() => this.onReject(onRejectMessage)}
+                  onAccept={() => this.onAccept(onAcceptMessage)}
                   className='form-control'
                   id='maskedInput'
                 />
               </div>
             </div>
+
+            {rejectMessage && (
+              <div className='form-group row'>
+                <div className='col-sm-9 col-sm-offset-3'>
+                  <p className='alert alert-warning' style={{margin: 0}}>
+                    {rejectMessage}
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className='form-group row'>
               <label
@@ -109,8 +135,8 @@ export default React.createClass({ // eslint-disable-line
                     className='form-control'
                     onChange={this.changePlaceholderChar}
                   >
+                    <option value={'\u2000'}>\u2000 (white space)</option>
                     <option value='_'>_ (underscore)</option>
-                    <option value={'\u2000'}>White space</option>
                   </select>
                 ) || (
                   <select
@@ -139,14 +165,24 @@ export default React.createClass({ // eslint-disable-line
       selectedChoice :
       customChoice
 
-    this.setState({customMask, selectedChoice: finalSelectedChoice})
+    this.setState({
+      customMask,
+      selectedChoice: finalSelectedChoice,
+      rejectMessage: null,
+      acceptMessage: null
+    })
   },
 
   onDropDownListChoiceSelect({target: {value: selectValue}}) {
     const {findChoice} = this
     const selectedChoice = findChoice('value', selectValue)
 
-    this.setState({selectedChoice, customMask: ''})
+    this.setState({
+      selectedChoice,
+      customMask: '',
+      rejectMessage: null,
+      acceptMessage: null
+    })
 
     if (selectValue === 'custom') {
       return this.refs.mask.focus()
@@ -174,5 +210,13 @@ export default React.createClass({ // eslint-disable-line
     return this.state.choices.findIndex((choice) => {
       return choice[name] === value
     })
+  },
+
+  onReject(rejectMessage) {
+    this.setState({rejectMessage})
+  },
+
+  onAccept(acceptMessage) {
+    this.setState({acceptMessage})
   }
 })
