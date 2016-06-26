@@ -64,10 +64,9 @@ export const initialState = {
         It also uses the
         {' '}<a
           target='_blank'
-          href="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject"
+          href='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject'
         >
           <code>onReject</code>
-
         </a>{' '}
         callback to show a hint message when user enters a rejected character.
       </span>
