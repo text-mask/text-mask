@@ -9,10 +9,6 @@ import {
 import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
-  if (typeof mask === 'function') {
-    mask = mask(userInput)
-  }
-  
   // These configurations tell us how to conform the mask
   const {
     guide = true,
