@@ -4,7 +4,7 @@ import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
 
 export default function createTextMaskInputElement({
   inputElement,
-  mask: userMask,
+  mask: providedMask,
   guide,
   validator,
   placeholderChar,
@@ -16,8 +16,8 @@ export default function createTextMaskInputElement({
   let componentPlaceholder = ''
   let mask
 
-  if (typeof userMask !== 'function') {
-    componentPlaceholder = convertMaskToPlaceholder(userMask, placeholderChar)
+  if (isString(providedMask)) {
+    componentPlaceholder = convertMaskToPlaceholder(providedMask, placeholderChar)
   }
 
   if (inputElement.placeholder === '') {
@@ -30,12 +30,12 @@ export default function createTextMaskInputElement({
     update(valueToConform = inputElement.value) {
       if (valueToConform === state.previousConformedInput) { return }
 
-      if (typeof userMask === 'function') {
-        mask = userMask(valueToConform)
+      if (typeof providedMask === 'function') {
+        mask = providedMask(valueToConform)
 
         componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
       } else {
-        mask = userMask
+        mask = providedMask
       }
 
       const {selectionStart: currentCaretPosition} = inputElement

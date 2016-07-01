@@ -5,7 +5,7 @@ import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-li
 import classnames from 'classnames'
 import appStyles from './app.scss'
 import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
-import createCurrencyMask from '../../core/src/createCurrencyMask'
+import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
