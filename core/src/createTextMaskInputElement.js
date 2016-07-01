@@ -12,7 +12,7 @@ export default function createTextMaskInputElement({
   onReject
 }) {
   const state = {previousConformedInput: ''}
-  const componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
+  const componentPlaceholder = 'enter'
 
   if (inputElement.placeholder === '') {
     inputElement.setAttribute('placeholder', componentPlaceholder)
