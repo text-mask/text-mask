@@ -143,7 +143,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(__4) 44_-____',
     adjustedCaretPosition: 7,
-    indexOfFirstRemovedCharacter: 8
   },
 
 }, {
@@ -206,7 +205,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(__4) 44_-____',
     adjustedCaretPosition: 8,
-    indexOfFirstRemovedCharacter: 8
   },
   // only: true,
 }, {
@@ -252,7 +250,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(333) 333-____',
     adjustedCaretPosition: 3,
-    indexOfFirstRemovedCharacter: 10
   }
 }, {
   line: getLineNumber(),
@@ -284,7 +281,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(00_) ___-____',
     adjustedCaretPosition: 2,
-    indexOfFirstRemovedCharacter: 3
   }
 }, {
   line: getLineNumber(),
@@ -299,7 +295,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '4_/__',
     adjustedCaretPosition: 1,
-    indexOfFirstRemovedCharacter: 1
   }
 }, {
   line: getLineNumber(),
@@ -314,7 +309,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(124) _',
     adjustedCaretPosition: 4,
-    indexOfFirstRemovedCharacter: 6
   },
 
   // only: true
@@ -497,7 +491,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '(127) _',
     adjustedCaretPosition: 2,
-    indexOfFirstRemovedCharacter: 2
   },
 }, {
   line: getLineNumber(),
@@ -725,7 +718,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '22/__',
     adjustedCaretPosition: 1,
-    indexOfFirstRemovedCharacter: 3
   },
 }, {
   line: getLineNumber(),
@@ -771,7 +763,6 @@ export default _.filter((t) => t, [{
   output: {
     conformedInputFieldValue: '_2/__',
     adjustedCaretPosition: 0,
-    indexOfFirstRemovedCharacter: 1
   },
 
   // only: true
