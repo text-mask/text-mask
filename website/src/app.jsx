@@ -5,7 +5,6 @@ import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-li
 import classnames from 'classnames'
 import appStyles from './app.scss'
 import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
-import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
@@ -56,7 +55,7 @@ export default React.createClass({ // eslint-disable-line
                   placeholderCharacter={placeholderChar}
                   validator={validator}
                   ref='maskedInput'
-                  mask={createCurrencyMask()}
+                  mask={customMask || choiceMask}
                   guide={guide}
                   onReject={() => this.onReject(onRejectMessage)}
                   onAccept={() => this.onAccept(onAcceptMessage)}
