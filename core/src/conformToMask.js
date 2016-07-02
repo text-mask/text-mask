@@ -153,7 +153,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     output: isCustomValid(conformedString) ? conformedString : previousConformedInput,
     meta: {
       input: userInput,
-      mask: mask,
+      mask,
       guide,
       placeholderChar,
       placeholder
