@@ -148,7 +148,7 @@ describe('adjustCaretPosition', () => {
             placeholderChar,
           })}, it knows to adjust the caret to '${
           test.output.adjustedCaretPosition
-          }'`,
+          }'. Line: ${test.line}`,
 
         body: () => {
           expect(adjustCaretPosition({
