@@ -32,6 +32,10 @@ export default function adjustCaretPosition({
   // This works fine for most cases.
   if (isPartialMultiCharEdit) { return currentCaretPosition }
 
+  // For a mask like (111), if the `previousConformedInput` is (1__) and user attempts to enter
+  // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
+  // same as the original `previousConformedInput`. We handle this case differently for caret
+  // positioning.
   const possiblyHasRejectedChar = isAddition && (
     previousConformedInput === conformedInput ||
     conformedInput === placeholder
