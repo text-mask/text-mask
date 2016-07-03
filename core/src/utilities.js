@@ -90,6 +90,18 @@ function isAlphabetic(character) {
   return /^[a-zA-Z]+$/.test(character)
 }
 
+export function getIndexOfFirstChange(stringOne, stringTwo) {
+  const longestLength = (stringOne.length > stringTwo.length) ? stringOne.length : stringTwo.length
+
+  for (let i = 0; i < longestLength; i++) {
+    if (stringOne[i] !== stringTwo[i]) {
+      return i
+    }
+  }
+
+  return null
+}
+
 export function isString(value) {
   return typeof value === 'string' || value instanceof String
 }

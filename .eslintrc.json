@@ -22,7 +22,8 @@
     "_": true,
     "dynamicTests": true,
     "isVerify": true,
-    "sinon": true
+    "sinon": true,
+    "getLineNumber": true
   },
   "plugins": [
     "standard",

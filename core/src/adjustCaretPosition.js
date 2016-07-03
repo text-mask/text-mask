@@ -7,22 +7,13 @@ export default function adjustCaretPosition({
 
   const {output: conformedInput = '', meta = {}} = conformToMaskResults
   const {input: rawInput = '', placeholderChar, placeholder} = meta
-  const normalizedConformedInput = conformedInput.toLowerCase()
-  const normalizedRawInput = rawInput.toLowerCase()
-  const leftHalfChars = normalizedRawInput.substr(0, currentCaretPosition).split('')
-  const intersection = leftHalfChars.filter((char) => normalizedConformedInput.indexOf(char) !== -1)
-  const targetChar = intersection[intersection.length - 1]
-  const requiredNumberOfMatches = intersection.filter((char) => char === targetChar).length
-  const editLength = rawInput.length - previousConformedInput.length
-  const isAddition = editLength > 0
-  const possiblyHasRejectedChar = isAddition && (
-    previousConformedInput === conformedInput ||
-    conformedInput === placeholder
-  )
 
-  // This is true when user has entered more than one character per iteration. This happens
-  // when user pastes or makes a selection and edits
-  const isMultiCharEdit = Math.abs(previousConformedInput.length - rawInput.length) > 1
+  // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
+  // we know the user in this instance pasted two characters
+  const editLength = rawInput.length - previousConformedInput.length
+
+  // If the edit length is positive, that means the user is adding characters, not deleting.
+  const isAddition = editLength > 0
 
   // This is the first character the user entered that needs to be conformed to mask
   const isFirstChar = rawInput.length === 1
@@ -33,40 +24,83 @@ export default function adjustCaretPosition({
   //
   // Such cases can also happen when the user presses the backspace while holding down the ALT
   // key.
-  const isPartialMultiCharEdit = isMultiCharEdit && !isAddition && !isFirstChar
+  const isPartialMultiCharEdit = editLength > 1 && !isAddition && !isFirstChar
 
-  if (isPartialMultiCharEdit) {
-    return currentCaretPosition
-  }
+  // This algorithm doesn't support all cases of multi-character edits, so we just return
+  // the current caret position.
+  //
+  // This works fine for most cases.
+  if (isPartialMultiCharEdit) { return currentCaretPosition }
+
+  const possiblyHasRejectedChar = isAddition && (
+    previousConformedInput === conformedInput ||
+    conformedInput === placeholder
+  )
 
   let startingSearchIndex = 0
 
   if (possiblyHasRejectedChar) {
-    startingSearchIndex = currentCaretPosition - editLength - 1
+    startingSearchIndex = currentCaretPosition - editLength
   } else {
-    let numberOfMatches = 0
+    // At this point in the algorithm, we want to know where the caret is right before the raw input
+    // has been conformed, and then see if we can find that same spot in the conformed input.
+    //
+    // We do that by seeing what character lies immediately before the caret, and then look for that
+    // same character in the conformed input and place the caret there.
+
+    // First, we need to normalize the inputs so that letter capitalization between raw input and
+    // conformed input wouldn't matter.
+    const normalizedConformedInput = conformedInput.toLowerCase()
+    const normalizedRawInput = rawInput.toLowerCase()
+
+    // Then we take all characters that come before where the caret currently is.
+    const leftHalfChars = normalizedRawInput.substr(0, currentCaretPosition).split('')
+
+    // Now we find all the characters in the left half that exist in the conformed input
+    const intersection = leftHalfChars.filter(
+      (char) => normalizedConformedInput.indexOf(char) !== -1
+    )
+
+    // The last character in the intersection is the character we want to look for in the conformed
+    // input
+    const targetChar = intersection[intersection.length - 1]
+
+    // However, it may happen to exist more than once in the intersection. We need to know
+    // how many times it occurs
+    const requiredNumberOfMatches = intersection.filter((char) => char === targetChar).length
+
+    // Now we start looking for the location of the character.
+    // We keep looping forward and store the index in every iteration. Once we have encountered
+    // enough occurrences of the target character, we break out of the loop
+    let numberOfEncounteredMatches = 0
     for (let i = 0; i < conformedInput.length; i++) {
       const conformedInputChar = normalizedConformedInput[i]
 
+      startingSearchIndex = i + 1
+
       if (conformedInputChar === targetChar) {
-        numberOfMatches++
+        numberOfEncounteredMatches++
       }
 
-      startingSearchIndex = i
-
-      if (numberOfMatches === requiredNumberOfMatches) {
+      if (numberOfEncounteredMatches >= requiredNumberOfMatches) {
         break
       }
     }
   }
 
-  if (isAddition || isFirstChar) {
-    for (let i = startingSearchIndex + 1; i <= placeholder.length; i++) {
+  // At this point, if we simply return `startingSearchIndex` as the adjusted caret position,
+  // most cases would be handled. However, we want to fast forward or rewind the caret to the
+  // closest placeholder character if it happens to be in a non-editable spot. That's what the next
+  // logic is for.
+
+  // In case of addition, we fast forward.
+  if (isAddition) {
+    for (let i = startingSearchIndex; i <= placeholder.length; i++) {
       if (
         // If we're adding, we can position the caret at the next placeholder character.
       placeholder[i] === placeholderChar ||
 
-      // This is the end of the target. We cannot move any further. Let's put the caret there.
+      // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
       i === placeholder.length
       ) {
         // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
@@ -79,7 +113,8 @@ export default function adjustCaretPosition({
       }
     }
   } else {
-    for (let i = startingSearchIndex + 1; i >= 0; i--) {
+    // In case of deletion, we rewind.
+    for (let i = startingSearchIndex; i >= 0; i--) {
       // If we're deleting, we stop the caret right before the placeholder character.
       // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
       // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
@@ -87,7 +122,7 @@ export default function adjustCaretPosition({
       if (
         placeholder[i - 1] === placeholderChar ||
 
-        // This is the beginning of the target. We cannot move any further.
+        // This is the beginning of the placeholder. We cannot move any further.
         // Let's put the caret there.
         i === 0
       ) {
