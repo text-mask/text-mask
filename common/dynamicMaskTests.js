@@ -41,5 +41,7 @@ export default _.filter((t) => t.only, [{
     adjustedCaretPosition: 6,
   },
 
-  only: true
+  // TODO: for now, this works as expected. In the future, I'll want to make it possible to
+  // prevent the caret from moving over the dot.
+  skips: ['adjustedCaretPosition']
 }])
