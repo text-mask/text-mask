@@ -3,7 +3,6 @@ require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 import packageJson from '../package.json'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import conformToMask from '../src/conformToMask.js'
-import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :
@@ -42,6 +41,12 @@ describe('createTextMaskInputElement', () => {
     createTextMaskInputElement({inputElement, mask})
 
     expect(inputElement.placeholder).to.equal('hello')
+  })
+
+  it('works with dynamic masks', () => {
+    const mask = () => '1111'
+
+    expect(() => createTextMaskInputElement({inputElement, mask})).to.not.throw()
   })
 
   describe('`update` method', () => {
@@ -143,6 +148,23 @@ describe('createTextMaskInputElement', () => {
 
       textMaskControl.update()
       expect(inputElement.selectionStart).to.equal(0)
+    })
+
+    describe.only('dynamic mask', () => {
+      it('calls the dynamic mask function before every update', () => {
+        const maskSpy = sinon.spy(() => '1111')
+        const textMaskControl = createTextMaskInputElement({inputElement, mask: maskSpy})
+
+        inputElement.value = '2'
+        textMaskControl.update()
+        expect(inputElement.value).to.equal('2___')
+
+        inputElement.value = '24'
+        textMaskControl.update()
+        expect(inputElement.value).to.equal('24__')
+
+        expect(maskSpy.callCount).to.equal(2)
+      })
     })
 
     describe('`onAccept` callback', () => {

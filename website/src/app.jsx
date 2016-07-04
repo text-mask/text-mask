@@ -56,7 +56,7 @@ export default React.createClass({ // eslint-disable-line
                   placeholderCharacter={placeholderChar}
                   validator={validator}
                   ref='maskedInput'
-                  mask={createCurrencyMask()}
+                  mask={choiceMask || customMask}
                   guide={guide}
                   onReject={() => this.onReject(onRejectMessage)}
                   onAccept={() => this.onAccept(onAcceptMessage)}
