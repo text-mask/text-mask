@@ -100,7 +100,7 @@
     "rxjs": "^5.0.0-beta.8",
     "sass-loader": "^4.0.0",
     "sinon": "^1.17.3",
-    "stats-webpack-plugin": "^0.3.0",
+    "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.0",
     "testdom": "^2.0.0",
     "ts-node": "^0.9.3",
