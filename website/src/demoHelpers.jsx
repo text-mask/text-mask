@@ -1,5 +1,6 @@
 import React from 'react' // eslint-disable-line
 import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
+import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 export const initialState = {
   choices: [{
@@ -50,7 +51,7 @@ export const initialState = {
           target='_blank'
           href='https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js'>
           createMmddyyyyValidator
-        </a>, which needs to be installed separately as a
+        </a>, which is included in needs to be installed separately as a
         {' '}
         <a
           className='alert-link'
@@ -69,6 +70,39 @@ export const initialState = {
           <code>onReject</code>
         </a>{' '}
         callback to show a hint message when user enters a rejected character.
+      </span>
+    )
+  }, {
+    value: 'currency',
+    name: 'U.S. dollars currency',
+    mask: createCurrencyMask(),
+    placeholder: 'Enter an amount',
+    help: (
+      <span>
+        This is a
+        {' '}
+          <a
+            className='alert-link'
+            target='_blank'
+            href='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask'>
+            dynamic mask
+          </a>,
+        {' '}
+        which was created with
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js'>
+          createCurrencyMask
+        </a>. It needs to be installed separately as a
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/tree/master/addons/#readme'>
+          Text Mask addon
+        </a>.
       </span>
     )
   }, {

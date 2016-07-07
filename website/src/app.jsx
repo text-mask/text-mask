@@ -5,7 +5,6 @@ import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-li
 import classnames from 'classnames'
 import appStyles from './app.scss'
 import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
-import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
@@ -30,13 +29,15 @@ export default React.createClass({ // eslint-disable-line
       onRejectMessage,
       onAcceptMessage
     } = choices[selectedChoice]
-    const placeholderValue = guide !== true ? placeholder : undefined
     const maskedInputKey = JSON.stringify({
       customMask,
       selectedChoice,
       placeholderChar,
       guide
     })
+    const maskInUse = choiceMask || customMask
+    const isDynamicMask = typeof maskInUse === 'function'
+    const placeholderValue = (guide !== true || isDynamicMask) ? placeholder : undefined
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -56,7 +57,7 @@ export default React.createClass({ // eslint-disable-line
                   placeholderCharacter={placeholderChar}
                   validator={validator}
                   ref='maskedInput'
-                  mask={choiceMask || customMask}
+                  mask={maskInUse}
                   guide={guide}
                   onReject={() => this.onReject(onRejectMessage)}
                   onAccept={() => this.onAccept(onAcceptMessage)}
@@ -94,14 +95,23 @@ export default React.createClass({ // eslint-disable-line
               </div>
 
               <div className='col-sm-5 col-xs-12'>
-                <input
-                  ref='mask'
-                  type='text'
-                  onChange={this.onManualMaskChange}
-                  value={customMask || choiceMask}
-                  className={classnames('form-control', appStyles.mask)}
-                  id='mask'
-                />
+                {isDynamicMask && (
+                  <input
+                    disabled
+                    type='text'
+                    value="Dynamic mask"
+                    className={classnames('form-control', appStyles.mask)}
+                  />
+                ) || (
+                  <input
+                    ref='mask'
+                    type='text'
+                    onChange={this.onManualMaskChange}
+                    value={maskInUse}
+                    className={classnames('form-control', appStyles.mask)}
+                    id='mask'
+                  />
+                )}
               </div>
             </div>
 

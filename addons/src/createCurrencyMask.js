@@ -3,13 +3,19 @@ export default function createCurrencyMask({
   suffix = ''
 } = {}) {
   return function(userInput) {
-    userInput = userInput.replace(/\D+/g, '')
-    userInput = userInput.replace(/\d/g, '1')
+    userInput = userInput
+      .replace(/\D+/g, '')
+      .replace(/\d/g, '1')
 
-    return `${prefix}${numberWithCommas(userInput)}${suffix}`
+    if (userInput === '') {
+      return `${prefix}1${suffix}`
+    } else {
+      return `${prefix}${numberWithCommas(userInput)}${suffix}`
+    }
   }
 }
 
+// http://stackoverflow.com/a/10899795/604296
 function numberWithCommas(n) {
   var parts = n.toString().split(".");
 
