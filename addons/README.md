@@ -1,6 +1,6 @@
 # Text Mask Addons
 
-Text Mask addons are accessories for Text Mask.
+These addons are ready-to-use validators and masks that can be used with Text Mask.
 
 ## Installation
 
@@ -24,11 +24,11 @@ is `$` and the default `suffix` is nothing. So, `currencyMask` by default will t
 ### Usage
 
 ```js
-var createCurrencyMask = require('text-mask-addons/dist/createCurrencyMask.js')
+import createCurrencyMask from 'text-mask-addons/dist/createCurrencyMask.js'
 
-var currencyMask = createCurrencyMask({
+const currencyMask = createCurrencyMask({
   prefix: '',
-  suffix: ' $' // This will put the dolalr sign at the end, with a space.
+  suffix: ' $' // This will put the dollar sign at the end, with a space.
 })
 
 // ...then pass `currencyMask` to the Text Mask component
@@ -52,9 +52,9 @@ character that would invalidate the date. For example, a month that begins with 
 #### Usage
 
 ```js
-var createMmddyyyyValidator = require('text-mask-addons/dist/createMmddyyyyValidator.js')
+import createMmddyyyyValidator from 'text-mask-addons/dist/createMmddyyyyValidator.js'
 
-var mmddyyyyValidator = createMmddyyyyValidator({
+const mmddyyyyValidator = createMmddyyyyValidator({
   minimumDate: '01/01/1900',
   maximumDate: '12/31/2016'
 })
