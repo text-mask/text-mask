@@ -2,6 +2,9 @@ import React from 'react' // eslint-disable-line
 import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
 import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
+const dynamicMaskDocumentationLink = 'https://github.com/msafi/text-mask/blob/master/' +
+  'componentDocumentation.md#mask-function-aka-dynamic-mask'
+
 export const initialState = {
   choices: [{
     value: 'usPhoneNumber',
@@ -84,7 +87,7 @@ export const initialState = {
           <a
             className='alert-link'
             target='_blank'
-            href='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask'>
+            href={dynamicMaskDocumentationLink}>
             dynamic mask
           </a>,
         {' '}

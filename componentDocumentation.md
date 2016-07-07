@@ -47,8 +47,10 @@ For example, US phone number with country code would look like `+\\1 (111) 111-1
 ### `mask` function (a.k.a dynamic mask)
 
 You can also pass a function as the `mask`. The function will receive the user input at every
-change. The function is expected to return a `mask` string. This is useful when we want to format
-a user input of unknown length, such as formatting a number to currency or email address.
+change. The function is expected to return a `mask` string.
+
+This feature is useful when we want to format a user input of unknown length, such as
+formatting a number to currency or formatting a string to email address mask.
 
 For an example of a dynamic mask, see the source code of
 [`createCurrencyMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js).
