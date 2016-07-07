@@ -45,7 +45,7 @@ describe('createCurrencyMask', () => {
     })
 
     it('adds adds a comma after a thousand', () => {
-      expect(currencyMask('1000')).to.equal('$1,111');
+      expect(currencyMask('1000')).to.equal('$1,111')
     })
 
     it('adds as many commas as needed', () => {

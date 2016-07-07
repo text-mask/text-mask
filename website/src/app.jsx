@@ -99,7 +99,7 @@ export default React.createClass({ // eslint-disable-line
                   <input
                     disabled
                     type='text'
-                    value="Dynamic mask"
+                    value='Dynamic mask'
                     className={classnames('form-control', appStyles.mask)}
                   />
                 ) || (

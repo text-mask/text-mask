@@ -17,7 +17,7 @@ export default function createCurrencyMask({
 
 // http://stackoverflow.com/a/10899795/604296
 function numberWithCommas(n) {
-  var parts = n.toString().split(".");
+  var parts = n.toString().split('.')
 
-  return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+  return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '')
 }
