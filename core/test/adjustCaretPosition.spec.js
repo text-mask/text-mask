@@ -1,4 +1,5 @@
 import testParameters, {noGuideMode} from './../../common/testParameters.js'
+import dynamicMaskTests from './../../common/dynamicMaskTests.js'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import {placeholderCharacter as placeholderChar} from '../src/constants'
 import packageJson from '../package.json'
@@ -194,6 +195,33 @@ describe('adjustCaretPosition', () => {
             previousConformedInput: test.input.startingInputFieldValue,
             conformToMaskResults: {
               output: test.output.conformedInputFieldValue,
+              meta: {
+                input: test.input.userModifiedInputFieldValue,
+                placeholder: convertMaskToPlaceholder(test.input.mask),
+                guide: false,
+                placeholderChar
+              }
+            },
+            currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
+          })).to.equal(test.output.adjustedCaretPosition)
+        }
+      })
+    )
+  })
+
+  describe('Dynamic mask tests', () => {
+    dynamicTests(
+      dynamicMaskTests,
+
+      (test) => ({
+        description: `for input: ${JSON.stringify(test.input)}, it knows to adjust the caret to ` +
+        `'${test.output.adjustedCaretPosition}'`,
+
+        body: () => {
+          expect(adjustCaretPosition({
+            previousConformedInput: test.input.startingInputFieldValue,
+            conformToMaskResults: {
+              output: test.input.conformedInputFieldValue,
               meta: {
                 input: test.input.userModifiedInputFieldValue,
                 placeholder: convertMaskToPlaceholder(test.input.mask),

@@ -27,15 +27,18 @@ export default React.createClass({ // eslint-disable-line
       validator,
       value,
       onRejectMessage,
-      onAcceptMessage
+      onAcceptMessage,
+      style
     } = choices[selectedChoice]
-    const placeholderValue = guide !== true ? placeholder : undefined
     const maskedInputKey = JSON.stringify({
       customMask,
       selectedChoice,
       placeholderChar,
       guide
     })
+    const maskInUse = choiceMask || customMask
+    const isDynamicMask = typeof maskInUse === 'function'
+    const placeholderValue = (guide !== true || isDynamicMask) ? placeholder : undefined
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -50,12 +53,13 @@ export default React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
+                  style={style}
                   key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
                   validator={validator}
                   ref='maskedInput'
-                  mask={customMask || choiceMask}
+                  mask={maskInUse}
                   guide={guide}
                   onReject={() => this.onReject(onRejectMessage)}
                   onAccept={() => this.onAccept(onAcceptMessage)}
@@ -94,10 +98,18 @@ export default React.createClass({ // eslint-disable-line
 
               <div className='col-sm-5 col-xs-12'>
                 <input
+                  style={{display: (isDynamicMask) ? null : 'none'}}
+                  disabled
+                  type='text'
+                  value='Dynamic mask'
+                  className={classnames('form-control', appStyles.mask)}
+                />
+                <input
+                  style={{display: (isDynamicMask) ? 'none' : null}}
                   ref='mask'
                   type='text'
                   onChange={this.onManualMaskChange}
-                  value={customMask || choiceMask}
+                  value={maskInUse}
                   className={classnames('form-control', appStyles.mask)}
                   id='mask'
                 />
@@ -182,13 +194,13 @@ export default React.createClass({ // eslint-disable-line
       customMask: '',
       rejectMessage: null,
       acceptMessage: null
+    }, () => {
+      if (selectValue === 'custom') {
+        this.refs.mask.focus()
+      } else {
+        this.focusMaskedInput()
+      }
     })
-
-    if (selectValue === 'custom') {
-      return this.refs.mask.focus()
-    }
-
-    this.focusMaskedInput()
   },
 
   changeGuide({target: {value: guide}}) {

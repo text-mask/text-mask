@@ -99,7 +99,16 @@ export default function adjustCaretPosition({
 
   // In case of addition, we fast forward.
   if (isAddition) {
+    // We want to remember the last placeholder character encountered so that if the mask
+    // contains more characters after the last placeholder character, we don't forward the caret
+    // that far to the right. Instead, we stop it at the last encountered placeholder character.
+    let lastPlaceholderChar = startingSearchIndex
+
     for (let i = startingSearchIndex; i <= placeholder.length; i++) {
+      if (placeholder[i] === placeholderChar) {
+        lastPlaceholderChar = i
+      }
+
       if (
         // If we're adding, we can position the caret at the next placeholder character.
       placeholder[i] === placeholderChar ||
@@ -107,13 +116,7 @@ export default function adjustCaretPosition({
       // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
       i === placeholder.length
       ) {
-        // Limiting `i` to the length of the `conformedInput` is a brute force fix for caret
-        // positioning in `!guide` mode. There are a few edge cases which are
-        // solved by this. To see what happens without it, uncomment the line below and run
-        // the test suite
-
-        // return i
-        return (i > conformedInput.length) ? conformedInput.length : i
+        return lastPlaceholderChar
       }
     }
   } else {

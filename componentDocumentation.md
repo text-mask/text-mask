@@ -2,7 +2,7 @@
 
 Text Mask accepts the following values:
 
-* [`mask`](#mask) (string)
+* [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
 * [`placeholderCharacter`](#placeholdercharacter) (string)
 * [`validator`](#validator) (function)
@@ -11,9 +11,11 @@ Text Mask accepts the following values:
 
 ## `mask`
 
-`mask` is a string that defines how the user input is going to be masked.
+`mask` is a string or a function that defines how the user input is going to be masked.
 
-### Examples
+### `mask` string
+
+#### Examples
 
 Description | Mask
 --- | ---
@@ -21,7 +23,7 @@ US phone number | `(111) 111-1111`
 US phone number with country code | `+\1 (111) 111-1111`
 Canadian postal code | `U1U 1U1`
 
-### Masking characters
+#### Masking characters
 
 You can use any of the characters below to define your mask
 
@@ -41,6 +43,17 @@ To use a masking character as part of the mask, you need to escape it with `\`.
 in a string. In that case you will need to double `\`.
 
 For example, US phone number with country code would look like `+\\1 (111) 111-1111`.
+
+### `mask` function (a.k.a dynamic mask)
+
+You can also pass a function as the `mask`. The function will receive the user input at every
+change. The function is expected to return a `mask` string.
+
+This feature is useful when we want to format a user input of unknown length, such as
+formatting a number to currency or formatting a string to email address mask.
+
+For an example of a dynamic mask, see the source code of
+[`createCurrencyMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js).
 
 ## `guide`
 

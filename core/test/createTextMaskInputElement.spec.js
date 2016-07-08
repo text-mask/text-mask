@@ -43,6 +43,12 @@ describe('createTextMaskInputElement', () => {
     expect(inputElement.placeholder).to.equal('hello')
   })
 
+  it('works with dynamic masks', () => {
+    const mask = () => '1111'
+
+    expect(() => createTextMaskInputElement({inputElement, mask})).to.not.throw()
+  })
+
   describe('`update` method', () => {
     it('conforms whatever value is in the input element to a mask', () => {
       const mask = '(111) 111-1111'
@@ -142,6 +148,21 @@ describe('createTextMaskInputElement', () => {
 
       textMaskControl.update()
       expect(inputElement.selectionStart).to.equal(0)
+    })
+
+    it('calls the dynamic mask function before every update', () => {
+      const maskSpy = sinon.spy(() => '1111')
+      const textMaskControl = createTextMaskInputElement({inputElement, mask: maskSpy})
+
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('2___')
+
+      inputElement.value = '24'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('24__')
+
+      expect(maskSpy.callCount).to.equal(2)
     })
 
     describe('`onAccept` callback', () => {

@@ -1,5 +1,9 @@
 import React from 'react' // eslint-disable-line
 import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
+import createCurrencyMask from '../../addons/src/createCurrencyMask'
+
+const dynamicMaskDocumentationLink = 'https://github.com/msafi/text-mask/blob/master/' +
+  'componentDocumentation.md#mask-function-aka-dynamic-mask'
 
 export const initialState = {
   choices: [{
@@ -71,6 +75,40 @@ export const initialState = {
         callback to show a hint message when user enters a rejected character.
       </span>
     )
+  }, {
+    value: 'currency',
+    name: 'U.S. dollars currency',
+    mask: createCurrencyMask(),
+    placeholder: 'Enter an amount',
+    help: (
+      <span>
+        This is a
+        {' '}
+          <a
+            className='alert-link'
+            target='_blank'
+            href={dynamicMaskDocumentationLink}>
+            dynamic mask
+          </a>,
+        {' '}
+        which was created with
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js'>
+          createCurrencyMask
+        </a>. It needs to be installed separately as a
+        {' '}
+        <a
+          className='alert-link'
+          target='_blank'
+          href='https://github.com/msafi/text-mask/tree/master/addons/#readme'>
+          Text Mask addon
+        </a>.
+      </span>
+    ),
+    style: {textAlign: 'right'}
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',
