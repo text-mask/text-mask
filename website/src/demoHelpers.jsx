@@ -107,7 +107,8 @@ export const initialState = {
           Text Mask addon
         </a>.
       </span>
-    )
+    ),
+    style: {textAlign: 'right'}
   }, {
     value: 'fiveDigitNumber',
     name: 'Five digit number (zip code)',

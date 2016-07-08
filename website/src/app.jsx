@@ -27,7 +27,8 @@ export default React.createClass({ // eslint-disable-line
       validator,
       value,
       onRejectMessage,
-      onAcceptMessage
+      onAcceptMessage,
+      style
     } = choices[selectedChoice]
     const maskedInputKey = JSON.stringify({
       customMask,
@@ -52,6 +53,7 @@ export default React.createClass({ // eslint-disable-line
 
               <div className='col-sm-9'>
                 <MaskedInput
+                  style={style}
                   key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}

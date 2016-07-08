@@ -42,6 +42,15 @@ The mask also supports escaping, so you can use a masking character *within* the
 The first `1` is not a masking character but part of the mask. For more information, see the
 [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
+### Dynamic mask
+
+<p align="center">
+<img src="assets/dynamicMask.gif"/>
+</p>
+
+You can pass a function as the mask to create dynamic masks for things like currency formatting
+and more.
+
 ### Guide mode
 
 <p align="center">
