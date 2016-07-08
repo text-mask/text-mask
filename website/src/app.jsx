@@ -95,23 +95,22 @@ export default React.createClass({ // eslint-disable-line
               </div>
 
               <div className='col-sm-5 col-xs-12'>
-                {isDynamicMask && (
-                  <input
-                    disabled
-                    type='text'
-                    value='Dynamic mask'
-                    className={classnames('form-control', appStyles.mask)}
-                  />
-                ) || (
-                  <input
-                    ref='mask'
-                    type='text'
-                    onChange={this.onManualMaskChange}
-                    value={maskInUse}
-                    className={classnames('form-control', appStyles.mask)}
-                    id='mask'
-                  />
-                )}
+                <input
+                  style={{display: (isDynamicMask) ? null : 'none'}}
+                  disabled
+                  type='text'
+                  value='Dynamic mask'
+                  className={classnames('form-control', appStyles.mask)}
+                />
+                <input
+                  style={{display: (isDynamicMask) ? 'none' : null}}
+                  ref='mask'
+                  type='text'
+                  onChange={this.onManualMaskChange}
+                  value={maskInUse}
+                  className={classnames('form-control', appStyles.mask)}
+                  id='mask'
+                />
               </div>
             </div>
 
@@ -193,13 +192,13 @@ export default React.createClass({ // eslint-disable-line
       customMask: '',
       rejectMessage: null,
       acceptMessage: null
+    }, () => {
+      if (selectValue === 'custom') {
+        this.refs.mask.focus()
+      } else {
+        this.focusMaskedInput()
+      }
     })
-
-    if (selectValue === 'custom') {
-      return this.refs.mask.focus()
-    }
-
-    this.focusMaskedInput()
   },
 
   changeGuide({target: {value: guide}}) {
