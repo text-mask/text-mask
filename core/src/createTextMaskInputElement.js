@@ -6,7 +6,7 @@ export default function createTextMaskInputElement({
   inputElement,
   mask: providedMask,
   guide,
-  pipe,
+  pipe = defaultPipe,
   placeholderChar,
   onAccept,
   onReject
@@ -41,8 +41,13 @@ export default function createTextMaskInputElement({
       const {selectionStart: currentCaretPosition} = inputElement
       const {previousConformedInput} = state
       const safeValueToConform = getSafeInputValue(valueToConform)
-      const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, pipe}
-      const conformToMaskResults = conformToMask(safeValueToConform, mask, conformToMaskConfig)
+      const conformToMaskConfig = {previousConformedInput, guide, placeholderChar}
+      const conformToMaskResults = pipe({
+        valueToConform: safeValueToConform,
+        mask,
+        conformToMask,
+        conformToMaskConfig
+      })
       const {output: outputOfConformToMask} = conformToMaskResults
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedInput,
@@ -95,4 +100,8 @@ function getSafeInputValue(inputValue) {
       `received was:\n\n ${JSON.stringify(inputValue)}`
     )
   }
+}
+
+function defaultPipe({valueToConform, mask, conformToMask, conformToMaskConfig}) {
+  return conformToMask(valueToConform, mask, conformToMaskConfig)
 }

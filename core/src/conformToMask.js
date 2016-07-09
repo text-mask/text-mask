@@ -14,7 +14,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     guide = true,
     previousConformedInput = '',
     placeholderChar = defaultPlaceholderChar,
-    pipe: isCustomValid = alwaysReturnTrue
+    pipe = identity
   } = config
 
   // We will be iterating over each character in the placeholder and sort of fill it up
@@ -149,8 +149,13 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     }
   }
 
+  const pipedConformedString = pipe({
+    conformedUserInput: conformedString,
+    placeholderCharacter: placeholderChar
+  })
+  
   return {
-    output: isCustomValid(conformedString) ? conformedString : previousConformedInput,
+    output: (pipedConformedString === false) ? previousConformedInput : pipedConformedString,
     meta: {
       input: userInput,
       mask,
@@ -161,6 +166,6 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   }
 }
 
-function alwaysReturnTrue() {
-  return true
+function identity(a) {
+  return a
 }
