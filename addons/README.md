@@ -1,6 +1,6 @@
 # Text Mask Addons
 
-These addons are ready-to-use validators and masks that can be used with Text Mask.
+These addons are ready-to-use pipes and masks that can be used with Text Mask.
 
 ## Installation
 
@@ -34,15 +34,15 @@ const currencyMask = createCurrencyMask({
 // ...then pass `currencyMask` to the Text Mask component
 ```
 
-## Validators
+## Pipes
 
 These functions here can be passed as a
-[`validator`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#validator)
+[`pipe`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
-### `createMmddyyyyValidator`
+### `createMmddyyyyPipe`
 
-`createMmddyyyyValidator` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
+`createMmddyyyyPipe` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
 date.
 
 It accepts a config object with `minimumDate` and `maximumDate`, and ensures that the user is
@@ -52,12 +52,12 @@ character that would invalidate the date. For example, a month that begins with 
 #### Usage
 
 ```js
-import createMmddyyyyValidator from 'text-mask-addons/dist/createMmddyyyyValidator.js'
+import createMmddyyyyPipe from 'text-mask-addons/dist/createMmddyyyyPipe.js'
 
-const mmddyyyyValidator = createMmddyyyyValidator({
+const mmddyyyyPipe = createMmddyyyyPipe({
   minimumDate: '01/01/1900',
   maximumDate: '12/31/2016'
 })
 
-// ...then pass `mmddyyyyValidator` to the Text Mask component
+// ...then pass `mmddyyyyPipe` to the Text Mask component
 ```

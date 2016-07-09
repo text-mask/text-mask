@@ -4,7 +4,7 @@ export function maskInput({
   inputElement,
   mask,
   guide,
-  validator,
+  pipe,
   placeholderCharacter: placeholderChar,
   onAccept,
   onReject
@@ -13,7 +13,7 @@ export function maskInput({
     inputElement,
     mask,
     guide,
-    validator,
+    pipe,
     placeholderChar,
     onAccept,
     onReject

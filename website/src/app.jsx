@@ -24,7 +24,7 @@ export default React.createClass({ // eslint-disable-line
       mask: choiceMask,
       placeholder,
       help,
-      validator,
+      pipe,
       value,
       onRejectMessage,
       onAcceptMessage,
@@ -57,7 +57,7 @@ export default React.createClass({ // eslint-disable-line
                   key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderCharacter={placeholderChar}
-                  validator={validator}
+                  pipe={pipe}
                   ref='maskedInput'
                   mask={maskInUse}
                   guide={guide}

@@ -5,7 +5,7 @@ Text Mask accepts the following values:
 * [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
 * [`placeholderCharacter`](#placeholdercharacter) (string)
-* [`validator`](#validator) (function)
+* [`pipe`](#pipe) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
 
@@ -96,24 +96,24 @@ is, since the default placeholder character is `_`, you cannot have a mask that 
 `_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
 in your mask.
 
-## `validator`
+## `pipe`
 
-You can pass a validator to Text Mask. It should adhere to the following interface:
+You can pass a pipe to Text Mask. It should adhere to the following interface:
 
 * Accepts `conformedUserInput` (string)
 * Returns `isValid` (boolean)
 
-The validator will be called whenever the user modifies the value in the component.
-The validator will receive one argument: *the conformed user input*.
-Given that argument, the validator should return either `true` or `false`. If it returned `false`,
+The pipe will be called whenever the user modifies the value in the component.
+The pipe will receive one argument: *the conformed user input*.
+Given that argument, the pipe should return either `true` or `false`. If it returned `false`,
 the component will not update. If it returned `true`, it will.
 
-Since the validator will receive the user input on every change, it should return `true` for
+Since the pipe will receive the user input on every change, it should return `true` for
 partial values that could potentially develop into full valid values. For example, a date
-validator should return `true` for `conformedUserInput` that equals `1_/__/____`.
+pipe should return `true` for `conformedUserInput` that equals `1_/__/____`.
 
-For an example of a validator, see the code for
-[`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
+For an example of a pipe, see the code for
+[`createMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyPipe.js)
 in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `onReject`

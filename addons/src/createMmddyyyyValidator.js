@@ -1,6 +1,6 @@
 const numberOfDaysInEachMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-export default function createMmddyyyyValidator(
+export default function createMmddyyyyPipe(
   {minimumDate = '', maximumDate = ''} = {}
 ) {
   return function(conformedUserInput) {

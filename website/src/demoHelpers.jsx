@@ -1,5 +1,5 @@
 import React from 'react' // eslint-disable-line
-import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
+import createMmddyyyyPipe from '../../addons/src/createMmddyyyyPipe.js'
 import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 const dynamicMaskDocumentationLink = 'https://github.com/msafi/text-mask/blob/master/' +
@@ -30,7 +30,7 @@ export const initialState = {
     value: 'birthDay',
     name: 'Birth day (validated)',
     mask: '11/11/1111',
-    validator: createMmddyyyyValidator({
+    pipe: createMmddyyyyPipe({
       minimumDate: '01/01/1900',
       maximumDate: (new Date()).toLocaleDateString('en-US', {
         day: '2-digit',
@@ -52,8 +52,8 @@ export const initialState = {
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js'>
-          createMmddyyyyValidator
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyPipe.js'>
+          createMmddyyyyPipe
         </a>, which needs to be installed separately as a
         {' '}
         <a

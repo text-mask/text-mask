@@ -6,7 +6,7 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
     guide: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    validator: PropTypes.func
+    pipe: PropTypes.func
   },
 
   componentDidMount() {
