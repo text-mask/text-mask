@@ -3,6 +3,7 @@ import testParameters, {
   acceptedCharInMask,
   allowMaskingCharInMask
 } from './../../common/testParameters.js'
+import dynamicMaskTests from '../../common/dynamicMaskTests'
 import packageJson from '../package.json'
 
 const conformToMask = (isVerify()) ?
@@ -81,6 +82,25 @@ describe('conformToMask', () => {
             test.input.mask,
             {guide: true, previousConformedInput: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
+        }
+      })
+    )
+  })
+
+  describe('Dynamic mask', () => {
+    dynamicTests(
+      dynamicMaskTests,
+
+      (test) => ({
+        description: `for input ${JSON.stringify(test.input)}, ` +
+        `it outputs '${test.output.conformedInputFieldValue}'`,
+
+        body: () => {
+          expect(conformToMask(
+            test.input.userModifiedInputFieldValue,
+            test.input.mask,
+            {guide: true, previousConformedInput: test.input.startingInputFieldValue}
+          ).output).to.equal(test.input.conformedInputFieldValue)
         }
       })
     )

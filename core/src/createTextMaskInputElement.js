@@ -1,20 +1,27 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
+import {placeholderCharacter} from './constants.js'
 
+// This component orchestrates the flow of data through the various Text Mask functions
+// and can update the DOM input element.
 export default function createTextMaskInputElement({
   inputElement,
   mask: providedMask,
   guide,
   validator,
-  placeholderChar,
+  placeholderChar = placeholderCharacter,
   onAccept,
   onReject
 }) {
+  // We need to keep a state
   const state = {previousConformedInput: ''}
-
+  const caretTrapsRegex = /\[\]/g
+  
   let componentPlaceholder = ''
   let mask
+  let maskPotentiallyWithCaretTraps
+  let hasCaretTraps
 
   if (isString(providedMask)) {
     componentPlaceholder = convertMaskToPlaceholder(providedMask, placeholderChar)
@@ -30,15 +37,22 @@ export default function createTextMaskInputElement({
     update(valueToConform = inputElement.value) {
       if (valueToConform === state.previousConformedInput) { return }
 
+      const {selectionStart: currentCaretPosition} = inputElement
+      
       if (typeof providedMask === 'function') {
-        mask = providedMask(valueToConform)
+        maskPotentiallyWithCaretTraps = providedMask({
+          valueToConform, 
+          currentCaretPosition,
+          placeholderCharacter: placeholderChar
+        })
+        mask = maskPotentiallyWithCaretTraps.replace(caretTrapsRegex, '')
+        hasCaretTraps = mask !== maskPotentiallyWithCaretTraps
 
         componentPlaceholder = convertMaskToPlaceholder(mask, placeholderChar)
       } else {
         mask = providedMask
       }
 
-      const {selectionStart: currentCaretPosition} = inputElement
       const {previousConformedInput} = state
       const safeValueToConform = getSafeInputValue(valueToConform)
       const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, validator}
@@ -48,7 +62,8 @@ export default function createTextMaskInputElement({
         previousConformedInput,
         conformToMaskResults,
         currentCaretPosition,
-        placeholderChar
+        placeholderChar,
+        maskWithCaretTraps: (hasCaretTraps) ? maskPotentiallyWithCaretTraps : undefined
       })
       const valueShouldBeEmpty = (
         outputOfConformToMask === componentPlaceholder && adjustedCaretPosition === 0

@@ -230,6 +230,7 @@ describe('adjustCaretPosition', () => {
               }
             },
             currentCaretPosition: test.input.caretPositionAfterInputFieldValueChange,
+            maskWithCaretTraps: test.input.maskWithCaretTraps
           })).to.equal(test.output.adjustedCaretPosition)
         }
       })

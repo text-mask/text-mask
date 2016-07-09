@@ -2,11 +2,14 @@ export default function adjustCaretPosition({
   previousConformedInput = '',
   conformToMaskResults = {},
   currentCaretPosition = 0,
+  maskWithCaretTraps
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
   const {output: conformedInput = '', meta = {}} = conformToMaskResults
   const {input: rawInput = '', placeholderChar, placeholder} = meta
+  const hasCaretTraps = maskWithCaretTraps !== undefined
+  const caretTrapsIndexes = (hasCaretTraps) ? getCaretTrapsIndexes(maskWithCaretTraps) : []
 
   // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
   // we know the user in this instance pasted two characters
@@ -114,7 +117,9 @@ export default function adjustCaretPosition({
       placeholder[i] === placeholderChar ||
 
       // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
-      i === placeholder.length
+      i === placeholder.length ||
+
+      (hasCaretTraps && caretTrapsIndexes.indexOf(i) !== -1)
       ) {
         return lastPlaceholderChar
       }
@@ -131,10 +136,27 @@ export default function adjustCaretPosition({
 
         // This is the beginning of the placeholder. We cannot move any further.
         // Let's put the caret there.
-        i === 0
+        i === 0 ||
+
+        (hasCaretTraps && caretTrapsIndexes.indexOf(i) !== -1)
       ) {
         return i
       }
     }
   }
+}
+
+function getCaretTrapsIndexes(mask) {
+  let previousLengths = 0
+
+  return mask
+    .split('[]')
+    .slice(0, -1)
+    .map((chunk) => {
+      const trapIndex = chunk.length + previousLengths
+
+      previousLengths += chunk.length
+
+      return trapIndex
+    })
 }

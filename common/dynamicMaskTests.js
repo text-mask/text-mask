@@ -30,18 +30,32 @@ export default _.filter((t) => t.only, [{
   // only: true,
 }, {
   input: {
-    startingInputFieldValue: '$200.34',
-    userModifiedInputFieldValue: '$2003.34',
-    mask: '$1,111.11',
-    caretPositionAfterInputFieldValueChange: 6,
-    conformedInputFieldValue: '$2,003.34',
+    startingInputFieldValue: '',
+    userModifiedInputFieldValue: 'f',
+    mask: '*@*.*',
+    caretPositionAfterInputFieldValueChange: 1,
+    conformedInputFieldValue: 'f@_._',
+    maskWithCaretTraps: '*[]@*.*'
   },
 
   output: {
-    adjustedCaretPosition: 6,
+    adjustedCaretPosition: 1,
   },
 
-  // TODO: for now, this works as expected. In the future, I'll want to make it possible to
-  // prevent the caret from moving over the dot.
-  skips: ['adjustedCaretPosition']
+  // only: true
+}, {
+  input: {
+    startingInputFieldValue: 'ff@ssd.com',
+    userModifiedInputFieldValue: 'ff@sd.com',
+    mask: '**@**.***',
+    caretPositionAfterInputFieldValueChange: 3,
+    conformedInputFieldValue: 'ff@sd.com',
+    maskWithCaretTraps: '**@[]**.***'
+  },
+
+  output: {
+    adjustedCaretPosition: 3,
+  },
+
+  // only: true
 }])
