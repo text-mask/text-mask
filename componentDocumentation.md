@@ -4,7 +4,7 @@ Text Mask accepts the following values:
 
 * [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
-* [`placeholderCharacter`](#placeholdercharacter) (string)
+* [`placeholderChar`](#placeholderChar) (string)
 * [`validator`](#validator) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
@@ -79,7 +79,7 @@ mask characters.
 When `guide` is `false`, Text Mask doesn't print out placeholder characters and only adds mask
 characters when the user reaches them as they're typing.
 
-## `placeholderCharacter`
+## `placeholderChar`
 
 The placeholder character represents the fillable spot in the mask. The default placeholder
 character is underscore, `_`.
@@ -93,7 +93,7 @@ as `'\u2000'`.
 
 &#x1F4CD; **Note**: you cannot use a mask that has a placeholder character hard-coded in it. That
 is, since the default placeholder character is `_`, you cannot have a mask that looks like
-`_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
+`_111_` unless you pass `placeholderChar` that is not `_` and doesn't exist
 in your mask.
 
 ## `validator`

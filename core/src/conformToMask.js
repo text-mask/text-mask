@@ -6,7 +6,7 @@ import {
   getIndexOfFirstChange,
   unescapeMask
 } from './utilities.js'
-import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
+import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
@@ -116,7 +116,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       // And we break
       break
 
-    // Else, the characterInPlaceholder is not a placeholderCharacter. That is, we cannot fill it
+    // Else, the characterInPlaceholder is not a placeholderChar. That is, we cannot fill it
     // with user input. So we just map it to the final output
     } else {
       conformedString += charInPlaceholder
@@ -143,7 +143,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       // We substring from the beginning until the position after the last filled placeholder char.
       conformedString = conformedString.substr(0, indexOfLastFilledPlaceholderChar + 1)
     } else {
-      // If we couldn't find `indexOfLastFilledPlaceholderCharacter` that means the user deleted
+      // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
       // the first character in the mask. So we return an empty string.
       conformedString = ''
     }

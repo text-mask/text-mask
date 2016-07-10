@@ -1,7 +1,7 @@
 import testParameters, {noGuideMode} from './../../common/testParameters.js'
 import dynamicMaskTests from './../../common/dynamicMaskTests.js'
 import {convertMaskToPlaceholder} from '../src/utilities'
-import {placeholderCharacter as placeholderChar} from '../src/constants'
+import {placeholderChar} from '../src/constants'
 import packageJson from '../package.json'
 
 const adjustCaretPosition = (isVerify()) ?

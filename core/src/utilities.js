@@ -1,7 +1,7 @@
 import {
   maskingCharactersEnums,
   maskingCharacters,
-  placeholderCharacter as defaultPlaceholderChar
+  placeholderChar as defaultPlaceholderChar
 } from './constants.js'
 
 export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPlaceholderChar) {
