@@ -11,7 +11,7 @@ const adjustCaretPosition = (isVerify()) ?
 describe('adjustCaretPosition', () => {
   it('places the caret after the last change when operation is addition', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '3333',
+      previousConformedValue: '3333',
       conformToMaskResults: {
         output: '2938',
         meta: {
@@ -27,7 +27,7 @@ describe('adjustCaretPosition', () => {
   it('sets the caret back in order to prevent it from moving when the change ' +
     'has not actually modified the output and the operation is not deletion', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '(123) ___-____',
+      previousConformedValue: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
         meta: {
@@ -44,7 +44,7 @@ describe('adjustCaretPosition', () => {
     'conformed output are the same but the reverted position is not a ' +
     'placeholder character', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '(___)      ___-____',
+      previousConformedValue: '(___)      ___-____',
       conformToMaskResults: {
         output: '(___)      ___-____',
         meta: {
@@ -60,7 +60,7 @@ describe('adjustCaretPosition', () => {
   it('knows to move the caret back when the previousInput and conformToMaskResults output ' +
     'are identical but the operation is deletion', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '(123) ___-____',
+      previousConformedValue: '(123) ___-____',
       conformToMaskResults: {
         output: '(123) ___-____',
         meta: {
@@ -76,7 +76,7 @@ describe('adjustCaretPosition', () => {
   it('knows to move caret to the next mask area when the last character of the current part ' +
     'has just been filled and the caret is at the end of the mask part', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '(12_) _',
+      previousConformedValue: '(12_) _',
       conformToMaskResults: {
         output: '(123) _',
         meta: {
@@ -89,7 +89,7 @@ describe('adjustCaretPosition', () => {
     })).to.equal(6)
 
     expect(adjustCaretPosition({
-      previousConformedInput: '(12_) 7',
+      previousConformedValue: '(12_) 7',
       conformToMaskResults: {
         output: '(132) _',
         meta: {
@@ -105,7 +105,7 @@ describe('adjustCaretPosition', () => {
   it('knows to move caret to previous mask part when the first character of current part ' +
     'has just been deleted and the caret is at the beginning of the mask part', () => {
     expect(adjustCaretPosition({
-      previousConformedInput: '(124) 3',
+      previousConformedValue: '(124) 3',
       conformToMaskResults: {
         output: '(124) _',
         meta: {
@@ -118,7 +118,7 @@ describe('adjustCaretPosition', () => {
     })).to.equal(4)
 
     expect(adjustCaretPosition({
-      previousConformedInput: '(12_) 3',
+      previousConformedValue: '(12_) 3',
       conformToMaskResults: {
         output: '(12_) _',
         meta: {
@@ -153,7 +153,7 @@ describe('adjustCaretPosition', () => {
 
         body: () => {
           expect(adjustCaretPosition({
-            previousConformedInput: test.input.startingInputFieldValue,
+            previousConformedValue: test.input.startingInputFieldValue,
             conformToMaskResults: {
               output: test.output.conformedInputFieldValue,
               meta: {
@@ -192,7 +192,7 @@ describe('adjustCaretPosition', () => {
 
         body: () => {
           expect(adjustCaretPosition({
-            previousConformedInput: test.input.startingInputFieldValue,
+            previousConformedValue: test.input.startingInputFieldValue,
             conformToMaskResults: {
               output: test.output.conformedInputFieldValue,
               meta: {
@@ -219,7 +219,7 @@ describe('adjustCaretPosition', () => {
 
         body: () => {
           expect(adjustCaretPosition({
-            previousConformedInput: test.input.startingInputFieldValue,
+            previousConformedValue: test.input.startingInputFieldValue,
             conformToMaskResults: {
               output: test.input.conformedInputFieldValue,
               meta: {

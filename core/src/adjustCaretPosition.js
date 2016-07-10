@@ -1,16 +1,16 @@
 export default function adjustCaretPosition({
-  previousConformedInput = '',
-  conformToMaskResults = {},
+  previousConformedValue = '',
   currentCaretPosition = 0,
+  conformedInput,
+  rawInput,
+  placeholderChar,
+  placeholder
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
-  const {output: conformedInput = '', meta = {}} = conformToMaskResults
-  const {input: rawInput = '', placeholderChar, placeholder} = meta
-
   // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
   // we know the user in this instance pasted two characters
-  const editLength = rawInput.length - previousConformedInput.length
+  const editLength = rawInput.length - previousConformedValue.length
 
   // If the edit length is positive, that means the user is adding characters, not deleting.
   const isAddition = editLength > 0
@@ -32,12 +32,12 @@ export default function adjustCaretPosition({
   // This works fine for most cases.
   if (isPartialMultiCharEdit) { return currentCaretPosition }
 
-  // For a mask like (111), if the `previousConformedInput` is (1__) and user attempts to enter
-  // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
-  // same as the original `previousConformedInput`. We handle this case differently for caret
+  // For a mask like (111), if the `previousConformedValue` is (1__) and user attempts to enter
+  // `f` so the `rawValue` becomes (1f__), the new `conformedInput` would be (1__), which is the
+  // same as the original `previousConformedValue`. We handle this case differently for caret
   // positioning.
   const possiblyHasRejectedChar = isAddition && (
-    previousConformedInput === conformedInput ||
+    previousConformedValue === conformedInput ||
     conformedInput === placeholder
   )
 

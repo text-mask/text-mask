@@ -88,7 +88,7 @@ string to contain a guide or no. The `guide` is basically the placeholder charac
 mask hard characters. For example, with mask `(111) 111-1111`, input `123` with `guide` set to
 `true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
 
-* `previousConformedInput` (string) (required): this is the previous `output` of `conformToMask`.
+* `previousConformedValue` (string) (required): this is the previous `output` of `conformToMask`.
 If you're calling `conformToMask` for the first time, pass this as an empty string or `undefined`.
 
 * `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
@@ -97,7 +97,7 @@ documentation page](https://github.com/msafi/text-mask/blob/master/componentDocu
 * `validator` (function) (optional): this function will receive **one
 argument**, the conformed string. The function should **return a boolean**. If the function returned
 `true`, the `output` of `conformToMask` will be the newly conformed string. If the function returned
-`false`, the `output` of `conformToMask` will be the `previousConformedInput`
+`false`, the `output` of `conformToMask` will be the `previousConformedValue`
 
 ```js
 const results = conformToMask('5554833902', '(111) 111-1111')
@@ -118,7 +118,7 @@ helps you restore the position.
 
 `adjustCaretPosition` takes the following object of arguments:
 
-* previousConformedInput (string): the string value of the `input` before the last time you set
+* previousConformedValue (string): the string value of the `input` before the last time you set
 its value. If you're calling this function for the first time, you can pass an empty string.
 * conformedToMaskResults (object): the return value of the last call to `conformToMask`
 * currentCaretPosition (integer): the position of the caret right before you called this

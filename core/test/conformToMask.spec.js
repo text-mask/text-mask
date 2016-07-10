@@ -22,7 +22,7 @@ describe('conformToMask', () => {
           expect(conformToMask(
             test.input.userModifiedInputFieldValue,
             test.input.mask,
-            {previousConformedInput: test.input.startingInputFieldValue}
+            {previousConformedValue: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
         }
       })
@@ -41,7 +41,7 @@ describe('conformToMask', () => {
           expect(conformToMask(
             test.input.userModifiedInputFieldValue,
             test.input.mask,
-            {guide: false, previousConformedInput: test.input.startingInputFieldValue}
+            {guide: false, previousConformedValue: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
         }
       })
@@ -60,7 +60,7 @@ describe('conformToMask', () => {
           expect(conformToMask(
             test.input.userModifiedInputFieldValue,
             test.input.mask,
-            {guide: true, previousConformedInput: test.input.startingInputFieldValue}
+            {guide: true, previousConformedValue: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
         }
       })
@@ -79,7 +79,7 @@ describe('conformToMask', () => {
           expect(conformToMask(
             test.input.userModifiedInputFieldValue,
             test.input.mask,
-            {guide: true, previousConformedInput: test.input.startingInputFieldValue}
+            {guide: true, previousConformedValue: test.input.startingInputFieldValue}
           ).output).to.equal(test.output.conformedInputFieldValue)
         }
       })

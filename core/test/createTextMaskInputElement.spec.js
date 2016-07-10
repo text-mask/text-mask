@@ -69,7 +69,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     if (!isVerify()) {
-      it('does not conform given parameter if it is the same as the previousConformedInput', () => {
+      it('does not conform given parameter if it is the same as the previousConformedValue', () => {
         const conformToMaskSpy = sinon.spy(conformToMask)
         const mask = '(111) 111-1111'
         const textMaskControl = createTextMaskInputElement({inputElement, mask})

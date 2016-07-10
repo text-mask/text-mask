@@ -1,5 +1,4 @@
 import {
-  convertMaskToPlaceholder,
   tokenize,
   isAcceptableCharacter as isAcceptableChar,
   potentiallyTransformCharacter as potentiallyTransformChar,
@@ -12,28 +11,25 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
   const {
     guide = true,
-    previousConformedInput = '',
+    previousConformedValue = '',
     placeholderChar = defaultPlaceholderChar,
+    placeholder,
     validator: isCustomValid = alwaysReturnTrue
   } = config
 
-  // We will be iterating over each character in the placeholder and sort of fill it up
-  // with user input
-  const placeholder = convertMaskToPlaceholder(mask, placeholderChar)
-
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
-  const suppressGuide = guide === false && previousConformedInput !== undefined
+  const suppressGuide = guide === false && previousConformedValue !== undefined
 
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
-  const indexOfFirstChange = getIndexOfFirstChange(previousConformedInput, userInput)
+  const indexOfFirstChange = getIndexOfFirstChange(previousConformedValue, userInput)
 
   // This tells us the number of edited characters and the direction in which they were edited (+/-)
-  const numberOfEditedChars = userInput.length - previousConformedInput.length
+  const numberOfEditedChars = userInput.length - previousConformedValue.length
 
   const userInputArr = tokenize(userInput)
 
   // In *no guide* mode, we need to know if the user is trying to add a character or not
-  const isAddition = suppressGuide && !(userInput.length < previousConformedInput.length)
+  const isAddition = suppressGuide && !(userInput.length < previousConformedValue.length)
 
   // Unescaping a mask turns a mask like `+\1 (111) 111-1111` into `+  (111) 111-1111`. That is,
   // it substituted an escaped character with empty white space. We do that because further down
@@ -48,7 +44,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
   // then would lay `234` on top of the available placeholder positions in the mask.
   let numberOfSpliceOperations = 0
   for (let i = 0; i < placeholder.length && userInputArr.length > 0; i++) {
-    const shouldJumpAheadInUserInput = i >= indexOfFirstChange && previousConformedInput !== ''
+    const shouldJumpAheadInUserInput = i >= indexOfFirstChange && previousConformedValue !== ''
     const userInputPointer = (
       (shouldJumpAheadInUserInput ? i + numberOfEditedChars : i) - numberOfSpliceOperations
     )
@@ -149,16 +145,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     }
   }
 
-  return {
-    output: isCustomValid(conformedString) ? conformedString : previousConformedInput,
-    meta: {
-      input: userInput,
-      mask,
-      guide,
-      placeholderChar,
-      placeholder
-    }
-  }
+  return isCustomValid(conformedString) ? conformedString : previousConformedValue
 }
 
 function alwaysReturnTrue() {
