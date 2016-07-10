@@ -91,8 +91,8 @@ mask hard characters. For example, with mask `(111) 111-1111`, input `123` with 
 * `previousConformedInput` (string) (required): this is the previous `output` of `conformToMask`.
 If you're calling `conformToMask` for the first time, pass this as an empty string or `undefined`.
 
-* `placeholderCharacter` (string) (optional): for documentation on this key, [see this section of the component
-documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderCharacter).
+* `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
+documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderChar).
 
 * `pipe` (function) (optional): this function will receive **one
 argument**, the conformed string. The function should **return a boolean**. If the function returned

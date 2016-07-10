@@ -56,7 +56,7 @@ export default React.createClass({ // eslint-disable-line
                   style={style}
                   key={maskedInputKey}
                   placeholder={placeholderValue}
-                  placeholderCharacter={placeholderChar}
+                  placeholderChar={placeholderChar}
                   pipe={pipe}
                   ref='maskedInput'
                   mask={maskInUse}

@@ -10,7 +10,7 @@ export const MaskedInput = React.createClass({
   },
 
   componentDidMount() {
-    const {props, props: {placeholderCharacter: placeholderChar, value}} = this
+    const {props, props: {placeholderChar, value}} = this
 
     this.control = createTextMaskInputElement(Object.assign({
       inputElement: this.inputElement,

@@ -5,7 +5,7 @@ export function maskInput({
   mask,
   guide,
   pipe,
-  placeholderCharacter: placeholderChar,
+  placeholderChar,
   onAccept,
   onReject
 }) {

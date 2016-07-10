@@ -25,4 +25,4 @@ export const maskingCharacters = [
   '*'
 ]
 
-export const placeholderCharacter = '_'
+export const placeholderChar = '_'

@@ -1,12 +1,11 @@
 import {
-  convertMaskToPlaceholder,
   tokenize,
   isAcceptableCharacter as isAcceptableChar,
   potentiallyTransformCharacter as potentiallyTransformChar,
   getIndexOfFirstChange,
   unescapeMask
 } from './utilities.js'
-import {placeholderCharacter as defaultPlaceholderChar} from './constants.js'
+import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
 export default function conformToMask(userInput = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
@@ -14,12 +13,9 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
     guide = true,
     previousConformedInput = '',
     placeholderChar = defaultPlaceholderChar,
-    pipe = identity
+    placeholder
+    // pipe = identity
   } = config
-
-  // We will be iterating over each character in the placeholder and sort of fill it up
-  // with user input
-  const placeholder = convertMaskToPlaceholder(mask, placeholderChar)
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedInput !== undefined
@@ -116,7 +112,7 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       // And we break
       break
 
-    // Else, the characterInPlaceholder is not a placeholderCharacter. That is, we cannot fill it
+    // Else, the characterInPlaceholder is not a placeholderChar. That is, we cannot fill it
     // with user input. So we just map it to the final output
     } else {
       conformedString += charInPlaceholder
@@ -143,29 +139,31 @@ export default function conformToMask(userInput = '', mask = '', config = {}) {
       // We substring from the beginning until the position after the last filled placeholder char.
       conformedString = conformedString.substr(0, indexOfLastFilledPlaceholderChar + 1)
     } else {
-      // If we couldn't find `indexOfLastFilledPlaceholderCharacter` that means the user deleted
+      // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
       // the first character in the mask. So we return an empty string.
       conformedString = ''
     }
   }
 
-  const pipedConformedString = pipe({
-    conformedUserInput: conformedString,
-    placeholderCharacter: placeholderChar
-  })
-  
-  return {
-    output: (pipedConformedString === false) ? previousConformedInput : pipedConformedString,
-    meta: {
-      input: userInput,
-      mask,
-      guide,
-      placeholderChar,
-      placeholder
-    }
-  }
+  // const pipedConformedString = pipe({
+  //   conformedUserInput: conformedString,
+  //   placeholderChar: placeholderChar
+  // })
+
+  return conformedString
+
+  // return {
+  //   output: conformedString,
+  //   meta: {
+  //     input: userInput,
+  //     mask,
+  //     guide,
+  //     placeholderChar,
+  //     placeholder
+  //   }
+  // }
 }
 
-function identity(a) {
-  return a
-}
+// function identity(a) {
+//   return a
+// }

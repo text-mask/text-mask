@@ -1,6 +1,25 @@
 export default function createMmddyyyyPipe() {
-  return function({conformedUserInput, placeholderCharacter}) {
-    let month, day, year = ''
+  return function({
+    valueToConform,
+    mask,
+    conformToMask,
+    conformToMaskConfig,
+    currentCaretPosition,
+    placeholderChar,
+    retainCharsPositions
+  }) {
+    const {previousConformedInput, placeholder} = conformToMaskConfig
+
+    valueToConform = retainCharsPositions({
+      valueToConform,
+      placeholder,
+      currentCaretPosition,
+      placeholderChar,
+      previousConformedInput
+    })
+
+    const conformedUserInput = conformToMask(valueToConform, mask, conformToMaskConfig)
+    const indexesOfAddedCharacters = []
 
     const month1stDigit = parseDigit(conformedUserInput[0])
     const month2ndDigit = parseDigit(conformedUserInput[1])
@@ -15,29 +34,40 @@ export default function createMmddyyyyPipe() {
 
     if (month1stDigit > 1) {
       conformedUserInputArr.splice(0, 2, 0, month1stDigit)
+
+      indexesOfAddedCharacters.push(0)
     }
 
     if (
       (month1stDigit === 1 && month2ndDigit > 2) ||
       (month1stDigit === 0 && month2ndDigit === 0)
     ) {
-      return false
+      return {conformedInput: previousConformedInput}
     }
 
     if (day1stDigit > 3) {
       conformedUserInputArr.splice(3, 2, 0, day1stDigit)
+
+      indexesOfAddedCharacters.push(3)
     }
 
     if (
       (day1stDigit === 3 && day2ndDigit > 1) ||
       (day1stDigit === 0 && day2ndDigit === 0)
     ) {
-      return false
+      return {conformedInput: previousConformedInput}
     }
 
-    // conformedUserInputArr.splice(4, 2, day)
+    if (year1stDigit > 2 || year1stDigit === 0) {
+      conformedUserInputArr.splice(6, 3, 2, 0, year1stDigit)
 
-    return conformedUserInputArr.join('')
+      indexesOfAddedCharacters.push(6, 7)
+    }
+
+    return {
+      conformedInput: conformedUserInputArr.join(''),
+      indexesOfAddedCharacters
+    }
   }
 }
 

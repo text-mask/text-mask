@@ -1,12 +1,13 @@
 export default function adjustCaretPosition({
+  conformedInput = '',
   previousConformedInput = '',
-  conformToMaskResults = {},
   currentCaretPosition = 0,
+  rawInput,
+  placeholderChar,
+  placeholder,
+  indexesOfAddedCharacters = []
 }) {
   if (currentCaretPosition === 0) { return 0 }
-
-  const {output: conformedInput = '', meta = {}} = conformToMaskResults
-  const {input: rawInput = '', placeholderChar, placeholder} = meta
 
   // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
   // we know the user in this instance pasted two characters
@@ -65,13 +66,17 @@ export default function adjustCaretPosition({
       (char) => normalizedConformedInput.indexOf(char) !== -1
     )
 
+    const addedChars = indexesOfAddedCharacters.map((index) => normalizedConformedInput[index])
+
     // The last character in the intersection is the character we want to look for in the conformed
     // input
     const targetChar = intersection[intersection.length - 1]
 
+    const targetCharOccurrencesInAddedChars = addedChars.filter((char) => char === targetChar).length
+
     // However, it may happen to exist more than once in the intersection. We need to know
     // how many times it occurs
-    const requiredNumberOfMatches = intersection.filter((char) => char === targetChar).length
+    const requiredNumberOfMatches = intersection.filter((char) => char === targetChar).length + targetCharOccurrencesInAddedChars
 
     // Now we start looking for the location of the character.
     // We keep looping forward and store the index in every iteration. Once we have encountered
