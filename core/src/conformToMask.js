@@ -3,7 +3,8 @@ import {
   isAcceptableCharacter as isAcceptableChar,
   potentiallyTransformCharacter as potentiallyTransformChar,
   getIndexOfFirstChange,
-  unescapeMask
+  unescapeMask,
+  convertMaskToPlaceholder
 } from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
@@ -13,7 +14,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     guide = true,
     previousConformedValue = '',
     placeholderChar = defaultPlaceholderChar,
-    placeholder,
+    placeholder = convertMaskToPlaceholder(mask, placeholderChar),
     validator: isCustomValid = alwaysReturnTrue
   } = config
 

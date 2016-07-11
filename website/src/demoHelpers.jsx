@@ -133,7 +133,7 @@ export const initialState = {
   guide: true,
 }
 
-const githubLink = 'https://github.com/msafi/text-mask/#readme'
+const githubLink = 'https://github.com/msafi/text-mask/'
 
 export const DemoTop = () => (
   <div>
