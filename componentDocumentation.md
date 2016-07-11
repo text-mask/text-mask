@@ -100,7 +100,7 @@ in your mask.
 
 You can pass a validator to Text Mask. It should adhere to the following interface:
 
-* Accepts `conformedUserInput` (string)
+* Accepts `conformedValue` (string)
 * Returns `isValid` (boolean)
 
 The validator will be called whenever the user modifies the value in the component.
@@ -110,7 +110,7 @@ the component will not update. If it returned `true`, it will.
 
 Since the validator will receive the user input on every change, it should return `true` for
 partial values that could potentially develop into full valid values. For example, a date
-validator should return `true` for `conformedUserInput` that equals `1_/__/____`.
+validator should return `true` for `conformedValue` that equals `1_/__/____`.
 
 For an example of a validator, see the code for
 [`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)

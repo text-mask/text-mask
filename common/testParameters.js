@@ -7,14 +7,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___)',
-    userModifiedInputFieldValue: '(3___)',
+    previousConformedValue: '(___)',
+    rawValue: '(3___)',
     mask: '(111)',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '(3__)',
+    conformedValue: '(3__)',
     adjustedCaretPosition: 2,
   },
 
@@ -23,14 +23,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '___',
-    userModifiedInputFieldValue: '1___',
+    previousConformedValue: '___',
+    rawValue: '1___',
     mask: '111',
-    caretPositionAfterInputFieldValueChange: 1,
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '1__',
+    conformedValue: '1__',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 0
   },
@@ -38,14 +38,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(12_) _',
-    userModifiedInputFieldValue: '(12f_) _',
+    previousConformedValue: '(12_) _',
+    rawValue: '(12f_) _',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 4,
+    currentCaretPosition: 4,
   },
 
   output: {
-    conformedInputFieldValue: '(12_) _',
+    conformedValue: '(12_) _',
     adjustedCaretPosition: 3
   },
 
@@ -54,14 +54,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___) ___-____',
-    userModifiedInputFieldValue: '(1___) ___-____',
+    previousConformedValue: '(___) ___-____',
+    rawValue: '(1___) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '(1__) ___-____',
+    conformedValue: '(1__) ___-____',
     adjustedCaretPosition: 2
   },
 
@@ -69,14 +69,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(1__) ___-3___',
-    userModifiedInputFieldValue: '(1__) ___-___',
+    previousConformedValue: '(1__) ___-3___',
+    rawValue: '(1__) ___-___',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 10,
+    currentCaretPosition: 10,
   },
 
   output: {
-    conformedInputFieldValue: '(1__) ___-____',
+    conformedValue: '(1__) ___-____',
     adjustedCaretPosition: 9
   },
 
@@ -85,14 +85,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(1__) ___-3___',
-    userModifiedInputFieldValue: '(12__) ___-3___',
+    previousConformedValue: '(1__) ___-3___',
+    rawValue: '(12__) ___-3___',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 3,
+    currentCaretPosition: 3,
   },
 
   output: {
-    conformedInputFieldValue: '(12_) ___-_3__',
+    conformedValue: '(12_) ___-_3__',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 11
   },
@@ -101,14 +101,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(333) ___-____',
-    userModifiedInputFieldValue: '(3333) ___-____',
+    previousConformedValue: '(333) ___-____',
+    rawValue: '(3333) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '(333) 3__-____',
+    conformedValue: '(333) 3__-____',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 6
   },
@@ -118,14 +118,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(123) 948-____',
-    userModifiedInputFieldValue: '(123) 94-____',
+    previousConformedValue: '(123) 948-____',
+    rawValue: '(123) 94-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 8,
+    currentCaretPosition: 8,
   },
 
   output: {
-    conformedInputFieldValue: '(123) 94_-____',
+    conformedValue: '(123) 94_-____',
     adjustedCaretPosition: 8,
   },
 
@@ -134,14 +134,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(__4) 444-____',
-    userModifiedInputFieldValue: '(__4) 44-____',
+    previousConformedValue: '(__4) 444-____',
+    rawValue: '(__4) 44-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 7,
+    currentCaretPosition: 7,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) 44_-____',
+    conformedValue: '(__4) 44_-____',
     adjustedCaretPosition: 7,
   },
 
@@ -149,14 +149,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(__4) 44_-____',
-    userModifiedInputFieldValue: '(__4) 444_-____',
+    previousConformedValue: '(__4) 44_-____',
+    rawValue: '(__4) 444_-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 8,
+    currentCaretPosition: 8,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) 444-____',
+    conformedValue: '(__4) 444-____',
     adjustedCaretPosition: 8,
     indexOfLastAddedCharacter: 8
   },
@@ -164,14 +164,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(__4) 444-____',
-    userModifiedInputFieldValue: '(__4) 444-___',
+    previousConformedValue: '(__4) 444-____',
+    rawValue: '(__4) 444-___',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 10,
+    currentCaretPosition: 10,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) 444-____',
+    conformedValue: '(__4) 444-____',
     adjustedCaretPosition: 9,
   },
 
@@ -180,14 +180,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(__4) 444-____',
-    userModifiedInputFieldValue: '(__4) 444____',
+    previousConformedValue: '(__4) 444-____',
+    rawValue: '(__4) 444____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 9,
+    currentCaretPosition: 9,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) 444-____',
+    conformedValue: '(__4) 444-____',
     adjustedCaretPosition: 9
   },
 
@@ -196,14 +196,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(__4) 444-____',
-    userModifiedInputFieldValue: '(__4) 44-____',
+    previousConformedValue: '(__4) 444-____',
+    rawValue: '(__4) 44-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 8,
+    currentCaretPosition: 8,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) 44_-____',
+    conformedValue: '(__4) 44_-____',
     adjustedCaretPosition: 8,
   },
   // only: true,
@@ -211,14 +211,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(505) ___-____',
-    userModifiedInputFieldValue: '(505 ___-____',
+    previousConformedValue: '(505) ___-____',
+    rawValue: '(505 ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 4,
+    currentCaretPosition: 4,
   },
 
   output: {
-    conformedInputFieldValue: '(505) ___-____',
+    conformedValue: '(505) ___-____',
     adjustedCaretPosition: 4,
   },
 
@@ -227,42 +227,42 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(505) ___-____',
-    userModifiedInputFieldValue: '(505) __-____',
+    previousConformedValue: '(505) ___-____',
+    rawValue: '(505) __-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 6,
+    currentCaretPosition: 6,
   },
 
   output: {
-    conformedInputFieldValue: '(505) ___-____',
+    conformedValue: '(505) ___-____',
     adjustedCaretPosition: 4
   }
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(333) 333-3___',
-    userModifiedInputFieldValue: '(33) 333-3___',
+    previousConformedValue: '(333) 333-3___',
+    rawValue: '(33) 333-3___',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 3,
+    currentCaretPosition: 3,
   },
 
   output: {
-    conformedInputFieldValue: '(333) 333-____',
+    conformedValue: '(333) 333-____',
     adjustedCaretPosition: 3,
   }
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___) ___-____',
-    userModifiedInputFieldValue: '5(___) ___-____',
+    previousConformedValue: '(___) ___-____',
+    rawValue: '5(___) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 1,
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '(5__) ___-____',
+    conformedValue: '(5__) ___-____',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1
   },
@@ -272,28 +272,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(000) ___-____',
-    userModifiedInputFieldValue: '(00) ___-____',
+    previousConformedValue: '(000) ___-____',
+    rawValue: '(00) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '(00_) ___-____',
+    conformedValue: '(00_) ___-____',
     adjustedCaretPosition: 2,
   }
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '44/__',
-    userModifiedInputFieldValue: '4/__',
+    previousConformedValue: '44/__',
+    rawValue: '4/__',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 1,
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '4_/__',
+    conformedValue: '4_/__',
     adjustedCaretPosition: 1,
   }
 }, {
@@ -301,13 +301,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 1',
-    startingInputFieldValue: '(124) 3',
-    userModifiedInputFieldValue: '(124) ',
-    caretPositionAfterInputFieldValueChange: 6,
+    previousConformedValue: '(124) 3',
+    rawValue: '(124) ',
+    currentCaretPosition: 6,
   },
 
   output: {
-    conformedInputFieldValue: '(124) _',
+    conformedValue: '(124) _',
     adjustedCaretPosition: 4,
   },
 
@@ -316,14 +316,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(449) _',
-    userModifiedInputFieldValue: '(4495) _',
+    previousConformedValue: '(449) _',
+    rawValue: '(4495) _',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 5,
+    currentCaretPosition: 5,
   },
 
   output: {
-    conformedInputFieldValue: '(449) 5',
+    conformedValue: '(449) 5',
     adjustedCaretPosition: 7,
     indexOfLastAddedCharacter: 6
   },
@@ -333,14 +333,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___) ___-____',
-    userModifiedInputFieldValue: '(__4_) ___-____',
+    previousConformedValue: '(___) ___-____',
+    rawValue: '(__4_) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 4,
+    currentCaretPosition: 4,
   },
 
   output: {
-    conformedInputFieldValue: '(__4) ___-____',
+    conformedValue: '(__4) ___-____',
     adjustedCaretPosition: 6,
     indexOfLastAddedCharacter: 3
   },
@@ -350,14 +350,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '1__',
-    userModifiedInputFieldValue: '11__',
+    previousConformedValue: '1__',
+    rawValue: '11__',
     mask: '111',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '11_',
+    conformedValue: '11_',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1
   }
@@ -367,14 +367,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '11_',
-    userModifiedInputFieldValue: '111_',
+    previousConformedValue: '11_',
+    rawValue: '111_',
     mask: '111',
-    caretPositionAfterInputFieldValueChange: 3,
+    currentCaretPosition: 3,
   },
 
   output: {
-    conformedInputFieldValue: '111',
+    conformedValue: '111',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 2
   }
@@ -382,14 +382,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___)',
-    userModifiedInputFieldValue: '(3___)',
+    previousConformedValue: '(___)',
+    rawValue: '(3___)',
     mask: '(111)',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(3__)',
+    conformedValue: '(3__)',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1
   },
@@ -399,14 +399,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '___',
-    userModifiedInputFieldValue: '1___',
+    previousConformedValue: '___',
+    rawValue: '1___',
     mask: '111',
-    caretPositionAfterInputFieldValueChange: 1,
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '1__',
+    conformedValue: '1__',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 0
   }
@@ -414,14 +414,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '1__',
-    userModifiedInputFieldValue: '11__',
+    previousConformedValue: '1__',
+    rawValue: '11__',
     mask: '111',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '11_',
+    conformedValue: '11_',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1,
   }
@@ -431,14 +431,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(12_) 7',
-    userModifiedInputFieldValue: '(132_) 7',
+    previousConformedValue: '(12_) 7',
+    rawValue: '(132_) 7',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 3,
+    currentCaretPosition: 3,
   },
 
   output: {
-    conformedInputFieldValue: '(132) _',
+    conformedValue: '(132) _',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 6,
   },
@@ -448,14 +448,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(___) ___/____',
-    userModifiedInputFieldValue: '5(___) ___/____',
+    previousConformedValue: '(___) ___/____',
+    rawValue: '5(___) ___/____',
     mask: '(111) 111/1111',
-    caretPositionAfterInputFieldValueChange: 1,
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '(5__) ___/____',
+    conformedValue: '(5__) ___/____',
     adjustedCaretPosition: 2,
     indexOfLastAddedCharacter: 1,
   },
@@ -465,14 +465,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '3333',
-    userModifiedInputFieldValue: '2938',
+    previousConformedValue: '3333',
+    rawValue: '2938',
     mask: '1111',
-    caretPositionAfterInputFieldValueChange: 4,
+    currentCaretPosition: 4,
   },
 
   output: {
-    conformedInputFieldValue: '2938',
+    conformedValue: '2938',
     adjustedCaretPosition: 4,
     indexOfLastAddedCharacter: 3,
   }
@@ -482,28 +482,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(132) 7',
-    userModifiedInputFieldValue: '(12) 7',
+    previousConformedValue: '(132) 7',
+    rawValue: '(12) 7',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 2,
+    currentCaretPosition: 2,
   },
 
   output: {
-    conformedInputFieldValue: '(127) _',
+    conformedValue: '(127) _',
     adjustedCaretPosition: 2,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/__/____',
-    userModifiedInputFieldValue: '1__/__/____',
+    previousConformedValue: '__/__/____',
+    rawValue: '1__/__/____',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '1_/__/____',
+    conformedValue: '1_/__/____',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 0
   },
@@ -511,14 +511,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '1_/__/____',
-    userModifiedInputFieldValue: '11_/__/____',
+    previousConformedValue: '1_/__/____',
+    rawValue: '11_/__/____',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '11/__/____',
+    conformedValue: '11/__/____',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 1
   },
@@ -526,14 +526,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '1111',
+    previousConformedValue: '',
+    rawValue: '1111',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 4
+    currentCaretPosition: 4
   },
 
   output: {
-    conformedInputFieldValue: '11/11/____',
+    conformedValue: '11/11/____',
     adjustedCaretPosition: 6,
   },
 
@@ -541,56 +541,56 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '23840957',
+    previousConformedValue: '',
+    rawValue: '23840957',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 8
+    currentCaretPosition: 8
   },
 
   output: {
-    conformedInputFieldValue: '23/84/0957',
+    conformedValue: '23/84/0957',
     adjustedCaretPosition: 10,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '2384095',
+    previousConformedValue: '',
+    rawValue: '2384095',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 7
+    currentCaretPosition: 7
   },
 
   output: {
-    conformedInputFieldValue: '23/84/095_',
+    conformedValue: '23/84/095_',
     adjustedCaretPosition: 9,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '2',
+    previousConformedValue: '',
+    rawValue: '2',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '2_/__',
+    conformedValue: '2_/__',
     adjustedCaretPosition: 1,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '777',
+    previousConformedValue: '',
+    rawValue: '777',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '(777) ___-____',
+    conformedValue: '(777) ___-____',
     adjustedCaretPosition: 6,
   },
 
@@ -599,28 +599,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '7771',
+    previousConformedValue: '',
+    rawValue: '7771',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 4
+    currentCaretPosition: 4
   },
 
   output: {
-    conformedInputFieldValue: '(777) 1__-____',
+    conformedValue: '(777) 1__-____',
     adjustedCaretPosition: 7,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '1_/__/____',
-    userModifiedInputFieldValue: '1_/__/___1_',
+    previousConformedValue: '1_/__/____',
+    rawValue: '1_/__/___1_',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 10
+    currentCaretPosition: 10
   },
 
   output: {
-    conformedInputFieldValue: '1_/__/___1',
+    conformedValue: '1_/__/___1',
     adjustedCaretPosition: 10,
     indexOfLastAddedCharacter: 9
   },
@@ -630,14 +630,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '1_/1_/____',
-    userModifiedInputFieldValue: '1_/1__/___1',
+    previousConformedValue: '1_/1_/____',
+    rawValue: '1_/1__/___1',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 11
+    currentCaretPosition: 11
   },
 
   output: {
-    conformedInputFieldValue: '1_/1_/____',
+    conformedValue: '1_/1_/____',
     adjustedCaretPosition: 10,
   },
 
@@ -646,14 +646,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(1__) ___-____',
-    userModifiedInputFieldValue: '(d1__) ___-____',
+    previousConformedValue: '(1__) ___-____',
+    rawValue: '(d1__) ___-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(1__) ___-____',
+    conformedValue: '(1__) ___-____',
     adjustedCaretPosition: 1,
   },
 
@@ -662,28 +662,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '12/32',
+    previousConformedValue: '',
+    rawValue: '12/32',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 5
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '12/32',
+    conformedValue: '12/32',
     adjustedCaretPosition: 5,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '__/32',
+    previousConformedValue: '',
+    rawValue: '__/32',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 5
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '__/32',
+    conformedValue: '__/32',
     adjustedCaretPosition: 5,
   },
 
@@ -694,14 +694,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/__/____',
-    userModifiedInputFieldValue: '1__/__/____',
+    previousConformedValue: '__/__/____',
+    rawValue: '1__/__/____',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '1_/__/____',
+    conformedValue: '1_/__/____',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 0
   },
@@ -709,28 +709,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '22/2_',
-    userModifiedInputFieldValue: '2/2_',
+    previousConformedValue: '22/2_',
+    rawValue: '2/2_',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '22/__',
+    conformedValue: '22/__',
     adjustedCaretPosition: 1,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '(222) 2__-____',
-    userModifiedInputFieldValue: '(22) 2__-____',
+    previousConformedValue: '(222) 2__-____',
+    rawValue: '(22) 2__-____',
     mask: '(111) 111-1111',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(222) ___-____',
+    conformedValue: '(222) ___-____',
     adjustedCaretPosition: 0,
   },
 
@@ -739,14 +739,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/2_',
-    userModifiedInputFieldValue: '_2_/2_',
+    previousConformedValue: '__/2_',
+    rawValue: '_2_/2_',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '_2/_2',
+    conformedValue: '_2/_2',
     adjustedCaretPosition: 3,
     indexOfLastAddedCharacter: 4
   },
@@ -754,14 +754,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/2_',
-    userModifiedInputFieldValue: '_/2_',
+    previousConformedValue: '__/2_',
+    rawValue: '_/2_',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 0
+    currentCaretPosition: 0
   },
 
   output: {
-    conformedInputFieldValue: '_2/__',
+    conformedValue: '_2/__',
     adjustedCaretPosition: 0,
   },
 
@@ -770,14 +770,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '1',
+    previousConformedValue: '',
+    rawValue: '1',
     mask: '(',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(',
+    conformedValue: '(',
     adjustedCaretPosition: 0,
   },
 
@@ -790,28 +790,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '2',
+    previousConformedValue: '',
+    rawValue: '2',
     mask: '1',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '2',
+    conformedValue: '2',
     adjustedCaretPosition: 1,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '__/22',
+    previousConformedValue: '',
+    rawValue: '__/22',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 5
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '__/22',
+    conformedValue: '__/22',
     adjustedCaretPosition: 5,
   },
 
@@ -822,14 +822,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/22',
-    userModifiedInputFieldValue: '2__/22',
+    previousConformedValue: '__/22',
+    rawValue: '2__/22',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '2_/_2',
+    conformedValue: '2_/_2',
     adjustedCaretPosition: 1,
     indexOfLastAddedCharacter: 3
   },
@@ -837,42 +837,42 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '22',
+    previousConformedValue: '',
+    rawValue: '22',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '22/__',
+    conformedValue: '22/__',
     adjustedCaretPosition: 3,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '222',
+    previousConformedValue: '',
+    rawValue: '222',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '22/2_',
+    conformedValue: '22/2_',
     adjustedCaretPosition: 4,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '777777',
+    previousConformedValue: '',
+    rawValue: '777777',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 6
+    currentCaretPosition: 6
   },
 
   output: {
-    conformedInputFieldValue: '77/77',
+    conformedValue: '77/77',
     adjustedCaretPosition: 5,
   },
 
@@ -881,28 +881,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '222/1',
+    previousConformedValue: '',
+    rawValue: '222/1',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 5
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '22/21',
+    conformedValue: '22/21',
     adjustedCaretPosition: 5,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '__/__',
-    userModifiedInputFieldValue: '__5/__',
+    previousConformedValue: '__/__',
+    rawValue: '__5/__',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '__/5_',
+    conformedValue: '__/5_',
     adjustedCaretPosition: 4,
     indexOfLastAddedCharacter: 3
   },
@@ -912,14 +912,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '8_/4_5/222_1',
+    previousConformedValue: '',
+    rawValue: '8_/4_5/222_1',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 12
+    currentCaretPosition: 12
   },
 
   output: {
-    conformedInputFieldValue: '8_/4_/5222',
+    conformedValue: '8_/4_/5222',
     adjustedCaretPosition: 10,
   },
 
@@ -930,70 +930,70 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '8293847/4_2/222_1',
+    previousConformedValue: '',
+    rawValue: '8293847/4_2/222_1',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 17
+    currentCaretPosition: 17
   },
 
   output: {
-    conformedInputFieldValue: '82/93/8474',
+    conformedValue: '82/93/8474',
     adjustedCaretPosition: 10,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '0/22',
+    previousConformedValue: '',
+    rawValue: '0/22',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 4
+    currentCaretPosition: 4
   },
 
   output: {
-    conformedInputFieldValue: '02/2_',
+    conformedValue: '02/2_',
     adjustedCaretPosition: 4,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '/22',
+    previousConformedValue: '',
+    rawValue: '/22',
     mask: '11/11',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '22/__',
+    conformedValue: '22/__',
     adjustedCaretPosition: 3,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '22/3/995',
+    previousConformedValue: '',
+    rawValue: '22/3/995',
     mask: '11/11/1111',
-    caretPositionAfterInputFieldValueChange: 8
+    currentCaretPosition: 8
   },
 
   output: {
-    conformedInputFieldValue: '22/39/95__',
+    conformedValue: '22/39/95__',
     adjustedCaretPosition: 8,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '2d',
+    previousConformedValue: '',
+    rawValue: '2d',
     mask: '11',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '2_',
+    conformedValue: '2_',
     adjustedCaretPosition: 1,
   },
 
@@ -1002,14 +1002,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '(123) 3',
+    previousConformedValue: '',
+    rawValue: '(123) 3',
     mask: '(111) 1',
-    caretPositionAfterInputFieldValueChange: 7
+    currentCaretPosition: 7
   },
 
   output: {
-    conformedInputFieldValue: '(123) 3',
+    conformedValue: '(123) 3',
     adjustedCaretPosition: 7,
   },
 
@@ -1018,14 +1018,14 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '(123) 3',
+    previousConformedValue: '',
+    rawValue: '(123) 3',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 7
+    currentCaretPosition: 7
   },
 
   output: {
-    conformedInputFieldValue: '___ ___',
+    conformedValue: '___ ___',
     adjustedCaretPosition: 0,
   },
 
@@ -1034,56 +1034,56 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: 'M',
+    previousConformedValue: '',
+    rawValue: 'M',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 1
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: 'M__ ___',
+    conformedValue: 'M__ ___',
     adjustedCaretPosition: 1,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: 'M__ ___',
-    userModifiedInputFieldValue: 'M2__ ___',
+    previousConformedValue: 'M__ ___',
+    rawValue: 'M2__ ___',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 2
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: 'M2_ ___',
+    conformedValue: 'M2_ ___',
     adjustedCaretPosition: 2,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: 'M__ ___',
-    userModifiedInputFieldValue: 'M2j_ ___',
+    previousConformedValue: 'M__ ___',
+    rawValue: 'M2j_ ___',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: 'M2j ___',
+    conformedValue: 'M2j ___',
     adjustedCaretPosition: 4,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: 'M2j ___',
-    userModifiedInputFieldValue: 'M2j __2_',
+    previousConformedValue: 'M2j ___',
+    rawValue: 'M2j __2_',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 7
+    currentCaretPosition: 7
   },
 
   output: {
-    conformedInputFieldValue: 'M2j ___',
+    conformedValue: 'M2j ___',
     adjustedCaretPosition: 6,
   },
 
@@ -1092,28 +1092,28 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: 'M2j ___',
-    userModifiedInputFieldValue: 'M2j __R_',
+    previousConformedValue: 'M2j ___',
+    rawValue: 'M2j __R_',
     mask: 'A1A A1A',
-    caretPositionAfterInputFieldValueChange: 7
+    currentCaretPosition: 7
   },
 
   output: {
-    conformedInputFieldValue: 'M2j __R',
+    conformedValue: 'M2j __R',
     adjustedCaretPosition: 7,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    startingInputFieldValue: 'M__ ___',
-    userModifiedInputFieldValue: 'M2j_ ___',
+    previousConformedValue: 'M__ ___',
+    rawValue: 'M2j_ ___',
     mask: 'U1U U1U',
-    caretPositionAfterInputFieldValueChange: 3
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: 'M2J ___',
+    conformedValue: 'M2J ___',
     adjustedCaretPosition: 4,
   },
 }, {
@@ -1121,13 +1121,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(1__)',
-    userModifiedInputFieldValue: '(21__)',
-    caretPositionAfterInputFieldValueChange: 2
+    previousConformedValue: '(1__)',
+    rawValue: '(21__)',
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(21_)',
+    conformedValue: '(21_)',
     adjustedCaretPosition: 2,
   },
 
@@ -1137,13 +1137,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111',
-    startingInputFieldValue: '(323) ___',
-    userModifiedInputFieldValue: '(3243) ___',
-    caretPositionAfterInputFieldValueChange: 4
+    previousConformedValue: '(323) ___',
+    rawValue: '(3243) ___',
+    currentCaretPosition: 4
   },
 
   output: {
-    conformedInputFieldValue: '(324) 3__',
+    conformedValue: '(324) 3__',
     adjustedCaretPosition: 6,
   },
 
@@ -1153,13 +1153,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(1__)',
-    userModifiedInputFieldValue: '(21__)',
-    caretPositionAfterInputFieldValueChange: 2
+    previousConformedValue: '(1__)',
+    rawValue: '(21__)',
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(21_)',
+    conformedValue: '(21_)',
     adjustedCaretPosition: 2,
   },
 
@@ -1169,13 +1169,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '1',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '1',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(1__)',
+    conformedValue: '(1__)',
     adjustedCaretPosition: 2,
   },
 
@@ -1185,13 +1185,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(290) 382-3039',
-    userModifiedInputFieldValue: '(290) 38-3039',
-    caretPositionAfterInputFieldValueChange: 8
+    previousConformedValue: '(290) 382-3039',
+    rawValue: '(290) 38-3039',
+    currentCaretPosition: 8
   },
 
   output: {
-    conformedInputFieldValue: '(290) 383-039_',
+    conformedValue: '(290) 383-039_',
     adjustedCaretPosition: 8
   },
 }, {
@@ -1199,13 +1199,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '(',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '(',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(___) ___-____',
+    conformedValue: '(___) ___-____',
     adjustedCaretPosition: 1
   },
 
@@ -1215,13 +1215,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(395) 834-____',
-    userModifiedInputFieldValue: '(395) 34-____',
-    caretPositionAfterInputFieldValueChange: 6
+    previousConformedValue: '(395) 834-____',
+    rawValue: '(395) 34-____',
+    currentCaretPosition: 6
   },
 
   output: {
-    conformedInputFieldValue: '(395) 34_-____',
+    conformedValue: '(395) 34_-____',
     adjustedCaretPosition: 4
   },
 
@@ -1231,13 +1231,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(1__) ___-____',
-    userModifiedInputFieldValue: '(__) ___-____',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '(1__) ___-____',
+    rawValue: '(__) ___-____',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(___) ___-____',
+    conformedValue: '(___) ___-____',
     adjustedCaretPosition: 0
   },
 
@@ -1247,13 +1247,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: 'U1U 1U1',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '5',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '5',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '___ ___',
+    conformedValue: '___ ___',
     adjustedCaretPosition: 0
   },
 
@@ -1263,13 +1263,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '00 (111)',
-    startingInputFieldValue: '00 (___)',
-    userModifiedInputFieldValue: '00 (1___)',
-    caretPositionAfterInputFieldValueChange: 5
+    previousConformedValue: '00 (___)',
+    rawValue: '00 (1___)',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '00 (1__)',
+    conformedValue: '00 (1__)',
     adjustedCaretPosition: 5
   },
 
@@ -1279,13 +1279,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '1111',
-    startingInputFieldValue: '3333',
-    userModifiedInputFieldValue: '2',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '3333',
+    rawValue: '2',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '2___',
+    conformedValue: '2___',
     adjustedCaretPosition: 1
   },
 
@@ -1295,13 +1295,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '//1111',
-    startingInputFieldValue: '//3333',
-    userModifiedInputFieldValue: '2',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '//3333',
+    rawValue: '2',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '//2___',
+    conformedValue: '//2___',
     adjustedCaretPosition: 3
   },
 }, {
@@ -1309,13 +1309,13 @@ export default _.filter((t) => t, [{
 
   input: {
     mask: '1111',
-    startingInputFieldValue: '3333',
-    userModifiedInputFieldValue: '23',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '3333',
+    rawValue: '23',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '23__',
+    conformedValue: '23__',
     adjustedCaretPosition: 1
   },
 
@@ -1332,13 +1332,13 @@ export const noGuideMode = _.filter((t) => t, [{
 // export const noGuideMode = _.filter((t) => t.only, [{
   input: {
     mask: '(111)',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '(',
-    caretPositionAfterInputFieldValueChange: 1,
+    previousConformedValue: '',
+    rawValue: '(',
+    currentCaretPosition: 1,
   },
 
   output: {
-    conformedInputFieldValue: '(',
+    conformedValue: '(',
     adjustedCaretPosition: 1
   },
 
@@ -1348,13 +1348,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '2',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '2',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '(2',
+    conformedValue: '(2',
     adjustedCaretPosition: 2
   },
 
@@ -1364,13 +1364,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(2',
-    userModifiedInputFieldValue: '(23',
-    caretPositionAfterInputFieldValueChange: 3
+    previousConformedValue: '(2',
+    rawValue: '(23',
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '(23',
+    conformedValue: '(23',
     adjustedCaretPosition: 3
   },
 
@@ -1380,13 +1380,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(2',
-    userModifiedInputFieldValue: '(32',
-    caretPositionAfterInputFieldValueChange: 2
+    previousConformedValue: '(2',
+    rawValue: '(32',
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(32',
+    conformedValue: '(32',
     adjustedCaretPosition: 2
   },
 
@@ -1396,13 +1396,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 1',
-    startingInputFieldValue: '(234)',
-    userModifiedInputFieldValue: '(234)5',
-    caretPositionAfterInputFieldValueChange: 6
+    previousConformedValue: '(234)',
+    rawValue: '(234)5',
+    currentCaretPosition: 6
   },
 
   output: {
-    conformedInputFieldValue: '(234) 5',
+    conformedValue: '(234) 5',
     adjustedCaretPosition: 7
   },
 
@@ -1412,13 +1412,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(',
-    userModifiedInputFieldValue: '(1',
-    caretPositionAfterInputFieldValueChange: 2
+    previousConformedValue: '(',
+    rawValue: '(1',
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(1',
+    conformedValue: '(1',
     adjustedCaretPosition: 2
   },
 
@@ -1428,13 +1428,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111)',
-    startingInputFieldValue: '(23',
-    userModifiedInputFieldValue: '(423',
-    caretPositionAfterInputFieldValueChange: 2
+    previousConformedValue: '(23',
+    rawValue: '(423',
+    currentCaretPosition: 2
   },
 
   output: {
-    conformedInputFieldValue: '(423)',
+    conformedValue: '(423)',
     adjustedCaretPosition: 2
   },
 
@@ -1443,13 +1443,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 11',
-    startingInputFieldValue: '(12',
-    userModifiedInputFieldValue: '(123',
-    caretPositionAfterInputFieldValueChange: 4
+    previousConformedValue: '(12',
+    rawValue: '(123',
+    currentCaretPosition: 4
   },
 
   output: {
-    conformedInputFieldValue: '(123) ',
+    conformedValue: '(123) ',
     adjustedCaretPosition: 6
   },
 }, {
@@ -1457,13 +1457,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 11',
-    startingInputFieldValue: '(123) ',
-    userModifiedInputFieldValue: '(123)',
-    caretPositionAfterInputFieldValueChange: 5
+    previousConformedValue: '(123) ',
+    rawValue: '(123)',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '(123',
+    conformedValue: '(123',
     adjustedCaretPosition: 4
   },
 }, {
@@ -1471,13 +1471,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 11',
-    startingInputFieldValue: '(987) 6_',
-    userModifiedInputFieldValue: '(9875) 6_',
-    caretPositionAfterInputFieldValueChange: 5
+    previousConformedValue: '(987) 6_',
+    rawValue: '(9875) 6_',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '(987) 56',
+    conformedValue: '(987) 56',
     adjustedCaretPosition: 7
   },
 
@@ -1487,13 +1487,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(987) 656-4938',
-    userModifiedInputFieldValue: '(987) 6565-4938',
-    caretPositionAfterInputFieldValueChange: 10
+    previousConformedValue: '(987) 656-4938',
+    rawValue: '(987) 6565-4938',
+    currentCaretPosition: 10
   },
 
   output: {
-    conformedInputFieldValue: '(987) 656-5493',
+    conformedValue: '(987) 656-5493',
     adjustedCaretPosition: 11
   },
 }, {
@@ -1501,13 +1501,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(',
-    userModifiedInputFieldValue: '',
-    caretPositionAfterInputFieldValueChange: 0
+    previousConformedValue: '(',
+    rawValue: '',
+    currentCaretPosition: 0
   },
 
   output: {
-    conformedInputFieldValue: '',
+    conformedValue: '',
     adjustedCaretPosition: 0
   },
 }, {
@@ -1515,13 +1515,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '(111) 111-1111',
-    startingInputFieldValue: '(1',
-    userModifiedInputFieldValue: '(',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '(1',
+    rawValue: '(',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '',
+    conformedValue: '',
     adjustedCaretPosition: 0
   },
 
@@ -1531,13 +1531,13 @@ export const noGuideMode = _.filter((t) => t, [{
 
   input: {
     mask: '11/11',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '_',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '_',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '',
+    conformedValue: '',
     adjustedCaretPosition: 0
   },
 
@@ -1554,13 +1554,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 // export const acceptedCharInMask = _.filter((t) => t.only, [{
   input: {
     mask: '0 1 0 11',
-    startingInputFieldValue: '0 _ 0 __',
-    userModifiedInputFieldValue: '0 3_ 0 __',
-    caretPositionAfterInputFieldValueChange: 3
+    previousConformedValue: '0 _ 0 __',
+    rawValue: '0 3_ 0 __',
+    currentCaretPosition: 3
   },
 
   output: {
-    conformedInputFieldValue: '0 3 0 __',
+    conformedValue: '0 3 0 __',
     adjustedCaretPosition: 3
   },
 
@@ -1570,13 +1570,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     mask: '0 1 0 11',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '0',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '0',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '0 _ 0 __',
+    conformedValue: '0 _ 0 __',
     adjustedCaretPosition: 2
   },
 
@@ -1586,13 +1586,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     mask: '00 (111)',
-    startingInputFieldValue: '00 (___)',
-    userModifiedInputFieldValue: '00 (1___)',
-    caretPositionAfterInputFieldValueChange: 5
+    previousConformedValue: '00 (___)',
+    rawValue: '00 (1___)',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '00 (1__)',
+    conformedValue: '00 (1__)',
     adjustedCaretPosition: 5
   },
 
@@ -1602,13 +1602,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     mask: '00 (111)',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '00 (234)',
-    caretPositionAfterInputFieldValueChange: 8
+    previousConformedValue: '',
+    rawValue: '00 (234)',
+    currentCaretPosition: 8
   },
 
   output: {
-    conformedInputFieldValue: '00 (234)',
+    conformedValue: '00 (234)',
     adjustedCaretPosition: 8
   },
 
@@ -1618,13 +1618,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     mask: '00 (111) 00 83 111 93 111',
-    startingInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
-    userModifiedInputFieldValue: '00 (344_) 00 83 ___ 93 ___',
-    caretPositionAfterInputFieldValueChange: 6
+    previousConformedValue: '00 (34_) 00 83 ___ 93 ___',
+    rawValue: '00 (344_) 00 83 ___ 93 ___',
+    currentCaretPosition: 6
   },
 
   output: {
-    conformedInputFieldValue: '00 (344) 00 83 ___ 93 ___',
+    conformedValue: '00 (344) 00 83 ___ 93 ___',
     adjustedCaretPosition: 6
   },
 }, {
@@ -1632,13 +1632,13 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     mask: '00 (111) 00 83 111 93 111',
-    startingInputFieldValue: '00 (344) 00 83 ___ 93 ___',
-    userModifiedInputFieldValue: '00 (34) 00 83 ___ 93 ___',
-    caretPositionAfterInputFieldValueChange: 5
+    previousConformedValue: '00 (344) 00 83 ___ 93 ___',
+    rawValue: '00 (34) 00 83 ___ 93 ___',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedInputFieldValue: '00 (34_) 00 83 ___ 93 ___',
+    conformedValue: '00 (34_) 00 83 ___ 93 ___',
     adjustedCaretPosition: 5
   },
 }])
@@ -1653,13 +1653,13 @@ export const allowMaskingCharInMask = _.filter((t) => t, [{
 // export const allowMaskingCharInMask = _.filter((t) => t.only, [{
   input: {
     mask: '00\\1 (111) 111-1111',
-    startingInputFieldValue: '',
-    userModifiedInputFieldValue: '9',
-    caretPositionAfterInputFieldValueChange: 1
+    previousConformedValue: '',
+    rawValue: '9',
+    currentCaretPosition: 1
   },
 
   output: {
-    conformedInputFieldValue: '001 (9__) ___-____',
+    conformedValue: '001 (9__) ___-____',
     adjustedCaretPosition: 6
   },
 }])
@@ -1667,13 +1667,13 @@ export const allowMaskingCharInMask = _.filter((t) => t, [{
 export function transformTestForComponent(test) {
   const {
     input: {mask},
-    output: {conformedInputFieldValue, adjustedCaretPosition}
+    output: {conformedValue, adjustedCaretPosition}
   } = test
 
   return {
-    conformedInputFieldValue: (
-      conformedInputFieldValue === convertMaskToPlaceholder(mask) &&
+    conformedValue: (
+      conformedValue === convertMaskToPlaceholder(mask) &&
       adjustedCaretPosition === 0
-    ) ? '' : conformedInputFieldValue
+    ) ? '' : conformedValue
   }
 }

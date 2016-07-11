@@ -64,11 +64,11 @@ You can use this function to initialize an `input` element to a placeholder valu
 
 ---
 
-### `conformToMask(userInput, mask, config)`
+### `conformToMask(rawValue, mask, config)`
 
 This function takes three arguments:
 
-* userInput (string): the string value that you want to conform to the mask
+* rawValue (string): the string value that you want to conform to the mask
 * mask (string): the mask to which you want the string to conform. You can find
 [mask documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 * config (object): optional config object. See below for details

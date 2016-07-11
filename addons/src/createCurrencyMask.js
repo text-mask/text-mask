@@ -2,15 +2,15 @@ export default function createCurrencyMask({
   prefix = '$',
   suffix = ''
 } = {}) {
-  return function(userInput) {
-    userInput = userInput
+  return function(rawValue) {
+    rawValue = rawValue
       .replace(/\D+/g, '')
       .replace(/\d/g, '1')
 
-    if (userInput === '') {
+    if (rawValue === '') {
       return `${prefix}1${suffix}`
     } else {
-      return `${prefix}${numberWithCommas(userInput)}${suffix}`
+      return `${prefix}${numberWithCommas(rawValue)}${suffix}`
     }
   }
 }
