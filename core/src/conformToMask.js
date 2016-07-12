@@ -2,7 +2,6 @@ import {
   tokenize,
   isAcceptableCharacter as isAcceptableChar,
   potentiallyTransformCharacter as potentiallyTransformChar,
-  getIndexOfFirstChange,
   unescapeMask,
   convertMaskToPlaceholder
 } from './utilities.js'
@@ -15,17 +14,18 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     previousConformedValue = '',
     placeholderChar = defaultPlaceholderChar,
     placeholder = convertMaskToPlaceholder(mask, placeholderChar),
-    validator: isCustomValid = alwaysReturnTrue
+    validator: isCustomValid = alwaysReturnTrue,
+    currentCaretPosition
   } = config
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedValue !== undefined
 
-  // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
-  const indexOfFirstChange = getIndexOfFirstChange(previousConformedValue, rawValue)
-
   // This tells us the number of edited characters and the direction in which they were edited (+/-)
   const numberOfEditedChars = rawValue.length - previousConformedValue.length
+
+  // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
+  const indexOfFirstChange = currentCaretPosition - numberOfEditedChars
 
   const rawValueArr = tokenize(rawValue)
 

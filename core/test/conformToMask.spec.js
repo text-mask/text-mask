@@ -26,7 +26,8 @@ describe('conformToMask', () => {
             test.input.mask,
             {
               previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar)
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
             }
           )).to.equal(test.output.conformedValue)
         }
@@ -49,7 +50,8 @@ describe('conformToMask', () => {
             {
               guide: false,
               previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar)
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
             }
           )).to.equal(test.output.conformedValue)
         }
@@ -63,7 +65,7 @@ describe('conformToMask', () => {
 
       (test) => ({
         description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}'`,
+        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
@@ -72,7 +74,8 @@ describe('conformToMask', () => {
             {
               guide: true,
               previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar)
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
             }
           )).to.equal(test.output.conformedValue)
         }
@@ -95,7 +98,8 @@ describe('conformToMask', () => {
             {
               guide: true,
               previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar)
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
             }
           )).to.equal(test.output.conformedValue)
         }
