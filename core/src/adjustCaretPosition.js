@@ -1,22 +1,22 @@
 export default function adjustCaretPosition({
-  previousConformedInput = '',
-  conformToMaskResults = {},
+  previousConformedValue = '',
   currentCaretPosition = 0,
+  conformedValue,
+  rawValue,
+  placeholderChar,
+  placeholder
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
-  const {output: conformedInput = '', meta = {}} = conformToMaskResults
-  const {input: rawInput = '', placeholderChar, placeholder} = meta
-
   // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
   // we know the user in this instance pasted two characters
-  const editLength = rawInput.length - previousConformedInput.length
+  const editLength = rawValue.length - previousConformedValue.length
 
   // If the edit length is positive, that means the user is adding characters, not deleting.
   const isAddition = editLength > 0
 
   // This is the first character the user entered that needs to be conformed to mask
-  const isFirstChar = rawInput.length === 1
+  const isFirstChar = rawValue.length === 1
 
   // A partial multi-character edit happens when the user makes a partial selection in their
   // input and edits that selection. That is going from `(123) 432-4348` to `() 432-4348` by
@@ -32,13 +32,13 @@ export default function adjustCaretPosition({
   // This works fine for most cases.
   if (isPartialMultiCharEdit) { return currentCaretPosition }
 
-  // For a mask like (111), if the `previousConformedInput` is (1__) and user attempts to enter
-  // `f` so the `rawInput` becomes (1f__), the new `conformedInput` would be (1__), which is the
-  // same as the original `previousConformedInput`. We handle this case differently for caret
+  // For a mask like (111), if the `previousConformedValue` is (1__) and user attempts to enter
+  // `f` so the `rawValue` becomes (1f__), the new `conformedValue` would be (1__), which is the
+  // same as the original `previousConformedValue`. We handle this case differently for caret
   // positioning.
   const possiblyHasRejectedChar = isAddition && (
-    previousConformedInput === conformedInput ||
-    conformedInput === placeholder
+    previousConformedValue === conformedValue ||
+    conformedValue === placeholder
   )
 
   let startingSearchIndex = 0
@@ -54,15 +54,15 @@ export default function adjustCaretPosition({
 
     // First, we need to normalize the inputs so that letter capitalization between raw input and
     // conformed input wouldn't matter.
-    const normalizedConformedInput = conformedInput.toLowerCase()
-    const normalizedRawInput = rawInput.toLowerCase()
+    const normalizedConformedValue = conformedValue.toLowerCase()
+    const normalizedRawValue = rawValue.toLowerCase()
 
     // Then we take all characters that come before where the caret currently is.
-    const leftHalfChars = normalizedRawInput.substr(0, currentCaretPosition).split('')
+    const leftHalfChars = normalizedRawValue.substr(0, currentCaretPosition).split('')
 
     // Now we find all the characters in the left half that exist in the conformed input
     const intersection = leftHalfChars.filter(
-      (char) => normalizedConformedInput.indexOf(char) !== -1
+      (char) => normalizedConformedValue.indexOf(char) !== -1
     )
 
     // The last character in the intersection is the character we want to look for in the conformed
@@ -77,12 +77,12 @@ export default function adjustCaretPosition({
     // We keep looping forward and store the index in every iteration. Once we have encountered
     // enough occurrences of the target character, we break out of the loop
     let numberOfEncounteredMatches = 0
-    for (let i = 0; i < conformedInput.length; i++) {
-      const conformedInputChar = normalizedConformedInput[i]
+    for (let i = 0; i < conformedValue.length; i++) {
+      const conformedValueChar = normalizedConformedValue[i]
 
       startingSearchIndex = i + 1
 
-      if (conformedInputChar === targetChar) {
+      if (conformedValueChar === targetChar) {
         numberOfEncounteredMatches++
       }
 

@@ -30,6 +30,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+`*` | Any character
 
 #### Escapable masking characters
 

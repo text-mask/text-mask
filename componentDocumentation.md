@@ -4,7 +4,7 @@ Text Mask accepts the following values:
 
 * [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
-* [`placeholderCharacter`](#placeholdercharacter) (string)
+* [`placeholderChar`](#placeholderChar) (string)
 * [`validator`](#validator) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
@@ -34,6 +34,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+`*` | Any character
 
 ##### Escaping a masking character
 
@@ -79,7 +80,7 @@ mask characters.
 When `guide` is `false`, Text Mask doesn't print out placeholder characters and only adds mask
 characters when the user reaches them as they're typing.
 
-## `placeholderCharacter`
+## `placeholderChar`
 
 The placeholder character represents the fillable spot in the mask. The default placeholder
 character is underscore, `_`.
@@ -93,14 +94,14 @@ as `'\u2000'`.
 
 &#x1F4CD; **Note**: you cannot use a mask that has a placeholder character hard-coded in it. That
 is, since the default placeholder character is `_`, you cannot have a mask that looks like
-`_111_` unless you pass `placeholderCharacter` that is not `_` and doesn't exist
+`_111_` unless you pass `placeholderChar` that is not `_` and doesn't exist
 in your mask.
 
 ## `validator`
 
 You can pass a validator to Text Mask. It should adhere to the following interface:
 
-* Accepts `conformedUserInput` (string)
+* Accepts `conformedValue` (string)
 * Returns `isValid` (boolean)
 
 The validator will be called whenever the user modifies the value in the component.
@@ -110,7 +111,7 @@ the component will not update. If it returned `true`, it will.
 
 Since the validator will receive the user input on every change, it should return `true` for
 partial values that could potentially develop into full valid values. For example, a date
-validator should return `true` for `conformedUserInput` that equals `1_/__/____`.
+validator should return `true` for `conformedValue` that equals `1_/__/____`.
 
 For an example of a validator, see the code for
 [`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)

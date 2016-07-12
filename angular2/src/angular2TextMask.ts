@@ -1,3 +1,5 @@
+///<reference path="../typings/index.d.ts"/>
+
 import {Directive, ElementRef, Input} from '@angular/core'
 import {NgControl} from '@angular/common'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
@@ -15,7 +17,7 @@ export default class MaskedInputDirective {
   @Input('textMask') textMaskConfig = {
     mask: '',
     guide: true,
-    placeholderCharacter: undefined,
+    placeholderChar: undefined,
     validator: undefined,
     onReject: undefined,
     onAccept: undefined
@@ -26,7 +28,7 @@ export default class MaskedInputDirective {
   }
 
   ngOnInit() {
-    const {placeholderCharacter: placeholderChar} = this.textMaskConfig
+    const {placeholderChar} = this.textMaskConfig
 
     this.control = createTextMaskInputElement(Object.assign({
       inputElement: this.inputElement,
