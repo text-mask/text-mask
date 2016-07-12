@@ -47,7 +47,8 @@ export default function createTextMaskInputElement({
         guide,
         placeholderChar,
         validator,
-        placeholder
+        placeholder,
+        currentCaretPosition
       }
       const conformedValue = conformToMask(safeRawValue, mask, conformToMaskConfig)
       const adjustedCaretPosition = adjustCaretPosition({

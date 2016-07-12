@@ -1549,9 +1549,11 @@ export const noGuideMode = _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
-export const acceptedCharInMask = _.filter((t) => t, [{
 // export const acceptedCharInMask = _.filter((t) => false, [{
+export const acceptedCharInMask = _.filter((t) => t, [{
 // export const acceptedCharInMask = _.filter((t) => t.only, [{
+  line: getLineNumber(),
+
   input: {
     mask: '0 1 0 11',
     previousConformedValue: '0 _ 0 __',
