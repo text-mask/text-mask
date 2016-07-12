@@ -3,6 +3,7 @@ import testParameters, {
   acceptedCharInMask,
   allowMaskingCharInMask
 } from './../../common/testParameters.js'
+import keepCharPositionsTests from '../../common/keepCharPositionsTests.js'
 import packageJson from '../package.json'
 import {convertMaskToPlaceholder} from '../src/utilities.js'
 import {placeholderChar} from '../src/constants.js'
@@ -96,6 +97,30 @@ describe('conformToMask', () => {
               guide: true,
               previousConformedValue: test.input.previousConformedValue,
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar)
+            }
+          )).to.equal(test.output.conformedValue)
+        }
+      })
+    )
+  })
+
+  describe.only('keepCharPositionsTests', () => {
+    dynamicTests(
+      keepCharPositionsTests,
+
+      (test) => ({
+        description: `for input ${JSON.stringify(test.input)}, ` +
+        `it outputs '${test.output.conformedValue}'`,
+
+        body: () => {
+          expect(conformToMask(
+            test.input.rawValue,
+            test.input.mask,
+            {
+              guide: true,
+              previousConformedValue: test.input.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              keepCharPositions: true
             }
           )).to.equal(test.output.conformedValue)
         }

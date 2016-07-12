@@ -171,7 +171,9 @@ describe('adjustCaretPosition', () => {
 
   describe('Dynamic mask tests', () => {
     dynamicTests(
-      dynamicMaskTests,
+      _.filter(dynamicMaskTests, (testParameter) => (
+        !_.includes(testParameter.skips, 'adjustCaretPosition')
+      )),
 
       (test) => ({
         description: `for input: ${JSON.stringify(test.input)}, it knows to adjust the caret to ` +
