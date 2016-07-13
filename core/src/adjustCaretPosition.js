@@ -61,9 +61,7 @@ export default function adjustCaretPosition({
     const leftHalfChars = normalizedRawValue.substr(0, currentCaretPosition).split('')
 
     // Now we find all the characters in the left half that exist in the conformed input
-    const intersection = leftHalfChars.filter(
-      (char) => normalizedConformedValue.indexOf(char) !== -1
-    )
+    const intersection = leftHalfChars.filter((char) => normalizedConformedValue.indexOf(char) !== -1)
 
     // The last character in the intersection is the character we want to look for in the conformed
     // input

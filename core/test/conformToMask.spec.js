@@ -114,7 +114,7 @@ describe('conformToMask', () => {
 
       (test) => ({
         description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}'`,
+        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
@@ -124,7 +124,8 @@ describe('conformToMask', () => {
               guide: true,
               previousConformedValue: test.input.previousConformedValue,
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              keepCharPositions: true
+              keepCharPositions: true,
+              currentCaretPosition: test.input.currentCaretPosition
             }
           )).to.equal(test.output.conformedValue)
         }
