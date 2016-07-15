@@ -6,7 +6,6 @@ import {
   convertMaskToPlaceholder
 } from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants.js'
-import adjustCharPositions from './adjustCharPositions.js'
 
 export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // These configurations tell us how to conform the mask
@@ -30,7 +29,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   const isAddition = editLength > 0
 
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
-  const indexOfFirstChange = currentCaretPosition + ((isAddition) ? editLength : 0)
+  const indexOfFirstChange = currentCaretPosition + ((isAddition) ? -editLength : 0)
 
   // Unescaping a mask turns a mask like `+\1 (111) 111-1111` into `+  (111) 111-1111`. That is,
   // it substituted an escaped character with empty white space. We do that because further down
@@ -38,6 +37,26 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // code to think that we can insert a numeric character in the `1` spot (which when unescaped
   // stands for *any numeric character*).
   const unescapedMask = unescapeMask(mask)
+
+  if (keepCharPositions === true && !isAddition) {
+    const indexOfLastChange = indexOfFirstChange + Math.abs(editLength)
+
+    let compensatingPlaceholderChars = ''
+
+    for (let i = indexOfFirstChange; i < indexOfLastChange; i++) {
+      if (placeholder[i] === placeholderChar) {
+        compensatingPlaceholderChars += placeholderChar
+      }
+    }
+
+    rawValue = (
+      rawValue.slice(0, indexOfFirstChange) +
+      compensatingPlaceholderChars +
+      rawValue.slice(indexOfFirstChange, rawValue.length)
+    )
+  }
+
+  console.log('rawValue', rawValue)
 
   const rawValueArr = tokenize(rawValue)
 
@@ -92,6 +111,10 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
             // like upper casing or lower casing.
             conformedValue += potentiallyTransformChar(rawValueChar, unescapedMask[i])
 
+            if (keepCharPositions && i >= indexOfFirstChange && isAddition) {
+              rawValueArr.splice(rawValueArr.indexOf(placeholderChar), 1)
+            }
+
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
           }
@@ -141,16 +164,6 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
       // the first character in the mask. So we return an empty string.
       conformedValue = ''
     }
-  }
-
-  if (keepCharPositions === true) {
-    conformedValue = adjustCharPositions({
-      conformedValue,
-      placeholderChar,
-      previousConformedValue,
-      indexOfFirstChange,
-      mask
-    })
   }
 
   return isCustomValid(conformedValue) ? conformedValue : previousConformedValue

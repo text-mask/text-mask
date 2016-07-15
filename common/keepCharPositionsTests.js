@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 
 // export default _.filter((t) => false, [{
-// export default _.filter((t) => t, [{
-export default _.filter((t) => t.only, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
@@ -14,6 +14,8 @@ export default _.filter((t) => t.only, [{
 
   output: {
     // (650) 394-211_
+    // (650) 394-21_1
+    // (650) 394-2_11
     conformedValue: '(650) 394-2_11',
     adjustedCaretPosition: 11,
   },
@@ -55,6 +57,47 @@ export default _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
+    previousConformedValue: '(650) 394-2_11',
+    rawValue: '(650) 3-2_11',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 7,
+  },
+
+  output: {
+    // (650) 32_-11__
+    conformedValue: '(650) 3__-2_11',
+    adjustedCaretPosition: 7,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(650) 394-2_11',
+    rawValue: '(65-2_11',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 3,
+  },
+
+  output: {
+    // (652) _11-____
+    // 6_____2_11
+    conformedValue: '(65_) ___-2_11',
+    adjustedCaretPosition: 3,
+  },
+
+  // only: true
+
+
+  // ##########################
+  // Addition operation
+  // ##########################
+
+}, {
+  line: getLineNumber(),
+
+  input: {
     previousConformedValue: '(650) ___-3___',
     rawValue: '(650) 4___-3___',
     mask: '(111) 111-1111',
@@ -62,6 +105,7 @@ export default _.filter((t) => t.only, [{
   },
 
   output: {
+    // (650) 4__-_3__
     conformedValue: '(650) 4__-3___',
     adjustedCaretPosition: 7,
   },
@@ -78,8 +122,43 @@ export default _.filter((t) => t.only, [{
   },
 
   output: {
+    // (650) ___-3___
     conformedValue: '(650) ___-3___',
     adjustedCaretPosition: 8,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(650) ___-3___',
+    rawValue: '(650) __-_-3___',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 9,
+  },
+
+  output: {
+    // (650) ___-3___
+    conformedValue: '(650) ___-3___',
+    adjustedCaretPosition: 8,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(650) ___-3___',
+    rawValue: '(650) __-23_-3___',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 11,
+  },
+
+  output: {
+    // (650) _2-3_3_
+    conformedValue: '(650) __2-33__',
+    adjustedCaretPosition: 11,
   },
 
   // only: true
