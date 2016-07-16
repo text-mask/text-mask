@@ -4,7 +4,8 @@ Text Mask accepts the following values:
 
 * [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
-* [`placeholderChar`](#placeholderChar) (string)
+* [`placeholderChar`](#placeholderchar) (string)
+* [`keepCharPositions`](#keepcharpositions) (boolean)
 * [`validator`](#validator) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
@@ -62,23 +63,38 @@ For an example of a dynamic mask, see the source code of
 
 **It is set to `true` by default.**
 
-### Guide mode
+<table>
+<tbody>
+<tr>
+<th>Guide mode</th>
+<th>No-guide mode</th>
+</tr>
 
+<tr>
+<td>
 <p align="center">
 <img src="assets/guideMode.gif"/>
 </p>
 
-When `guide` is `true`, Text Mask always shows both placeholder characters and non-placeholder
+<p>
+When <code>guide</code> is <code>true</code>, Text Mask always shows both placeholder characters and non-placeholder
 mask characters.
+</p>
+</td>
 
-### No-guide mode
-
+<td>
 <p align="center">
 <img src="assets/noGuideMode.gif"/>
 </p>
 
-When `guide` is `false`, Text Mask doesn't print out placeholder characters and only adds mask
+</p>
+When <code>guide</code> is <code>false</code>, Text Mask doesn't print out placeholder characters and only adds mask
 characters when the user reaches them as they're typing.
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## `placeholderChar`
 
@@ -96,6 +112,12 @@ as `'\u2000'`.
 is, since the default placeholder character is `_`, you cannot have a mask that looks like
 `_111_` unless you pass `placeholderChar` that is not `_` and doesn't exist
 in your mask.
+
+## `keepCharPositions`
+
+`keepCharPositions`, **which is `false` by default**, changes the general behavior of the Text Mask component. When
+`true`, adding or deleting characters will not affect the positions if existing characters. When `false`, adding
+characters causes existing characters to advance. And deleting characters causes existing characters to move back.
 
 ## `validator`
 
