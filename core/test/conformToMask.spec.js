@@ -30,7 +30,7 @@ describe('conformToMask', () => {
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
               currentCaretPosition: test.input.currentCaretPosition
             }
-          )).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.output.conformedValue)
         }
       })
     )
@@ -54,7 +54,7 @@ describe('conformToMask', () => {
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
               currentCaretPosition: test.input.currentCaretPosition
             }
-          )).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.output.conformedValue)
         }
       })
     )
@@ -78,7 +78,7 @@ describe('conformToMask', () => {
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
               currentCaretPosition: test.input.currentCaretPosition
             }
-          )).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.output.conformedValue)
         }
       })
     )
@@ -102,7 +102,7 @@ describe('conformToMask', () => {
               placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
               currentCaretPosition: test.input.currentCaretPosition
             }
-          )).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.output.conformedValue)
         }
       })
     )
@@ -127,7 +127,7 @@ describe('conformToMask', () => {
               keepCharPositions: true,
               currentCaretPosition: test.input.currentCaretPosition
             }
-          )).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.output.conformedValue)
         }
       })
     )

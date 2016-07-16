@@ -115,9 +115,41 @@ in your mask.
 
 ## `keepCharPositions`
 
-`keepCharPositions`, **which is `false` by default**, changes the general behavior of the Text Mask component. When
-`true`, adding or deleting characters will not affect the positions if existing characters. When `false`, adding
-characters causes existing characters to advance. And deleting characters causes existing characters to move back.
+`keepCharPositions` changes the general behavior of the Text Mask component.
+
+**It is set to `false` by default**,
+
+<table>
+<tbody>
+<tr>
+<th><code>keepCharPositions</code> is set to <code>true</code></th>
+<th><code>keepCharPositions</code> is set to <code>false</code></th>
+</tr>
+
+<tr>
+<td>
+<p align="center">
+<img src="assets/keepCharPositionsTrue.gif"/>
+</p>
+
+<p>
+When <code>true</code>, adding or deleting characters will not affect the positions if existing characters.
+</p>
+</td>
+
+<td>
+<p align="center">
+<img src="assets/keepCharPositionsFalse.gif"/>
+</p>
+
+</p>
+When <code>false</code>, adding characters causes existing characters to advance. And deleting characters
+causes existing characters to move back.
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## `validator`
 

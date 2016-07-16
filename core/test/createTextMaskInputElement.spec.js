@@ -252,6 +252,26 @@ describe('createTextMaskInputElement', () => {
 
         expect(onReject.callCount).to.equal(0)
       })
+
+      it('is not called when a character is rejected because it is blocked in `keepCharPositions` mode', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onReject,
+          keepCharPositions: true
+        })
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(42__) ___-____'
+        inputElement.selectionStart = 2
+        textMaskControl.update() // after this, value is still (2__) ___-____
+
+        expect(onReject.callCount).to.equal(0)
+      })
     })
   })
 })

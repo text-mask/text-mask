@@ -19,6 +19,7 @@ export default React.createClass({ // eslint-disable-line
       selectedChoice,
       customMask,
       rejectMessage,
+      keepCharPositions
     } = this.state
     const {
       mask: choiceMask,
@@ -34,7 +35,8 @@ export default React.createClass({ // eslint-disable-line
       customMask,
       selectedChoice,
       placeholderChar,
-      guide
+      guide,
+      keepCharPositions
     })
     const maskInUse = choiceMask || customMask
     const isDynamicMask = typeof maskInUse === 'function'
@@ -48,16 +50,17 @@ export default React.createClass({ // eslint-disable-line
           <form className='form-horizontal'>
             <div className='form-group'>
               <label
-                className='col-sm-3 control-label'
+                className='col-sm-4 control-label'
                 htmlFor='maskedInput'>Masked input</label>
 
-              <div className='col-sm-9'>
+              <div className='col-sm-8'>
                 <MaskedInput
                   style={style}
                   key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderChar={placeholderChar}
                   validator={validator}
+                  keepCharPositions={keepCharPositions}
                   ref='maskedInput'
                   mask={maskInUse}
                   guide={guide}
@@ -71,7 +74,7 @@ export default React.createClass({ // eslint-disable-line
 
             {rejectMessage && (
               <div className='form-group row'>
-                <div className='col-sm-9 col-sm-offset-3'>
+                <div className='col-sm-8 col-sm-offset-4'>
                   <p className='alert alert-warning' style={{margin: 0}}>
                     {rejectMessage}
                   </p>
@@ -82,7 +85,9 @@ export default React.createClass({ // eslint-disable-line
             <div className='form-group row'>
               <label
                 htmlFor='mask'
-                className='col-sm-3 col-xs-12 control-label'>Mask</label>
+                className='col-sm-4 col-xs-12 control-label'>
+                Mask <HelpLink section="mask"/>
+              </label>
 
               <div className='col-sm-4 col-xs-12'>
                 <select
@@ -96,7 +101,7 @@ export default React.createClass({ // eslint-disable-line
                 </select>
               </div>
 
-              <div className='col-sm-5 col-xs-12'>
+              <div className='col-sm-4 col-xs-12'>
                 <input
                   style={{display: (isDynamicMask) ? null : 'none'}}
                   disabled
@@ -117,7 +122,7 @@ export default React.createClass({ // eslint-disable-line
             </div>
 
             {help !== undefined && <div className='form-group row'>
-              <div className='col-sm-9 col-sm-offset-3'>
+              <div className='col-sm-8 col-sm-offset-4'>
                 <p className='alert alert-info' style={{margin: 0}}>
                   {help}
                 </p>
@@ -125,7 +130,9 @@ export default React.createClass({ // eslint-disable-line
             </div>}
 
             <div className='form-group'>
-              <label htmlFor='guide' className='col-sm-3 control-label'>Guide</label>
+              <label htmlFor='guide' className='col-sm-4 control-label'>
+                Guide <HelpLink section="guide"/>
+              </label>
 
               <div className='col-sm-2'>
                 <select className='form-control' onChange={this.changeGuide} value={guide}>
@@ -136,33 +143,37 @@ export default React.createClass({ // eslint-disable-line
             </div>
 
             <div className='form-group'>
-              <label htmlFor='placeholderChar' className='col-sm-3 control-label'>
-                Placeholder character
+              <label htmlFor='keepCharPositions' className='col-sm-4 control-label'>
+                Keep character positions <HelpLink section="keepcharpositions"/>
               </label>
 
-              <div className='col-sm-6'>
-                {guide === true && (
-                  <select
-                    id='placeholderChar'
-                    className='form-control'
-                    onChange={this.changePlaceholderChar}
-                  >
-                    <option value={'\u2000'}>\u2000 (white space)</option>
-                    <option value='_'>_ (underscore)</option>
-                  </select>
-                ) || (
-                  <select
-                    disabled
-                    id='placeholderChar'
-                    className='form-control'
-                    onChange={this.changePlaceholderChar}
-                  >
-                    <option>Turn guide on to see placeholder character</option>
-                  </select>
-                )}
+              <div className='col-sm-2'>
+                <select className='form-control' onChange={this.changeKeepCharPositions} value={keepCharPositions}>
+                  <option value={false}>Off</option>
+                  <option value={true}>On</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <label htmlFor='placeholderChar' className='col-sm-4 control-label'>
+                Placeholder character <HelpLink section="placeholderchar"/>
+              </label>
+
+              <div className='col-sm-3'>
+                <select
+                  id='placeholderChar'
+                  className='form-control'
+                  onChange={this.changePlaceholderChar}
+                >
+                  <option value={'\u2000'}>\u2000 (white space)</option>
+                  <option value='_'>_ (underscore)</option>
+                </select>
               </div>
             </div>
           </form>
+
+          <hr/>
 
           <DemoBottom/>
         </div>
@@ -208,6 +219,11 @@ export default React.createClass({ // eslint-disable-line
     this.focusMaskedInput()
   },
 
+  changeKeepCharPositions({target: {value: keepCharPositions}}) {
+    this.setState({keepCharPositions: keepCharPositions === 'true'})
+    this.focusMaskedInput()
+  },
+
   changePlaceholderChar({target: {value: placeholderChar}}) {
     this.setState({placeholderChar})
     this.focusMaskedInput()
@@ -232,3 +248,15 @@ export default React.createClass({ // eslint-disable-line
     this.setState({acceptMessage})
   }
 })
+
+function HelpLink({section}) {
+  return (
+    <a
+      className="small"
+      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
+      target="_blank"
+    >
+      <span className="glyphicon glyphicon-question-sign"/>
+    </a>
+  )
+}

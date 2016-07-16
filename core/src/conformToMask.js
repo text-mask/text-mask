@@ -98,6 +98,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below
   let conformedValue = ''
+  let someCharsRejected = false
 
   // Ok, so first we loop through the placeholder looking for placeholder characters to fill up.
   placeholderLoop: for (let i = 0; i < placeholderLength; i++) {
@@ -184,6 +185,8 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
 
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
+          } else {
+            someCharsRejected = true
           }
         }
       }
@@ -233,7 +236,10 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     }
   }
 
-  return isCustomValid(conformedValue) ? conformedValue : previousConformedValue
+  return {
+    conformedValue: isCustomValid(conformedValue) ? conformedValue : previousConformedValue,
+    meta: {someCharsRejected}
+  }
 }
 
 function alwaysReturnTrue() {

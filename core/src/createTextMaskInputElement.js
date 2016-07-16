@@ -10,7 +10,7 @@ export default function createTextMaskInputElement({
   placeholderChar,
   onAccept,
   onReject,
-  keepCharPositions
+  keepCharPositions = false
 }) {
   const state = {previousConformedValue: ''}
 
@@ -50,9 +50,9 @@ export default function createTextMaskInputElement({
         validator,
         placeholder,
         currentCaretPosition,
-        keepCharPositions: true
+        keepCharPositions
       }
-      const conformedValue = conformToMask(safeRawValue, mask, conformToMaskConfig)
+      const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
         conformedValue,
@@ -75,7 +75,7 @@ export default function createTextMaskInputElement({
 
       if (
         typeof onReject === 'function' &&
-        inputElementValue === previousConformedValue &&
+        someCharsRejected &&
         isDeletion === false &&
         currentCaretPosition <= mask.length
       ) {
