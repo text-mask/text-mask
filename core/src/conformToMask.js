@@ -179,7 +179,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
               // If `indexOfNextAvailablePlaceholderChar` is `null`, that means the character is blocked. We have to
               // discard it.
               } else {
-                i--;
+                i--
               }
             }
 

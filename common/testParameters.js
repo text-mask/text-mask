@@ -1566,7 +1566,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
     adjustedCaretPosition: 3
   },
 
-  only: true
+  // only: true
 }, {
   line: getLineNumber(),
 

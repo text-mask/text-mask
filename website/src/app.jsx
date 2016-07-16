@@ -6,6 +6,18 @@ import classnames from 'classnames'
 import appStyles from './app.scss'
 import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
 
+const HelpLink = ({section}) => { // eslint-disable-line
+  return (
+    <a
+      className='small'
+      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
+      target='_blank'
+    >
+      <span className='glyphicon glyphicon-question-sign'/>
+    </a>
+  )
+}
+
 export default React.createClass({ // eslint-disable-line
   getInitialState() {
     return Object.assign({}, initialState)
@@ -86,7 +98,7 @@ export default React.createClass({ // eslint-disable-line
               <label
                 htmlFor='mask'
                 className='col-sm-4 col-xs-12 control-label'>
-                Mask <HelpLink section="mask"/>
+                Mask <HelpLink section='mask'/>
               </label>
 
               <div className='col-sm-4 col-xs-12'>
@@ -131,7 +143,7 @@ export default React.createClass({ // eslint-disable-line
 
             <div className='form-group'>
               <label htmlFor='guide' className='col-sm-4 control-label'>
-                Guide <HelpLink section="guide"/>
+                Guide <HelpLink section='guide'/>
               </label>
 
               <div className='col-sm-2'>
@@ -144,7 +156,7 @@ export default React.createClass({ // eslint-disable-line
 
             <div className='form-group'>
               <label htmlFor='keepCharPositions' className='col-sm-4 control-label'>
-                Keep character positions <HelpLink section="keepcharpositions"/>
+                Keep character positions <HelpLink section='keepcharpositions'/>
               </label>
 
               <div className='col-sm-2'>
@@ -157,7 +169,7 @@ export default React.createClass({ // eslint-disable-line
 
             <div className='form-group'>
               <label htmlFor='placeholderChar' className='col-sm-4 control-label'>
-                Placeholder character <HelpLink section="placeholderchar"/>
+                Placeholder character <HelpLink section='placeholderchar'/>
               </label>
 
               <div className='col-sm-3'>
@@ -248,15 +260,3 @@ export default React.createClass({ // eslint-disable-line
     this.setState({acceptMessage})
   }
 })
-
-function HelpLink({section}) {
-  return (
-    <a
-      className="small"
-      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
-      target="_blank"
-    >
-      <span className="glyphicon glyphicon-question-sign"/>
-    </a>
-  )
-}

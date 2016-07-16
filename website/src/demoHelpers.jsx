@@ -157,7 +157,7 @@ export const DemoTop = () => (
 )
 
 export const DemoBottom = () => (
-  <p className="col-sm-8 col-sm-offset-4">
+  <p className='col-sm-8 col-sm-offset-4'>
     For more information about
     installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
   </p>
