@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 
 // export default _.filter((t) => false, [{
-// export default _.filter((t) => t, [{
-export default _.filter((t) => t.only, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => t.only, [{
   input: {
     previousConformedValue: '$100',
     rawValue: '$1000',
@@ -43,5 +43,5 @@ export default _.filter((t) => t.only, [{
 
   // TODO: for now, this works as expected. In the future, I'll want to make it possible to
   // prevent the caret from moving over the dot.
-  skips: ['adjustedCaretPosition']
+  skips: ['adjustCaretPosition']
 }])

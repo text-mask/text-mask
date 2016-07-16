@@ -131,6 +131,8 @@ export const initialState = {
   placeholderChar: '\u2000',
 
   guide: true,
+
+  keepCharPositions: false
 }
 
 const githubLink = 'https://github.com/msafi/text-mask/'
@@ -147,7 +149,7 @@ export const DemoTop = () => (
     </p>
 
     <p>
-      This is just a demo. Try filling out the masked input field.
+      This is a demo of Text Mask. Try filling out the masked input field.
       Try entering bad characters. Pasting. Deleting.
       Or using auto-fill. Try it on mobile too.
     </p>
@@ -155,7 +157,7 @@ export const DemoTop = () => (
 )
 
 export const DemoBottom = () => (
-  <p>
+  <p className='col-sm-8 col-sm-offset-4'>
     For more information about
     installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
   </p>
