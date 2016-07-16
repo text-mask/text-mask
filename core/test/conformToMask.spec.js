@@ -108,7 +108,7 @@ describe('conformToMask', () => {
     )
   })
 
-  describe.only('keepCharPositionsTests', () => {
+  describe('keepCharPositionsTests', () => {
     dynamicTests(
       keepCharPositionsTests,
 

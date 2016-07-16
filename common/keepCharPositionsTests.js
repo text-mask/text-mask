@@ -20,7 +20,7 @@ export default _.filter((t) => t, [{
     adjustedCaretPosition: 11,
   },
 
-  only: true
+  // only: true
 }, {
   line: getLineNumber(),
 
@@ -133,23 +133,6 @@ export default _.filter((t) => t, [{
 
   input: {
     previousConformedValue: '(650) ___-3___',
-    rawValue: '(650) __-_-3___',
-    mask: '(111) 111-1111',
-    currentCaretPosition: 9,
-  },
-
-  output: {
-    // (650) ___-3___
-    conformedValue: '(650) ___-3___',
-    adjustedCaretPosition: 8,
-  },
-
-  // only: true
-}, {
-  line: getLineNumber(),
-
-  input: {
-    previousConformedValue: '(650) ___-3___',
     rawValue: '(650) __-23_-3___',
     mask: '(111) 111-1111',
     currentCaretPosition: 11,
@@ -157,7 +140,75 @@ export default _.filter((t) => t, [{
 
   output: {
     // (650) _2-3_3_
-    conformedValue: '(650) __2-33__',
+    conformedValue: '(650) __2-3___',
+    adjustedCaretPosition: 11,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(902) 394-8__3',
+    rawValue: '(902) 394-38__3',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 11,
+  },
+
+  output: {
+    // (902) 394-38__
+    conformedValue: '(902) 394-8__3',
+    adjustedCaretPosition: 11,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(830) 203-___3',
+    rawValue: '(830) 203dkla8xxx-___3',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 17,
+  },
+
+  output: {
+    conformedValue: '(830) 203-8__3',
+    adjustedCaretPosition: 11,
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(830) 203-___3',
+    rawValue: '(830) 2038-___3',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 10,
+  },
+
+  output: {
+    conformedValue: '(830) 203-8__3',
+    adjustedCaretPosition: 11,
+  },
+
+  // only: true
+}, {
+  // ##########################
+  // Blocker character
+  // ##########################
+  line: getLineNumber(),
+
+  input: {
+    previousConformedValue: '(830) 203-4__3',
+    rawValue: '(830) 2038-4__3',
+    mask: '(111) 111-1111',
+    currentCaretPosition: 10,
+  },
+
+  output: {
+    conformedValue: '(830) 203-4__3',
     adjustedCaretPosition: 11,
   },
 
