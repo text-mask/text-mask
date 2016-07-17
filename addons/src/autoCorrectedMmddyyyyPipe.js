@@ -1,4 +1,4 @@
-export default function assistedMmddyyyyPipe(conformedValue) {
+export default function autoCorrectedMmddyyyyPipe(conformedValue) {
   const conformedValueArr = conformedValue.split('')
   const indexesOfPipedChars = []
 

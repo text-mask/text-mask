@@ -1,5 +1,5 @@
 import React from 'react' // eslint-disable-line
-import assistedMmddyyyyPipe from '../../addons/src/assistedMmddyyyyPipe.js'
+import autoCorrectedMmddyyyyPipe from '../../addons/src/autoCorrectedMmddyyyyPipe.js'
 import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 const dynamicMaskDocumentationLink = 'https://github.com/msafi/text-mask/blob/master/' +
@@ -27,10 +27,10 @@ export const initialState = {
     mask: '11/11/1111',
     placeholder: '25/09/1970'
   }, {
-    value: 'assistedDate',
-    name: 'Date (assisted)',
+    value: 'autoCorrectedDate',
+    name: 'Date (auto-corrected)',
     mask: '11/11/1111',
-    pipe: assistedMmddyyyyPipe,
+    pipe: autoCorrectedMmddyyyyPipe,
     onRejectMessage: <span>Please enter a date with the following format <code>MM/DD/YYYY</code>.</span>,
     placeholder: 'Please enter a date',
     keepCharPositions: true,
@@ -41,8 +41,8 @@ export const initialState = {
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js'>
-          assistedMmddyyyyPipe
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js'>
+          autoCorrectedMmddyyyyPipe
         </a>, which needs to be installed separately as a
         {' '}
         <a
