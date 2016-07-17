@@ -8,7 +8,6 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     previousConformedValue = '',
     placeholderChar = defaultPlaceholderChar,
     placeholder = convertMaskToPlaceholder(mask, placeholderChar),
-    validator: isCustomValid = alwaysReturnTrue,
     currentCaretPosition,
     keepCharPositions
   } = config
@@ -237,11 +236,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   }
 
   return {
-    conformedValue: isCustomValid(conformedValue) ? conformedValue : previousConformedValue,
+    conformedValue: conformedValue,
     meta: {someCharsRejected}
   }
-}
-
-function alwaysReturnTrue() {
-  return true
 }

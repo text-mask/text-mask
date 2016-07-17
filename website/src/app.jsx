@@ -31,7 +31,7 @@ export default React.createClass({ // eslint-disable-line
       selectedChoice,
       customMask,
       rejectMessage,
-      keepCharPositions
+      stateKeepCharPositions
     } = this.state
     const {
       mask: choiceMask,
@@ -41,6 +41,7 @@ export default React.createClass({ // eslint-disable-line
       value,
       onRejectMessage,
       onAcceptMessage,
+      keepCharPositions = stateKeepCharPositions,
       style
     } = choices[selectedChoice]
     const maskedInputKey = JSON.stringify({
@@ -71,7 +72,7 @@ export default React.createClass({ // eslint-disable-line
                   key={maskedInputKey}
                   placeholder={placeholderValue}
                   placeholderChar={placeholderChar}
-                  validator={validator}
+                  pipe={pipe}
                   keepCharPositions={keepCharPositions}
                   ref='maskedInput'
                   mask={maskInUse}

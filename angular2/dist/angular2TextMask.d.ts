@@ -8,7 +8,7 @@ export default class MaskedInputDirective {
         mask: string;
         guide: boolean;
         placeholderChar: any;
-        validator: any;
+        pipe: any;
         onReject: any;
         onAccept: any;
     };

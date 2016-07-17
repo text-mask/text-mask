@@ -45,6 +45,7 @@ export const initialState = {
       </span>
     ),
     placeholder: 'Date between 01/01/1900 and today',
+    keepCharPositions: true,
     help: (
       <span>
         This mask configuration is validated with

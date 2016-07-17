@@ -18,7 +18,7 @@ export default class MaskedInputDirective {
     mask: '',
     guide: true,
     placeholderChar: '_',
-    validator: undefined,
+    pipe: undefined,
     keepCharPositions: false,
     onReject: undefined,
     onAccept: undefined
