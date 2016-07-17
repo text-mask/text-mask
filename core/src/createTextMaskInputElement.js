@@ -1,13 +1,14 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
+import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 export default function createTextMaskInputElement({
   inputElement,
   mask: providedMask,
   guide,
   validator,
-  placeholderChar,
+  placeholderChar = defaultPlaceholderChar,
   onAccept,
   onReject,
   keepCharPositions = false

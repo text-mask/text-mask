@@ -17,8 +17,9 @@ export default class MaskedInputDirective {
   @Input('textMask') textMaskConfig = {
     mask: '',
     guide: true,
-    placeholderChar: undefined,
+    placeholderChar: '_',
     validator: undefined,
+    keepCharPositions: false,
     onReject: undefined,
     onAccept: undefined
   }
