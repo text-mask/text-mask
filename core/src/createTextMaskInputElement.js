@@ -116,7 +116,7 @@ export default function createTextMaskInputElement({
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
-        indexesOfPipedChars: pipeResults.indexesOfPipedChars
+        indexesOfPipedChars: (piped) ? pipeResults.indexesOfPipedChars : undefined
       })
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.

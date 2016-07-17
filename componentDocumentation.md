@@ -168,7 +168,7 @@ partial values that could potentially develop into full valid values. For exampl
 pipe should return `true` for `conformedValue` that equals `1_/__/____`.
 
 For an example of a pipe, see the code for
-[`createMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyPipe.js)
+[`assistedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js)
 in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `onReject`

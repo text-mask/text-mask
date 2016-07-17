@@ -40,9 +40,9 @@ These functions here can be passed as a
 [`pipe`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
-### `createMmddyyyyPipe`
+### `assistedMmddyyyyPipe`
 
-`createMmddyyyyPipe` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
+`assistedMmddyyyyPipe` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
 date.
 
 It accepts a config object with `minimumDate` and `maximumDate`, and ensures that the user is
@@ -52,9 +52,8 @@ character that would invalidate the date. For example, a month that begins with 
 #### Usage
 
 ```js
-import createMmddyyyyPipe from 'text-mask-addons/dist/createMmddyyyyPipe.js'
-
-const mmddyyyyPipe = createMmddyyyyPipe({
+import assistedMmddyyyyPipe from assistedMmddyyyyPipe.js
+onst mmddyyyyPipe = assistedMmddyyyyPipe({
   minimumDate: '01/01/1900',
   maximumDate: '12/31/2016'
 })
