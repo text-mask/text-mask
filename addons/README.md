@@ -1,6 +1,6 @@
 # Text Mask Addons
 
-These addons are ready-to-use validators and masks that can be used with Text Mask.
+These addons are ready-to-use pipes and masks that can be used with Text Mask.
 
 ## Installation
 
@@ -34,30 +34,33 @@ const currencyMask = createCurrencyMask({
 // ...then pass `currencyMask` to the Text Mask component
 ```
 
-## Validators
+## Pipes
 
 These functions here can be passed as a
-[`validator`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#validator)
+[`pipe`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
-### `createMmddyyyyValidator`
+### `assistedMmddyyyyPipe`
 
-`createMmddyyyyValidator` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
-date.
+The `assistedMmddyyyyPipe` helps the user in entering a date in the `MM/DD/YYYY` format.
 
-It accepts a config object with `minimumDate` and `maximumDate`, and ensures that the user is
-typing a valid calendar date between these two dates. It prevents the user from entering any
-character that would invalidate the date. For example, a month that begins with `2` is prevented.
+For example, if the user enters a value
+larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
+day slots.
+
+When the user enters `0` in the 1st slot of the year, it transforms that to `200`.
+
+It also blocks the user from entering invalid days or months such as `33/44`.
+
+For `assistedMmddyyyyPipe` to work properly, the Text Mask component needs to be
+configured with
+[`keepCharPositions`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
+set to `true`.
 
 #### Usage
 
 ```js
-import createMmddyyyyValidator from 'text-mask-addons/dist/createMmddyyyyValidator.js'
+import assistedMmddyyyyPipe from 'text-mask-addons/dist/assistedMmddyyyyPipe.js'
 
-const mmddyyyyValidator = createMmddyyyyValidator({
-  minimumDate: '01/01/1900',
-  maximumDate: '12/31/2016'
-})
-
-// ...then pass `mmddyyyyValidator` to the Text Mask component
+// ...then pass `assistedMmddyyyyPipe` to the Text Mask component
 ```

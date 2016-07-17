@@ -1,5 +1,5 @@
 import React from 'react' // eslint-disable-line
-import createMmddyyyyValidator from '../../addons/src/createMmddyyyyValidator.js'
+import assistedMmddyyyyPipe from '../../addons/src/assistedMmddyyyyPipe.js'
 import createCurrencyMask from '../../addons/src/createCurrencyMask'
 
 const dynamicMaskDocumentationLink = 'https://github.com/msafi/text-mask/blob/master/' +
@@ -23,37 +23,26 @@ export const initialState = {
     placeholder: 'K1A 0B2'
   }, {
     value: 'date',
-    name: 'Date (not validated)',
+    name: 'Date',
     mask: '11/11/1111',
     placeholder: '25/09/1970'
   }, {
-    value: 'birthDay',
-    name: 'Birth day (validated)',
+    value: 'assistedDate',
+    name: 'Date (assisted)',
     mask: '11/11/1111',
-    validator: createMmddyyyyValidator({
-      minimumDate: '01/01/1900',
-      maximumDate: (new Date()).toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      })
-    }),
-    onRejectMessage: (
-      <span>
-        Please enter an actual calendar date between 01/01/1900 and today,
-        with the following format `mm/dd/yyyy`.
-      </span>
-    ),
-    placeholder: 'Date between 01/01/1900 and today',
+    pipe: assistedMmddyyyyPipe,
+    onRejectMessage: <span>Please enter a date with the following format <code>MM/DD/YYYY</code>.</span>,
+    placeholder: 'Please enter a date',
+    keepCharPositions: true,
     help: (
       <span>
-        This mask configuration is validated with
+        This mask is configured with
         {' '}
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js'>
-          createMmddyyyyValidator
+          href='https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js'>
+          assistedMmddyyyyPipe
         </a>, which needs to be installed separately as a
         {' '}
         <a

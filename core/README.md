@@ -91,7 +91,7 @@ If you're calling `conformToMask` for the first time, you don't have to pass thi
 * `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
 documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderChar).
 
-* `validator` (function) (optional): this function will receive **one
+* `pipe` (function) (optional): this function will receive **one
 argument**, the conformed string. The function should **return a boolean**. If the function returned
 `true`, the `output` of `conformToMask` will be the newly conformed string. If the function returned
 `false`, the `output` of `conformToMask` will be the `previousConformedValue`

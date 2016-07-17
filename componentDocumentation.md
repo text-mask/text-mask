@@ -6,7 +6,7 @@ Text Mask accepts the following values:
 * [`guide`](#guide) (boolean)
 * [`placeholderChar`](#placeholderchar) (string)
 * [`keepCharPositions`](#keepcharpositions) (boolean)
-* [`validator`](#validator) (function)
+* [`pipe`](#pipe) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
 
@@ -55,7 +55,8 @@ This feature is useful when we want to format a user input of unknown length, su
 formatting a number to currency or formatting a string to email address mask.
 
 For an example of a dynamic mask, see the source code of
-[`createCurrencyMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js).
+[`createCurrencyMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js),
+which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `guide`
 
@@ -151,30 +152,42 @@ causes existing characters to move back.
 </tbody>
 </table>
 
-## `validator`
+## `pipe`
 
-You can pass a validator to Text Mask. It should adhere to the following interface:
+You can provide a `pipe` function that will give you the opportunity to modify the conformed value before it is
+displayed on the screen.
 
-* Accepts `conformedValue` (string)
-* Returns `isValid` (boolean)
+The `pipe` receives:
 
-The validator will be called whenever the user modifies the value in the component.
-The validator will receive one argument: *the conformed user input*.
-Given that argument, the validator should return either `true` or `false`. If it returned `false`,
-the component will not update. If it returned `true`, it will.
+1. `conformedValue`
+1. `config`
 
-Since the validator will receive the user input on every change, it should return `true` for
-partial values that could potentially develop into full valid values. For example, a date
-validator should return `true` for `conformedValue` that equals `1_/__/____`.
+The `conformedValue` is the value that the user entered after it has been conformed. The `config` contains all the user
+configurations for Text Mask (the ones detailed on this page).
 
-For an example of a validator, see the code for
-[`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
-in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/#readme).
+The `pipe` must return either an `object` or `false`.
+
+It could return `false` to reject the new conformed value.
+If the `pipe` accepts the conformed value as-is or modifies it, it must return an object with the following keys:
+
+1. `value`: the new conformed value
+1. `indexesOfPipedChars`: array of integers, which contains the indexes of all the characters that were added by the
+`pipe` to the conformed value
+
+For an example of a pipe, see the code for
+[`assistedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js)
+which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `onReject`
 
 You can provide an `onReject` callback function which will be called when the user tries to enter
-a character that ends up being rejected and not displayed on the input element.
+a character that ends up being rejected either by the mask or by the `pipe` and not displayed on the input element.
+
+The `onReject` callback will receive an object with the following keys:
+
+1. `conformedValue` (string): containing the conformed value
+1. `maskRejection` (boolean): `true` if the rejection was due to mask incompatibility
+1. `pipeRejection` (boolean): `true` if the rejection was decided by the pipe
 
 ## `onAccept`
 
