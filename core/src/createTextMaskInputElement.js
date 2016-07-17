@@ -91,12 +91,14 @@ export default function createTextMaskInputElement({
 
       // If `pipe` is a function, we call it.
       if (piped) {
+        // `pipe` receives the `conformedValue` and the configurations with which `conformToMask` was called.
         pipeResults = pipe(conformedValue, conformToMaskConfig)
 
         // `pipeResults` should be an object. But as a convenience, we allow the pipe author to just return `false` to
         // indicate rejection. If the `pipe` returns `false`, the block below turns it into an object that the rest
         // of the code can work with.
         if (pipeResults === false) {
+          // If the `pipe` rejects `conformedValue`, we use the `previousConformedValue`, and set `rejected` to `true`.
           pipeResults = {value: previousConformedValue, rejected: true}
         }
       }
@@ -105,37 +107,50 @@ export default function createTextMaskInputElement({
       // returned by `conformToMask`.
       const finalConformedValue = (piped) ? pipeResults.value : conformedValue
 
-      const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
-      const inputElementValue = (inputValueShouldBeEmpty) ? '' : finalConformedValue
-
       // After setting the `finalConformedValue` as the value of the `inputElement`, we will need to know where to set
       // the caret position. `adjustCaretPosition` will tell us.
-      const adjustedCaretPosition = (inputValueShouldBeEmpty) ? 0 : adjustCaretPosition({
+      const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
-        indexesOfAddedChars: pipeResults.indexesOfAddedChars
+        indexesOfPipedChars: pipeResults.indexesOfPipedChars
       })
 
-      inputElement.value = inputElementValue
-      state.previousConformedValue = inputElementValue
-      safeSetSelection(inputElement, adjustedCaretPosition)
+      // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
+      const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
+      const inputElementValue = (inputValueShouldBeEmpty) ? '' : finalConformedValue
 
+      inputElement.value = inputElementValue // set the input value
+      safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
+      state.previousConformedValue = inputElementValue // store value for access for next time
+
+      // If we set a value to the input element that's different form `previousConformedValue`, it means user input
+      // was accepted, and we call the `onAccept` callback if it's a function.
       if (typeof onAccept === 'function' && inputElementValue !== previousConformedValue) {
         onAccept()
       }
 
+      // Now we need to figure out if user input was rejected to decide whether to call `onReject` callback or not.
+      // We need to know if the operation is deletion, because if it is, then we definitely don't need to call
+      // `onReject` in that case.
       const isDeletion = safeRawValue.length < previousConformedValue.length
 
+      // To call `onReject`
       if (
+        // `onReject` has to be a function
         typeof onReject === 'function' &&
+
+        // `someCharsRejected` or `pipeResults.rejected` has to be true
         (someCharsRejected || pipeResults.rejected) &&
-        isDeletion === false &&
-        currentCaretPosition <= mask.length
+
+        // the operation needs to be addition, not deletion
+        isDeletion === false
       ) {
+        // `onReject` receives the `finalConformedValue` and booleans for `pipeRejection` and `maskRejection`
+        // so know whether the user input was rejected by the mask pattern or by the pipe.
         onReject({
           conformedValue: finalConformedValue,
           pipeRejection: pipeResults.rejected,

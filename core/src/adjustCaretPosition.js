@@ -1,22 +1,31 @@
+const defaultIndexesOfPipedChars = []
+
 export default function adjustCaretPosition({
   previousConformedValue = '',
   currentCaretPosition = 0,
   conformedValue,
   rawValue,
   placeholderChar,
-  placeholder
+  placeholder,
+  indexesOfPipedChars = defaultIndexesOfPipedChars
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
+  // Store lengths for faster performance?
+  const rawValueLength = rawValue.length
+  const previousConformedValueLength = previousConformedValue.length
+  const placeholderLength = placeholder.length
+  const conformedValueLength = conformedValue.length
+
   // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
   // we know the user in this instance pasted two characters
-  const editLength = rawValue.length - previousConformedValue.length
+  const editLength = rawValueLength - previousConformedValueLength
 
   // If the edit length is positive, that means the user is adding characters, not deleting.
   const isAddition = editLength > 0
 
   // This is the first character the user entered that needs to be conformed to mask
-  const isFirstChar = rawValue.length === 1
+  const isFirstChar = rawValueLength === 1
 
   // A partial multi-character edit happens when the user makes a partial selection in their
   // input and edits that selection. That is going from `(123) 432-4348` to `() 432-4348` by
@@ -64,18 +73,28 @@ export default function adjustCaretPosition({
     const intersection = leftHalfChars.filter((char) => normalizedConformedValue.indexOf(char) !== -1)
 
     // The last character in the intersection is the character we want to look for in the conformed
-    // input
+    // value and the one we want to adjust the caret close to
     const targetChar = intersection[intersection.length - 1]
 
-    // However, it may happen to exist more than once in the intersection. We need to know
-    // how many times it occurs
-    const requiredNumberOfMatches = intersection.filter((char) => char === targetChar).length
+    // If the `conformedValue` got piped, we need to know which characters were piped in so that when we look for
+    // our `targetChar`, we don't select a piped char by mistake
+    const pipedChars = indexesOfPipedChars.map((index) => normalizedConformedValue[index])
 
-    // Now we start looking for the location of the character.
+    // We need to know how many times the `targetChar` occurs in the piped characters.
+    const countTargetCharInPipedChars = pipedChars.filter((char) => char === targetChar).length
+
+    // And we need to know how many times it occurs in the intersection
+    const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
+
+    // The number of times we need to see occurrences of the `targetChar` before we know it is the one we're looking
+    // for is:
+    const requiredNumberOfMatches = countTargetCharInIntersection + countTargetCharInPipedChars
+
+    // Now we start looking for the location of the `targetChar`.
     // We keep looping forward and store the index in every iteration. Once we have encountered
     // enough occurrences of the target character, we break out of the loop
     let numberOfEncounteredMatches = 0
-    for (let i = 0; i < conformedValue.length; i++) {
+    for (let i = 0; i < conformedValueLength; i++) {
       const conformedValueChar = normalizedConformedValue[i]
 
       startingSearchIndex = i + 1
@@ -102,7 +121,7 @@ export default function adjustCaretPosition({
     // that far to the right. Instead, we stop it at the last encountered placeholder character.
     let lastPlaceholderChar = startingSearchIndex
 
-    for (let i = startingSearchIndex; i <= placeholder.length; i++) {
+    for (let i = startingSearchIndex; i <= placeholderLength; i++) {
       if (placeholder[i] === placeholderChar) {
         lastPlaceholderChar = i
       }
@@ -112,7 +131,7 @@ export default function adjustCaretPosition({
       placeholder[i] === placeholderChar ||
 
       // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
-      i === placeholder.length
+      i === placeholderLength
       ) {
         return lastPlaceholderChar
       }

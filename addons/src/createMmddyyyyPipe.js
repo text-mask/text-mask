@@ -1,7 +1,7 @@
 export default function createMmddyyyyPipe() {
   return function(conformedValue) {
     const conformedValueArr = conformedValue.split('')
-    const indexesOfAddedChars = []
+    const indexesOfPipedChars = []
 
     const month1stDigit = parseDigit(conformedValue[0])
     const month2ndDigit = parseDigit(conformedValue[1])
@@ -15,7 +15,7 @@ export default function createMmddyyyyPipe() {
     if (month1stDigit > 1) {
       conformedValueArr.splice(0, 2, 0, month1stDigit)
 
-      indexesOfAddedChars.push(0)
+      indexesOfPipedChars.push(0)
     }
 
     if (
@@ -28,7 +28,7 @@ export default function createMmddyyyyPipe() {
     if (day1stDigit > 3) {
       conformedValueArr.splice(3, 2, 0, day1stDigit)
 
-      indexesOfAddedChars.push(3)
+      indexesOfPipedChars.push(3)
     }
 
     if (
@@ -41,12 +41,12 @@ export default function createMmddyyyyPipe() {
     if (year1stDigit > 2 || year1stDigit === 0) {
       conformedValueArr.splice(6, 3, 2, 0, year1stDigit)
 
-      indexesOfAddedChars.push(6, 7)
+      indexesOfPipedChars.push(6, 7)
     }
 
     return {
       value: conformedValueArr.join(''),
-      indexesOfAddedChars
+      indexesOfPipedChars
     }
   }
 }
