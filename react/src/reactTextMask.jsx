@@ -6,7 +6,11 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
     guide: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    pipe: PropTypes.func
+    pipe: PropTypes.func,
+    placeholderChar: PropTypes.string,
+    onAccept: PropTypes.func,
+    onReject: PropTypes.func,
+    keepCharPositions: PropTypes.bool
   },
 
   componentDidMount() {
@@ -22,9 +26,19 @@ export const MaskedInput = React.createClass({
   },
 
   render() {
+    const props = Object.assign({}, this.props)
+
+    delete props.mask
+    delete props.guide
+    delete props.pipe
+    delete props.placeholderChar
+    delete props.onAccept
+    delete props.onReject
+    delete props.keepCharPositions
+
     return (
       <input
-        {...this.props}
+        {...props}
         onChange={this.onChange}
         ref={(inputElement) => (this.inputElement = inputElement)}
       />
