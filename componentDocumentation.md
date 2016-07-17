@@ -153,19 +153,25 @@ causes existing characters to move back.
 
 ## `pipe`
 
-You can pass a pipe to Text Mask. It should adhere to the following interface:
+`pipe` is a function that you can provide that gives you an opportunity to modify the conformed value before it is
+displayed on the screen.
 
-* Accepts `conformedValue` (string)
-* Returns `isValid` (boolean)
+The `pipe` receives:
 
-The pipe will be called whenever the user modifies the value in the component.
-The pipe will receive one argument: *the conformed user input*.
-Given that argument, the pipe should return either `true` or `false`. If it returned `false`,
-the component will not update. If it returned `true`, it will.
+1. `conformedValue`
+1. `config`
 
-Since the pipe will receive the user input on every change, it should return `true` for
-partial values that could potentially develop into full valid values. For example, a date
-pipe should return `true` for `conformedValue` that equals `1_/__/____`.
+The `conformedValue` is the value that the user entered after it has been conformed. The `config` contains all the user
+configurations for Text Mask (the ones detailed on this page).
+
+The `pipe` must return either an `object` or `false`.
+
+It could return `false` to reject the new conformed value.
+If the `pipe` accepts the conformed value as-is or modifies it, it must return an object with the following shape:
+
+1. `value`: the new conformed value
+1. `indexesOfPipedChars`: array of integers, which contains the indexes of all the characters that were added by the
+`pipe` to the conformed value
 
 For an example of a pipe, see the code for
 [`assistedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js)

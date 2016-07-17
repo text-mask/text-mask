@@ -31,7 +31,7 @@ export default React.createClass({ // eslint-disable-line
       selectedChoice,
       customMask,
       rejectMessage,
-      stateKeepCharPositions
+      keepCharPositions: stateKeepCharPositions
     } = this.state
     const {
       mask: choiceMask,

@@ -42,21 +42,25 @@ to Text Mask.
 
 ### `assistedMmddyyyyPipe`
 
-`assistedMmddyyyyPipe` returns a function that ensures the user is typing a valid `mm/dd/yyyy`
-date.
+The `assistedMmddyyyyPipe` helps the user in entering a date in the `MM/DD/YYYY` format.
 
-It accepts a config object with `minimumDate` and `maximumDate`, and ensures that the user is
-typing a valid calendar date between these two dates. It prevents the user from entering any
-character that would invalidate the date. For example, a month that begins with `2` is prevented.
+For example, if the user enters a value
+larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
+day slots.
+
+When the user enters `0` in the 1st slot of the year, it transforms that to `200`.
+
+It also blocks the user from entering invalid days or months such as `33/44`.
+
+For `assistedMmddyyyyPipe` to work properly, the Text Mask component needs to be
+configured with
+[`keepCharPositions`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
+set to `true`.
 
 #### Usage
 
 ```js
-import assistedMmddyyyyPipe from assistedMmddyyyyPipe.js
-onst mmddyyyyPipe = assistedMmddyyyyPipe({
-  minimumDate: '01/01/1900',
-  maximumDate: '12/31/2016'
-})
+import assistedMmddyyyyPipe from 'text-mask-addons/dist/assistedMmddyyyyPipe.js'
 
-// ...then pass `mmddyyyyPipe` to the Text Mask component
+// ...then pass `assistedMmddyyyyPipe` to the Text Mask component
 ```

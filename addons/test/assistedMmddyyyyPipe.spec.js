@@ -2,7 +2,7 @@ const assistedMmddyyyyPipe = (isVerify()) ?
   require('../dist/assistedMmddyyyyPipe.js').default :
   require('../src/assistedMmddyyyyPipe.js').default
 
-describe.only('assistedMmddyyyyPipe', () => {
+describe('assistedMmddyyyyPipe', () => {
   it('completes the month if the 1st digit is bigger than 1 and returns `indexesOfPipedChars`', () => {
     expect(assistedMmddyyyyPipe('1')).to.deep.equal({value: '1', indexesOfPipedChars: []})
     expect(assistedMmddyyyyPipe('2')).to.deep.equal({value: '02', indexesOfPipedChars: [0]})

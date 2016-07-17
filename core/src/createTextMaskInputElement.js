@@ -87,7 +87,7 @@ export default function createTextMaskInputElement({
       // The following few lines are to support the `pipe` feature.
       const piped = typeof pipe === 'function'
 
-      let pipeResults
+      let pipeResults = {}
 
       // If `pipe` is a function, we call it.
       if (piped) {
@@ -116,7 +116,7 @@ export default function createTextMaskInputElement({
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
-        indexesOfPipedChars: (piped) ? pipeResults.indexesOfPipedChars : undefined
+        indexesOfPipedChars: pipeResults.indexesOfPipedChars
       })
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
