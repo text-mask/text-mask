@@ -63,10 +63,10 @@ export default React.createClass({ // eslint-disable-line
           <form className='form-horizontal'>
             <div className='form-group'>
               <label
-                className='col-sm-3 control-label'
+                className='col-sm-4 control-label'
                 htmlFor='maskedInput'>Masked input</label>
 
-              <div className='col-sm-9'>
+              <div className='col-sm-8'>
                 <MaskedInput
                   style={style}
                   key={maskedInputKey}
