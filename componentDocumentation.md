@@ -175,7 +175,7 @@ If the `pipe` accepts the conformed value as-is or modifies it, it must return a
 `pipe` to the conformed value
 
 For an example of a pipe, see the code for
-[`assistedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/assistedMmddyyyyPipe.js)
+[`autoCorrectedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
 which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `onReject`

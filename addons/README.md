@@ -40,19 +40,19 @@ These functions here can be passed as a
 [`pipe`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
-### `assistedMmddyyyyPipe`
+### `autoCorrectedMmddyyyyPipe`
 
-The `assistedMmddyyyyPipe` helps the user in entering a date in the `MM/DD/YYYY` format.
+The `autoCorrectedMmddyyyyPipe` helps the user in entering a date in the `MM/DD/YYYY` format.
 
 For example, if the user enters a value
 larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
 day slots.
 
-When the user enters `0` in the 1st slot of the year, it transforms that to `200`.
+And for the year, when the user enters `0` in the 1st slot of the year, it transforms that to `200`.
 
 It also blocks the user from entering invalid days or months such as `33/44`.
 
-For `assistedMmddyyyyPipe` to work properly, the Text Mask component needs to be
+For `autoCorrectedMmddyyyyPipe` to work properly, the Text Mask component needs to be
 configured with
 [`keepCharPositions`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
 set to `true`.
@@ -60,7 +60,7 @@ set to `true`.
 #### Usage
 
 ```js
-import assistedMmddyyyyPipe from 'text-mask-addons/dist/assistedMmddyyyyPipe.js'
+import autoCorrectedMmddyyyyPipe from 'text-mask-addons/dist/autoCorrectedMmddyyyyPipe.js'
 
-// ...then pass `assistedMmddyyyyPipe` to the Text Mask component
+// ...then pass `autoCorrectedMmddyyyyPipe` to the Text Mask component
 ```
