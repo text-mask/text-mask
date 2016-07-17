@@ -1,10 +1,8 @@
 # Angular 2 Input Mask
 
-&#x1F6A7; **This Angular 2 directive is experimental**. It basically works but I'm not an Angular 2
-user, so if you encounter a problem, I may not be able to help you.
-But, please, give it a go anyway! And if you wanna help make this project better, feel free to
-[open an issue](https://github.com/msafi/text-mask/issues) or
-[contribute](https://github.com/msafi/text-mask/blob/master/contributing.md#readme)!
+&#x1F6A7; **This Angular 2 directive is experimental**. It may not work properly or at all. However,
+making it work should be pretty simple for someone who knows TypeScript and Angular 2.
+If you're interested in helping out, please [email me](mailto:msafi@msafi.com).
 
 ## Getting started
 
