@@ -30,6 +30,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+`*` | Any character
 
 #### Escapable masking characters
 
@@ -82,7 +83,7 @@ Or for date
 
 ### Other features
 
-* Accepts [custom pipe](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
+* Highly configurable, [see the documentation](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme)
 * Supports pasting
 * Supports browser auto-fill
 * It is small, around *3KB* gzipped

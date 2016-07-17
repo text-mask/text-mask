@@ -1,14 +1,14 @@
 import _ from 'lodash/fp'
 
 // export default _.filter((t) => false, [{
-// export default _.filter((t) => t, [{
-export default _.filter((t) => t.only, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => t.only, [{
   input: {
-    startingInputFieldValue: '$100',
-    userModifiedInputFieldValue: '$1000',
+    previousConformedValue: '$100',
+    rawValue: '$1000',
     mask: '$1,111',
-    caretPositionAfterInputFieldValueChange: 5,
-    conformedInputFieldValue: '$1,000',
+    currentCaretPosition: 5,
+    conformedValue: '$1,000',
   },
 
   output: {
@@ -16,11 +16,11 @@ export default _.filter((t) => t.only, [{
   },
 }, {
   input: {
-    startingInputFieldValue: '2 $',
-    userModifiedInputFieldValue: '24 $',
+    previousConformedValue: '2 $',
+    rawValue: '24 $',
     mask: '11 $',
-    caretPositionAfterInputFieldValueChange: 2,
-    conformedInputFieldValue: '24 $',
+    currentCaretPosition: 2,
+    conformedValue: '24 $',
   },
 
   output: {
@@ -30,11 +30,11 @@ export default _.filter((t) => t.only, [{
   // only: true,
 }, {
   input: {
-    startingInputFieldValue: '$200.34',
-    userModifiedInputFieldValue: '$2003.34',
+    previousConformedValue: '$200.34',
+    rawValue: '$2003.34',
     mask: '$1,111.11',
-    caretPositionAfterInputFieldValueChange: 6,
-    conformedInputFieldValue: '$2,003.34',
+    currentCaretPosition: 6,
+    conformedValue: '$2,003.34',
   },
 
   output: {
@@ -43,5 +43,5 @@ export default _.filter((t) => t.only, [{
 
   // TODO: for now, this works as expected. In the future, I'll want to make it possible to
   // prevent the caret from moving over the dot.
-  skips: ['adjustedCaretPosition']
+  skips: ['adjustCaretPosition']
 }])

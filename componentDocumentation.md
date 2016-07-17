@@ -4,8 +4,9 @@ Text Mask accepts the following values:
 
 * [`mask`](#mask) (string or function)
 * [`guide`](#guide) (boolean)
-* [`placeholderChar`](#placeholderChar) (string)
-* [`pipe`](#pipe) (function)
+* [`placeholderChar`](#placeholderchar) (string)
+* [`keepCharPositions`](#keepcharpositions) (boolean)
+* [`validator`](#validator) (function)
 * [`onReject`](#onreject) (function)
 * [`onAccept`](#onaccept) (function)
 
@@ -34,6 +35,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
+`*` | Any character
 
 ##### Escaping a masking character
 
@@ -61,23 +63,38 @@ For an example of a dynamic mask, see the source code of
 
 **It is set to `true` by default.**
 
-### Guide mode
+<table>
+<tbody>
+<tr>
+<th>Guide mode</th>
+<th>No-guide mode</th>
+</tr>
 
+<tr>
+<td>
 <p align="center">
 <img src="assets/guideMode.gif"/>
 </p>
 
-When `guide` is `true`, Text Mask always shows both placeholder characters and non-placeholder
+<p>
+When <code>guide</code> is <code>true</code>, Text Mask always shows both placeholder characters and non-placeholder
 mask characters.
+</p>
+</td>
 
-### No-guide mode
-
+<td>
 <p align="center">
 <img src="assets/noGuideMode.gif"/>
 </p>
 
-When `guide` is `false`, Text Mask doesn't print out placeholder characters and only adds mask
+</p>
+When <code>guide</code> is <code>false</code>, Text Mask doesn't print out placeholder characters and only adds mask
 characters when the user reaches them as they're typing.
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## `placeholderChar`
 
@@ -96,24 +113,62 @@ is, since the default placeholder character is `_`, you cannot have a mask that 
 `_111_` unless you pass `placeholderChar` that is not `_` and doesn't exist
 in your mask.
 
-## `pipe`
+## `keepCharPositions`
 
-You can pass a pipe to Text Mask. It should adhere to the following interface:
+`keepCharPositions` changes the general behavior of the Text Mask component.
 
-* Accepts `conformedUserInput` (string)
+**It is set to `false` by default**,
+
+<table>
+<tbody>
+<tr>
+<th><code>keepCharPositions</code> is set to <code>true</code></th>
+<th><code>keepCharPositions</code> is set to <code>false</code></th>
+</tr>
+
+<tr>
+<td>
+<p align="center">
+<img src="assets/keepCharPositionsTrue.gif"/>
+</p>
+
+<p>
+When <code>true</code>, adding or deleting characters will not affect the positions if existing characters.
+</p>
+</td>
+
+<td>
+<p align="center">
+<img src="assets/keepCharPositionsFalse.gif"/>
+</p>
+
+</p>
+When <code>false</code>, adding characters causes existing characters to advance. And deleting characters
+causes existing characters to move back.
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+## `validator`
+
+You can pass a validator to Text Mask. It should adhere to the following interface:
+
+* Accepts `conformedValue` (string)
 * Returns `isValid` (boolean)
 
-The pipe will be called whenever the user modifies the value in the component.
-The pipe will receive one argument: *the conformed user input*.
-Given that argument, the pipe should return either `true` or `false`. If it returned `false`,
+The validator will be called whenever the user modifies the value in the component.
+The validator will receive one argument: *the conformed user input*.
+Given that argument, the validator should return either `true` or `false`. If it returned `false`,
 the component will not update. If it returned `true`, it will.
 
-Since the pipe will receive the user input on every change, it should return `true` for
+Since the validator will receive the user input on every change, it should return `true` for
 partial values that could potentially develop into full valid values. For example, a date
-pipe should return `true` for `conformedUserInput` that equals `1_/__/____`.
+validator should return `true` for `conformedValue` that equals `1_/__/____`.
 
-For an example of a pipe, see the code for
-[`createMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyPipe.js)
+For an example of a validator, see the code for
+[`createMmddyyyyValidator`](https://github.com/msafi/text-mask/blob/master/addons/src/createMmddyyyyValidator.js)
 in [Text Mask Addons](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
 ## `onReject`

@@ -40,15 +40,11 @@ export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPla
   return placeholder
 }
 
-export function unescapeMask(mask = '') {
-  return mask.replace(/\\./g, ' ')
-}
-
 export function tokenize(string = '') {
   return string.split('')
 }
 
-export function isAcceptableCharacter(character = '', maskingCharacter) {
+export function isAcceptableChar(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.numeric:
       return isNumeric(character)
@@ -69,7 +65,7 @@ export function isAcceptableCharacter(character = '', maskingCharacter) {
   }
 }
 
-export function potentiallyTransformCharacter(character = '', maskingCharacter) {
+export function potentiallyTransformChar(character = '', maskingCharacter) {
   switch(maskingCharacter) {
     case maskingCharactersEnums.uppercase:
       return character.toUpperCase()
@@ -88,18 +84,6 @@ function isNumeric(character) {
 
 function isAlphabetic(character) {
   return /^[a-zA-Z]+$/.test(character)
-}
-
-export function getIndexOfFirstChange(stringOne, stringTwo) {
-  const longestLength = (stringOne.length > stringTwo.length) ? stringOne.length : stringTwo.length
-
-  for (let i = 0; i < longestLength; i++) {
-    if (stringOne[i] !== stringTwo[i]) {
-      return i
-    }
-  }
-
-  return null
 }
 
 export function isString(value) {

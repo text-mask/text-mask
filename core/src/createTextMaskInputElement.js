@@ -1,19 +1,19 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
-import retainCharsPositions from './retainCharsPositions.js'
+import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 export default function createTextMaskInputElement({
   inputElement,
   mask: providedMask,
   guide,
-  pipe = defaultPipe,
-  placeholderChar,
+  validator,
+  placeholderChar = defaultPlaceholderChar,
   onAccept,
   onReject,
-  shouldRetainCharsPositions = false
+  keepCharPositions = false
 }) {
-  const state = {previousConformedInput: ''}
+  const state = {previousConformedValue: ''}
 
   let placeholder = ''
   let mask
@@ -29,13 +29,13 @@ export default function createTextMaskInputElement({
   return {
     state,
 
-    update(valueToConform = inputElement.value) {
-      if (valueToConform === state.previousConformedInput) { return }
+    update(rawValue = inputElement.value) {
+      if (rawValue === state.previousConformedValue) { return }
 
-      const safeValueToConform = getSafeInputValue(valueToConform)
+      const safeRawValue = getSafeRawValue(rawValue)
 
       if (typeof providedMask === 'function') {
-        mask = providedMask(safeValueToConform)
+        mask = providedMask(safeRawValue)
 
         placeholder = convertMaskToPlaceholder(mask, placeholderChar)
       } else {
@@ -43,47 +43,45 @@ export default function createTextMaskInputElement({
       }
 
       const {selectionStart: currentCaretPosition} = inputElement
-      const {previousConformedInput} = state
-      const conformToMaskConfig = {previousConformedInput, guide, placeholderChar, placeholder}
-      const {conformedInput, indexesOfAddedCharacters} = pipe({
-        valueToConform: safeValueToConform,
-        mask,
-        conformToMask,
-        conformToMaskConfig,
-        currentCaretPosition,
-        retainCharsPositions,
-        shouldRetainCharsPositions
-      })
-
-      const adjustedCaretPosition = adjustCaretPosition({
-        conformedInput,
-        previousConformedInput,
-        rawInput: safeValueToConform,
+      const {previousConformedValue} = state
+      const conformToMaskConfig = {
+        previousConformedValue,
+        guide,
         placeholderChar,
+        validator,
         placeholder,
         currentCaretPosition,
-        indexesOfAddedCharacters
+        keepCharPositions
+      }
+      const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
+      const adjustedCaretPosition = adjustCaretPosition({
+        previousConformedValue,
+        conformedValue,
+        placeholder,
+        rawValue: safeRawValue,
+        currentCaretPosition,
+        placeholderChar
       })
-      const valueShouldBeEmpty = conformedInput === placeholder && adjustedCaretPosition === 0
-      const finalConformedInput = (valueShouldBeEmpty) ? '' : conformedInput
-      const isDeletion = safeValueToConform.length < previousConformedInput.length
+      const inputValueShouldBeEmpty = conformedValue === placeholder && adjustedCaretPosition === 0
+      const inputElementValue = (inputValueShouldBeEmpty) ? '' : conformedValue
+      const isDeletion = safeRawValue.length < previousConformedValue.length
 
-      if (typeof onAccept === 'function' && finalConformedInput !== previousConformedInput) {
+      inputElement.value = inputElementValue
+      state.previousConformedValue = inputElementValue
+      safeSetSelection(inputElement, adjustedCaretPosition)
+
+      if (typeof onAccept === 'function' && inputElementValue !== previousConformedValue) {
         onAccept()
       }
 
       if (
         typeof onReject === 'function' &&
-        conformedInput === previousConformedInput &&
+        someCharsRejected &&
         isDeletion === false &&
         currentCaretPosition <= mask.length
       ) {
-        onReject({userInput: safeValueToConform})
+        onReject({rawValue: safeRawValue})
       }
-
-      inputElement.value = finalConformedInput
-      state.previousConformedInput = finalConformedInput
-      safeSetSelection(inputElement, adjustedCaretPosition)
     }
   }
 }
@@ -94,7 +92,7 @@ function safeSetSelection(element, selectionPosition) {
   }
 }
 
-function getSafeInputValue(inputValue) {
+function getSafeRawValue(inputValue) {
   if (isString(inputValue)) {
     return inputValue
   } else if (isNumber(inputValue)) {
@@ -106,12 +104,5 @@ function getSafeInputValue(inputValue) {
       "The 'value' provided to Text Mask needs to be a string or a number. The value " +
       `received was:\n\n ${JSON.stringify(inputValue)}`
     )
-  }
-}
-
-function defaultPipe({valueToConform, mask, conformToMask, conformToMaskConfig}) {
-  return {
-    conformedInput: conformToMask(valueToConform, mask, conformToMaskConfig),
-    indexesOfAddedCharacters: []
   }
 }

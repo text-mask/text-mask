@@ -3,6 +3,7 @@ require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 import packageJson from '../package.json'
 import {convertMaskToPlaceholder} from '../src/utilities'
 import conformToMask from '../src/conformToMask.js'
+import {placeholderChar} from '../src/constants.js'
 
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :
@@ -69,7 +70,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     if (!isVerify()) {
-      it('does not conform given parameter if it is the same as the previousConformedInput', () => {
+      it('does not conform given parameter if it is the same as the previousConformedValue', () => {
         const conformToMaskSpy = sinon.spy(conformToMask)
         const mask = '(111) 111-1111'
         const textMaskControl = createTextMaskInputElement({inputElement, mask})
@@ -129,7 +130,7 @@ describe('createTextMaskInputElement', () => {
 
     it('adjusts the caret position', () => {
       const mask = '(111) 111-1111'
-      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+      const textMaskControl = createTextMaskInputElement({inputElement, mask, placeholderChar})
 
       inputElement.focus()
       inputElement.value = '2'
@@ -248,6 +249,26 @@ describe('createTextMaskInputElement', () => {
         inputElement.value = '(233) 543-65435'
         inputElement.selectionStart = '(233) 543-65435'.length
         textMaskControl.update() // after this, value is (233) 543-6543
+
+        expect(onReject.callCount).to.equal(0)
+      })
+
+      it('is not called when a character is rejected because it is blocked in `keepCharPositions` mode', () => {
+        const mask = '(111) 111-1111'
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onReject,
+          keepCharPositions: true
+        })
+
+        inputElement.value = '2'
+        textMaskControl.update() // after this, value is (2__) ___-____
+
+        inputElement.value = '(42__) ___-____'
+        inputElement.selectionStart = 2
+        textMaskControl.update() // after this, value is still (2__) ___-____
 
         expect(onReject.callCount).to.equal(0)
       })
