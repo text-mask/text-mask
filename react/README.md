@@ -59,7 +59,7 @@ The code of the example is in [`react/example`](https://github.com/msafi/text-ma
 
 ## Contributing
 
-We would love some contributions! Check out [this document](https://github.com/msafi/text-mask/blob/master/contributing.md#readme) to get started.
+We would love some contributions! Check out [this document](https://github.com/msafi/text-mask/blob/master/howToContribute.md#readme) to get started.
 
 ## License
 
