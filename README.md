@@ -2,12 +2,11 @@
 
 [![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
 
-Text Mask let's you turn a plain `<input />`, into one that conforms
-any user input, as they type, to a given mask pattern.
+Text Mask is an input mask library. It works with any JavaScript framework. There are convenient wrappers for React and Angular 2. More wrappers in the works!
 
 ## Live demo
 
-To see Text Mask in action, [checkout the demo page](https://msafi.github.io/text-mask/).
+See it in action, [checkout the demo page](https://msafi.github.io/text-mask/).
 
 ## Installation and usage
 
