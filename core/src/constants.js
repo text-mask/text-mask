@@ -13,7 +13,7 @@ export const maskingCharactersWithDescription = {
   '?': 'Any number or letter',
   'U': 'Any letter (will be transformed to uppercase)',
   'L': 'Any letter (will be transformed to lowercase)',
-  '*': 'Any character'
+  '*': 'Any character (except white space)'
 }
 
 export const maskingCharacters = [

@@ -4,7 +4,11 @@ import {
   placeholderChar as defaultPlaceholderChar
 } from './constants.js'
 
-export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPlaceholderChar) {
+const emptyString = ''
+const whiteSpaceRegExp = /\s/g
+const alphabeticRegExp = /^[a-zA-Z]+$/
+
+export function convertMaskToPlaceholder(mask = emptyString, placeholderChar = defaultPlaceholderChar) {
   if (mask.indexOf(placeholderChar) !== -1) {
     throw new Error(
       'Placeholder character must not be used as part of the mask. Please specify a character ' +
@@ -15,14 +19,14 @@ export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPla
   }
 
   let escaping = false
-  let placeholder = ''
+  let placeholder = emptyString
 
   for (let i = 0; i < mask.length; i++) {
     const character = mask[i]
 
     if (character === '\\' && escaping !== true) {
       escaping = true
-      placeholder += ''
+      placeholder += emptyString
       continue
     }
 
@@ -40,12 +44,12 @@ export function convertMaskToPlaceholder(mask = '', placeholderChar = defaultPla
   return placeholder
 }
 
-export function tokenize(string = '') {
-  return string.split('')
+export function tokenize(string = emptyString) {
+  return string.split(emptyString)
 }
 
-export function isAcceptableChar(character = '', maskingCharacter) {
-  switch(maskingCharacter) {
+export function isAcceptableChar(character = emptyString, maskingCharacter) {
+  switch (maskingCharacter) {
     case maskingCharactersEnums.numeric:
       return isNumeric(character)
 
@@ -58,7 +62,7 @@ export function isAcceptableChar(character = '', maskingCharacter) {
       return isNumeric(character) || isAlphabetic(character)
 
     case maskingCharactersEnums.any:
-      return true
+      return whiteSpaceRegExp.test(character) === false
 
     default:
       return false
@@ -66,7 +70,7 @@ export function isAcceptableChar(character = '', maskingCharacter) {
 }
 
 export function potentiallyTransformChar(character = '', maskingCharacter) {
-  switch(maskingCharacter) {
+  switch (maskingCharacter) {
     case maskingCharactersEnums.uppercase:
       return character.toUpperCase()
 
@@ -79,11 +83,11 @@ export function potentiallyTransformChar(character = '', maskingCharacter) {
 }
 
 function isNumeric(character) {
-  return !isNaN(character) && character !== ' '
+  return !isNaN(character) && whiteSpaceRegExp.test(character) !== true
 }
 
 function isAlphabetic(character) {
-  return /^[a-zA-Z]+$/.test(character)
+  return alphabeticRegExp.test(character)
 }
 
 export function isString(value) {
