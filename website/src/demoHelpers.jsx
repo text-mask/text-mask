@@ -155,7 +155,7 @@ export const DemoBottom = () => (
     <p>
       If you need support, have any questions or suggestions, please
       {' '}
-      <a href="https://github.com/msafi/text-mask/issues" target="_blank">file an issue</a>!
+      <a href='https://github.com/msafi/text-mask/issues' target='_blank'>file an issue</a>!
     </p>
   </div>
 )
