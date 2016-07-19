@@ -4,6 +4,8 @@
 
 Text Mask is an input mask library. It works with any JavaScript framework. There are convenient wrappers for React and Angular 2. More wrappers in the works!
 
+Text Mask is robust and tiny (around *3KB* gzipped).
+
 ## Live demo
 
 See it in action, [checkout the demo page](https://msafi.github.io/text-mask/).
