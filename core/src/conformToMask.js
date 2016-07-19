@@ -72,10 +72,9 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // Convert `rawValue` string to an array, and mark characters based on whether they are newly added or have
   // existed in the previous conformed value. Identifying new and old characters is needed for `conformToMask`
   // to work if it is configured to keep character positions.
-  const rawValueArr = rawValue.split('').map((char, i) => ({
-    char,
-    isNew: i >= indexOfFirstChange && i < indexOfLastChange
-  }))
+  const rawValueArr = rawValue
+    .split('')
+    .map((char, i) => ({char, isNew: i >= indexOfFirstChange && i < indexOfLastChange}))
 
   // The loop below removes masking characters from user input. For example, for mask
   // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below

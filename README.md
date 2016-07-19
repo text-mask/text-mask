@@ -30,7 +30,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
-`*` | Any character
+`*` | Any character (except white space)
 
 #### Escapable masking characters
 
@@ -89,11 +89,9 @@ Or for date
 * It is small, around *3KB* gzipped
 * Has no dependencies
 
-## For support, questions, or suggestions
+## If you need support, have any questions or suggestions
 
-Please
-[file an issue](https://github.com/msafi/text-mask/issues) or
-[tweet at me](https://twitter.com/msafi).
+[Please file an issue](https://github.com/msafi/text-mask/issues)!
 
 ## License
 

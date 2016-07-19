@@ -7,15 +7,6 @@ export const maskingCharactersEnums = {
   any: '*'
 }
 
-export const maskingCharactersWithDescription = {
-  '1': 'Any number',
-  'A': 'Any letter',
-  '?': 'Any number or letter',
-  'U': 'Any letter (will be transformed to uppercase)',
-  'L': 'Any letter (will be transformed to lowercase)',
-  '*': 'Any character'
-}
-
 export const maskingCharacters = [
   '1',
   'A',

@@ -146,8 +146,16 @@ export const DemoTop = () => (
 )
 
 export const DemoBottom = () => (
-  <p className='col-sm-8 col-sm-offset-4'>
-    For more information about
-    installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
-  </p>
+  <div className='col-sm-8 col-sm-offset-4'>
+    <p>
+      For more information about
+      installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
+    </p>
+
+    <p>
+      If you need support, have any questions or suggestions, please
+      {' '}
+      <a href='https://github.com/msafi/text-mask/issues' target='_blank'>file an issue</a>!
+    </p>
+  </div>
 )

@@ -35,7 +35,7 @@ Character | Description
 `?` | Any number or letter
 `U` | Any letter (will be transformed to uppercase)
 `L` | Any letter (will be transformed to lowercase)
-`*` | Any character
+`*` | Any character (except white space)
 
 ##### Escaping a masking character
 
@@ -134,7 +134,7 @@ in your mask.
 </p>
 
 <p>
-When <code>true</code>, adding or deleting characters will not affect the positions if existing characters.
+When <code>true</code>, adding or deleting characters will not affect the positions of existing characters.
 </p>
 </td>
 
