@@ -134,7 +134,7 @@ in your mask.
 </p>
 
 <p>
-When <code>true</code>, adding or deleting characters will not affect the positions if existing characters.
+When <code>true</code>, adding or deleting characters will not affect the positions of existing characters.
 </p>
 </td>
 
