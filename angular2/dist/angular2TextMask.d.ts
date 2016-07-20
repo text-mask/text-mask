@@ -7,8 +7,9 @@ export default class MaskedInputDirective {
     textMaskConfig: {
         mask: string;
         guide: boolean;
-        placeholderChar: any;
+        placeholderChar: string;
         pipe: any;
+        keepCharPositions: boolean;
         onReject: any;
         onAccept: any;
     };
