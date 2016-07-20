@@ -10,9 +10,9 @@
     "noImplicitAny": false
   },
   "files": [
-    "./angular2/src/**/*.ts",
-    "./angular2/example/**/*.ts",
-    "./angular2/typings/index.d.ts",
+    "src/**/*.ts",
+    "example/**/*.ts",
+    "typings/index.d.ts",
     "../core/**/*.ts"
   ],
   "awesomeTypescriptLoaderOptions": {

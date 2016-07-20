@@ -1,5 +1,3 @@
-///<reference path="../typings/index.d.ts"/>
-
 import {Directive, ElementRef, Input} from '@angular/core'
 import {NgControl} from '@angular/common'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'

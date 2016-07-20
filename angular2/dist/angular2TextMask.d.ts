@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/common';
 export default class MaskedInputDirective {
