@@ -1,3 +1,4 @@
+/// <reference path="../typings/index.d.ts" />
 import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/common';
 export default class MaskedInputDirective {
@@ -7,8 +8,9 @@ export default class MaskedInputDirective {
     textMaskConfig: {
         mask: string;
         guide: boolean;
-        placeholderChar: any;
+        placeholderChar: string;
         pipe: any;
+        keepCharPositions: boolean;
         onReject: any;
         onAccept: any;
     };

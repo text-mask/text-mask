@@ -34,7 +34,7 @@
     "vanilla:verify": "npm run vanilla:test -- --verify",
     "vanilla:build": "./node_modules/.bin/webpack -p --config vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:publish": "sh vanilla/publish.sh",
-    "angular2:build": "./node_modules/.bin/webpack -p --config angular2/webpack.buildAngular2Integration.js",
+    "angular2:build": "./node_modules/.bin/webpack -p --config angular2/webpack.buildAngular2Integration.js && mv angular2/dist/angular2/src/angular2TextMask.d.ts angular2/dist/ && rm -rf ./angular2/dist/angular2",
     "angular2:test": "./node_modules/.bin/mocha --compilers js:babel-core/register angular2/test --require ./common/domSetup.js --recursive",
     "angular2:tdd": "npm run angular2:test -- --watch",
     "angular2:verify": "npm run angular2:test -- --verify",
