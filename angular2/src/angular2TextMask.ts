@@ -33,6 +33,8 @@ export default class MaskedInputDirective {
       inputElement: this.inputElement,
       placeholderChar,
     }, this.textMaskConfig))
+
+    this.control.update()
   }
 
   onInput() {
