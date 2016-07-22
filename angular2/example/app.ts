@@ -13,7 +13,9 @@ import MaskedInput from '../src/angular2TextMask'
   templateUrl: 'app.html',
   directives: [MaskedInput]
 })
-class AppComponent {}
+class AppComponent {
+    myModel:string = '(800)';
+}
 
 //noinspection TypeScriptValidateTypes
 bootstrap(AppComponent, [
