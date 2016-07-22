@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Input} from '@angular/core'
-import {NgControl} from '@angular/common'
+import {NgControl} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
@@ -33,6 +33,8 @@ export default class MaskedInputDirective {
       inputElement: this.inputElement,
       placeholderChar,
     }, this.textMaskConfig))
+
+    this.control.update()
   }
 
   onInput() {

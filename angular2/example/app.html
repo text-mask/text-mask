@@ -5,11 +5,18 @@
     <div class="col-sm-10">
       <input
         id="1"
+        name="phone"
+        #phone="ngModel"
         [(ngModel)]="myModel"
         [textMask]="{mask: '(111) 111-1111'}"
         type="text"
         class="form-control"
+        pattern="\(\d{3}\) \d{3}-\d{4}"
+        required
       />
+      <div>
+        {{phone.valid ? 'VALID' : 'INVALID'}}
+      </div>
     </div>
   </div>
 </form>
