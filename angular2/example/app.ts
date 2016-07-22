@@ -4,6 +4,7 @@ import 'zone.js/dist/zone';
 import 'reflect-metadata';
 
 import {Component} from '@angular/core';
+import {disableDeprecatedForms, provideForms} from '@angular/forms';
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
@@ -21,4 +22,7 @@ class AppComponent {
 }
 
 //noinspection TypeScriptValidateTypes
-bootstrap(AppComponent);
+bootstrap(AppComponent, [
+    disableDeprecatedForms(),
+    provideForms()
+]);
