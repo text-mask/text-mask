@@ -59,11 +59,11 @@ module.exports = {
         amd: '@angular/core'
       },
 
-      '@angular/common': {
-        root: ['ng', 'common'],
-        commonjs: '@angular/common',
-        commonjs2: '@angular/common',
-        amd: '@angular/common'
+      '@angular/forms': {
+        root: ['ng', 'forms'],
+        commonjs: '@angular/forms',
+        commonjs2: '@angular/forms',
+        amd: '@angular/forms'
       }
     }
   ]
