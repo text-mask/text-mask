@@ -4,7 +4,7 @@
 
 Text Mask is an input mask library. It works with any JavaScript framework. There are convenient wrappers for React and Angular 2. More wrappers in the works!
 
-Text Mask is robust and tiny (around *3KB* gzipped).
+Text Mask is robust, tiny (around *3KB* gzipped), and infinitely flexible!
 
 ## Live demo
 
@@ -90,7 +90,7 @@ Or for date
 * It is small, around *3KB* gzipped
 * Has no dependencies
 
-## If you need support, have any questions or suggestions
+## For any questions, suggestions, or feature requests
 
 [Please file an issue](https://github.com/msafi/text-mask/issues)!
 

@@ -1,7 +1,7 @@
-import 'es6-shim';
-import 'es6-promise';
-import 'zone.js/dist/zone';
-import 'reflect-metadata';
+import 'es6-shim'
+import 'es6-promise'
+import 'zone.js/dist/zone'
+import 'reflect-metadata'
 
 import {Component} from '@angular/core';
 import {disableDeprecatedForms, provideForms} from '@angular/forms';
@@ -14,7 +14,11 @@ import MaskedInput from '../src/angular2TextMask'
   directives: [MaskedInput]
 })
 class AppComponent {
-    myModel:string = '(800)';
+    public myModel;
+
+  constructor() {
+    this.myModel = '(800)';
+  }
 }
 
 //noinspection TypeScriptValidateTypes

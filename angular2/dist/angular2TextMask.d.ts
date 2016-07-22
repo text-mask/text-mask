@@ -1,5 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { NgControl } from '@angular/common';
+import { NgControl } from '@angular/forms';
 export default class MaskedInputDirective {
     private ngControl;
     private inputElement;
