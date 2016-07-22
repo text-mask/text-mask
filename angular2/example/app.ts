@@ -1,10 +1,10 @@
-import 'es6-shim';
-import 'es6-promise';
-import 'zone.js/dist/zone';
-import 'reflect-metadata';
+import 'es6-shim'
+import 'es6-promise'
+import 'zone.js/dist/zone'
+import 'reflect-metadata'
 
 import {Component} from '@angular/core';
-import {disableDeprecatedForms, provideForms} from '@angular/forms';
+import {disableDeprecatedForms, provideForms} from '@angular/forms'
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
@@ -14,15 +14,15 @@ import MaskedInput from '../src/angular2TextMask'
   directives: [MaskedInput]
 })
 class AppComponent {
-	public myModel;
+  public myModel
 
-	constructor(){
-		this.myModel = "3123213213";
-	}
+  constructor() {
+    this.myModel = ''
+  }
 }
 
 //noinspection TypeScriptValidateTypes
 bootstrap(AppComponent, [
-    disableDeprecatedForms(),
-    provideForms()
-]);
+  provideForms(),
+  disableDeprecatedForms()
+])
