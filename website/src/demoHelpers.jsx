@@ -153,7 +153,7 @@ export const DemoBottom = () => (
     </p>
 
     <p>
-      If you need support, have any questions or suggestions, please
+      For any questions, suggestions, or feature requests, please
       {' '}
       <a href='https://github.com/msafi/text-mask/issues' target='_blank'>file an issue</a>!
     </p>
