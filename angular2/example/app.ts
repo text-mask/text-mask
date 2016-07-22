@@ -12,7 +12,13 @@ import MaskedInput from '../src/angular2TextMask'
   templateUrl: 'app.html',
   directives: [MaskedInput]
 })
-class AppComponent {}
+class AppComponent {
+	public myModel;
+
+	constructor(){
+		this.myModel = "3123213213";
+	}
+}
 
 //noinspection TypeScriptValidateTypes
 bootstrap(AppComponent);
