@@ -104,7 +104,7 @@
     "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.0",
     "testdom": "^2.0.0",
-    "ts-node": "^0.9.3",
+    "ts-node": "^1.1.0",
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
     "url-loader": "^0.5.7",
