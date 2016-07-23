@@ -9,8 +9,8 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
   }
 })
 export default class MaskedInputDirective {
-  private inputElement:HTMLInputElement
-  public control: any
+  private inputElement:HTMLInputElement;
+  public control: any;
 
   @Input('textMask') textMaskConfig = {
     mask: '',
@@ -20,26 +20,25 @@ export default class MaskedInputDirective {
     keepCharPositions: false,
     onReject: undefined,
     onAccept: undefined
-  }
+  };
 
   constructor(inputElement: ElementRef, private ngControl: NgControl) {
     this.inputElement = inputElement.nativeElement
   }
 
   ngOnInit() {
-    const {placeholderChar} = this.textMaskConfig
-
+    const {placeholderChar} = this.textMaskConfig;
     this.control = createTextMaskInputElement(Object.assign({
       inputElement: this.inputElement,
       placeholderChar,
-    }, this.textMaskConfig))
+    }, this.textMaskConfig));
 
-    this.control.update()
+    setTimeout(() => this.onInput());
   }
 
   onInput() {
-    this.control.update()
-    this.ngControl.viewToModelUpdate(this.inputElement.value)
+    this.control.update();
+    this.ngControl.viewToModelUpdate(this.inputElement.value);
   }
 }
 
