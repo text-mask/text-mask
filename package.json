@@ -43,8 +43,8 @@
     "angular2:watch": "./node_modules/.bin/webpack --watch --config angular2/webpack.buildAngular2Integration.js",
     "git:done": "git checkout gh-pages && git rebase master && git checkout master && git push origin master --tags && git push origin gh-pages",
     "ci": "npm run test && npm run build && npm run verify",
-    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
-    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix || true"
+    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx && node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts",
+    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix && node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts || true"
   },
   "repository": {
     "type": "git",
@@ -105,6 +105,7 @@
     "style-loader": "^0.13.0",
     "testdom": "^2.0.0",
     "ts-node": "^1.1.0",
+    "tslint": "^3.13.0",
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
     "url-loader": "^0.5.7",

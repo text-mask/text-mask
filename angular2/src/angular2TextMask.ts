@@ -3,16 +3,17 @@ import {NgControl} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
-  selector: 'input[textMask]',
   host: {
     '(input)': 'onInput()'
-  }
+  },
+  selector: 'input[textMask]'
 })
 export default class MaskedInputDirective {
+  private control: any
   private inputElement:HTMLInputElement
-  public control: any
 
-  @Input('textMask') textMaskConfig = {
+  @Input('textMask')
+  textMaskConfig = {
     mask: '',
     guide: true,
     placeholderChar: '_',

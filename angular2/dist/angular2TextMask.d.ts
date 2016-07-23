@@ -2,8 +2,8 @@ import { ElementRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
 export default class MaskedInputDirective {
     private ngControl;
+    private control;
     private inputElement;
-    control: any;
     textMaskConfig: {
         mask: string;
         guide: boolean;
