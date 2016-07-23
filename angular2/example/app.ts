@@ -21,7 +21,7 @@ class AppComponent {
   }
 }
 
-//noinspection TypeScriptValidateTypes
+// noinspection TypeScriptValidateTypes
 bootstrap(AppComponent, [
   provideForms(),
   disableDeprecatedForms()
