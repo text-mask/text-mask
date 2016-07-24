@@ -6,11 +6,11 @@ Text Mask is an input mask library. It works with any JavaScript framework.
 There are convenient wrappers for React and Angular 2. And I need help creating wrappers for other frameworks,
 like Ember, Vue, Knockout, or anything else. If you can help, [email me](mailto:msafi@msafi.com)!
 
+Text Mask can create input masks for phone, date, currency, zip code, and anything else!
+
 ## Live demo
 
 See it in action, [check out the demo page](https://msafi.github.io/text-mask/).
-
-The demo includes examples of input masks for phone, date, currency, zip code, and more.
 
 ## Installation and usage
 
