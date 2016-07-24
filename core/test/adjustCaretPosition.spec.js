@@ -1,4 +1,4 @@
-import testParameters, {noGuideMode} from './../../common/testParameters.js'
+import testParameters, {noGuideMode, caretTrapTests} from './../../common/testParameters.js'
 import dynamicMaskTests from './../../common/dynamicMaskTests.js'
 import {convertMaskToPlaceholder} from '../src/utilities.js'
 import {placeholderChar} from '../src/constants.js'
@@ -188,6 +188,32 @@ describe('adjustCaretPosition', () => {
             guide: false,
             placeholderChar,
             currentCaretPosition: test.input.currentCaretPosition,
+          })).to.equal(test.output.adjustedCaretPosition)
+        }
+      })
+    )
+  })
+
+  describe('Caret trap tests', () => {
+    dynamicTests(
+      _.filter(caretTrapTests, (testParameter) => (
+        !_.includes(testParameter.skips, 'adjustCaretPosition')
+      )),
+
+      (test) => ({
+        description: `for input: ${JSON.stringify(test.input)}, it knows to adjust the caret to ` +
+        `'${test.output.adjustedCaretPosition}'`,
+
+        body: () => {
+          expect(adjustCaretPosition({
+            previousConformedValue: test.input.previousConformedValue,
+            conformedValue: test.input.conformedValue,
+            rawValue: test.input.rawValue,
+            placeholder: convertMaskToPlaceholder(test.input.mask),
+            guide: false,
+            placeholderChar,
+            currentCaretPosition: test.input.currentCaretPosition,
+            caretTrapIndexes: test.input.caretTrapIndexes
           })).to.equal(test.output.adjustedCaretPosition)
         }
       })

@@ -1,4 +1,4 @@
-const defaultIndexesOfPipedChars = []
+const defaultArray = []
 
 export default function adjustCaretPosition({
   previousConformedValue = '',
@@ -7,7 +7,8 @@ export default function adjustCaretPosition({
   rawValue,
   placeholderChar,
   placeholder,
-  indexesOfPipedChars = defaultIndexesOfPipedChars
+  indexesOfPipedChars = defaultArray,
+  caretTrapIndexes = defaultArray
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
@@ -131,7 +132,9 @@ export default function adjustCaretPosition({
       placeholder[i] === placeholderChar ||
 
       // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
-      i === placeholderLength
+      i === placeholderLength ||
+
+      caretTrapIndexes.indexOf(i) !== -1
       ) {
         return lastPlaceholderChar
       }
@@ -145,6 +148,8 @@ export default function adjustCaretPosition({
       // right after the first `6`
       if (
         placeholder[i - 1] === placeholderChar ||
+
+        caretTrapIndexes.indexOf(i) !== -1 ||
 
         // This is the beginning of the placeholder. We cannot move any further.
         // Let's put the caret there.
