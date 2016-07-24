@@ -31,9 +31,10 @@ Text Mask is very configurable and allows you to create any type of input mask w
 
 ### Robust
 
-Text Mask supports pasting, browser auto-fill, and all operations that a user would expect while interacting with text.
+Text Mask supports pasting, browser auto-fill, and all operations that a user would expect while interacting with
+an input field.
 
-It works on mobile, has no 3rd party dependencies, and has very a tiny footprint.
+It works on mobile, has no 3rd party dependencies, and has a tiny footprint (around 4KB gzipped).
 
 ## For any questions, suggestions, or feature requests
 
