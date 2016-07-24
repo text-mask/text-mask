@@ -1,6 +1,6 @@
 {
   "name": "vanilla-text-mask",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "JavaScript function that makes input HTML element accept mask pattern",
   "main": "dist/vanillaTextMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",
