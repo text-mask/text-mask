@@ -17,9 +17,17 @@ to Text Mask.
 ### `createCurrencyMask`
 
 `createCurrencyMask` returns a `currencyMask` function that will format user input as currency.
-`createCurrencyMask` accepts an object with `prefix` and `suffix` keys. The default `prefix`
-is `$` and the default `suffix` is nothing. So, `currencyMask` by default will turn an input like
-`3000` to `$3,000`.
+`createCurrencyMask` accepts an object with the following keys:
+
+1. `prefix` (string): what to display before the amount. Defaults to `'$'`.
+1. `suffix` (string): what to display after the amount. Defaults to empty string.
+1. `includeThousandsSeparator` (boolean): whether or not to separate thousands. Defaults to to `true`.
+1. `thousandsSeparatorSymbol` (string): character with which to separate thousands. Default to `','`.
+1. `allowDecimal` (boolean): whether or not to allow the user to enter a fraction with the amount. Default to `false`.
+1. `decimalSymbol` (string): character that will act as a decimal point. Defaults to `'.'`
+1. `decimalLimit` (number): how many digits to allow after the decimal. Defaults to `2`
+1. `requireFraction` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
+after the integer. Defaults to `false`.
 
 ### Usage
 

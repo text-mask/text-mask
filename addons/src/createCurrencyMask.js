@@ -1,25 +1,33 @@
 const dollarSign = '$'
 const emptyString = ''
 const comma = ','
-const strOne = '1'
+const one = '1'
+const period = '.'
 const noneDigitsRegExp = /\D+/g
 const digitsRegExp = /\d/g
+const number = 'number'
 
 export default function createCurrencyMask({
   prefix = dollarSign,
   suffix = emptyString,
   includeThousandsSeparator = true,
-  thousandsSeparator = comma,
-  acceptFraction = true
+  thousandsSeparatorSymbol = comma,
+  allowDecimal = false,
+  decimalSymbol = period,
+  decimalLimit = 2,
+  requireFraction = false
 } = {}) {
-  return function(rawValue, config = {}) {
-    if (rawValue === emptyString) { return `${prefix}${strOne}${suffix}` }
+  return function(rawValue) {
+    const rawValueLength = rawValue.length
 
-    const {previousConformedValue} = config
+    if (
+      rawValue === emptyString ||
+      (rawValue[0] === prefix[0] && rawValueLength === 1)
+    ) {
+      return `${prefix}${one}${suffix}`
+    }
 
-    const isDeletion = previousConformedValue.length > rawValue.length
-
-    const indexOfLastDecimal = rawValue.lastIndexOf('.')
+    const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
     const hasDecimal = indexOfLastDecimal !== -1
 
     let integer
@@ -28,47 +36,42 @@ export default function createCurrencyMask({
 
     integer = rawValue
 
-    if (hasDecimal) {
+    if (hasDecimal && (allowDecimal || requireFraction)) {
       integer = rawValue.slice(0, indexOfLastDecimal)
-      fraction = rawValue.slice(indexOfLastDecimal + 1, rawValue.length)
+      fraction = convertToMask(rawValue.slice(indexOfLastDecimal + 1, rawValueLength))
     } else {
       integer = rawValue
     }
 
-    integer = sanitizeInput(integer)
+    integer = convertToMask(integer)
 
-    numberMask = (includeThousandsSeparator) ?
-      addThousandsSeparator(integer, thousandsSeparator) :
-      integer
+    numberMask = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 
-    if (hasDecimal && acceptFraction) {
-      numberMask += '.'
+    if ((hasDecimal && allowDecimal) || requireFraction === true) {
+      numberMask += (rawValue[indexOfLastDecimal - 1] === decimalSymbol) ? '' : '[]'
+      numberMask += `${decimalSymbol}[]`
 
       if (fraction) {
-        numberMask += sanitizeInput(fraction)
-      } else if (isDeletion) {
-        numberMask += strOne
+        if (typeof decimalLimit === number) {
+          fraction = fraction.slice(0, decimalLimit)
+        }
+        numberMask += fraction
+      } else if (requireFraction === true) {
+        for (let i = 0; i < decimalLimit; i++) {
+          numberMask += one
+        }
       }
     }
-
-    // console.log('fraction', fraction)
-
-    // if (acceptFraction) {
-    //   numberMask += '.' + fraction
-    // }
-
-    console.log('isDeletion', isDeletion)
-    console.log('numberMask', numberMask)
 
     return `${prefix}${numberMask}${suffix}`
   }
 }
 
-function sanitizeInput(strNumber) {
-  return strNumber.replace(noneDigitsRegExp, '').replace(digitsRegExp, strOne)
+function convertToMask(strNumber) {
+  return strNumber.replace(noneDigitsRegExp, emptyString).replace(digitsRegExp, one)
 }
 
 // http://stackoverflow.com/a/10899795/604296
-function addThousandsSeparator(n, thousandsSeparator) {
-  return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator)
+function addThousandsSeparator(n, thousandsSeparatorSymbol) {
+  return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparatorSymbol)
 }
