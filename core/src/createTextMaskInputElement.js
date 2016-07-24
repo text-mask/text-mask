@@ -1,6 +1,6 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
-import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
+import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 export default function createTextMaskInputElement({
@@ -56,10 +56,17 @@ export default function createTextMaskInputElement({
       // We need to know what the `previousConformedValue` is from the previous `update` call
       const {previousConformedValue} = state
 
+      let caretTrapIndexes
+
       // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` string.
       // Then we also need to get the `placeholder`
       if (typeof providedMask === 'function') {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
+
+        const {maskWithoutCaretTraps, indexes} = processCaretTraps(mask)
+
+        mask = maskWithoutCaretTraps
+        caretTrapIndexes = indexes
 
         placeholder = convertMaskToPlaceholder(mask, placeholderChar)
 
@@ -116,7 +123,8 @@ export default function createTextMaskInputElement({
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
-        indexesOfPipedChars: pipeResults.indexesOfPipedChars
+        indexesOfPipedChars: pipeResults.indexesOfPipedChars,
+        caretTrapIndexes
       })
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.

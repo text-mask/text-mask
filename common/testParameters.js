@@ -1666,6 +1666,30 @@ export const allowMaskingCharInMask = _.filter((t) => t, [{
   },
 }])
 
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+export const caretTrapTests = _.filter((t) => t, [{
+// export const allowMaskingCharInMask = _.filter((t) => false, [{
+// export const allowMaskingCharInMask = _.filter((t) => t.only, [{
+  line: getLineNumber(),
+
+  input: {
+    mask: '$1,111.',
+    previousConformedValue: '$2,000.2',
+    rawValue: '$2,000.',
+    currentCaretPosition: 7,
+    conformedValue: '$2,000.',
+    caretTrapIndexes: [7]
+  },
+
+  output: {
+    adjustedCaretPosition: 7
+  },
+}])
+
 export function transformTestForComponent(test) {
   const {
     input: {mask},
