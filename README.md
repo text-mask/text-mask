@@ -18,18 +18,16 @@ See it in action, [check out the demo page](https://msafi.github.io/text-mask/).
 * [Angular 2](angular2#readme)
 * [Vanilla JS](vanilla#readme)
 
-## Features
-
-### Expected to work with...
+## Expected to work with...
 
 IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and Chrome
 
-### Flexible
+## Flexible
 
 Text Mask is very configurable and allows you to create any type of input mask with very minimal APIs.
 [See the documentation for details](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
 
-### Robust
+## Robust
 
 Text Mask supports pasting, browser auto-fill, and all operations that a user would expect while interacting with
 an input field.
