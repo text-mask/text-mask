@@ -64,7 +64,7 @@ After you've made some changes, send a PR!
 #### What are the commands for all the framework components?
 
 The pattern is like `npm run LIBRARY_NAME:dev`. Check out the scripts section of
-the root `package.json` to see the specific spellings.
+the root [`package.json`](https://github.com/msafi/text-mask/blob/master/package.json) to see the specific spellings.
 
 #### How about running the code for the `core`?
 

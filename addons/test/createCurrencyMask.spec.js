@@ -21,7 +21,55 @@ describe('createCurrencyMask', () => {
     expect(currencyMask('12')).to.equal('11 $')
   })
 
-  describe('currencyMask', () => {
+  it('can be configured to add a thousands separator or not', () => {
+    let currencyMaskWithoutThousandsSeparator = createCurrencyMask({includeThousandsSeparator: false})
+    expect(currencyMaskWithoutThousandsSeparator('1000')).to.equal('$1111')
+
+    let currencyMaskWithThousandsSeparator = createCurrencyMask()
+    expect(currencyMaskWithThousandsSeparator('1000')).to.equal('$1,111')
+  })
+
+  it('can be configured with a custom character for the thousands separator', () => {
+    let currencyMask = createCurrencyMask({thousandsSeparatorSymbol: '.'})
+
+    expect(currencyMask('1000')).to.equal('$1.111')
+  })
+
+  it('can be configured to accept a fraction and returns the fraction separator with caret traps', () => {
+    let currencyMask = createCurrencyMask({allowDecimal: true})
+
+    expect(currencyMask('1000.')).to.equal('$1,111[].[]')
+  })
+
+  it('rejects fractions by default', () => {
+    let currencyMask = createCurrencyMask()
+
+    expect(currencyMask('1000.')).to.equal('$1,111')
+  })
+
+  it('can be configured with a custom character for the fraction separator', () => {
+    let currencyMask = createCurrencyMask({
+      allowDecimal: true,
+      decimalSymbol: ',',
+      thousandsSeparatorSymbol: '.'
+    })
+
+    expect(currencyMask('1000,')).to.equal('$1.111[],[]')
+  })
+
+  it('can limit the length of the fraction', () => {
+    let currencyMask = createCurrencyMask({allowDecimal: true, decimalLimit: 2})
+
+    expect(currencyMask('1000.3823')).to.equal('$1,111[].[]11')
+  })
+
+  it('can require a fraction', () => {
+    let currencyMask = createCurrencyMask({requireFraction: true})
+
+    expect(currencyMask('1000')).to.equal('$1,111[].[]11')
+  })
+
+  describe('currencyMask default behavior', () => {
     let currencyMask = null
 
     beforeEach(() => {

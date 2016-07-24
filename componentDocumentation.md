@@ -58,6 +58,10 @@ For an example of a dynamic mask, see the source code of
 [`createCurrencyMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js),
 which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
 
+<p align="center">
+<img src="assets/dynamicMask.gif"/>
+</p>
+
 ## `guide`
 
 `guide` is a boolean that tells the component whether to be in *guide* or *no guide* mode.

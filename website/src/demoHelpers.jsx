@@ -41,7 +41,7 @@ export const initialState = {
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js'>
+          href='https://github.com/msafi/text-mask/tree/master/addons#autocorrectedmmddyyyypipe'>
           autoCorrectedMmddyyyyPipe
         </a>, which needs to be installed separately as a
         {' '}
@@ -85,7 +85,7 @@ export const initialState = {
         <a
           className='alert-link'
           target='_blank'
-          href='https://github.com/msafi/text-mask/blob/master/addons/src/createCurrencyMask.js'>
+          href='https://github.com/msafi/text-mask/tree/master/addons#createcurrencymask'>
           createCurrencyMask
         </a>. It needs to be installed separately as a
         {' '}

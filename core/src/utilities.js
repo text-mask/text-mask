@@ -97,3 +97,20 @@ export function isString(value) {
 export function isNumber(value) {
   return value && value.length === undefined && !isNaN(value)
 }
+
+const strCaretTrap = '[]'
+const caretTrapsRegExp = new RegExp(`[${strCaretTrap}]`, 'g')
+export function processCaretTraps(mask) {
+  const indexes = []
+
+  let tempStr = mask
+
+  let indexOfCaretTrap
+  while(indexOfCaretTrap = tempStr.indexOf(strCaretTrap), indexOfCaretTrap !== -1) { // eslint-disable-line
+    indexes.push(indexOfCaretTrap)
+
+    tempStr = tempStr.slice(0, indexOfCaretTrap) + tempStr.slice(indexOfCaretTrap + strCaretTrap.length, tempStr.length)
+  }
+
+  return {maskWithoutCaretTraps: mask.replace(caretTrapsRegExp, emptyString), indexes}
+}

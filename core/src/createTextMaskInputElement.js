@@ -1,6 +1,6 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
-import {convertMaskToPlaceholder, isString, isNumber} from './utilities.js'
+import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 export default function createTextMaskInputElement({
@@ -50,10 +50,26 @@ export default function createTextMaskInputElement({
       // If it's something we can't work with `getSafeRawValue` will throw.
       const safeRawValue = getSafeRawValue(rawValue)
 
+      // `selectionStart` indicates to us where the caret position is after the user has typed into the input
+      const {selectionStart: currentCaretPosition} = inputElement
+
+      // We need to know what the `previousConformedValue` is from the previous `update` call
+      const {previousConformedValue} = state
+
+      let caretTrapIndexes
+
       // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` string.
       // Then we also need to get the `placeholder`
       if (typeof providedMask === 'function') {
-        mask = providedMask(safeRawValue)
+        mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
+
+        // dynamic masks can setup caret traps to have some control over how the caret moves. We need to process
+        // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
+        // the indexes of the caret traps.
+        const {maskWithoutCaretTraps, indexes} = processCaretTraps(mask)
+
+        mask = maskWithoutCaretTraps // The processed mask is what we're interested in
+        caretTrapIndexes = indexes // And we need to store these indexes because they're needed by `adjustCaretPosition`
 
         placeholder = convertMaskToPlaceholder(mask, placeholderChar)
 
@@ -61,12 +77,6 @@ export default function createTextMaskInputElement({
       } else {
         mask = providedMask
       }
-
-      // `selectionStart` indicates to us where the caret position is after the user has typed into the input
-      const {selectionStart: currentCaretPosition} = inputElement
-
-      // We need to know what the `previousConformedValue` is from the previous `update` call
-      const {previousConformedValue} = state
 
       // The following object will be passed to `conformToMask` to determine how the `rawValue` will be conformed
       const conformToMaskConfig = {
@@ -116,7 +126,8 @@ export default function createTextMaskInputElement({
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
-        indexesOfPipedChars: pipeResults.indexesOfPipedChars
+        indexesOfPipedChars: pipeResults.indexesOfPipedChars,
+        caretTrapIndexes
       })
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.

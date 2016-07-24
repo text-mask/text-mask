@@ -1,4 +1,4 @@
-const defaultIndexesOfPipedChars = []
+const defaultArray = []
 
 export default function adjustCaretPosition({
   previousConformedValue = '',
@@ -7,7 +7,8 @@ export default function adjustCaretPosition({
   rawValue,
   placeholderChar,
   placeholder,
-  indexesOfPipedChars = defaultIndexesOfPipedChars
+  indexesOfPipedChars = defaultArray,
+  caretTrapIndexes = defaultArray
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
@@ -128,10 +129,13 @@ export default function adjustCaretPosition({
 
       if (
         // If we're adding, we can position the caret at the next placeholder character.
-      placeholder[i] === placeholderChar ||
+        placeholder[i] === placeholderChar ||
 
-      // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
-      i === placeholderLength
+        // If a caret trap was set by a dynamic mask, we need to stop at the trap.
+        caretTrapIndexes.indexOf(i) !== -1 ||
+
+        // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
+        i === placeholderLength
       ) {
         return lastPlaceholderChar
       }
@@ -144,7 +148,11 @@ export default function adjustCaretPosition({
       // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
       // right after the first `6`
       if (
+        // If we're deleting, we can position the caret right before the placeholder character
         placeholder[i - 1] === placeholderChar ||
+
+        // If a caret trap was set by a dynamic mask, we need to stop at the trap.
+        caretTrapIndexes.indexOf(i) !== -1 ||
 
         // This is the beginning of the placeholder. We cannot move any further.
         // Let's put the caret there.
