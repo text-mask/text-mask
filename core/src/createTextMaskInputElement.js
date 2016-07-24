@@ -50,10 +50,16 @@ export default function createTextMaskInputElement({
       // If it's something we can't work with `getSafeRawValue` will throw.
       const safeRawValue = getSafeRawValue(rawValue)
 
+      // `selectionStart` indicates to us where the caret position is after the user has typed into the input
+      const {selectionStart: currentCaretPosition} = inputElement
+
+      // We need to know what the `previousConformedValue` is from the previous `update` call
+      const {previousConformedValue} = state
+
       // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` string.
       // Then we also need to get the `placeholder`
       if (typeof providedMask === 'function') {
-        mask = providedMask(safeRawValue)
+        mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
 
         placeholder = convertMaskToPlaceholder(mask, placeholderChar)
 
@@ -61,12 +67,6 @@ export default function createTextMaskInputElement({
       } else {
         mask = providedMask
       }
-
-      // `selectionStart` indicates to us where the caret position is after the user has typed into the input
-      const {selectionStart: currentCaretPosition} = inputElement
-
-      // We need to know what the `previousConformedValue` is from the previous `update` call
-      const {previousConformedValue} = state
 
       // The following object will be passed to `conformToMask` to determine how the `rawValue` will be conformed
       const conformToMaskConfig = {

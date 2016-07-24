@@ -115,7 +115,7 @@ export const initialState = {
     placeholder: undefined
   }],
 
-  selectedChoice: 0,
+  selectedChoice: 5,
 
   placeholderChar: '\u2000',
 

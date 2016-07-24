@@ -2,7 +2,7 @@ const createCurrencyMask = (isVerify()) ?
   require('../dist/createCurrencyMask.js').default :
   require('../src/createCurrencyMask.js').default
 
-describe('createCurrencyMask', () => {
+describe.only('createCurrencyMask', () => {
   it('can returns a configured currency mask', () => {
     let currencyMask = createCurrencyMask()
 
@@ -19,6 +19,20 @@ describe('createCurrencyMask', () => {
     let currencyMask = createCurrencyMask({suffix: ' $', prefix: ''})
 
     expect(currencyMask('12')).to.equal('11 $')
+  })
+
+  it('can be configured to add a thousands separator or not', () => {
+    let currencyMaskWithoutThousandsSeparator = createCurrencyMask({includeThousandsSeparator: false})
+    expect(currencyMaskWithoutThousandsSeparator('1000')).to.equal('$1111')
+
+    let currencyMaskWithThousandsSeparator = createCurrencyMask()
+    expect(currencyMaskWithThousandsSeparator('1000')).to.equal('$1,111')
+  })
+
+  it('can configure the character for the thousands separator', () => {
+    let currencyMask = createCurrencyMask({thousandsSeparator: '.'})
+
+    expect(currencyMask('1000')).to.equal('$1.111')
   })
 
   describe('currencyMask', () => {
