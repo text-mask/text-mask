@@ -106,7 +106,7 @@ export function processCaretTraps(mask) {
   let tempStr = mask
 
   let indexOfCaretTrap
-  while(indexOfCaretTrap = tempStr.indexOf(strCaretTrap), indexOfCaretTrap !== -1) {
+  while(indexOfCaretTrap = tempStr.indexOf(strCaretTrap), indexOfCaretTrap !== -1) { // eslint-disable-line
     indexes.push(indexOfCaretTrap)
 
     tempStr = tempStr.slice(0, indexOfCaretTrap) + tempStr.slice(indexOfCaretTrap + strCaretTrap.length, tempStr.length)

@@ -2,7 +2,7 @@ const createCurrencyMask = (isVerify()) ?
   require('../dist/createCurrencyMask.js').default :
   require('../src/createCurrencyMask.js').default
 
-describe.only('createCurrencyMask', () => {
+describe('createCurrencyMask', () => {
   it('can returns a configured currency mask', () => {
     let currencyMask = createCurrencyMask()
 
