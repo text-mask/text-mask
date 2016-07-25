@@ -1,0 +1,70 @@
+import React from 'react'
+
+const githubLink = 'https://github.com/msafi/text-mask/'
+
+const HelpLink = ({section}) => { // eslint-disable-line
+  return (
+    <a
+      className='small'
+      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
+      target='_blank'
+    >
+      <span className='glyphicon glyphicon-question-sign'/>
+    </a>
+  )
+}
+
+export const RightColumn = ({children, small}) => {
+  const columnSize = (small) ? '2' : '8'
+
+  return (
+    <div className={`col-sm-${columnSize} col-xs-12`}>{children}</div>
+  )
+}
+
+export const Row = ({children, name, value, noHelpLink, small}) => {
+  return (
+    <div className='form-group row'>
+      {name && value && <label htmlFor={value} className='col-sm-4 col-xs-12 control-label'>
+        {name} {noHelpLink !== true && <HelpLink section={value}/>}
+      </label> || <div className="col-sm-4 col-xs-12"/>}
+
+      <RightColumn small={small}>{children}</RightColumn>
+    </div>
+  )
+}
+
+export const DemoTop = () => (
+  <div>
+    <p>
+      <img
+        src='./assets/logo.png'
+        alt='Text Mask'
+        className='img-responsive'
+        width='331'
+        height='67'/>
+    </p>
+
+    <p>
+      This is a demo of Text Mask. Try filling out the masked input field.
+      Try entering bad characters. Pasting. Deleting.
+      Or using auto-fill. Try it on mobile too.
+    </p>
+  </div>
+)
+
+export const DemoBottom = () => (
+  <div className='col-sm-8 col-sm-offset-4'>
+    <p>
+      For more information about
+      installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
+    </p>
+
+    <p>
+      For any questions, suggestions, or feature requests, please
+      {' '}
+      <a href='https://github.com/msafi/text-mask/issues' target='_blank'>file an issue</a>!
+    </p>
+  </div>
+)
+

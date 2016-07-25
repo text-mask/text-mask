@@ -4,26 +4,18 @@ import ReactDOM from 'react-dom'
 import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
+import {initialState} from './choices.jsx' // eslint-disable-line
+import {Row, DemoTop, DemoBottom} from './partials.jsx'
+import {connect} from 'react-redux'
+import {actions, selectors} from './redux.js'
 
-const HelpLink = ({section}) => { // eslint-disable-line
-  return (
-    <a
-      className='small'
-      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
-      target='_blank'
-    >
-      <span className='glyphicon glyphicon-question-sign'/>
-    </a>
-  )
-}
-
-export default React.createClass({ // eslint-disable-line
+const App = React.createClass({ // eslint-disable-line
   getInitialState() {
-    return Object.assign({}, initialState)
+    return Object.assign({})
   },
 
   render() {
+    const {mask} = this.props
     const {
       guide,
       choices,
@@ -61,129 +53,81 @@ export default React.createClass({ // eslint-disable-line
 
         <div>
           <form className='form-horizontal'>
-            <div className='form-group'>
-              <label
-                className='col-sm-4 control-label'
-                htmlFor='maskedInput'>Masked input</label>
+            <Row name="Masked input" value="maskedInput" noHelpLink>
+              <MaskedInput
+                style={style}
+                key={maskedInputKey}
+                placeholder={placeholderValue}
+                placeholderChar={placeholderChar}
+                pipe={pipe}
+                keepCharPositions={keepCharPositions}
+                ref='maskedInput'
+                mask={mask}
+                guide={guide}
+                onReject={() => this.onReject(onRejectMessage)}
+                onAccept={() => this.onAccept(onAcceptMessage)}
+                className='form-control'
+                id='maskedInput'
+              />
+            </Row>
 
-              <div className='col-sm-8'>
-                <MaskedInput
-                  style={style}
-                  key={maskedInputKey}
-                  placeholder={placeholderValue}
-                  placeholderChar={placeholderChar}
-                  pipe={pipe}
-                  keepCharPositions={keepCharPositions}
-                  ref='maskedInput'
-                  mask={maskInUse}
-                  guide={guide}
-                  onReject={() => this.onReject(onRejectMessage)}
-                  onAccept={() => this.onAccept(onAcceptMessage)}
-                  className='form-control'
-                  id='maskedInput'
-                />
-              </div>
-            </div>
+            {rejectMessage && <Row><p className='alert alert-warning' style={{margin: 0}}>{rejectMessage}</p></Row>}
 
-            {rejectMessage && (
-              <div className='form-group row'>
-                <div className='col-sm-8 col-sm-offset-4'>
-                  <p className='alert alert-warning' style={{margin: 0}}>
-                    {rejectMessage}
-                  </p>
-                </div>
-              </div>
-            )}
+            <Row name="Mask" value="mask">
+              <select
+                className='form-control'
+                value={value}
+                onChange={this.onDropDownListChoiceSelect}
+                ref='maskSelect'>
+                {choices.map((choice, index) => {
+                  return <option key={index} value={choice.value}>{choice.name}</option>
+                })}
+              </select>
 
-            <div className='form-group row'>
-              <label
-                htmlFor='mask'
-                className='col-sm-4 col-xs-12 control-label'>
-                Mask <HelpLink section='mask'/>
-              </label>
+              <input
+                style={{display: (isDynamicMask) ? null : 'none', marginTop: 12}}
+                disabled
+                type='text'
+                value='Dynamic mask'
+                className={classnames('form-control', appStyles.mask)}
+              />
+              <input
+                style={{display: (isDynamicMask) ? 'none' : null, marginTop: 12}}
+                ref='mask'
+                type='text'
+                onChange={this.onManualMaskChange}
+                value={mask}
+                className={classnames('form-control', appStyles.mask)}
+                id='mask'
+              />
+            </Row>
 
-              <div className='col-sm-4 col-xs-12'>
-                <select
-                  className='form-control'
-                  value={value}
-                  onChange={this.onDropDownListChoiceSelect}
-                  ref='maskSelect'>
-                  {choices.map((choice, index) => {
-                    return <option key={index} value={choice.value}>{choice.name}</option>
-                  })}
-                </select>
-              </div>
+            {help !== undefined && <Row><p className='alert alert-info' style={{margin: 0}}>{help}</p></Row>}
 
-              <div className='col-sm-4 col-xs-12'>
-                <input
-                  style={{display: (isDynamicMask) ? null : 'none'}}
-                  disabled
-                  type='text'
-                  value='Dynamic mask'
-                  className={classnames('form-control', appStyles.mask)}
-                />
-                <input
-                  style={{display: (isDynamicMask) ? 'none' : null}}
-                  ref='mask'
-                  type='text'
-                  onChange={this.onManualMaskChange}
-                  value={maskInUse}
-                  className={classnames('form-control', appStyles.mask)}
-                  id='mask'
-                />
-              </div>
-            </div>
+            <Row name="Guide" value="guide" small>
+              <select className='form-control' onChange={this.changeGuide} value={guide}>
+                <option value={false}>Off</option>
+                <option value={true}>On</option>
+              </select>
+            </Row>
 
-            {help !== undefined && <div className='form-group row'>
-              <div className='col-sm-8 col-sm-offset-4'>
-                <p className='alert alert-info' style={{margin: 0}}>
-                  {help}
-                </p>
-              </div>
-            </div>}
+            <Row name="Keep character positions" value="keepCharPositions" small>
+              <select className='form-control' onChange={this.changeKeepCharPositions} value={keepCharPositions}>
+                <option value={false}>Off</option>
+                <option value={true}>On</option>
+              </select>
+            </Row>
 
-            <div className='form-group'>
-              <label htmlFor='guide' className='col-sm-4 control-label'>
-                Guide <HelpLink section='guide'/>
-              </label>
-
-              <div className='col-sm-2'>
-                <select className='form-control' onChange={this.changeGuide} value={guide}>
-                  <option value={false}>Off</option>
-                  <option value={true}>On</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='form-group'>
-              <label htmlFor='keepCharPositions' className='col-sm-4 control-label'>
-                Keep character positions <HelpLink section='keepcharpositions'/>
-              </label>
-
-              <div className='col-sm-2'>
-                <select className='form-control' onChange={this.changeKeepCharPositions} value={keepCharPositions}>
-                  <option value={false}>Off</option>
-                  <option value={true}>On</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='form-group'>
-              <label htmlFor='placeholderChar' className='col-sm-4 control-label'>
-                Placeholder character <HelpLink section='placeholderchar'/>
-              </label>
-
-              <div className='col-sm-3'>
-                <select
-                  id='placeholderChar'
-                  className='form-control'
-                  onChange={this.changePlaceholderChar}
-                >
-                  <option value={'\u2000'}>\u2000 (white space)</option>
-                  <option value='_'>_ (underscore)</option>
-                </select>
-              </div>
-            </div>
+            <Row name="Placeholder character" value="placeholderChar">
+              <select
+                id='placeholderChar'
+                className='form-control'
+                onChange={this.changePlaceholderChar}
+              >
+                <option value={'\u2000'}>\u2000 (white space)</option>
+                <option value='_'>_ (underscore)</option>
+              </select>
+            </Row>
           </form>
 
           <hr/>
@@ -195,18 +139,22 @@ export default React.createClass({ // eslint-disable-line
   },
 
   onManualMaskChange({target: {value: customMask}}) {
-    const selectedChoice = this.findChoice('mask', customMask)
-    const customChoice = this.findChoice('value', 'custom')
-    const finalSelectedChoice = (selectedChoice !== -1) ?
-      selectedChoice :
-      customChoice
+    const {setMask} = this.props
 
-    this.setState({
-      customMask,
-      selectedChoice: finalSelectedChoice,
-      rejectMessage: null,
-      acceptMessage: null
-    })
+    setMask(customMask)
+
+    // const selectedChoice = this.findChoice('mask', customMask)
+    // const customChoice = this.findChoice('value', 'custom')
+    // const finalSelectedChoice = (selectedChoice !== -1) ?
+    //   selectedChoice :
+    //   customChoice
+    //
+    // this.setState({
+    //   customMask,
+    //   selectedChoice: finalSelectedChoice,
+    //   rejectMessage: null,
+    //   acceptMessage: null
+    // })
   },
 
   onDropDownListChoiceSelect({target: {value: selectValue}}) {
@@ -261,3 +209,12 @@ export default React.createClass({ // eslint-disable-line
     this.setState({acceptMessage})
   }
 })
+
+export default connect(
+  (state) => ({
+    mask: state.mask,
+    textMaskComponentUniqueKey: selectors.getTextMaskComponentUniqueKey(state),
+    textMaskConfigurations: selectors.getTextMaskConfigurations(state)
+  }),
+  actions
+)(App)

@@ -19,9 +19,6 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    alias: {
-      'redux': path.join(__dirname, 'node_modules/redux')
-    },
     extensions: ['', '.js', '.jsx']
   },
   module: {
