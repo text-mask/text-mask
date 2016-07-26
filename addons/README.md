@@ -5,7 +5,7 @@ These addons are ready-to-use pipes and masks that can be used with Text Mask.
 ## Installation
 
 ```bash
-npm i text-mask-addons --save-dev
+npm i text-mask-addons --save
 ```
 
 ## Dynamic masks
