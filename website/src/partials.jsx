@@ -68,3 +68,78 @@ export const DemoBottom = () => (
   </div>
 )
 
+const Link = ({url, text}) => <a className='alert-link' target='_blank' href={url}>{text}</a>
+
+export const Links = {
+  autoCorrectedMmddyyyyPipe() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/tree/master/addons#autocorrectedmmddyyyypipe"
+        text="autoCorrectedMmddyyyyPipe"
+      />
+    )
+  },
+  addon() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/tree/master/addons/#readme"
+        text="addon"
+      />
+    )
+  },
+  onReject() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject"
+        text="onReject"
+      />
+    )
+  },
+  maskFunction() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask-function"
+        text="mask function"
+      />
+    )
+  },
+  pipe() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe"
+        text="pipe"
+      />
+    )
+  },
+  createNumberMask() {
+    return (
+      <Link
+        url="https://github.com/msafi/text-mask/tree/master/addons#createNumberMask"
+        text="createNumberMask"
+      />
+    )
+  }
+}
+
+export const Panel = ({title, children}) => (
+  <div className="panel panel-default" style={{marginBottom: 0}}>
+    {title && <div className="panel-heading">{title}</div>}
+
+    <div className="panel-body">{children}</div>
+  </div>
+)
+
+export const OnOffSwitch = ({name, value, onChange}) => (
+  <div>
+    <label className="radio-inline">
+      <input type="radio" name={name} checked={value} onChange={() => onChange(true)} />
+      On
+    </label>
+
+    <label className="radio-inline">
+      <input type="radio" name={name} checked={!value} onChange={() => onChange(false)}/>
+      Off
+    </label>
+  </div>
+)
+

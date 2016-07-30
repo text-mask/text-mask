@@ -5,7 +5,7 @@ var path = require('path')
 module.exports = {
   entry: {
     autoCorrectedMmddyyyyPipe: path.join(__dirname, './src/autoCorrectedMmddyyyyPipe.js'),
-    createCurrencyMask: path.join(__dirname, './src/createCurrencyMask.js'),
+    createNumberMask: path.join(__dirname, './src/createNumberMask.js'),
   },
 
   output: {

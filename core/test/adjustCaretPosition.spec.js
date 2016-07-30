@@ -169,7 +169,7 @@ describe('adjustCaretPosition', () => {
     )
   })
 
-  describe('Dynamic mask tests', () => {
+  describe('Mask function tests', () => {
     dynamicTests(
       _.filter(dynamicMaskTests, (testParameter) => (
         !_.includes(testParameter.skips, 'adjustCaretPosition')

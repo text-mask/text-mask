@@ -4,10 +4,11 @@ import ReactDOM from 'react-dom'
 import MaskedInput from '../../react/src/reactTextMask.jsx'
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {choices} from './choices.jsx'
-import {Row, DemoTop, DemoBottom} from './partials.jsx'
+import choices from './choices.jsx'
+import {Row, DemoTop, DemoBottom, OnOffSwitch} from './partials.jsx'
 import {connect} from 'react-redux'
 import {actionCreators, selectors} from './redux.js'
+import HelpPanel from './helpPanel.jsx'
 
 const App = React.createClass({
   componentDidUpdate() {
@@ -57,15 +58,7 @@ const App = React.createClass({
               </select>
 
               <input
-                style={{display: (props.isDynamicMask) ? null : 'none', marginTop: 12}}
-                disabled
-                type='text'
-                value='Dynamic mask'
-                className={classnames('form-control', appStyles.mask)}
-              />
-
-              <input
-                style={{display: (props.isDynamicMask) ? 'none' : null, marginTop: 12}}
+                style={{display: (props.isMaskFunction) ? 'none' : null, marginTop: 12}}
                 ref='mask'
                 type='text'
                 onChange={({target: {value: mask}}) => props.setMask(mask)}
@@ -75,28 +68,22 @@ const App = React.createClass({
               />
             </Row>
 
-           {props.help && <Row><p className='alert alert-info' style={{margin: 0}}>{props.help}</p></Row>}
+            <HelpPanel/>
 
             <Row name="Guide" value="guide" small>
-              <select
-                className='form-control'
-                onChange={({target: {value}}) => props.setGuide(value === 'true')}
+              <OnOffSwitch
+                name="guide"
                 value={props.guide}
-              >
-                <option value="false">Off</option>
-                <option value="true">On</option>
-              </select>
+                onChange={(value) => props.setGuide(value)}
+              />
             </Row>
 
             <Row name="Keep character positions" value="keepCharPositions" small>
-              <select
-                className='form-control'
-                onChange={({target: {value}}) => props.setKeepCharPositions(value === 'true')}
+              <OnOffSwitch
+                name="keepCharPositions"
                 value={props.keepCharPositions}
-              >
-                <option value='false'>Off</option>
-                <option value='true'>On</option>
-              </select>
+                onChange={(value) => props.setKeepCharPositions(value)}
+              />
             </Row>
 
             <Row name="Placeholder character" value="placeholderChar">
@@ -130,7 +117,7 @@ export default connect(
     ...state,
     textMaskComponentStyle: selectors.getTextMaskComponentStyle(state),
     textMaskComponentUniqueKey: selectors.getTextMaskComponentUniqueKey(state),
-    isDynamicMask: selectors.isDynamicMask(state)
+    isMaskFunction: selectors.isMaskFunction(state)
   }),
   actionCreators
 )(App)

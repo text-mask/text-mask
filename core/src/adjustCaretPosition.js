@@ -131,7 +131,7 @@ export default function adjustCaretPosition({
         // If we're adding, we can position the caret at the next placeholder character.
         placeholder[i] === placeholderChar ||
 
-        // If a caret trap was set by a dynamic mask, we need to stop at the trap.
+        // If a caret trap was set by a mask function, we need to stop at the trap.
         caretTrapIndexes.indexOf(i) !== -1 ||
 
         // This is the end of the placeholder. We cannot move any further. Let's put the caret there.
@@ -151,7 +151,7 @@ export default function adjustCaretPosition({
         // If we're deleting, we can position the caret right before the placeholder character
         placeholder[i - 1] === placeholderChar ||
 
-        // If a caret trap was set by a dynamic mask, we need to stop at the trap.
+        // If a caret trap was set by a mask function, we need to stop at the trap.
         caretTrapIndexes.indexOf(i) !== -1 ||
 
         // This is the beginning of the placeholder. We cannot move any further.

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { createStore } from 'redux'
 import mapValues from 'lodash/fp/mapValues'
 import find from 'lodash/fp/find'
 import pick from 'lodash/fp/pick'
-import {choices} from './choices.jsx'
+import choices from './choices.jsx'
 import {textMaskProps} from './constants.js'
 
 export const actionPayloaders = {
@@ -25,14 +24,14 @@ export const actionCreators = mapValues(
 )
 
 const initialState = {
-  ...choices[0],
   mask: '',
   placeholderChar: '\u2000',
   guide: true,
-  keepCharPositions: false
+  keepCharPositions: false,
+  ...choices[0]
 }
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   const {payload} = action
 
   state = {...state, shouldFocusMaskedInput: false}
@@ -59,16 +58,14 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export const store = createStore(reducer)
-
 export const selectors = {
   getTextMaskComponentUniqueKey(state) {
-    return JSON.stringify(pick(textMaskProps)(state))
+    return JSON.stringify(pick([...textMaskProps, 'name'])(state))
   },
   getTextMaskComponentStyle(state) {
-    return (state.name === choices[5].name) ? {textAlign: 'right'} : {}
+    return (state.mask.name === 'numberMask') ? {textAlign: 'right'} : {}
   },
-  isDynamicMask(state) {
+  isMaskFunction(state) {
     return typeof state.mask === 'function'
   }
 }
