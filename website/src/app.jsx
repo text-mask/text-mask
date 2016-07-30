@@ -63,7 +63,7 @@ const App = React.createClass({
                 type='text'
                 onChange={({target: {value: mask}}) => props.setMask(mask)}
                 value={props.mask}
-                className={classnames('form-control', appStyles.mask)}
+                className='form-control'
                 id='mask'
               />
             </Row>
