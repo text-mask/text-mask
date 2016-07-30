@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import mapValues from 'lodash/fp/mapValues'
 import find from 'lodash/fp/find'
 import pick from 'lodash/fp/pick'
@@ -18,7 +17,7 @@ export const actionPayloaders = {
 const types = mapValues((actionPayloader) => actionPayloader.name)(actionPayloaders)
 
 export const actionCreators = mapValues(
-  (actionPayloader) => (...args) => ({type: actionPayloader.name, payload: actionPayloader(...args)}),
+  (actionPayloader) => (...args) => ({type: actionPayloader.name, payload: actionPayloader(...args)})
 )(
   actionPayloaders
 )

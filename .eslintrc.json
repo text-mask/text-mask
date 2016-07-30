@@ -26,11 +26,14 @@
     "getLineNumber": true
   },
   "plugins": [
+    "react",
     "standard",
     "promise",
     "mocha"
   ],
   "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "mocha/no-exclusive-tests": 2,
     "max-len": [2, 120],
     "accessor-pairs": 2,

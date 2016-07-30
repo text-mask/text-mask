@@ -1,4 +1,4 @@
-import React from 'react' // eslint-disable-line
+import React from 'react'
 import autoCorrectedMmddyyyyPipe from '../../addons/src/autoCorrectedMmddyyyyPipe.js'
 import createNumberMask from '../../addons/src/createNumberMask'
 import {placeholderChars} from './constants.js'

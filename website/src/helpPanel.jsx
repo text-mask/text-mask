@@ -1,8 +1,7 @@
 import './styles.scss'
 import React from 'react'
-import {Row} from './partials.jsx'
 import {connect} from 'react-redux'
-import {Links, Panel} from './partials.jsx'
+import {Links, Panel, Row} from './partials.jsx'
 
 const HelpPanel = React.createClass({
   render() {
@@ -11,7 +10,7 @@ const HelpPanel = React.createClass({
     return (
       props.choiceName === 'Date (auto-corrected)' && (
         <Row>
-          <Panel title="Piped">
+          <Panel title='Piped'>
             <p>
               User input in this configuration is passed through a <Links.pipe/> that auto-corrects some values. For
               example,
@@ -31,7 +30,7 @@ const HelpPanel = React.createClass({
         </Row>
       ) || props.mask.name === 'numberMask' && (
         <Row>
-          <Panel title="Mask function">
+          <Panel title='Mask function'>
             <p>
               This is a <Links.maskFunction/>, which means it reads user input first and based on user input,
               it returns a mask string.

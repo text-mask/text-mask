@@ -1,8 +1,6 @@
 import React from 'react'
 
-const githubLink = 'https://github.com/msafi/text-mask/'
-
-const HelpLink = ({section}) => { // eslint-disable-line
+const HelpLink = ({section}) => {
   return (
     <a
       className='small'
@@ -27,7 +25,7 @@ export const Row = ({children, name, value, noHelpLink, small}) => {
     <div className='form-group row'>
       {name && value && <label htmlFor={value} className='col-sm-4 col-xs-12 control-label'>
         {name} {noHelpLink !== true && <HelpLink section={value}/>}
-      </label> || <div className="col-sm-4 col-xs-12"/>}
+      </label> || <div className='col-sm-4 col-xs-12'/>}
 
       <RightColumn small={small}>{children}</RightColumn>
     </div>
@@ -57,7 +55,7 @@ export const DemoBottom = () => (
   <div className='col-sm-8 col-sm-offset-4'>
     <p>
       For more information about
-      installation, usage, and documentation, see the <a href={githubLink}>GitHub page</a>.
+      installation, usage, and documentation, see the <a href='https://github.com/msafi/text-mask/'>GitHub page</a>.
     </p>
 
     <p>
@@ -74,70 +72,70 @@ export const Links = {
   autoCorrectedMmddyyyyPipe() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/tree/master/addons#autocorrectedmmddyyyypipe"
-        text="autoCorrectedMmddyyyyPipe"
+        url='https://github.com/msafi/text-mask/tree/master/addons#autocorrectedmmddyyyypipe'
+        text='autoCorrectedMmddyyyyPipe'
       />
     )
   },
   addon() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/tree/master/addons/#readme"
-        text="addon"
+        url='https://github.com/msafi/text-mask/tree/master/addons/#readme'
+        text='addon'
       />
     )
   },
   onReject() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject"
-        text="onReject"
+        url='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#onreject'
+        text='onReject'
       />
     )
   },
   maskFunction() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask-function"
-        text="mask function"
+        url='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask-function'
+        text='mask function'
       />
     )
   },
   pipe() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe"
-        text="pipe"
+        url='https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe'
+        text='pipe'
       />
     )
   },
   createNumberMask() {
     return (
       <Link
-        url="https://github.com/msafi/text-mask/tree/master/addons#createNumberMask"
-        text="createNumberMask"
+        url='https://github.com/msafi/text-mask/tree/master/addons#createNumberMask'
+        text='createNumberMask'
       />
     )
   }
 }
 
 export const Panel = ({title, children}) => (
-  <div className="panel panel-default" style={{marginBottom: 0}}>
-    {title && <div className="panel-heading">{title}</div>}
+  <div className='panel panel-default' style={{marginBottom: 0}}>
+    {title && <div className='panel-heading'>{title}</div>}
 
-    <div className="panel-body">{children}</div>
+    <div className='panel-body'>{children}</div>
   </div>
 )
 
 export const OnOffSwitch = ({name, value, onChange}) => (
   <div>
-    <label className="radio-inline">
-      <input type="radio" name={name} checked={value} onChange={() => onChange(true)} />
+    <label className='radio-inline'>
+      <input type='radio' name={name} checked={value} onChange={() => onChange(true)} />
       On
     </label>
 
-    <label className="radio-inline">
-      <input type="radio" name={name} checked={!value} onChange={() => onChange(false)}/>
+    <label className='radio-inline'>
+      <input type='radio' name={name} checked={!value} onChange={() => onChange(false)}/>
       Off
     </label>
   </div>

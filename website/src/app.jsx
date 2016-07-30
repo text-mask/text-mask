@@ -26,7 +26,7 @@ const App = React.createClass({
 
         <div>
           <form className='form-horizontal'>
-            <Row name="Masked input" value="maskedInput" noHelpLink>
+            <Row name='Masked input' value='maskedInput' noHelpLink>
               <MaskedInput
                 style={props.textMaskComponentStyle}
                 key={props.textMaskComponentUniqueKey}
@@ -48,7 +48,7 @@ const App = React.createClass({
               <Row><p className='alert alert-warning' style={{margin: 0}}>{props.rejectionMessage}</p></Row>
             )}
 
-            <Row name="Mask" value="mask">
+            <Row name='Mask' value='mask'>
               <select
                 className='form-control'
                 onChange={({target: {value}}) => props.populateFromChoice(value)}
@@ -70,23 +70,23 @@ const App = React.createClass({
 
             <HelpPanel/>
 
-            <Row name="Guide" value="guide" small>
+            <Row name='Guide' value='guide' small>
               <OnOffSwitch
-                name="guide"
+                name='guide'
                 value={props.guide}
                 onChange={(value) => props.setGuide(value)}
               />
             </Row>
 
-            <Row name="Keep character positions" value="keepCharPositions" small>
+            <Row name='Keep character positions' value='keepCharPositions' small>
               <OnOffSwitch
-                name="keepCharPositions"
+                name='keepCharPositions'
                 value={props.keepCharPositions}
                 onChange={(value) => props.setKeepCharPositions(value)}
               />
             </Row>
 
-            <Row name="Placeholder character" value="placeholderChar">
+            <Row name='Placeholder character' value='placeholderChar'>
               <select
                 id='placeholderChar'
                 className='form-control'
