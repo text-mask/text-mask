@@ -25,13 +25,14 @@ export const actionCreators = mapValues(
 )
 
 const initialState = {
+  ...choices[0],
   mask: '',
   placeholderChar: '\u2000',
   guide: true,
   keepCharPositions: false
 }
 
-const reducer = (state = {...initialState, ...choices[0]}, action) => {
+const reducer = (state = initialState, action) => {
   const {payload} = action
 
   state = {...state, shouldFocusMaskedInput: false}

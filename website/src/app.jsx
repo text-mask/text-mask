@@ -63,6 +63,7 @@ const App = React.createClass({
                 value='Dynamic mask'
                 className={classnames('form-control', appStyles.mask)}
               />
+
               <input
                 style={{display: (props.isDynamicMask) ? 'none' : null, marginTop: 12}}
                 ref='mask'
@@ -80,7 +81,8 @@ const App = React.createClass({
               <select
                 className='form-control'
                 onChange={({target: {value}}) => props.setGuide(value === 'true')}
-                value={props.guide}>
+                value={props.guide}
+              >
                 <option value="false">Off</option>
                 <option value="true">On</option>
               </select>
