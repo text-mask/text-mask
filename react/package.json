@@ -16,6 +16,12 @@
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0"
   },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
   "keywords": [
     "react",
     "react-component",
