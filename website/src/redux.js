@@ -62,7 +62,7 @@ export const selectors = {
     return JSON.stringify(pick([...textMaskProps, 'name'])(state))
   },
   getTextMaskComponentStyle(state) {
-    return (state.mask.name === 'numberMask') ? {textAlign: 'right'} : {}
+    return (state.mask.instanceOf === 'createNumberMask') ? {textAlign: 'right'} : {}
   },
   isMaskFunction(state) {
     return typeof state.mask === 'function'

@@ -17,7 +17,7 @@ export default function createNumberMask({
   decimalLimit = 2,
   requireDecimal = false
 } = {}) {
-  return function numberMask(rawValue) {
+  function numberMask(rawValue) {
     const rawValueLength = rawValue.length
 
     if (
@@ -65,6 +65,10 @@ export default function createNumberMask({
 
     return `${prefix}${mask}${suffix}`
   }
+
+  numberMask.instanceOf = 'createNumberMask'
+
+  return numberMask
 }
 
 function convertToMask(strNumber) {
