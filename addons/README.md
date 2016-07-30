@@ -8,16 +8,16 @@ These addons are ready-to-use pipes and masks that can be used with Text Mask.
 npm i text-mask-addons --save
 ```
 
-## Dynamic masks
+## Mask functions
 
 These functions here can be passed as a
 [`mask`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask)
 to Text Mask.
 
-### `createCurrencyMask`
+### `createNumberMask`
 
-`createCurrencyMask` returns a `currencyMask` function that will format user input as currency.
-`createCurrencyMask` accepts an object with the following keys:
+`createNumberMask` returns a `numberMask` function that will format user input as currency.
+`createNumberMask` accepts an object with the following keys:
 
 1. `prefix` (string): what to display before the amount. Defaults to `'$'`.
 1. `suffix` (string): what to display after the amount. Defaults to empty string.
@@ -26,20 +26,20 @@ to Text Mask.
 1. `allowDecimal` (boolean): whether or not to allow the user to enter a fraction with the amount. Default to `false`.
 1. `decimalSymbol` (string): character that will act as a decimal point. Defaults to `'.'`
 1. `decimalLimit` (number): how many digits to allow after the decimal. Defaults to `2`
-1. `requireFraction` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
+1. `requireDecimal` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
 after the integer. Defaults to `false`.
 
 ### Usage
 
 ```js
-import createCurrencyMask from 'text-mask-addons/dist/createCurrencyMask.js'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask.js'
 
-const currencyMask = createCurrencyMask({
+const numberMask = createNumberMask({
   prefix: '',
   suffix: ' $' // This will put the dollar sign at the end, with a space.
 })
 
-// ...then pass `currencyMask` to the Text Mask component
+// ...then pass `numberMask` to the Text Mask component
 ```
 
 ## Pipes

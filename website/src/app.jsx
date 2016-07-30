@@ -1,59 +1,24 @@
 import './styles.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MaskedInput from '../../react/src/reactTextMask.jsx' // eslint-disable-line
+import MaskedInput from '../../react/src/reactTextMask.jsx'
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import {initialState, DemoTop, DemoBottom} from './demoHelpers.jsx' // eslint-disable-line
+import choices from './choices.jsx'
+import {Row, DemoTop, DemoBottom, OnOffSwitch} from './partials.jsx'
+import {connect} from 'react-redux'
+import {actionCreators, selectors} from './redux.js'
+import HelpPanel from './helpPanel.jsx'
 
-const HelpLink = ({section}) => { // eslint-disable-line
-  return (
-    <a
-      className='small'
-      href={`https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#${section}`}
-      target='_blank'
-    >
-      <span className='glyphicon glyphicon-question-sign'/>
-    </a>
-  )
-}
-
-export default React.createClass({ // eslint-disable-line
-  getInitialState() {
-    return Object.assign({}, initialState)
+const App = React.createClass({
+  componentDidUpdate() {
+    if (this.props.shouldFocusMaskedInput) {
+      this.focusMaskedInput()
+    }
   },
 
   render() {
-    const {
-      guide,
-      choices,
-      placeholderChar,
-      selectedChoice,
-      customMask,
-      rejectMessage,
-      keepCharPositions: stateKeepCharPositions
-    } = this.state
-    const {
-      mask: choiceMask,
-      placeholder,
-      help,
-      pipe,
-      value,
-      onRejectMessage,
-      onAcceptMessage,
-      keepCharPositions = stateKeepCharPositions,
-      style
-    } = choices[selectedChoice]
-    const maskedInputKey = JSON.stringify({
-      customMask,
-      selectedChoice,
-      placeholderChar,
-      guide,
-      keepCharPositions
-    })
-    const maskInUse = choiceMask || customMask
-    const isDynamicMask = typeof maskInUse === 'function'
-    const placeholderValue = (guide !== true || isDynamicMask) ? placeholder : undefined
+    const {props} = this
 
     return (
       <div className={classnames(appStyles.mainContainer, 'container')}>
@@ -61,129 +26,76 @@ export default React.createClass({ // eslint-disable-line
 
         <div>
           <form className='form-horizontal'>
-            <div className='form-group'>
-              <label
-                className='col-sm-4 control-label'
-                htmlFor='maskedInput'>Masked input</label>
+            <Row name='Masked input' value='maskedInput' noHelpLink>
+              <MaskedInput
+                style={props.textMaskComponentStyle}
+                key={props.textMaskComponentUniqueKey}
+                placeholder={props.placeholder}
+                placeholderChar={props.placeholderChar}
+                pipe={props.pipe}
+                keepCharPositions={props.keepCharPositions}
+                ref='maskedInput'
+                mask={props.mask}
+                guide={props.guide}
+                onReject={() => props.setOnRejectMessage(props.onRejectMessage)}
+                onAccept={() => props.setOnAcceptMessage(props.onAcceptMessage)}
+                className='form-control'
+                id='maskedInput'
+              />
+            </Row>
 
-              <div className='col-sm-8'>
-                <MaskedInput
-                  style={style}
-                  key={maskedInputKey}
-                  placeholder={placeholderValue}
-                  placeholderChar={placeholderChar}
-                  pipe={pipe}
-                  keepCharPositions={keepCharPositions}
-                  ref='maskedInput'
-                  mask={maskInUse}
-                  guide={guide}
-                  onReject={() => this.onReject(onRejectMessage)}
-                  onAccept={() => this.onAccept(onAcceptMessage)}
-                  className='form-control'
-                  id='maskedInput'
-                />
-              </div>
-            </div>
-
-            {rejectMessage && (
-              <div className='form-group row'>
-                <div className='col-sm-8 col-sm-offset-4'>
-                  <p className='alert alert-warning' style={{margin: 0}}>
-                    {rejectMessage}
-                  </p>
-                </div>
-              </div>
+            {props.rejectionMessage && (
+              <Row><p className='alert alert-warning' style={{margin: 0}}>{props.rejectionMessage}</p></Row>
             )}
 
-            <div className='form-group row'>
-              <label
-                htmlFor='mask'
-                className='col-sm-4 col-xs-12 control-label'>
-                Mask <HelpLink section='mask'/>
-              </label>
+            <Row name='Mask' value='mask'>
+              <select
+                className='form-control'
+                onChange={({target: {value}}) => props.populateFromChoice(value)}
+                ref='maskSelect'
+              >
+                {choices.map((choice, index) => <option key={index} value={choice.name}>{choice.name}</option>)}
+              </select>
 
-              <div className='col-sm-4 col-xs-12'>
-                <select
-                  className='form-control'
-                  value={value}
-                  onChange={this.onDropDownListChoiceSelect}
-                  ref='maskSelect'>
-                  {choices.map((choice, index) => {
-                    return <option key={index} value={choice.value}>{choice.name}</option>
-                  })}
-                </select>
-              </div>
+              <input
+                style={{display: (props.isMaskFunction) ? 'none' : null, marginTop: 12}}
+                ref='mask'
+                type='text'
+                onChange={({target: {value: mask}}) => props.setMask(mask)}
+                value={props.mask}
+                className='form-control'
+                id='mask'
+              />
+            </Row>
 
-              <div className='col-sm-4 col-xs-12'>
-                <input
-                  style={{display: (isDynamicMask) ? null : 'none'}}
-                  disabled
-                  type='text'
-                  value='Dynamic mask'
-                  className={classnames('form-control', appStyles.mask)}
-                />
-                <input
-                  style={{display: (isDynamicMask) ? 'none' : null}}
-                  ref='mask'
-                  type='text'
-                  onChange={this.onManualMaskChange}
-                  value={maskInUse}
-                  className={classnames('form-control', appStyles.mask)}
-                  id='mask'
-                />
-              </div>
-            </div>
+            <HelpPanel/>
 
-            {help !== undefined && <div className='form-group row'>
-              <div className='col-sm-8 col-sm-offset-4'>
-                <p className='alert alert-info' style={{margin: 0}}>
-                  {help}
-                </p>
-              </div>
-            </div>}
+            <Row name='Guide' value='guide' small>
+              <OnOffSwitch
+                name='guide'
+                value={props.guide}
+                onChange={(value) => props.setGuide(value)}
+              />
+            </Row>
 
-            <div className='form-group'>
-              <label htmlFor='guide' className='col-sm-4 control-label'>
-                Guide <HelpLink section='guide'/>
-              </label>
+            <Row name='Keep character positions' value='keepCharPositions' small>
+              <OnOffSwitch
+                name='keepCharPositions'
+                value={props.keepCharPositions}
+                onChange={(value) => props.setKeepCharPositions(value)}
+              />
+            </Row>
 
-              <div className='col-sm-2'>
-                <select className='form-control' onChange={this.changeGuide} value={guide}>
-                  <option value={false}>Off</option>
-                  <option value={true}>On</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='form-group'>
-              <label htmlFor='keepCharPositions' className='col-sm-4 control-label'>
-                Keep character positions <HelpLink section='keepcharpositions'/>
-              </label>
-
-              <div className='col-sm-2'>
-                <select className='form-control' onChange={this.changeKeepCharPositions} value={keepCharPositions}>
-                  <option value={false}>Off</option>
-                  <option value={true}>On</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='form-group'>
-              <label htmlFor='placeholderChar' className='col-sm-4 control-label'>
-                Placeholder character <HelpLink section='placeholderchar'/>
-              </label>
-
-              <div className='col-sm-3'>
-                <select
-                  id='placeholderChar'
-                  className='form-control'
-                  onChange={this.changePlaceholderChar}
-                >
-                  <option value={'\u2000'}>\u2000 (white space)</option>
-                  <option value='_'>_ (underscore)</option>
-                </select>
-              </div>
-            </div>
+            <Row name='Placeholder character' value='placeholderChar'>
+              <select
+                id='placeholderChar'
+                className='form-control'
+                onChange={({target: {value: placeholderChar}}) => props.setPlaceholderChar(placeholderChar)}
+              >
+                <option value={'\u2000'}>\u2000 (white space)</option>
+                <option value='_'>_ (underscore)</option>
+              </select>
+            </Row>
           </form>
 
           <hr/>
@@ -194,70 +106,18 @@ export default React.createClass({ // eslint-disable-line
     )
   },
 
-  onManualMaskChange({target: {value: customMask}}) {
-    const selectedChoice = this.findChoice('mask', customMask)
-    const customChoice = this.findChoice('value', 'custom')
-    const finalSelectedChoice = (selectedChoice !== -1) ?
-      selectedChoice :
-      customChoice
-
-    this.setState({
-      customMask,
-      selectedChoice: finalSelectedChoice,
-      rejectMessage: null,
-      acceptMessage: null
-    })
-  },
-
-  onDropDownListChoiceSelect({target: {value: selectValue}}) {
-    const {findChoice} = this
-    const selectedChoice = findChoice('value', selectValue)
-
-    this.setState({
-      selectedChoice,
-      customMask: '',
-      rejectMessage: null,
-      acceptMessage: null
-    }, () => {
-      if (selectValue === 'custom') {
-        this.refs.mask.focus()
-      } else {
-        this.focusMaskedInput()
-      }
-    })
-  },
-
-  changeGuide({target: {value: guide}}) {
-    this.setState({guide: guide === 'true'})
-    this.focusMaskedInput()
-  },
-
-  changeKeepCharPositions({target: {value: keepCharPositions}}) {
-    this.setState({keepCharPositions: keepCharPositions === 'true'})
-    this.focusMaskedInput()
-  },
-
-  changePlaceholderChar({target: {value: placeholderChar}}) {
-    this.setState({placeholderChar})
-    this.focusMaskedInput()
-  },
-
   focusMaskedInput() {
     const {refs: {maskedInput}} = this
     ReactDOM.findDOMNode(maskedInput).focus()
-  },
-
-  findChoice(name, value) {
-    return this.state.choices.findIndex((choice) => {
-      return choice[name] === value
-    })
-  },
-
-  onReject(rejectMessage) {
-    this.setState({rejectMessage})
-  },
-
-  onAccept(acceptMessage) {
-    this.setState({acceptMessage})
   }
 })
+
+export default connect(
+  (state) => ({
+    ...state,
+    textMaskComponentStyle: selectors.getTextMaskComponentStyle(state),
+    textMaskComponentUniqueKey: selectors.getTextMaskComponentUniqueKey(state),
+    isMaskFunction: selectors.isMaskFunction(state)
+  }),
+  actionCreators
+)(App)

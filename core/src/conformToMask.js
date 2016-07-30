@@ -29,8 +29,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
   const indexOfFirstChange = currentCaretPosition + ((isAddition) ? -editLength : 0)
 
-  // To do this, we need the index of first change and of last change. We already have `indexOfFirstChange`.
-  // The following calculates the `indexOfLastChange`.
+  // We're also gonna need the index of last change, which we can derive as follows...
   const indexOfLastChange = indexOfFirstChange + Math.abs(editLength)
 
   // If `conformToMask` is configured to keep character positions, that is, for mask 111, previous value

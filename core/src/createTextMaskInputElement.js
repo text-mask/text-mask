@@ -63,7 +63,7 @@ export default function createTextMaskInputElement({
       if (typeof providedMask === 'function') {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
 
-        // dynamic masks can setup caret traps to have some control over how the caret moves. We need to process
+        // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
         // the indexes of the caret traps.
         const {maskWithoutCaretTraps, indexes} = processCaretTraps(mask)

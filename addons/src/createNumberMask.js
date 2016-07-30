@@ -7,7 +7,7 @@ const noneDigitsRegExp = /\D+/g
 const digitsRegExp = /\d/g
 const number = 'number'
 
-export default function createCurrencyMask({
+export default function createNumberMask({
   prefix = dollarSign,
   suffix = emptyString,
   includeThousandsSeparator = true,
@@ -15,9 +15,9 @@ export default function createCurrencyMask({
   allowDecimal = false,
   decimalSymbol = period,
   decimalLimit = 2,
-  requireFraction = false
+  requireDecimal = false
 } = {}) {
-  return function(rawValue) {
+  return function numberMask(rawValue) {
     const rawValueLength = rawValue.length
 
     if (
@@ -32,11 +32,11 @@ export default function createCurrencyMask({
 
     let integer
     let fraction
-    let numberMask
+    let mask
 
     integer = rawValue
 
-    if (hasDecimal && (allowDecimal || requireFraction)) {
+    if (hasDecimal && (allowDecimal || requireDecimal)) {
       integer = rawValue.slice(0, indexOfLastDecimal)
       fraction = convertToMask(rawValue.slice(indexOfLastDecimal + 1, rawValueLength))
     } else {
@@ -45,25 +45,25 @@ export default function createCurrencyMask({
 
     integer = convertToMask(integer)
 
-    numberMask = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
+    mask = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 
-    if ((hasDecimal && allowDecimal) || requireFraction === true) {
-      numberMask += (rawValue[indexOfLastDecimal - 1] === decimalSymbol) ? '' : '[]'
-      numberMask += `${decimalSymbol}[]`
+    if ((hasDecimal && allowDecimal) || requireDecimal === true) {
+      mask += (rawValue[indexOfLastDecimal - 1] === decimalSymbol) ? '' : '[]'
+      mask += `${decimalSymbol}[]`
 
       if (fraction) {
         if (typeof decimalLimit === number) {
           fraction = fraction.slice(0, decimalLimit)
         }
-        numberMask += fraction
-      } else if (requireFraction === true) {
+        mask += fraction
+      } else if (requireDecimal === true) {
         for (let i = 0; i < decimalLimit; i++) {
-          numberMask += one
+          mask += one
         }
       }
     }
 
-    return `${prefix}${numberMask}${suffix}`
+    return `${prefix}${mask}${suffix}`
   }
 }
 

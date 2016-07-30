@@ -1,8 +1,8 @@
-import React from 'react' // eslint-disable-line
+import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 import packageJson from '../package.json'
 
-const MaskedInput = (isVerify()) ? // eslint-disable-line
+const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
   require('../src/reactTextMask.jsx').default
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import MaskedInput from '../src/reactTextMask' // eslint-disable-line
+import MaskedInput from '../src/reactTextMask'
 
 export default React.createClass({
   render() {

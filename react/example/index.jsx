@@ -1,5 +1,5 @@
-import React from 'react' // eslint-disable-line
-import App from './app.jsx' // eslint-disable-line
+import React from 'react'
+import App from './app.jsx'
 import ReactDOM from 'react-dom'
 
 ReactDOM.render(
