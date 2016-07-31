@@ -1550,11 +1550,12 @@ export const noGuideMode = _.filter((t) => t, [{
 //####################################################################################
 
 // export const acceptedCharInMask = _.filter((t) => false, [{
-export const acceptedCharInMask = _.filter((t) => t, [{
-// export const acceptedCharInMask = _.filter((t) => t.only, [{
+// export const acceptedCharInMask = _.filter((t) => t, [{
+export const acceptedCharInMask = _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
+    // placeholder 0 _ 0 __
     mask: '0 1 0 11',
     previousConformedValue: '0 _ 0 __',
     rawValue: '0 3_ 0 __',
@@ -1571,6 +1572,40 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
+    // placeholder 0 _ 0 __
+    mask: '0 1 0 11',
+    previousConformedValue: '0 _ 0 __',
+    rawValue: '0 _ 0 __',
+    currentCaretPosition: 3
+  },
+
+  output: {
+    conformedValue: '0 _ 0 __',
+    adjustedCaretPosition: 3
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    // placeholder 0 _ 0 __
+    mask: '0 1 0 11',
+    previousConformedValue: '0 3 0 __',
+    rawValue: '0  0 __',
+    currentCaretPosition: 2
+  },
+
+  output: {
+    conformedValue: '0 _ 0 __',
+    adjustedCaretPosition: 2
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
     mask: '0 1 0 11',
     previousConformedValue: '',
     rawValue: '0',
@@ -1579,7 +1614,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   output: {
     conformedValue: '0 _ 0 __',
-    adjustedCaretPosition: 2
+    adjustedCaretPosition: 3
   },
 
   // only: true
@@ -1629,6 +1664,8 @@ export const acceptedCharInMask = _.filter((t) => t, [{
     conformedValue: '00 (344) 00 83 ___ 93 ___',
     adjustedCaretPosition: 6
   },
+
+  // only: true
 }, {
   line: getLineNumber(),
 
@@ -1643,6 +1680,25 @@ export const acceptedCharInMask = _.filter((t) => t, [{
     conformedValue: '00 (34_) 00 83 ___ 93 ___',
     adjustedCaretPosition: 5
   },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    // placeholder ___@____
+    mask: '***@****',
+    previousConformedValue: 'asdf@asdf',
+    rawValue: 'asf@asdf',
+    currentCaretPosition: 2
+  },
+
+  output: {
+    conformedValue: 'asf@asdf',
+    adjustedCaretPosition: 2
+  },
+
+  only: true
 }])
 
 //####################################################################################

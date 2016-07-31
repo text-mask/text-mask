@@ -19,6 +19,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   const rawValueLength = rawValue.length
   const previousConformedValueLength = previousConformedValue.length
   const placeholderLength = placeholder.length
+  const maskLength = mask.length
 
   // This tells us the number of edited characters and the direction in which they were edited (+/-)
   const editLength = rawValueLength - previousConformedValueLength
@@ -79,10 +80,26 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
   // would remove all characters but `234` from the `rawValueArr`. The rest of the algorithm
   // then would lay `234` on top of the available placeholder positions in the mask.
+  // let offset = (previousConformedValue === '') ? 0 : editLength
+  // let spliced = []
+  // for (let i = rawValueLength - 1; i >= 0; i--) {
+  //   const charData = rawValueArr[i]
+  //
+  //   // if (charData.isNew && previousConformedValue !== '') {
+  //   //   offset--
+  //   //   continue
+  //   // }
+  //
+  //   if (charData.char !== placeholderChar && placeholder[i - offset] !== placeholderChar) {
+  //     spliced.push(rawValueArr.splice(i, 1))
+  //   }
+  // }
+
   let numberOfRemovedChars = 0
   for (let i = 0; i < placeholderLength; i++) {
     const shouldJumpAheadInRawValue = i >= indexOfFirstChange && previousConformedValue !== ''
-    const rawValuePointer = ((shouldJumpAheadInRawValue) ? i + editLength : i) - numberOfRemovedChars
+    const neededEditLength = (previousConformedValueLength !== maskLength) ? 0 : editLength
+    const rawValuePointer = ((shouldJumpAheadInRawValue) ? i + neededEditLength : i) - numberOfRemovedChars
     const charData = rawValueArr[rawValuePointer]
 
     if (charData !== undefined && placeholder[i] === charData.char && charData.char !== placeholderChar) {
@@ -91,6 +108,8 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
       numberOfRemovedChars++
     }
   }
+
+
 
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below

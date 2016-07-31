@@ -84,7 +84,7 @@ describe('conformToMask', () => {
     )
   })
 
-  describe('Allow masking character in mask', () => {
+  describe('Allow escaped masking character in mask', () => {
     dynamicTests(
       allowMaskingCharInMask,
 
