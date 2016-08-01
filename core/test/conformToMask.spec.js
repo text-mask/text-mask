@@ -60,7 +60,7 @@ describe('conformToMask', () => {
     )
   })
 
-  describe('Accepted character in mask', () => {
+  describe.only('Accepted character in mask', () => {
     dynamicTests(
       acceptedCharInMask,
 
