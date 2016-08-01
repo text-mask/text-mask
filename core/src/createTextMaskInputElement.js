@@ -113,7 +113,7 @@ export default function createTextMaskInputElement({
       // If `pipe` is a function, we call it.
       if (piped) {
         // `pipe` receives the `conformedValue` and the configurations with which `conformToMask` was called.
-        pipeResults = pipe(conformedValue, conformToMaskConfig)
+        pipeResults = pipe(conformedValue, Object.assign({}, conformToMaskConfig, {rawValue: safeRawValue}))
 
         // `pipeResults` should be an object. But as a convenience, we allow the pipe author to just return `false` to
         // indicate rejection. If the `pipe` returns `false`, the block below turns it into an object that the rest
