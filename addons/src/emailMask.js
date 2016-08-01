@@ -3,69 +3,136 @@ const dot = '.'
 const emptyString = ''
 const whiteSpaceRegExp = /\s/g
 const atSymbol = '@'
+const caretTrap = '[]'
+const allAtSymbolsRegExp = /@/g
+const allNoneSpaceChars = /[^ ]/g
+const space = ' '
+const allSpaceRegExp = / /g
 
 export default function emailMask(rawValue, config) {
-  const {placeholderChar} = config
-  const indexOfFirstAtSymbol = rawValue.indexOf(atSymbol)
-
   console.clear()
 
   console.log('rawValue', rawValue)
 
-  // Sanitize rawValue
-  rawValue = rawValue
-    // Remove placeholder chars
-    .replace(new RegExp(`[${placeholderChar}]`, 'g'), '')
+  const {placeholderChar} = config
+  const indexOfFirstAtSymbol = rawValue.indexOf(atSymbol)
+  const indexOfLastDot = rawValue.lastIndexOf(dot)
 
-  // Remove the `.` if it exists in the end
-  if (rawValue[rawValue.length - 1] === dot) {
-    rawValue = rawValue.slice(0, rawValue.length - 1)
-  }
+  let localPartToDomainConnector = getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol)
+  let domainNameToTopLevelDomainConnector = getDomainNameToTopLevelDomainConnector(rawValue, indexOfLastDot)
 
-  let localPart = ''
-  let domainPart = ''
-  let mask = ''
+  let localPart = getLocalPart(rawValue, indexOfFirstAtSymbol, placeholderChar)
+  let domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfLastDot, placeholderChar)
+  let topLevelDomain = getTopLevelDomain(rawValue, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar)
 
-  // Check if user input has local and domain parts
-  // If it doesn't, that means there's only local part in the raw value
-  if (indexOfFirstAtSymbol === -1) {
-    localPart = convertToMask(rawValue)
-  } else {
-    localPart = rawValue.slice(0, indexOfFirstAtSymbol)
-    domainPart = rawValue.slice(indexOfFirstAtSymbol + 1, rawValue.length)
+  localPart = convertToMask(localPart)
+  domainName = convertToMask(domainName)
+  topLevelDomain = convertToMask(topLevelDomain)
 
-    localPart = convertToMask(localPart)
-    domainPart = convertToMask(domainPart)
-  }
-
-  console.log('localPart', localPart)
-  mask += localPart
-
-  if (rawValue[indexOfFirstAtSymbol + 1] !== atSymbol) {
-    mask += '[]'
-  }
-
-  mask += '@'
-
-  console.log('domainPart', domainPart)
-  mask += domainPart
+  let mask = (
+    localPart +
+    localPartToDomainConnector +
+    domainName +
+    domainNameToTopLevelDomainConnector +
+    topLevelDomain
+  )
 
   console.log('mask', mask)
-
-  // Remove unaccepted characters from rawValue
-  // Remove all but the first at symbol
-  rawValue = removeAllAtSymbolsButFirst(rawValue, indexOfFirstAtSymbol)
 
   return mask
 }
 
-function convertToMask(str) {
-  return str.replace(/./g, asterisk)
+function getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol) {
+  let connector
+
+  if (rawValue[indexOfFirstAtSymbol + 1] === atSymbol) {
+    connector = atSymbol
+  } else {
+    connector = caretTrap + atSymbol
+  }
+
+  return connector + caretTrap
 }
 
-function removeAllAtSymbolsButFirst(str, indexOfFirstAtSymbol) {
-  const localPart = str.slice(0, indexOfFirstAtSymbol + 1)
-  const rest = str.slice(indexOfFirstAtSymbol + 1, str.length)
+function getDomainNameToTopLevelDomainConnector(rawValue, indexOfLastDot) {
+  let connector
 
-  return localPart + rest.split(atSymbol).join('')
+  if (rawValue[indexOfLastDot - 1] === dot) {
+    connector = dot
+  } else {
+    connector = caretTrap + dot
+  }
+
+  return connector + caretTrap
+}
+
+function getLocalPart(str, indexOfFirstAtSymbol) {
+  if (indexOfFirstAtSymbol === -1) {
+    return str
+  } else {
+    return str.slice(0, indexOfFirstAtSymbol)
+  }
+}
+
+function getDomainName(str, indexOfFirstAtSymbol, indexOfLastDot, placeholderChar) {
+  let domainName = emptyString
+
+  if (indexOfFirstAtSymbol === -1) {
+    domainName = space
+  } else {
+    if (indexOfLastDot === -1) {
+      domainName = str.slice(indexOfFirstAtSymbol + 1, str.length)
+    } else {
+      domainName = str.slice(indexOfFirstAtSymbol + 1, indexOfLastDot)
+    }
+  }
+
+  domainName = removeMatch(domainName, allSpaceRegExp)
+  domainName = removeMatch(domainName, new RegExp(placeholderChar, 'g'))
+
+  if (domainName === atSymbol) {
+    return asterisk
+  } else if (domainName.length < 1) {
+    return space
+  } else {
+    if (domainName[domainName.length - 1] === dot && domainName.length !== 1) {
+      return domainName.slice(0, domainName.length - 1)
+    } else {
+      return domainName
+    }
+  }
+}
+
+function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar) {
+  let topLevelDomain = emptyString
+
+  if (indexOfLastDot === -1 || indexOfFirstAtSymbol === -1 || indexOfLastDot < indexOfFirstAtSymbol) {
+    topLevelDomain = space
+  } else {
+    topLevelDomain = str.slice(indexOfLastDot + 1, str.length)
+  }
+
+  topLevelDomain = removeMatch(topLevelDomain, allSpaceRegExp)
+  topLevelDomain = removeMatch(topLevelDomain, new RegExp(placeholderChar, 'g'))
+
+  if (rawValue[indexOfLastDot - 1] === dot) {
+    return asterisk
+  } else if (topLevelDomain.length < 1) {
+    return emptyString
+  } else {
+    return topLevelDomain
+  }
+}
+
+
+function removeMatch(str, regExp) {
+  return str.replace(regExp, emptyString)
+}
+
+function convertToMask(str) {
+  return str.replace(allNoneSpaceChars, asterisk)
+}
+
+function removeTrailingDot(str) {
+  return (str[str.length - 1] === dot) ? str.slice(0, str.length - 1)  : str
 }
