@@ -1,8 +1,6 @@
 import React from 'react'
 import autoCorrectedMmddyyyyPipe from '../../addons/src/autoCorrectedMmddyyyyPipe.js'
-import createNumberMask from '../../addons/src/createNumberMask.js'
-import emailMask from '../../addons/src/emailMask.js'
-import emailPipe from '../../addons/src/emailPipe.js'
+import createNumberMask from '../../addons/src/createNumberMask'
 import {placeholderChars} from './constants.js'
 import map from 'lodash/fp/map'
 
@@ -49,12 +47,6 @@ export default map(
     name: 'Percentage amount',
     mask: createNumberMask({suffix: '%', prefix: ''}),
     placeholder: 'Enter an amount',
-  },{
-    name: 'Email',
-    mask: emailMask,
-    pipe: emailPipe,
-    placeholder: 'john@smith.com',
-    placeholderChar: placeholderChars.underscore
   }, {
     name: 'US zip code',
     mask: '11111',
