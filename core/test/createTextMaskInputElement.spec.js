@@ -60,6 +60,15 @@ describe('createTextMaskInputElement', () => {
       expect(inputElement.value).to.equal('(2__) ___-____')
     })
 
+    it.only('works with escaped mask', () => {
+      const mask = '+\\1 (111) 111-1111'
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      inputElement.value = '+1 (__) ___-____'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (___) ___-____')
+    })
+
     it('accepts a string to conform and overrides whatever value is in the input element', () => {
       const mask = '(111) 111-1111'
       const textMaskControl = createTextMaskInputElement({inputElement, mask})

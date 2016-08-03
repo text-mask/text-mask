@@ -1,5 +1,5 @@
 import testParameters, {noGuideMode, caretTrapTests} from './../../common/testParameters.js'
-import dynamicMaskTests from './../../common/dynamicMaskTests.js'
+import maskFunctionTests from './../../common/maskFunctionTests.js'
 import {convertMaskToPlaceholder} from '../src/utilities.js'
 import {placeholderChar} from '../src/constants.js'
 import packageJson from '../package.json'
@@ -171,7 +171,7 @@ describe('adjustCaretPosition', () => {
 
   describe('Mask function tests', () => {
     dynamicTests(
-      _.filter(dynamicMaskTests, (testParameter) => (
+      _.filter(maskFunctionTests, (testParameter) => (
         !_.includes(testParameter.skips, 'adjustCaretPosition')
       )),
 

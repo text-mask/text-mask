@@ -48,7 +48,7 @@ export default function createTextMaskInputElement({
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
-      let safeRawValue = getSafeRawValue(rawValue)
+      const safeRawValue = getSafeRawValue(rawValue)
 
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
@@ -61,18 +61,7 @@ export default function createTextMaskInputElement({
       // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` string.
       // Then we also need to get the `placeholder`
       if (typeof providedMask === 'function') {
-        const maskFunctionResults = providedMask(safeRawValue, {
-          currentCaretPosition,
-          previousConformedValue,
-          placeholderChar
-        })
-
-        if (typeof maskFunctionResults === 'object') {
-          mask = maskFunctionResults.mask
-          safeRawValue = maskFunctionResults.rawValue
-        } else {
-          mask = maskFunctionResults
-        }
+        mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
@@ -113,7 +102,7 @@ export default function createTextMaskInputElement({
       // If `pipe` is a function, we call it.
       if (piped) {
         // `pipe` receives the `conformedValue` and the configurations with which `conformToMask` was called.
-        pipeResults = pipe(conformedValue, Object.assign({}, conformToMaskConfig, {rawValue: safeRawValue}))
+        pipeResults = pipe(conformedValue, conformToMaskConfig)
 
         // `pipeResults` should be an object. But as a convenience, we allow the pipe author to just return `false` to
         // indicate rejection. If the `pipe` returns `false`, the block below turns it into an object that the rest

@@ -1550,8 +1550,8 @@ export const noGuideMode = _.filter((t) => t, [{
 //####################################################################################
 
 // export const acceptedCharInMask = _.filter((t) => false, [{
-// export const acceptedCharInMask = _.filter((t) => t, [{
-export const acceptedCharInMask = _.filter((t) => t.only, [{
+export const acceptedCharInMask = _.filter((t) => t, [{
+// export const acceptedCharInMask = _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
@@ -1686,16 +1686,50 @@ export const acceptedCharInMask = _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
-    // placeholder ___@____
-    mask: '***@****',
-    previousConformedValue: 'asdf@asdf',
-    rawValue: 'asf@asdf',
-    currentCaretPosition: 2
+    mask: '00 (111) 00 83 111 93 111',
+    previousConformedValue: '00 (344) 00 83 ___ 93 ___',
+    rawValue: '00 (34) 00 83 ___ 93 ___',
+    currentCaretPosition: 5
   },
 
   output: {
-    conformedValue: 'asf@asdf',
-    adjustedCaretPosition: 2
+    conformedValue: '00 (34_) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 5
+  },
+
+  // only: true
+}])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
+// export const escapedMaskChar = _.filter((t) => false, [{
+// export const escapedMaskChar = _.filter((t) => t, [{
+export const escapedMaskChar = _.filter((t) => t.only, [{
+  input: {
+    mask: '+\\1 (111) 111-1111',
+    previousConformedValue: '',
+    rawValue: '9',
+    currentCaretPosition: 1
+  },
+
+  output: {
+    conformedValue: '+1 (9__) ___-____',
+    adjustedCaretPosition: 6
+  },
+}, {
+  input: {
+    mask: '+\\1 (111) 111-1111',
+    previousConformedValue: '',
+    rawValue: '+1 (__) ___-____',
+    currentCaretPosition: 4
+  },
+
+  output: {
+    conformedValue: '+1 (___) ___-____',
+    currentCaretPosition: 4
   },
 
   only: true
@@ -1706,30 +1740,9 @@ export const acceptedCharInMask = _.filter((t) => t.only, [{
 //####################################################################################
 //####################################################################################
 
-export const allowMaskingCharInMask = _.filter((t) => t, [{
-// export const allowMaskingCharInMask = _.filter((t) => false, [{
-// export const allowMaskingCharInMask = _.filter((t) => t.only, [{
-  input: {
-    mask: '00\\1 (111) 111-1111',
-    previousConformedValue: '',
-    rawValue: '9',
-    currentCaretPosition: 1
-  },
-
-  output: {
-    conformedValue: '001 (9__) ___-____',
-    adjustedCaretPosition: 6
-  },
-}])
-
-//####################################################################################
-//####################################################################################
-//####################################################################################
-//####################################################################################
-
 export const caretTrapTests = _.filter((t) => t, [{
-// export const allowMaskingCharInMask = _.filter((t) => false, [{
-// export const allowMaskingCharInMask = _.filter((t) => t.only, [{
+// export const escapedMaskChar = _.filter((t) => false, [{
+// export const escapedMaskChar = _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
