@@ -66,8 +66,9 @@ describe('createTextMaskInputElement', () => {
 
       inputElement.value = '+1 (__) ___-____'
       textMaskControl.update()
-      expect(inputElement.value).to.equal('+1 (___) ___-____')
+      expect(inputElement.value).to.equal('')
     })
+
 
     it('accepts a string to conform and overrides whatever value is in the input element', () => {
       const mask = '(111) 111-1111'
