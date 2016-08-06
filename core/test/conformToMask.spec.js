@@ -14,26 +14,24 @@ const conformToMask = (isVerify()) ?
   require(`../${packageJson.main}`).conformToMask :
   require('../src/conformToMask.js').default
 
-describe.only('conformToMask', () => {
+const testInputs = ['rawValue', 'mask', 'previousConformedValue', 'currentCaretPosition']
+
+describe('conformToMask', () => {
   describe('Accepted character in mask', () => {
     dynamicTests(
       _.filter(acceptedCharInMask, test => !test.skip),
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}' Line: ${test.line}`,
 
         body: () => {
-          expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
-            {
-              guide: true,
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              currentCaretPosition: test.input.currentCaretPosition
-            }
-          ).conformedValue).to.equal(test.output.conformedValue)
+          expect(conformToMask(test.rawValue, test.mask, {
+            guide: true,
+            previousConformedValue: test.previousConformedValue,
+            placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+            currentCaretPosition: test.currentCaretPosition
+          }).conformedValue).to.equal(test.conformedValue)
         }
       })
     )
@@ -44,19 +42,19 @@ describe.only('conformToMask', () => {
       testParameters,
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
+            test.rawValue,
+            test.mask,
             {
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              currentCaretPosition: test.input.currentCaretPosition
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+              currentCaretPosition: test.currentCaretPosition
             }
-          ).conformedValue).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.conformedValue)
         }
       })
     )
@@ -67,20 +65,20 @@ describe.only('conformToMask', () => {
       noGuideMode,
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}'`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}'`,
 
         body: () => {
           expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
+            test.rawValue,
+            test.mask,
             {
               guide: false,
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              currentCaretPosition: test.input.currentCaretPosition
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+              currentCaretPosition: test.currentCaretPosition
             }
-          ).conformedValue).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.conformedValue)
         }
       })
     )
@@ -91,20 +89,20 @@ describe.only('conformToMask', () => {
       escapedMaskChar,
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}'`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}'`,
 
         body: () => {
           expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
+            test.rawValue,
+            test.mask,
             {
               guide: true,
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              currentCaretPosition: test.input.currentCaretPosition
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+              currentCaretPosition: test.currentCaretPosition
             }
-          ).conformedValue).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.conformedValue)
         }
       })
     )
@@ -115,21 +113,21 @@ describe.only('conformToMask', () => {
       keepCharPositionsTests,
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
+            test.rawValue,
+            test.mask,
             {
               guide: true,
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
               keepCharPositions: true,
-              currentCaretPosition: test.input.currentCaretPosition
+              currentCaretPosition: test.currentCaretPosition
             }
-          ).conformedValue).to.equal(test.output.conformedValue)
+          ).conformedValue).to.equal(test.conformedValue)
         }
       })
     )
@@ -140,20 +138,20 @@ describe.only('conformToMask', () => {
       maskFunctionTests,
 
       (test) => ({
-        description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
-            test.input.rawValue,
-            test.input.mask,
+            test.rawValue,
+            test.mask,
             {
               guide: true,
-              previousConformedValue: test.input.previousConformedValue,
-              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-              currentCaretPosition: test.input.currentCaretPosition
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+              currentCaretPosition: test.currentCaretPosition
             }
-          ).conformedValue).to.equal(test.input.conformedValue)
+          ).conformedValue).to.equal(test.conformedValue)
         }
       })
     )

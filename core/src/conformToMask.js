@@ -76,15 +76,12 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
   // would remove all characters but `234` from the `rawValueArr`. The rest of the algorithm
   // then would lay `234` on top of the available placeholder positions in the mask.
   for (let i = rawValueLength - 1; i >= 0; i--) {
-    const charData = rawValueArr[i]
+    const {char} = rawValueArr[i]
 
-    if (charData.char !== placeholderChar) {
-      const shouldOffset = (
-        i > indexOfFirstChange &&
-        previousConformedValueLength === maskLength
-      )
+    if (char !== placeholderChar) {
+      const shouldOffset = i > indexOfFirstChange && previousConformedValueLength === maskLength
 
-      if (charData.char === placeholder[(shouldOffset) ? i - editDistance : i]) {
+      if (char === placeholder[(shouldOffset) ? i - editDistance : i]) {
         rawValueArr.splice(i, 1)
       }
     }
@@ -121,7 +118,6 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          // } else if (isAcceptableChar(rawValueChar, unescapedMask[i])) {
           } else if (mask[i].test(rawValueChar)) {
             // we map the character differently based on whether we are keeping character positions or not.
             // If any of the conditions below are met, we simply map the raw value character to the
@@ -229,8 +225,5 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
     }
   }
 
-  return {
-    conformedValue: conformedValue,
-    meta: {someCharsRejected}
-  }
+  return {conformedValue, meta: {someCharsRejected}}
 }
