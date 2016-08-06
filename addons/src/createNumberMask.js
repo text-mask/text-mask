@@ -1,11 +1,10 @@
 const dollarSign = '$'
 const emptyString = ''
 const comma = ','
-const one = '1'
 const period = '.'
 const noneDigitsRegExp = /\D+/g
-const digitsRegExp = /\d/g
 const number = 'number'
+const digitRegExp = /\d/
 
 export default function createNumberMask({
   prefix = dollarSign,
@@ -24,7 +23,7 @@ export default function createNumberMask({
       rawValue === emptyString ||
       (rawValue[0] === prefix[0] && rawValueLength === 1)
     ) {
-      return `${prefix}${one}${suffix}`
+      return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
     }
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
@@ -34,36 +33,50 @@ export default function createNumberMask({
     let fraction
     let mask
 
-    integer = rawValue
-
     if (hasDecimal && (allowDecimal || requireDecimal)) {
       integer = rawValue.slice(0, indexOfLastDecimal)
-      fraction = convertToMask(rawValue.slice(indexOfLastDecimal + 1, rawValueLength))
+
+      fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
+      fraction = convertToMask(fraction.replace(noneDigitsRegExp, emptyString))
     } else {
       integer = rawValue
     }
 
-    integer = convertToMask(integer)
+    integer = integer.replace(noneDigitsRegExp, emptyString)
 
-    mask = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
+    integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
+
+    mask = convertToMask(integer)
 
     if ((hasDecimal && allowDecimal) || requireDecimal === true) {
-      mask += (rawValue[indexOfLastDecimal - 1] === decimalSymbol) ? '' : '[]'
-      mask += `${decimalSymbol}[]`
+      if (rawValue[indexOfLastDecimal - 1] !== decimalSymbol) {
+        mask.push('[]')
+      }
+
+      mask.push(decimalSymbol, '[]')
 
       if (fraction) {
         if (typeof decimalLimit === number) {
           fraction = fraction.slice(0, decimalLimit)
         }
-        mask += fraction
+
+        mask = mask.concat(fraction)
       } else if (requireDecimal === true) {
         for (let i = 0; i < decimalLimit; i++) {
-          mask += one
+          mask.push(digitRegExp)
         }
       }
     }
 
-    return `${prefix}${mask}${suffix}`
+    if (prefix.length > 0) {
+      mask = prefix.split(emptyString).concat(mask)
+    }
+
+    if (suffix.length > 0) {
+      mask = mask.concat(suffix.split(emptyString))
+    }
+
+    return mask
   }
 
   numberMask.instanceOf = 'createNumberMask'
@@ -72,7 +85,9 @@ export default function createNumberMask({
 }
 
 function convertToMask(strNumber) {
-  return strNumber.replace(noneDigitsRegExp, emptyString).replace(digitsRegExp, one)
+  return strNumber
+    .split(emptyString)
+    .map((char) => digitRegExp.test(char) ? digitRegExp : char)
 }
 
 // http://stackoverflow.com/a/10899795/604296

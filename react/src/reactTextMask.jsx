@@ -3,7 +3,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
 
 export const MaskedInput = React.createClass({
   propTypes: {
-    mask: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+    mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]).isRequired,
     guide: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     pipe: PropTypes.func,
@@ -16,7 +16,7 @@ export const MaskedInput = React.createClass({
   componentDidMount() {
     const {props, props: {value}} = this
 
-    this.control = createTextMaskInputElement(Object.assign({inputElement: this.inputElement}, props))
+    this.control = createTextMaskInputElement({inputElement: this.inputElement, ...props})
 
     this.control.update(value)
   },
@@ -26,7 +26,7 @@ export const MaskedInput = React.createClass({
   },
 
   render() {
-    const props = Object.assign({}, this.props)
+    const props = {...this.props}
 
     delete props.mask
     delete props.guide

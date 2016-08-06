@@ -1,11 +1,13 @@
-import {isAcceptableChar, potentiallyTransformChar, convertMaskToPlaceholder} from './utilities.js'
+import {convertMaskToPlaceholder} from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
-export default function conformToMask(rawValue = '', mask = '', config = {}) {
+const emptyString = ''
+
+export default function conformToMask(rawValue = emptyString, mask = emptyString, config = {}) {
   // These configurations tell us how to conform the mask
   const {
     guide = true,
-    previousConformedValue = '',
+    previousConformedValue = emptyString,
     placeholderChar = defaultPlaceholderChar,
     placeholder = convertMaskToPlaceholder(mask, placeholderChar),
     currentCaretPosition,
@@ -19,18 +21,19 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   const rawValueLength = rawValue.length
   const previousConformedValueLength = previousConformedValue.length
   const placeholderLength = placeholder.length
+  const maskLength = mask.length
 
   // This tells us the number of edited characters and the direction in which they were edited (+/-)
-  const editLength = rawValueLength - previousConformedValueLength
+  const editDistance = rawValueLength - previousConformedValueLength
 
   // In *no guide* mode, we need to know if the user is trying to add a character or not
-  const isAddition = editLength > 0
+  const isAddition = editDistance > 0
 
   // Tells us the index of the first change. For (438) 394-4938 to (38) 394-4938, that would be 1
-  const indexOfFirstChange = currentCaretPosition + ((isAddition) ? -editLength : 0)
+  const indexOfFirstChange = currentCaretPosition + (isAddition ? -editDistance : 0)
 
   // We're also gonna need the index of last change, which we can derive as follows...
-  const indexOfLastChange = indexOfFirstChange + Math.abs(editLength)
+  const indexOfLastChange = indexOfFirstChange + Math.abs(editDistance)
 
   // If `conformToMask` is configured to keep character positions, that is, for mask 111, previous value
   // _2_ and raw value 3_2_, the new conformed value should be 32_, not 3_2 (default behavior). That's in the case of
@@ -42,7 +45,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
   // To do this, we want to compensate for all characters that were deleted
   if (keepCharPositions === true && !isAddition) {
     // We will be storing the new placeholder characters in this variable.
-    let compensatingPlaceholderChars = ''
+    let compensatingPlaceholderChars = emptyString
 
     // For every character that was deleted from a placeholder position, we add a placeholder char
     for (let i = indexOfFirstChange; i < indexOfLastChange; i++) {
@@ -61,40 +64,32 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     )
   }
 
-  // Unescaping a mask turns a mask like `+\1 (111) 111-1111` into `+  (111) 111-1111`. That is,
-  // it substituted an escaped character with empty white space. We do that because further down
-  // in the algorithm when we insert user input characters into the placeholder, we don't want the
-  // code to think that we can insert a numeric character in the `1` spot (which when unescaped
-  // stands for *any numeric character*).
-  const unescapedMask = mask.replace(/\\./g, ' ')
-
   // Convert `rawValue` string to an array, and mark characters based on whether they are newly added or have
   // existed in the previous conformed value. Identifying new and old characters is needed for `conformToMask`
   // to work if it is configured to keep character positions.
   const rawValueArr = rawValue
-    .split('')
+    .split(emptyString)
     .map((char, i) => ({char, isNew: i >= indexOfFirstChange && i < indexOfLastChange}))
 
   // The loop below removes masking characters from user input. For example, for mask
   // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
   // would remove all characters but `234` from the `rawValueArr`. The rest of the algorithm
   // then would lay `234` on top of the available placeholder positions in the mask.
-  let numberOfRemovedChars = 0
-  for (let i = 0; i < placeholderLength; i++) {
-    const shouldJumpAheadInRawValue = i >= indexOfFirstChange && previousConformedValue !== ''
-    const rawValuePointer = ((shouldJumpAheadInRawValue) ? i + editLength : i) - numberOfRemovedChars
-    const charData = rawValueArr[rawValuePointer]
+  for (let i = rawValueLength - 1; i >= 0; i--) {
+    const {char} = rawValueArr[i]
 
-    if (charData !== undefined && placeholder[i] === charData.char && charData.char !== placeholderChar) {
-      rawValueArr.splice(rawValuePointer, 1)
+    if (char !== placeholderChar) {
+      const shouldOffset = i > indexOfFirstChange && previousConformedValueLength === maskLength
 
-      numberOfRemovedChars++
+      if (char === placeholder[(shouldOffset) ? i - editDistance : i]) {
+        rawValueArr.splice(i, 1)
+      }
     }
   }
 
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below
-  let conformedValue = ''
+  let conformedValue = emptyString
   let someCharsRejected = false
 
   // Ok, so first we loop through the placeholder looking for placeholder characters to fill up.
@@ -123,21 +118,18 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
 
           // Else if, the character we got from the user input is not a placeholder, let's see
           // if the current position in the mask can accept it.
-          } else if (isAcceptableChar(rawValueChar, unescapedMask[i])) {
-            // if it is accepted. We map it--performing any necessary transforming along the way,
-            // like upper casing or lower casing.
-
+          } else if (mask[i].test(rawValueChar)) {
             // we map the character differently based on whether we are keeping character positions or not.
             // If any of the conditions below are met, we simply map the raw value character to the
             // placeholder position.
             if (
               keepCharPositions !== true ||
               isNew === false ||
-              previousConformedValue === '' ||
+              previousConformedValue === emptyString ||
               guide === false ||
               !isAddition
             ) {
-              conformedValue += potentiallyTransformChar(rawValueChar, unescapedMask[i])
+              conformedValue += rawValueChar
             } else {
               // We enter this block of code if we are trying to keep character positions and none of the conditions
               // above is met. In this case, we need to see if there's an available spot for the raw value character
@@ -170,7 +162,7 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
               // We can map it. And to keep the character positions, we remove the placeholder character
               // from the remaining characters
               if (indexOfNextAvailablePlaceholderChar !== null) {
-                conformedValue += potentiallyTransformChar(rawValueChar, unescapedMask[i])
+                conformedValue += rawValueChar
                 rawValueArr.splice(indexOfNextAvailablePlaceholderChar, 1)
 
               // If `indexOfNextAvailablePlaceholderChar` is `null`, that means the character is blocked. We have to
@@ -229,12 +221,9 @@ export default function conformToMask(rawValue = '', mask = '', config = {}) {
     } else {
       // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
       // the first character in the mask. So we return an empty string.
-      conformedValue = ''
+      conformedValue = emptyString
     }
   }
 
-  return {
-    conformedValue: conformedValue,
-    meta: {someCharsRejected}
-  }
+  return {conformedValue, meta: {someCharsRejected}}
 }

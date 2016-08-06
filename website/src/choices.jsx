@@ -1,7 +1,7 @@
 import React from 'react'
 import autoCorrectedMmddyyyyPipe from '../../addons/src/autoCorrectedMmddyyyyPipe.js'
 import createNumberMask from '../../addons/src/createNumberMask'
-import {placeholderChars} from './constants.js'
+import {placeholderChars, alphabetic, digit} from './constants.js'
 import map from 'lodash/fp/map'
 
 const defaultValues = {
@@ -18,19 +18,19 @@ export default map(
   (choice) => ({...defaultValues, ...choice}),
   [{
     name: 'US phone number',
-    mask: '(111) 111-1111',
+    mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     placeholder: '(555) 495-3947'
   }, {
     name: 'US phone number with country code',
-    mask: '+\\1 (111) 111-1111',
+    mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     placeholder: '+1 (555) 495-3947'
   }, {
     name: 'Date',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     placeholder: '25/09/1970'
   }, {
     name: 'Date (auto-corrected)',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     pipe: autoCorrectedMmddyyyyPipe,
     onRejectMessage: <span>Please enter a date with the following format <code>MM/DD/YYYY</code>.</span>,
     placeholder: 'Please enter a date',
@@ -49,12 +49,13 @@ export default map(
     placeholder: 'Enter an amount',
   }, {
     name: 'US zip code',
-    mask: '11111',
+    mask: [/[1-9]/, /\d/, /\d/, /\d/, /\d/],
     placeholder: '94303',
     placeholderChar: placeholderChars.underscore
   }, {
     name: 'Canadian postal code',
-    mask: 'U1U 1U1',
+    mask: [alphabetic, digit, alphabetic, ' ', digit, alphabetic, digit],
+    pipe: (conformedValue) => ({value: conformedValue.toUpperCase()}),
     placeholder: 'K1A 0B2',
     placeholderChar: placeholderChars.underscore
   }]

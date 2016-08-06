@@ -47,6 +47,20 @@ const HelpPanel = React.createClass({
           </Panel>
         </Row>
       )
+    ) || props.choiceName === 'Canadian postal code' && (
+      <Row>
+        <Panel title='Piped'>
+          <p>
+            User input in this configuration is passed through a <Links.pipe/> that upper-cases it.
+          </p>
+
+          <p>
+            The pipe in this case is a function such as:
+          </p>
+
+          <pre>{`function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}`}</pre>
+        </Panel>
+      </Row>
     )
   }
 })

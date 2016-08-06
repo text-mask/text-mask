@@ -1,7 +1,7 @@
 import adjustCaretPosition from './adjustCaretPosition.js'
 import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
-import {placeholderChar as defaultPlaceholderChar} from './constants'
+import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
 export default function createTextMaskInputElement({
   inputElement,
@@ -20,13 +20,13 @@ export default function createTextMaskInputElement({
   // `(___)` if the `placeholderChar` is set to `_`.
   let placeholder
 
-  // We don't know what the mask would be yet. If it is a string, we take it as is, but if it's a function, we will
-  // have to call that function to get the mask string.
+  // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
+  // have to call that function to get the mask array.
   let mask
 
-  // If the provided mask is a string, we can call `convertMaskToPlaceholder` here once and we'll always have the
+  // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
   // correct `placeholder`.
-  if (isString(providedMask)) {
+  if (providedMask instanceof Array) {
     placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
   }
 
@@ -58,7 +58,7 @@ export default function createTextMaskInputElement({
 
       let caretTrapIndexes
 
-      // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` string.
+      // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` array.
       // Then we also need to get the `placeholder`
       if (typeof providedMask === 'function') {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})

@@ -20,14 +20,14 @@ describe('createTextMaskInputElement', () => {
      'allows updating and controlling the masking of the input element', () => {
     const maskedInputElementControl = createTextMaskInputElement({
       inputElement,
-      mask: '(111) 111-1111'
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     })
 
     expect(maskedInputElementControl.update).to.be.a('function')
   })
 
   it('sets a default placeholder if the input element does not have one', () => {
-    const mask = '(111) 111-1111'
+    const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
     createTextMaskInputElement({inputElement, mask})
 
@@ -35,7 +35,7 @@ describe('createTextMaskInputElement', () => {
   })
 
   it('leaves current placeholder as is if it exists', () => {
-    const mask = '(111) 111-1111'
+    const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
     inputElement.placeholder = 'hello'
 
@@ -45,14 +45,14 @@ describe('createTextMaskInputElement', () => {
   })
 
   it('works with mask functions', () => {
-    const mask = () => '1111'
+    const mask = () => [/\d/, /\d/, /\d/, /\d/]
 
     expect(() => createTextMaskInputElement({inputElement, mask})).to.not.throw()
   })
 
   describe('`update` method', () => {
     it('conforms whatever value is in the input element to a mask', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       inputElement.value = '2'
@@ -60,8 +60,32 @@ describe('createTextMaskInputElement', () => {
       expect(inputElement.value).to.equal('(2__) ___-____')
     })
 
+    it('works after multiple calls', () => {
+      const mask = ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (2__) ___-____')
+
+      inputElement.value = '+1 (23__) ___-____'
+      inputElement.selectionStart = 6
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (23_) ___-____')
+
+      inputElement.value = '+1 (2_) ___-____'
+      inputElement.selectionStart = 5
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (2__) ___-____')
+
+      inputElement.value = '+1 (__) ___-____'
+      inputElement.selectionStart = 4
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('')
+    })
+
     it('accepts a string to conform and overrides whatever value is in the input element', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       inputElement.value = '2'
@@ -72,7 +96,7 @@ describe('createTextMaskInputElement', () => {
     if (!isVerify()) {
       it('does not conform given parameter if it is the same as the previousConformedValue', () => {
         const conformToMaskSpy = sinon.spy(conformToMask)
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
         createTextMaskInputElement.__Rewire__('conformToMask', conformToMaskSpy)
@@ -91,7 +115,7 @@ describe('createTextMaskInputElement', () => {
     }
 
     it('works with a string', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       textMaskControl.update('2')
@@ -100,7 +124,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('works with a number by coercing it into a string', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       textMaskControl.update(2)
@@ -109,7 +133,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('works with `undefined` and `null` by treating them as empty strings', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       textMaskControl.update(undefined)
@@ -120,7 +144,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('throws if given a value that it cannot work with', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       expect(() => textMaskControl.update({})).to.throw()
@@ -129,7 +153,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('adjusts the caret position', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask, placeholderChar})
 
       inputElement.focus()
@@ -141,7 +165,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('does not adjust the caret position if the input element is not focused', () => {
-      const mask = '(111) 111-1111'
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
       inputElement.value = '2'
@@ -152,7 +176,7 @@ describe('createTextMaskInputElement', () => {
     })
 
     it('calls the mask function before every update', () => {
-      const maskSpy = sinon.spy(() => '1111')
+      const maskSpy = sinon.spy(() => [/\d/, /\d/, /\d/, /\d/])
       const textMaskControl = createTextMaskInputElement({inputElement, mask: maskSpy})
 
       inputElement.value = '2'
@@ -168,7 +192,7 @@ describe('createTextMaskInputElement', () => {
 
     describe('`onAccept` callback', () => {
       it('is called when the updated value is different than the previous value', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onAccept = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
 
@@ -180,7 +204,7 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is not called when the updated value is the same as the previous value', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onAccept = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
 
@@ -196,7 +220,7 @@ describe('createTextMaskInputElement', () => {
 
     describe('`onReject` callback', () => {
       it('is called when the updated value is the same as the old value', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
 
@@ -210,7 +234,7 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is not called when the updated value is different than the previous value', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
 
@@ -222,7 +246,7 @@ describe('createTextMaskInputElement', () => {
 
       it('is not called when the operation is deletion, even if the current and previous ' +
         'values are not different', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
 
@@ -236,7 +260,7 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is not called when a character is rejected because it exceeds the mask length', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
 
@@ -254,7 +278,7 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is not called when a character is rejected because it is blocked in `keepCharPositions` mode', () => {
-        const mask = '(111) 111-1111'
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const textMaskControl = createTextMaskInputElement({
           inputElement,
