@@ -1,6 +1,8 @@
 import _ from 'lodash/fp'
 import {convertMaskToPlaceholder} from '../core/src/utilities.js'
 
+const alphabetic = /^[A-Z]+$/i
+
 // export default _.filter((t) => false, [{
 export default _.filter((t) => t, [{
 // export default _.filter((t) => t.only, [{
@@ -9,7 +11,8 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___)',
     rawValue: '(3___)',
-    mask: '(111)',
+    // mask: ['(', /\d/, /\d/, /\d/, ')'],
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     currentCaretPosition: 2,
   },
 
@@ -25,7 +28,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '___',
     rawValue: '1___',
-    mask: '111',
+    mask: [/\d/, /\d/, /\d/],
     currentCaretPosition: 1,
   },
 
@@ -40,7 +43,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(12_) _',
     rawValue: '(12f_) _',
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     currentCaretPosition: 4,
   },
 
@@ -56,7 +59,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___) ___-____',
     rawValue: '(1___) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 2,
   },
 
@@ -71,7 +74,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(1__) ___-3___',
     rawValue: '(1__) ___-___',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 10,
   },
 
@@ -87,7 +90,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(1__) ___-3___',
     rawValue: '(12__) ___-3___',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 3,
   },
 
@@ -103,7 +106,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(333) ___-____',
     rawValue: '(3333) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 2,
   },
 
@@ -120,7 +123,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(123) 948-____',
     rawValue: '(123) 94-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 8,
   },
 
@@ -136,7 +139,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(__4) 444-____',
     rawValue: '(__4) 44-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 7,
   },
 
@@ -151,7 +154,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(__4) 44_-____',
     rawValue: '(__4) 444_-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 8,
   },
 
@@ -166,7 +169,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(__4) 444-____',
     rawValue: '(__4) 444-___',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 10,
   },
 
@@ -182,7 +185,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(__4) 444-____',
     rawValue: '(__4) 444____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 9,
   },
 
@@ -198,7 +201,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(__4) 444-____',
     rawValue: '(__4) 44-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 8,
   },
 
@@ -213,7 +216,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(505) ___-____',
     rawValue: '(505 ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 4,
   },
 
@@ -229,7 +232,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(505) ___-____',
     rawValue: '(505) __-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 6,
   },
 
@@ -243,7 +246,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(333) 333-3___',
     rawValue: '(33) 333-3___',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 3,
   },
 
@@ -257,7 +260,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___) ___-____',
     rawValue: '5(___) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 1,
   },
 
@@ -274,7 +277,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(000) ___-____',
     rawValue: '(00) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 2,
   },
 
@@ -288,7 +291,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '44/__',
     rawValue: '4/__',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 1,
   },
 
@@ -300,7 +303,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     previousConformedValue: '(124) 3',
     rawValue: '(124) ',
     currentCaretPosition: 6,
@@ -318,7 +321,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(449) _',
     rawValue: '(4495) _',
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     currentCaretPosition: 5,
   },
 
@@ -335,7 +338,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___) ___-____',
     rawValue: '(__4_) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 4,
   },
 
@@ -352,7 +355,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '1__',
     rawValue: '11__',
-    mask: '111',
+    mask: [/\d/, /\d/, /\d/],
     currentCaretPosition: 2,
   },
 
@@ -369,7 +372,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '11_',
     rawValue: '111_',
-    mask: '111',
+    mask: [/\d/, /\d/, /\d/],
     currentCaretPosition: 3,
   },
 
@@ -384,7 +387,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___)',
     rawValue: '(3___)',
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     currentCaretPosition: 2
   },
 
@@ -401,7 +404,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '___',
     rawValue: '1___',
-    mask: '111',
+    mask: [/\d/, /\d/, /\d/],
     currentCaretPosition: 1,
   },
 
@@ -416,7 +419,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '1__',
     rawValue: '11__',
-    mask: '111',
+    mask: [/\d/, /\d/, /\d/],
     currentCaretPosition: 2,
   },
 
@@ -433,7 +436,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(12_) 7',
     rawValue: '(132_) 7',
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     currentCaretPosition: 3,
   },
 
@@ -450,7 +453,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(___) ___/____',
     rawValue: '5(___) ___/____',
-    mask: '(111) 111/1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 1,
   },
 
@@ -467,7 +470,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '3333',
     rawValue: '2938',
-    mask: '1111',
+    mask: [/\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 4,
   },
 
@@ -484,7 +487,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(132) 7',
     rawValue: '(12) 7',
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     currentCaretPosition: 2,
   },
 
@@ -498,7 +501,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/__/____',
     rawValue: '1__/__/____',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -513,7 +516,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '1_/__/____',
     rawValue: '11_/__/____',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 2
   },
 
@@ -528,7 +531,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '1111',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 4
   },
 
@@ -543,7 +546,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '23840957',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 8
   },
 
@@ -557,7 +560,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '2384095',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 7
   },
 
@@ -571,7 +574,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '2',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -585,7 +588,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '777',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 3
   },
 
@@ -601,7 +604,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '7771',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 4
   },
 
@@ -615,7 +618,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '1_/__/____',
     rawValue: '1_/__/___1_',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 10
   },
 
@@ -632,7 +635,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '1_/1_/____',
     rawValue: '1_/1__/___1',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 11
   },
 
@@ -648,7 +651,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(1__) ___-____',
     rawValue: '(d1__) ___-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 2
   },
 
@@ -664,7 +667,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '12/32',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 5
   },
 
@@ -678,7 +681,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '__/32',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 5
   },
 
@@ -696,7 +699,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/__/____',
     rawValue: '1__/__/____',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -711,7 +714,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '22/2_',
     rawValue: '2/2_',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -725,7 +728,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '(222) 2__-____',
     rawValue: '(22) 2__-____',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -741,7 +744,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/2_',
     rawValue: '_2_/2_',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 2
   },
 
@@ -756,7 +759,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/2_',
     rawValue: '_/2_',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 0
   },
 
@@ -772,7 +775,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '1',
-    mask: '(',
+    mask: ['('],
     currentCaretPosition: 1
   },
 
@@ -792,7 +795,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '2',
-    mask: '1',
+    mask: [/\d/],
     currentCaretPosition: 1
   },
 
@@ -806,7 +809,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '__/22',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 5
   },
 
@@ -824,7 +827,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/22',
     rawValue: '2__/22',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 1
   },
 
@@ -839,7 +842,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '22',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 2
   },
 
@@ -853,7 +856,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '222',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 3
   },
 
@@ -867,7 +870,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '777777',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 6
   },
 
@@ -883,7 +886,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '222/1',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 5
   },
 
@@ -897,7 +900,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '__/__',
     rawValue: '__5/__',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 3
   },
 
@@ -914,7 +917,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '8_/4_5/222_1',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 12
   },
 
@@ -932,7 +935,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '8293847/4_2/222_1',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 17
   },
 
@@ -946,7 +949,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '0/22',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 4
   },
 
@@ -960,7 +963,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '/22',
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     currentCaretPosition: 3
   },
 
@@ -974,7 +977,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '22/3/995',
-    mask: '11/11/1111',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     currentCaretPosition: 8
   },
 
@@ -982,13 +985,15 @@ export default _.filter((t) => t, [{
     conformedValue: '22/39/95__',
     adjustedCaretPosition: 8,
   },
+
+  // only: true
 }, {
   line: getLineNumber(),
 
   input: {
     previousConformedValue: '',
     rawValue: '2d',
-    mask: '11',
+    mask: [/\d/, /\d/],
     currentCaretPosition: 2
   },
 
@@ -1004,7 +1009,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '(123) 3',
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     currentCaretPosition: 7
   },
 
@@ -1020,7 +1025,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: '(123) 3',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 7
   },
 
@@ -1036,7 +1041,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: '',
     rawValue: 'M',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 1
   },
 
@@ -1050,7 +1055,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: 'M__ ___',
     rawValue: 'M2__ ___',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 2
   },
 
@@ -1064,7 +1069,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: 'M__ ___',
     rawValue: 'M2j_ ___',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 3
   },
 
@@ -1078,7 +1083,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: 'M2j ___',
     rawValue: 'M2j __2_',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 7
   },
 
@@ -1094,7 +1099,7 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: 'M2j ___',
     rawValue: 'M2j __R_',
-    mask: 'A1A A1A',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 7
   },
 
@@ -1108,19 +1113,19 @@ export default _.filter((t) => t, [{
   input: {
     previousConformedValue: 'M__ ___',
     rawValue: 'M2j_ ___',
-    mask: 'U1U U1U',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     currentCaretPosition: 3
   },
 
   output: {
-    conformedValue: 'M2J ___',
+    conformedValue: 'M2j ___',
     adjustedCaretPosition: 4,
   },
 }, {
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(1__)',
     rawValue: '(21__)',
     currentCaretPosition: 2
@@ -1136,7 +1141,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/],
     previousConformedValue: '(323) ___',
     rawValue: '(3243) ___',
     currentCaretPosition: 4
@@ -1152,7 +1157,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(1__)',
     rawValue: '(21__)',
     currentCaretPosition: 2
@@ -1168,7 +1173,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '',
     rawValue: '1',
     currentCaretPosition: 1
@@ -1184,7 +1189,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(290) 382-3039',
     rawValue: '(290) 38-3039',
     currentCaretPosition: 8
@@ -1198,7 +1203,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '',
     rawValue: '(',
     currentCaretPosition: 1
@@ -1214,7 +1219,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(395) 834-____',
     rawValue: '(395) 34-____',
     currentCaretPosition: 6
@@ -1230,7 +1235,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(1__) ___-____',
     rawValue: '(__) ___-____',
     currentCaretPosition: 1
@@ -1246,7 +1251,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: 'U1U 1U1',
+    mask: [alphabetic, /\d/, alphabetic, ' ', alphabetic, /\d/, alphabetic],
     previousConformedValue: '',
     rawValue: '5',
     currentCaretPosition: 1
@@ -1262,7 +1267,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111)',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '00 (___)',
     rawValue: '00 (1___)',
     currentCaretPosition: 5
@@ -1278,7 +1283,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '1111',
+    mask: [/\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '3333',
     rawValue: '2',
     currentCaretPosition: 1
@@ -1294,7 +1299,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '//1111',
+    mask: ['/', '/', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '//3333',
     rawValue: '2',
     currentCaretPosition: 1
@@ -1308,7 +1313,7 @@ export default _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '1111',
+    mask: [/\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '3333',
     rawValue: '23',
     currentCaretPosition: 1
@@ -1327,11 +1332,11 @@ export default _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
-export const noGuideMode = _.filter((t) => t, [{
 // export const noGuideMode = _.filter((t) => false, [{
+export const noGuideMode = _.filter((t) => t, [{
 // export const noGuideMode = _.filter((t) => t.only, [{
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '',
     rawValue: '(',
     currentCaretPosition: 1,
@@ -1347,7 +1352,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '',
     rawValue: '2',
     currentCaretPosition: 1
@@ -1363,7 +1368,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(2',
     rawValue: '(23',
     currentCaretPosition: 3
@@ -1379,7 +1384,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(2',
     rawValue: '(32',
     currentCaretPosition: 2
@@ -1395,7 +1400,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 1',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
     previousConformedValue: '(234)',
     rawValue: '(234)5',
     currentCaretPosition: 6
@@ -1411,7 +1416,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(',
     rawValue: '(1',
     currentCaretPosition: 2
@@ -1427,7 +1432,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111)',
+    mask: ['(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '(23',
     rawValue: '(423',
     currentCaretPosition: 2
@@ -1442,7 +1447,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 11',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
     previousConformedValue: '(12',
     rawValue: '(123',
     currentCaretPosition: 4
@@ -1456,7 +1461,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 11',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
     previousConformedValue: '(123) ',
     rawValue: '(123)',
     currentCaretPosition: 5
@@ -1470,7 +1475,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 11',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
     previousConformedValue: '(987) 6_',
     rawValue: '(9875) 6_',
     currentCaretPosition: 5
@@ -1486,7 +1491,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(987) 656-4938',
     rawValue: '(987) 6565-4938',
     currentCaretPosition: 10
@@ -1500,7 +1505,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(',
     rawValue: '',
     currentCaretPosition: 0
@@ -1514,7 +1519,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '(1',
     rawValue: '(',
     currentCaretPosition: 1
@@ -1530,7 +1535,7 @@ export const noGuideMode = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '11/11',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/],
     previousConformedValue: '',
     rawValue: '_',
     currentCaretPosition: 1
@@ -1556,7 +1561,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     // placeholder 0 _ 0 __
-    mask: '0 1 0 11',
+    mask: ['0', ' ', /\d/, ' ', '0', ' ', /\d/, /\d/],
     previousConformedValue: '0 _ 0 __',
     rawValue: '0 3_ 0 __',
     currentCaretPosition: 3
@@ -1573,7 +1578,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     // placeholder 0 _ 0 __
-    mask: '0 1 0 11',
+    mask: ['0', ' ', /\d/, ' ', '0', ' ', /\d/, /\d/],
     previousConformedValue: '0 _ 0 __',
     rawValue: '0 _ 0 __',
     currentCaretPosition: 3
@@ -1590,7 +1595,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   input: {
     // placeholder 0 _ 0 __
-    mask: '0 1 0 11',
+    mask: ['0', ' ', /\d/, ' ', '0', ' ', /\d/, /\d/],
     previousConformedValue: '0 3 0 __',
     rawValue: '0  0 __',
     currentCaretPosition: 2
@@ -1606,7 +1611,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '0 1 0 11',
+    mask: ['0', ' ', /\d/, ' ', '0', ' ', /\d/, /\d/],
     previousConformedValue: '',
     rawValue: '0',
     currentCaretPosition: 1
@@ -1622,7 +1627,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111)',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '00 (___)',
     rawValue: '00 (1___)',
     currentCaretPosition: 5
@@ -1638,7 +1643,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111)',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')'],
     previousConformedValue: '',
     rawValue: '00 (234)',
     currentCaretPosition: 8
@@ -1654,7 +1659,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111) 00 83 111 93 111',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
     previousConformedValue: '00 (34_) 00 83 ___ 93 ___',
     rawValue: '00 (344_) 00 83 ___ 93 ___',
     currentCaretPosition: 6
@@ -1670,7 +1675,40 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111) 00 83 111 93 111',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
+    previousConformedValue: '00 (___) 00 83 ___ 93 ___',
+    rawValue: '100 (___) 00 83 ___ 93 ___',
+    currentCaretPosition: 1
+  },
+
+  output: {
+    conformedValue: '00 (1__) 00 83 ___ 93 ___',
+    adjustedCaretPosition: 1
+  },
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
+    previousConformedValue: '',
+    rawValue: '0000',
+    currentCaretPosition: 4
+  },
+
+  output: {
+    conformedValue: '00 (000) 00 83 0__ 93 ___',
+    adjustedCaretPosition: 16
+  },
+
+  // only: true,
+  skip: true
+}, {
+  line: getLineNumber(),
+
+  input: {
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
     previousConformedValue: '00 (344) 00 83 ___ 93 ___',
     rawValue: '00 (34) 00 83 ___ 93 ___',
     currentCaretPosition: 5
@@ -1686,7 +1724,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '00 (111) 00 83 111 93 111',
+    mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
     previousConformedValue: '00 (344) 00 83 ___ 93 ___',
     rawValue: '00 (34) 00 83 ___ 93 ___',
     currentCaretPosition: 5
@@ -1706,10 +1744,10 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 //####################################################################################
 
 // export const escapedMaskChar = _.filter((t) => false, [{
-// export const escapedMaskChar = _.filter((t) => t, [{
-export const escapedMaskChar = _.filter((t) => t.only, [{
+export const escapedMaskChar = _.filter((t) => t, [{
+// export const escapedMaskChar = _.filter((t) => t.only, [{
   input: {
-    mask: '+\\1 (111) 111-1111',
+    mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '',
     rawValue: '9',
     currentCaretPosition: 1
@@ -1721,7 +1759,7 @@ export const escapedMaskChar = _.filter((t) => t.only, [{
   },
 }, {
   input: {
-    mask: '+\\1 (111) 111-1111',
+    mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     previousConformedValue: '',
     rawValue: '+1 (__) ___-____',
     currentCaretPosition: 4
@@ -1732,7 +1770,7 @@ export const escapedMaskChar = _.filter((t) => t.only, [{
     currentCaretPosition: 4
   },
 
-  only: true
+  // only: true
 }])
 
 //####################################################################################
@@ -1746,7 +1784,7 @@ export const caretTrapTests = _.filter((t) => t, [{
   line: getLineNumber(),
 
   input: {
-    mask: '$1,111.',
+    mask: ['$', /\d/, ',' ,/\d/, /\d/, /\d/, /\d/, '.'],
     previousConformedValue: '$2,000.2',
     rawValue: '$2,000.',
     currentCaretPosition: 7,

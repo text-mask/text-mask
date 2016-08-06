@@ -18,7 +18,7 @@ export default map(
   (choice) => ({...defaultValues, ...choice}),
   [{
     name: 'US phone number',
-    mask: '(111) 111-1111',
+    mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
     placeholder: '(555) 495-3947'
   }, {
     name: 'US phone number with country code',

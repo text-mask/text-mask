@@ -2,7 +2,7 @@
 
 Text Mask accepts the following values:
 
-* [`mask`](#mask) (string or function)
+* [`mask`](#mask) (array or function)
 * [`guide`](#guide) (boolean)
 * [`placeholderChar`](#placeholderchar) (string)
 * [`keepCharPositions`](#keepcharpositions) (boolean)
@@ -12,44 +12,40 @@ Text Mask accepts the following values:
 
 ## `mask`
 
-`mask` is a string or a function that defines how the user input is going to be masked.
+`mask` is an array or a function that defines how the user input is going to be masked.
 
-### `mask` string
+### `mask` array
+
+The way to define a mask in Text Mask is through an array.
+
+Each item in the array has to be either a string or a regular expression. Each string is a fixed character in the mask
+and each regular expression is a placeholder that accepts user input. 
+
+The regular expression will be used to test user input and either allow it or reject it.
+
+For example, a mask for a U.S. phone number such as `(555) 392-4932`, could be:
+
+```js
+['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+```
+
+That means the user can enter only a number between 1 and 9 in the first placeholder, and only a digit in the placeholders
+after that. 
+
+All valid regular expressions should work.
 
 #### Examples
 
 Description | Mask
 --- | ---
 US phone number | `(111) 111-1111`
-US phone number with country code | `+\1 (111) 111-1111`
+US phone number with country code | `+1 (111) 111-1111`
 Canadian postal code | `U1U 1U1`
-
-#### Masking characters
-
-You can use any of the characters below to define your mask
-
-Character | Description
---- | ---
-`1` | Any number
-`A` | Any letter
-`?` | Any number or letter
-`U` | Any letter (will be transformed to uppercase)
-`L` | Any letter (will be transformed to lowercase)
-`*` | Any character (except white space)
-
-##### Escaping a masking character
-
-To use a masking character as part of the mask, you need to escape it with `\`.
-
-&#x1F4CD; **Note**: most likely you will be specifying your mask in your JavaScript code,
-in a string. In that case you will need to double `\`.
-
-For example, US phone number with country code would look like `+\\1 (111) 111-1111`.
 
 ### `mask` function
 
 You can also pass a function as the `mask`. The function will receive the user input at every
-change. The function is expected to return a `mask` string.
+change. The function is expected to return a `mask` array as described above.
 
 This feature is useful when we want to format a user input of unknown length, such as
 formatting a number to currency or formatting a string to email address mask.

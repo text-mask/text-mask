@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import testParameters, {
   noGuideMode,
   acceptedCharInMask,
@@ -13,86 +14,38 @@ const conformToMask = (isVerify()) ?
   require(`../${packageJson.main}`).conformToMask :
   require('../src/conformToMask.js').default
 
-describe('Accepted character in mask', () => {
-  dynamicTests(
-    acceptedCharInMask,
+describe.only('conformToMask', () => {
+  describe('Accepted character in mask', () => {
+    dynamicTests(
+      _.filter(acceptedCharInMask, test => !test.skip),
 
-    (test) => ({
-      description: `for input ${JSON.stringify(test.input)}, ` +
-      `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+      (test) => ({
+        description: `for input ${JSON.stringify(test.input)}, ` +
+        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
 
-      body: () => {
-        expect(conformToMask(
-          test.input.rawValue,
-          test.input.mask,
-          {
-            guide: true,
-            previousConformedValue: test.input.previousConformedValue,
-            placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-            currentCaretPosition: test.input.currentCaretPosition
-          }
-        ).conformedValue).to.equal(test.output.conformedValue)
-      }
-    })
-  )
-})
+        body: () => {
+          expect(conformToMask(
+            test.input.rawValue,
+            test.input.mask,
+            {
+              guide: true,
+              previousConformedValue: test.input.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
+            }
+          ).conformedValue).to.equal(test.output.conformedValue)
+        }
+      })
+    )
+  })
 
-describe.only('Allow escaped masking character in mask', () => {
-  dynamicTests(
-    escapedMaskChar,
-
-    (test) => ({
-      description: `for input ${JSON.stringify(test.input)}, ` +
-      `it outputs '${test.output.conformedValue}'`,
-
-      body: () => {
-        expect(conformToMask(
-          test.input.rawValue,
-          test.input.mask,
-          {
-            guide: true,
-            previousConformedValue: test.input.previousConformedValue,
-            placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-            currentCaretPosition: test.input.currentCaretPosition
-          }
-        ).conformedValue).to.equal(test.output.conformedValue)
-      }
-    })
-  )
-})
-
-describe('Mask function', () => {
-  dynamicTests(
-    maskFunctionTests,
-
-    (test) => ({
-      description: `for input ${JSON.stringify(test.input)}, ` +
-      `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
-
-      body: () => {
-        expect(conformToMask(
-          test.input.rawValue,
-          test.input.mask,
-          {
-            guide: true,
-            previousConformedValue: test.input.previousConformedValue,
-            placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
-            currentCaretPosition: test.input.currentCaretPosition
-          }
-        ).conformedValue).to.equal(test.input.conformedValue)
-      }
-    })
-  )
-})
-
-describe('conformToMask', () => {
   describe('Guide mode tests', () => {
     dynamicTests(
       testParameters,
 
       (test) => ({
         description: `for input ${JSON.stringify(test.input)}, ` +
-        `it outputs '${test.output.conformedValue}'`,
+        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
 
         body: () => {
           expect(conformToMask(
@@ -133,6 +86,30 @@ describe('conformToMask', () => {
     )
   })
 
+  describe('Allow escaped masking character in mask', () => {
+    dynamicTests(
+      escapedMaskChar,
+
+      (test) => ({
+        description: `for input ${JSON.stringify(test.input)}, ` +
+        `it outputs '${test.output.conformedValue}'`,
+
+        body: () => {
+          expect(conformToMask(
+            test.input.rawValue,
+            test.input.mask,
+            {
+              guide: true,
+              previousConformedValue: test.input.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
+            }
+          ).conformedValue).to.equal(test.output.conformedValue)
+        }
+      })
+    )
+  })
+
   describe('keepCharPositionsTests', () => {
     dynamicTests(
       keepCharPositionsTests,
@@ -153,6 +130,30 @@ describe('conformToMask', () => {
               currentCaretPosition: test.input.currentCaretPosition
             }
           ).conformedValue).to.equal(test.output.conformedValue)
+        }
+      })
+    )
+  })
+
+  describe('Mask function', () => {
+    dynamicTests(
+      maskFunctionTests,
+
+      (test) => ({
+        description: `for input ${JSON.stringify(test.input)}, ` +
+        `it outputs '${test.output.conformedValue}' Line: ${test.line}`,
+
+        body: () => {
+          expect(conformToMask(
+            test.input.rawValue,
+            test.input.mask,
+            {
+              guide: true,
+              previousConformedValue: test.input.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.input.mask, placeholderChar),
+              currentCaretPosition: test.input.currentCaretPosition
+            }
+          ).conformedValue).to.equal(test.input.conformedValue)
         }
       })
     )

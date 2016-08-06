@@ -4,6 +4,10 @@ import isVerify from './isVerify.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import _ from 'lodash'
 
+RegExp.prototype.toJSON = function () {
+  return this.source;
+};
+
 global.getLineNumber = function() {
   const err = new Error()
   const stack = err['stack']

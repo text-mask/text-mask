@@ -1,12 +1,12 @@
 import _ from 'lodash/fp'
 
 // export default _.filter((t) => false, [{
-// export default _.filter((t) => t, [{
-export default _.filter((t) => t.only, [{
+export default _.filter((t) => t, [{
+// export default _.filter((t) => t.only, [{
   input: {
     previousConformedValue: '$100',
     rawValue: '$1000',
-    mask: '$1,111',
+    mask: ['$', /\d/, ',', /\d/, /\d/, /\d/],
     currentCaretPosition: 5,
     conformedValue: '$1,000',
   },
@@ -15,10 +15,12 @@ export default _.filter((t) => t.only, [{
     adjustedCaretPosition: 6,
   },
 }, {
+  line: getLineNumber(),
+
   input: {
     previousConformedValue: '2 $',
     rawValue: '24 $',
-    mask: '11 $',
+    mask: [/\d/, /\d/, ' ', '$'],
     currentCaretPosition: 2,
     conformedValue: '24 $',
   },
@@ -33,7 +35,7 @@ export default _.filter((t) => t.only, [{
 
   input: {
     // placeholder ___@____
-    mask: '***@****',
+    mask: [/./, /./, /./, '@', /./, /./, /./, /./],
     previousConformedValue: 'asdf@asdf',
     rawValue: 'asf@asdf',
     currentCaretPosition: 2,
@@ -49,8 +51,7 @@ export default _.filter((t) => t.only, [{
   line: getLineNumber(),
 
   input: {
-    // placeholder ___@____
-    mask: '***@ .***',
+    mask: [/./, /./, /./, '@', ' ', '.', /[^.]/, /[^.]/, /[^.]/],
     previousConformedValue: 'asd@asdf.com',
     rawValue: 'asd@.com',
     currentCaretPosition: 4,
@@ -61,7 +62,7 @@ export default _.filter((t) => t.only, [{
     adjustedCaretPosition: 4
   },
 
-  only: true,
+  // only: true,
 
   skips: ['adjustCaretPosition']
 }])
