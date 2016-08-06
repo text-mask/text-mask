@@ -61,7 +61,8 @@ const HelpPanel = React.createClass({
           <pre>{`function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}`}</pre>
         </Panel>
       </Row>
-    )}
+    )
+  }
 })
 
 export default connect((state) => ({choiceName: state.name, mask: state.mask}))(HelpPanel)

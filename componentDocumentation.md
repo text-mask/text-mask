@@ -32,15 +32,7 @@ For example, a mask for a U.S. phone number such as `(555) 392-4932`, could be:
 That means the user can enter only a number between 1 and 9 in the first placeholder, and only a digit in the placeholders
 after that. 
 
-All valid regular expressions should work.
-
-#### Examples
-
-Description | Mask
---- | ---
-US phone number | `(111) 111-1111`
-US phone number with country code | `+1 (111) 111-1111`
-Canadian postal code | `U1U 1U1`
+Any valid regular expressions should work.
 
 ### `mask` function
 
