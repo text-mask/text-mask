@@ -18,7 +18,7 @@ Text Mask accepts the following values:
 
 The way to define a mask in Text Mask is through an array.
 
-Each item in the array has to be either a string or a regular expression. Each string is a fixed character in the mask
+Each element in the array has to be either a string or a regular expression. Each string is a fixed character in the mask
 and each regular expression is a placeholder that accepts user input. 
 
 The regular expression will be used to test user input and either allow it or reject it.

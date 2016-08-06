@@ -58,11 +58,16 @@ const App = React.createClass({
               </select>
 
               <input
-                style={{display: (props.isMaskFunction) ? 'none' : null, marginTop: 12}}
+                style={{
+                  display: (props.isMaskFunction) ? 'none' : null, marginTop: 12,
+                  fontFamily: 'monospace',
+                  cursor: 'default'
+                }}
                 ref='mask'
                 type='text'
+                disabled
                 onChange={({target: {value: mask}}) => props.setMask(mask)}
-                value={props.mask}
+                value={convertMaskForDisplay(props.mask)}
                 className='form-control'
                 id='mask'
               />
@@ -121,3 +126,19 @@ export default connect(
   }),
   actionCreators
 )(App)
+
+function convertMaskForDisplay(mask) {
+  let displayMask = mask
+    .toString()
+    .split(',')
+    .map((element) => {
+      if (element[0] === '/') {
+        return element
+      } else {
+        return `'${element}'`
+      }
+    })
+    .join(', ')
+
+  return `[${displayMask}]`
+}
