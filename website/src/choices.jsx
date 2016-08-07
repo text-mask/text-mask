@@ -54,7 +54,7 @@ export default map(
     mask: emailMask,
     pipe: emailPipe,
     placeholder: 'john@smith.com',
-    placeholderChar: placeholderChars.underscore
+    placeholderChar: placeholderChars.whitespace
   }, {
     name: 'US zip code',
     mask: [/[1-9]/, /\d/, /\d/, /\d/, /\d/],

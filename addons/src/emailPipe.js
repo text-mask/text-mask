@@ -1,28 +1,29 @@
 const atSymbol = '@'
 const allAtSymbolsRegExp = /@/g
 const emptyString = ''
-const doubleDotsRegExp = /\.\./g
+const atDot = '@.'
 const dot = '.'
-const atSymbolDot = '@.'
+const dotDot = '..'
 
 export default function emailPipe(conformedValue, config) {
-  const {currentCaretPosition, rawValue, previousConformedValue} = config
-  const indexesOfPipedChars = []
+  const {currentCaretPosition, rawValue, previousConformedValue, placeholderChar} = config
 
   let value = conformedValue
 
   value = removeAllAtSymbolsButFirst(value)
 
-  const indexOfAtDot = value.indexOf('@.')
+  const indexOfAtDot = value.indexOf(atDot)
 
-  console.log('value', value)
-  console.log('indexOfAtDot', indexOfAtDot)
-  console.log('currentCaretPosition', currentCaretPosition)
+  const emptyValue = rawValue.match(new RegExp(`[^@\\s.${placeholderChar}]`)) === null
+
+  if (emptyValue) {
+    return emptyString
+  }
 
   if (
-    value.indexOf('..') !== -1 ||
+    value.indexOf(dotDot) !== -1 ||
     indexOfAtDot !== -1 && currentCaretPosition !== (indexOfAtDot + 1) ||
-    rawValue.indexOf('@') === -1 && previousConformedValue !== '' && rawValue !== ''
+    rawValue.indexOf(atSymbol) === -1 && previousConformedValue !== emptyString && rawValue.indexOf(dot) !== -1
   ) {
     return false
   }
@@ -32,16 +33,13 @@ export default function emailPipe(conformedValue, config) {
 
   if (
     (domainPart.match(/\./g) || []).length > 1 &&
-    value.substr(-1) === '.' &&
-    currentCaretPosition !== value.length
+    value.substr(-1) === dot &&
+    currentCaretPosition !== rawValue.length
   ) {
     value = value.slice(0, value.length - 1)
   }
 
-  return {
-    value,
-    indexesOfPipedChars
-  }
+  return value
 }
 
 function removeAllAtSymbolsButFirst(str) {

@@ -1,69 +1,75 @@
 const asterisk = '*'
 const dot = '.'
 const emptyString = ''
-const whiteSpaceRegExp = /\s/g
 const atSymbol = '@'
 const caretTrap = '[]'
-const allAtSymbolsRegExp = /@/g
-const allNoneSpaceChars = /[^ ]/g
 const space = ' '
-const allSpaceRegExp = / /g
+const g = 'g'
+const anyNonWhitespaceRegExp = /[^\s]/
+const anyNonDotOrWhitespaceRegExp = /[^.\s]/
+const allWhitespaceRegExp = /\s/g
 
 export default function emailMask(rawValue, config) {
-  console.clear()
+  rawValue = rawValue.replace(allWhitespaceRegExp, emptyString)
 
-  console.log('rawValue', rawValue)
-
-  const {placeholderChar} = config
+  const {placeholderChar, currentCaretPosition} = config
   const indexOfFirstAtSymbol = rawValue.indexOf(atSymbol)
   const indexOfLastDot = rawValue.lastIndexOf(dot)
+  const indexOfTopLevelDomainDot = (indexOfLastDot < indexOfFirstAtSymbol) ? -1 : indexOfLastDot
 
   let localPartToDomainConnector = getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol)
-  let domainNameToTopLevelDomainConnector = getDomainNameToTopLevelDomainConnector(rawValue, indexOfLastDot)
+  let domainNameToTopLevelDomainConnector = getDomainNameToTopLevelDomainConnector(rawValue, indexOfTopLevelDomainDot)
 
   let localPart = getLocalPart(rawValue, indexOfFirstAtSymbol, placeholderChar)
-  let domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfLastDot, placeholderChar)
-  let topLevelDomain = getTopLevelDomain(rawValue, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar)
+  let domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar)
+  let topLevelDomain = getTopLevelDomain(
+    rawValue,
+    indexOfTopLevelDomainDot,
+    indexOfFirstAtSymbol,
+    rawValue,
+    placeholderChar,
+    currentCaretPosition
+  )
 
   localPart = convertToMask(localPart)
   domainName = convertToMask(domainName)
-  topLevelDomain = convertToMask(topLevelDomain)
+  topLevelDomain = convertToMask(topLevelDomain, true)
 
-  let mask = (
-    localPart +
-    localPartToDomainConnector +
-    domainName +
-    domainNameToTopLevelDomainConnector +
-    topLevelDomain
-  )
-
-  console.log('mask', mask)
+  const mask = localPart
+    .concat(localPartToDomainConnector)
+    .concat(domainName)
+    .concat(domainNameToTopLevelDomainConnector)
+    .concat(topLevelDomain)
 
   return mask
 }
 
 function getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol) {
-  let connector
+  const connector = []
 
   if (rawValue[indexOfFirstAtSymbol + 1] === atSymbol) {
-    connector = atSymbol
+    connector.push(atSymbol)
   } else {
-    connector = caretTrap + atSymbol
+    connector.push(caretTrap, atSymbol)
   }
 
-  return connector + caretTrap
+  connector.push(caretTrap)
+
+  return connector
 }
 
 function getDomainNameToTopLevelDomainConnector(rawValue, indexOfLastDot) {
-  let connector
+  const connector = []
 
   if (rawValue[indexOfLastDot - 1] === dot) {
-    connector = dot
+    connector.push(dot)
   } else {
-    connector = caretTrap + dot
+    connector.push(caretTrap, dot)
   }
 
-  return connector + caretTrap
+  connector.push(caretTrap)
+
+  return connector
 }
 
 function getLocalPart(str, indexOfFirstAtSymbol) {
@@ -87,8 +93,7 @@ function getDomainName(str, indexOfFirstAtSymbol, indexOfLastDot, placeholderCha
     }
   }
 
-  domainName = removeMatch(domainName, allSpaceRegExp)
-  domainName = removeMatch(domainName, new RegExp(placeholderChar, 'g'))
+  domainName = domainName.replace(new RegExp(`[\\s${placeholderChar}]`, g), emptyString)
 
   if (domainName === atSymbol) {
     return asterisk
@@ -103,7 +108,7 @@ function getDomainName(str, indexOfFirstAtSymbol, indexOfLastDot, placeholderCha
   }
 }
 
-function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar) {
+function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar, currentCaretPosition) {
   let topLevelDomain = emptyString
 
   if (indexOfLastDot === -1 || indexOfFirstAtSymbol === -1 || indexOfLastDot < indexOfFirstAtSymbol) {
@@ -112,11 +117,14 @@ function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, 
     topLevelDomain = str.slice(indexOfLastDot + 1, str.length)
   }
 
-  topLevelDomain = removeMatch(topLevelDomain, allSpaceRegExp)
-  topLevelDomain = removeMatch(topLevelDomain, new RegExp(placeholderChar, 'g'))
+  topLevelDomain = topLevelDomain.replace(new RegExp(`[\\s${placeholderChar}.]`, g), emptyString)
 
   if (rawValue[indexOfLastDot - 1] === dot) {
-    return asterisk
+    if (currentCaretPosition === rawValue.length) {
+      return emptyString
+    } else {
+      return asterisk
+    }
   } else if (topLevelDomain.length < 1) {
     return emptyString
   } else {
@@ -124,15 +132,8 @@ function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, 
   }
 }
 
-
-function removeMatch(str, regExp) {
-  return str.replace(regExp, emptyString)
-}
-
-function convertToMask(str) {
-  return str.replace(allNoneSpaceChars, asterisk)
-}
-
-function removeTrailingDot(str) {
-  return (str[str.length - 1] === dot) ? str.slice(0, str.length - 1)  : str
+function convertToMask(str, noDots) {
+  return str
+    .split(emptyString)
+    .map((char) => char === space ? char : (noDots) ? anyNonDotOrWhitespaceRegExp : anyNonWhitespaceRegExp)
 }
