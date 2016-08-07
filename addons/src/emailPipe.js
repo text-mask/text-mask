@@ -5,6 +5,7 @@ const atDot = '@.'
 const dot = '.'
 const dotDot = '..'
 const emptyArray = []
+const allDotsRegExp = /\./g
 
 export default function emailPipe(conformedValue, config) {
   const {currentCaretPosition, rawValue, previousConformedValue, placeholderChar} = config
@@ -15,9 +16,9 @@ export default function emailPipe(conformedValue, config) {
 
   const indexOfAtDot = value.indexOf(atDot)
 
-  const emptyValue = rawValue.match(new RegExp(`[^@\\s.${placeholderChar}]`)) === null
+  const emptyEmail = rawValue.match(new RegExp(`[^@\\s.${placeholderChar}]`)) === null
 
-  if (emptyValue) {
+  if (emptyEmail) {
     return emptyString
   }
 
@@ -33,7 +34,7 @@ export default function emailPipe(conformedValue, config) {
   const domainPart = value.slice(indexOfAtSymbol + 1, value.length)
 
   if (
-    (domainPart.match(/\./g) || emptyArray).length > 1 &&
+    (domainPart.match(allDotsRegExp) || emptyArray).length > 1 &&
     value.substr(-1) === dot &&
     currentCaretPosition !== rawValue.length
   ) {

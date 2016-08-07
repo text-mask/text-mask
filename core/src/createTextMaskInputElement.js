@@ -18,6 +18,14 @@ export default function createTextMaskInputElement({
   onReject,
   keepCharPositions = false
 }) {
+  // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
+  // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
+  // were passed.
+  if (typeof providedMask === 'object' && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
+    pipe = providedMask.pipe
+    providedMask = providedMask.mask
+  }
+
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: emptyString}
 

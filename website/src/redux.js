@@ -27,7 +27,7 @@ const initialState = {
   placeholderChar: '\u2000',
   guide: true,
   keepCharPositions: false,
-  ...choices[0]
+  ...choices[7]
 }
 
 export const reducer = (state = initialState, action) => {
@@ -65,6 +65,6 @@ export const selectors = {
     return (state.mask.instanceOf === 'createNumberMask') ? {textAlign: 'right'} : {}
   },
   isMaskFunction(state) {
-    return typeof state.mask === 'function'
+    return typeof state.mask === 'function' || (typeof state.mask === 'object' && !(state.mask instanceof Array))
   }
 }

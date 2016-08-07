@@ -9,7 +9,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
   selector: 'input[textMask]'
 })
 export default class MaskedInputDirective {
-  private control: any
+  private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
   @Input('textMask')
@@ -28,14 +28,14 @@ export default class MaskedInputDirective {
   }
 
   ngOnInit() {
-    this.control = createTextMaskInputElement(Object.assign({inputElement: this.inputElement, }, this.textMaskConfig))
+    this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement, }, this.textMaskConfig))
 
     // This ensures that initial model value gets masked
     setTimeout(() => this.onInput())
   }
 
   onInput() {
-    this.control.update()
+    this.textMaskInputElement.update()
     this.ngControl.viewToModelUpdate(this.inputElement.value)
   }
 }

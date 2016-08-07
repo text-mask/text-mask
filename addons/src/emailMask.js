@@ -1,3 +1,5 @@
+import emailPipe from './emailPipe.js'
+
 const asterisk = '*'
 const dot = '.'
 const emptyString = ''
@@ -9,7 +11,7 @@ const anyNonWhitespaceRegExp = /[^\s]/
 const anyNonDotOrWhitespaceRegExp = /[^.\s]/
 const allWhitespaceRegExp = /\s/g
 
-export default function emailMask(rawValue, config) {
+function emailMask(rawValue, config) {
   rawValue = rawValue.replace(allWhitespaceRegExp, emptyString)
 
   const {placeholderChar, currentCaretPosition} = config
@@ -17,19 +19,12 @@ export default function emailMask(rawValue, config) {
   const indexOfLastDot = rawValue.lastIndexOf(dot)
   const indexOfTopLevelDomainDot = (indexOfLastDot < indexOfFirstAtSymbol) ? -1 : indexOfLastDot
 
-  let localPartToDomainConnector = getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol)
-  let domainNameToTopLevelDomainConnector = getDomainNameToTopLevelDomainConnector(rawValue, indexOfTopLevelDomainDot)
+  let localPartToDomainConnector = getConnector(rawValue, indexOfFirstAtSymbol + 1, atSymbol)
+  let domainNameToTopLevelDomainConnector = getConnector(rawValue, indexOfTopLevelDomainDot - 1, dot)
 
   let localPart = getLocalPart(rawValue, indexOfFirstAtSymbol, placeholderChar)
   let domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar)
-  let topLevelDomain = getTopLevelDomain(
-    rawValue,
-    indexOfTopLevelDomainDot,
-    indexOfFirstAtSymbol,
-    rawValue,
-    placeholderChar,
-    currentCaretPosition
-  )
+  let topLevelDomain = getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition)
 
   localPart = convertToMask(localPart)
   domainName = convertToMask(domainName)
@@ -44,13 +39,13 @@ export default function emailMask(rawValue, config) {
   return mask
 }
 
-function getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol) {
+function getConnector(rawValue, indexOfConnection, connectionSymbol) {
   const connector = []
 
-  if (rawValue[indexOfFirstAtSymbol + 1] === atSymbol) {
-    connector.push(atSymbol)
+  if (rawValue[indexOfConnection] === connectionSymbol) {
+    connector.push(connectionSymbol)
   } else {
-    connector.push(caretTrap, atSymbol)
+    connector.push(caretTrap, connectionSymbol)
   }
 
   connector.push(caretTrap)
@@ -58,38 +53,22 @@ function getLocalPartToDomainConnector(rawValue, indexOfFirstAtSymbol) {
   return connector
 }
 
-function getDomainNameToTopLevelDomainConnector(rawValue, indexOfLastDot) {
-  const connector = []
-
-  if (rawValue[indexOfLastDot - 1] === dot) {
-    connector.push(dot)
-  } else {
-    connector.push(caretTrap, dot)
-  }
-
-  connector.push(caretTrap)
-
-  return connector
-}
-
-function getLocalPart(str, indexOfFirstAtSymbol) {
+function getLocalPart(rawValue, indexOfFirstAtSymbol) {
   if (indexOfFirstAtSymbol === -1) {
-    return str
+    return rawValue
   } else {
-    return str.slice(0, indexOfFirstAtSymbol)
+    return rawValue.slice(0, indexOfFirstAtSymbol)
   }
 }
 
-function getDomainName(str, indexOfFirstAtSymbol, indexOfLastDot, placeholderChar) {
+function getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar) {
   let domainName = emptyString
 
-  if (indexOfFirstAtSymbol === -1) {
-    domainName = space
-  } else {
-    if (indexOfLastDot === -1) {
-      domainName = str.slice(indexOfFirstAtSymbol + 1, str.length)
+  if (indexOfFirstAtSymbol !== -1) {
+    if (indexOfTopLevelDomainDot === -1) {
+      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, rawValue.length)
     } else {
-      domainName = str.slice(indexOfFirstAtSymbol + 1, indexOfLastDot)
+      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, indexOfTopLevelDomainDot)
     }
   }
 
@@ -99,34 +78,26 @@ function getDomainName(str, indexOfFirstAtSymbol, indexOfLastDot, placeholderCha
     return asterisk
   } else if (domainName.length < 1) {
     return space
+  } else if (domainName[domainName.length - 1] === dot) {
+    return domainName.slice(0, domainName.length - 1)
   } else {
-    if (domainName[domainName.length - 1] === dot && domainName.length !== 1) {
-      return domainName.slice(0, domainName.length - 1)
-    } else {
-      return domainName
-    }
+    return domainName
   }
 }
 
-function getTopLevelDomain(str, indexOfLastDot, indexOfFirstAtSymbol, rawValue, placeholderChar, currentCaretPosition) {
+function getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition) {
   let topLevelDomain = emptyString
 
-  if (indexOfLastDot === -1 || indexOfFirstAtSymbol === -1 || indexOfLastDot < indexOfFirstAtSymbol) {
-    topLevelDomain = space
-  } else {
-    topLevelDomain = str.slice(indexOfLastDot + 1, str.length)
+  if (indexOfTopLevelDomainDot !== -1) {
+    topLevelDomain = rawValue.slice(indexOfTopLevelDomainDot + 1, rawValue.length)
   }
 
   topLevelDomain = topLevelDomain.replace(new RegExp(`[\\s${placeholderChar}.]`, g), emptyString)
 
-  if (rawValue[indexOfLastDot - 1] === dot) {
-    if (currentCaretPosition === rawValue.length) {
-      return emptyString
-    } else {
-      return asterisk
-    }
-  } else if (topLevelDomain.length < 1) {
-    return emptyString
+  if (topLevelDomain.length === 0) {
+    return (rawValue[indexOfTopLevelDomainDot - 1] === dot && currentCaretPosition !== rawValue.length) ?
+      asterisk :
+      emptyString
   } else {
     return topLevelDomain
   }
@@ -137,3 +108,5 @@ function convertToMask(str, noDots) {
     .split(emptyString)
     .map((char) => char === space ? char : (noDots) ? anyNonDotOrWhitespaceRegExp : anyNonWhitespaceRegExp)
 }
+
+export default {mask: emailMask, pipe: emailPipe}

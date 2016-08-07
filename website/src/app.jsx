@@ -85,7 +85,7 @@ const App = React.createClass({
               />
             </Row>
 
-            <Row name='Keep character positions' value='keepCharPositions' small>
+            <Row name='Keep character positions' value='keepcharpositions' small>
               <OnOffSwitch
                 name='keepCharPositions'
                 value={props.keepCharPositions}
@@ -93,7 +93,7 @@ const App = React.createClass({
               />
             </Row>
 
-            <Row name='Placeholder character' value='placeholderChar'>
+            <Row name='Placeholder character' value='placeholderchar'>
               <select
                 id='placeholderChar'
                 className='form-control'

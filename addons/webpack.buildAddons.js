@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     autoCorrectedMmddyyyyPipe: path.join(__dirname, './src/autoCorrectedMmddyyyyPipe.js'),
     createNumberMask: path.join(__dirname, './src/createNumberMask.js'),
+    emailMask: path.join(__dirname, './src/emailMask.js')
   },
 
   output: {
