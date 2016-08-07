@@ -17,7 +17,7 @@ Then, use it as follows:
   type="text/javascript"
   src="./node_modules/vanilla-text-mask/dist/vanillaTextMask.js"></script>
 <script type="text/javascript">
-  var phoneMask = '(111) 111-1111'
+  var phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   // Assuming you have an input element in your HTML with the class .myInput
   var myInput = document.querySelector('.myInput')
