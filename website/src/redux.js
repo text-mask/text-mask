@@ -27,7 +27,7 @@ const initialState = {
   placeholderChar: '\u2000',
   guide: true,
   keepCharPositions: false,
-  ...choices[7]
+  ...choices[0]
 }
 
 export const reducer = (state = initialState, action) => {
