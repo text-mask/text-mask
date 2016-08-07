@@ -3,6 +3,20 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Links, Panel, Row} from './partials.jsx'
 
+const MaskFunctionDefinition = ({maskLink}) => (
+  <div>
+    <p>
+      This is a <Links.maskFunction/>, which means it reads user input first and based on user input,
+      it returns a mask string.
+    </p>
+
+    <p>
+      The mask function used in this configuration is {maskLink}, which is
+      available as an <Links.addon/>.
+    </p>
+  </div>
+)
+
 const HelpPanel = React.createClass({
   render() {
     const {props} = this
@@ -31,15 +45,7 @@ const HelpPanel = React.createClass({
       ) || props.mask.instanceOf === 'createNumberMask' && (
         <Row>
           <Panel title='Mask function'>
-            <p>
-              This is a <Links.maskFunction/>, which means it reads user input first and based on user input,
-              it returns a mask string.
-            </p>
-
-            <p>
-              The mask function used in this configuration is <Links.createNumberMask/>, which is
-              available as an <Links.addon/>.
-            </p>
+            <MaskFunctionDefinition maskLink={<Links.createNumberMask/>} />
 
             <p style={{marginBottom: 0}}>
               <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
@@ -59,6 +65,12 @@ const HelpPanel = React.createClass({
           </p>
 
           <pre>{`function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}`}</pre>
+        </Panel>
+      </Row>
+    ) || props.choiceName === 'Email' && (
+      <Row>
+        <Panel title='Mask function'>
+          <MaskFunctionDefinition maskLink={<Links.emailMask/>}/>
         </Panel>
       </Row>
     )

@@ -65,6 +65,6 @@ export const selectors = {
     return (state.mask.instanceOf === 'createNumberMask') ? {textAlign: 'right'} : {}
   },
   isMaskFunction(state) {
-    return typeof state.mask === 'function'
+    return typeof state.mask === 'function' || (typeof state.mask === 'object' && !(state.mask instanceof Array))
   }
 }

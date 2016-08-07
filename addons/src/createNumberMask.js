@@ -2,7 +2,7 @@ const dollarSign = '$'
 const emptyString = ''
 const comma = ','
 const period = '.'
-const noneDigitsRegExp = /\D+/g
+const nonDigitsRegExp = /\D+/g
 const number = 'number'
 const digitRegExp = /\d/
 
@@ -37,12 +37,12 @@ export default function createNumberMask({
       integer = rawValue.slice(0, indexOfLastDecimal)
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
-      fraction = convertToMask(fraction.replace(noneDigitsRegExp, emptyString))
+      fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
     } else {
       integer = rawValue
     }
 
-    integer = integer.replace(noneDigitsRegExp, emptyString)
+    integer = integer.replace(nonDigitsRegExp, emptyString)
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 

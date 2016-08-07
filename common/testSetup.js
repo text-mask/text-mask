@@ -6,6 +6,8 @@ import isVerify from './isVerify.js'
 import dynamicTests from 'mocha-dynamic-tests'
 import _ from 'lodash'
 
+console.clear = () => null // eslint-disable-line
+
 RegExp.prototype.toJSON = function() {
   return this.source
 }

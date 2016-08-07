@@ -149,20 +149,24 @@ causes existing characters to move back.
 You can provide a `pipe` function that will give you the opportunity to modify the conformed value before it is
 displayed on the screen.
 
-The `pipe` receives:
+The `pipe` function receives:
 
 1. `conformedValue`
 1. `config`
 
-The `conformedValue` is the value that the user entered after it has been conformed. The `config` contains all the user
-configurations for Text Mask (the ones detailed on this page).
+The `conformedValue` is the value that the user entered after it has been conformed. `config` is an object that 
+contains all the user configurations for Text Mask (the ones detailed on this page).
 
-The `pipe` must return either an `object` or `false`.
+The `pipe` function must return one of the following: `false`, `string`, or `object`.
 
-It could return `false` to reject the new conformed value.
-If the `pipe` accepts the conformed value as-is or modifies it, it must return an object with the following keys:
+Return `false` to reject the new conformed value and keep the input field from changing.
 
-1. `value`: the new conformed value
+If the `pipe` modifies the string without adding new characters, for example, changing letter capitalization or removing
+characters, it should return the modified string. 
+
+If the `pipe` adds new characters to the string, it must return an object with the following keys:
+
+1. `value`: the new string
 1. `indexesOfPipedChars`: array of integers, which contains the indexes of all the characters that were added by the
 `pipe` to the conformed value
 

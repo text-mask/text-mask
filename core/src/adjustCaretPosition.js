@@ -1,7 +1,8 @@
 const defaultArray = []
+const emptyString = ''
 
 export default function adjustCaretPosition({
-  previousConformedValue = '',
+  previousConformedValue = emptyString,
   currentCaretPosition = 0,
   conformedValue,
   rawValue,
@@ -68,7 +69,7 @@ export default function adjustCaretPosition({
     const normalizedRawValue = rawValue.toLowerCase()
 
     // Then we take all characters that come before where the caret currently is.
-    const leftHalfChars = normalizedRawValue.substr(0, currentCaretPosition).split('')
+    const leftHalfChars = normalizedRawValue.substr(0, currentCaretPosition).split(emptyString)
 
     // Now we find all the characters in the left half that exist in the conformed input
     const intersection = leftHalfChars.filter((char) => normalizedConformedValue.indexOf(char) !== -1)

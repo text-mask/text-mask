@@ -51,6 +51,7 @@ const App = React.createClass({
             <Row name='Mask' value='mask'>
               <select
                 className='form-control'
+                value={props.name}
                 onChange={({target: {value}}) => props.populateFromChoice(value)}
                 ref='maskSelect'
               >
@@ -59,7 +60,8 @@ const App = React.createClass({
 
               <input
                 style={{
-                  display: (props.isMaskFunction) ? 'none' : null, marginTop: 12,
+                  display: (props.isMaskFunction) ? 'none' : null,
+                  marginTop: 12,
                   fontFamily: 'monospace',
                   cursor: 'default'
                 }}
@@ -83,7 +85,7 @@ const App = React.createClass({
               />
             </Row>
 
-            <Row name='Keep character positions' value='keepCharPositions' small>
+            <Row name='Keep character positions' value='keepcharpositions' small>
               <OnOffSwitch
                 name='keepCharPositions'
                 value={props.keepCharPositions}
@@ -91,10 +93,11 @@ const App = React.createClass({
               />
             </Row>
 
-            <Row name='Placeholder character' value='placeholderChar'>
+            <Row name='Placeholder character' value='placeholderchar'>
               <select
                 id='placeholderChar'
                 className='form-control'
+                value={props.placeholderChar}
                 onChange={({target: {value: placeholderChar}}) => props.setPlaceholderChar(placeholderChar)}
               >
                 <option value={'\u2000'}>\u2000 (white space)</option>
@@ -132,11 +135,7 @@ function convertMaskForDisplay(mask) {
     .toString()
     .split(',')
     .map((element) => {
-      if (element[0] === '/') {
-        return element
-      } else {
-        return `'${element}'`
-      }
+      return (element[0] === '/' && element.length > 1) ? element : `'${element}'`
     })
     .join(', ')
 

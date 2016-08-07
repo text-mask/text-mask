@@ -5,7 +5,8 @@
   "main": "index.js",
   "babel": {
     "presets": [
-      "es2015"
+      "es2015",
+      "stage-0"
     ]
   },
   "scripts": {
@@ -21,7 +22,7 @@
     "core:verify": "npm run core:test -- --verify",
     "core:publish": "sh core/publish.sh",
     "addons:build": "./node_modules/.bin/webpack -p --config addons/webpack.buildAddons.js",
-    "addons:test": "./node_modules/.bin/mocha --compilers js:babel-core/register addons/test --require ./common/testSetup.js --recursive",
+    "addons:test": "./node_modules/.bin/mocha --compilers js:babel-core/register addons/test --require ./common/domSetup.js --recursive",
     "addons:tdd": "npm run addons:test -- --watch",
     "addons:verify": "npm run addons:test -- --verify",
     "addons:publish": "sh addons/publish.sh",

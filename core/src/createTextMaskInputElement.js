@@ -3,6 +3,11 @@ import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
+const strPlaceholder = 'placeholder'
+const strFunction = 'function'
+const emptyString = ''
+const strNone = ''
+
 export default function createTextMaskInputElement({
   inputElement,
   mask: providedMask,
@@ -13,8 +18,16 @@ export default function createTextMaskInputElement({
   onReject,
   keepCharPositions = false
 }) {
+  // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
+  // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
+  // were passed.
+  if (typeof providedMask === 'object' && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
+    pipe = providedMask.pipe
+    providedMask = providedMask.mask
+  }
+
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: ''}
+  const state = {previousConformedValue: emptyString}
 
   // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
@@ -31,8 +44,8 @@ export default function createTextMaskInputElement({
   }
 
   // If the `inputElement`, doesn't have a placeholder. Text Mask will set a default placeholder on it.
-  if (inputElement.placeholder === '') {
-    inputElement.setAttribute('placeholder', placeholder)
+  if (inputElement.placeholder === emptyString) {
+    inputElement.setAttribute(strPlaceholder, placeholder)
   }
 
   return {
@@ -60,8 +73,8 @@ export default function createTextMaskInputElement({
 
       // If the `providedMask` is a function. We need to call it at every `update` to get the `mask` array.
       // Then we also need to get the `placeholder`
-      if (typeof providedMask === 'function') {
-        mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue})
+      if (typeof providedMask === strFunction) {
+        mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
@@ -95,21 +108,24 @@ export default function createTextMaskInputElement({
       const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
 
       // The following few lines are to support the `pipe` feature.
-      const piped = typeof pipe === 'function'
+      const piped = typeof pipe === strFunction
 
       let pipeResults = {}
 
       // If `pipe` is a function, we call it.
       if (piped) {
         // `pipe` receives the `conformedValue` and the configurations with which `conformToMask` was called.
-        pipeResults = pipe(conformedValue, conformToMaskConfig)
+        pipeResults = pipe(conformedValue, {rawValue: safeRawValue, ...conformToMaskConfig})
 
         // `pipeResults` should be an object. But as a convenience, we allow the pipe author to just return `false` to
-        // indicate rejection. If the `pipe` returns `false`, the block below turns it into an object that the rest
+        // indicate rejection. Or return just a string when there are no piped characters.
+        // If the `pipe` returns `false` or a string, the block below turns it into an object that the rest
         // of the code can work with.
         if (pipeResults === false) {
           // If the `pipe` rejects `conformedValue`, we use the `previousConformedValue`, and set `rejected` to `true`.
           pipeResults = {value: previousConformedValue, rejected: true}
+        } else if (isString(pipeResults)) {
+          pipeResults = {value: pipeResults}
         }
       }
 
@@ -132,7 +148,7 @@ export default function createTextMaskInputElement({
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
       const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
-      const inputElementValue = (inputValueShouldBeEmpty) ? '' : finalConformedValue
+      const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
 
       inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
@@ -140,7 +156,7 @@ export default function createTextMaskInputElement({
 
       // If we set a value to the input element that's different form `previousConformedValue`, it means user input
       // was accepted, and we call the `onAccept` callback if it's a function.
-      if (typeof onAccept === 'function' && inputElementValue !== previousConformedValue) {
+      if (typeof onAccept === strFunction && inputElementValue !== previousConformedValue) {
         onAccept()
       }
 
@@ -152,7 +168,7 @@ export default function createTextMaskInputElement({
       // To call `onReject`
       if (
         // `onReject` has to be a function
-        typeof onReject === 'function' &&
+        typeof onReject === strFunction &&
 
         // `someCharsRejected` or `pipeResults.rejected` has to be true
         (someCharsRejected || pipeResults.rejected) &&
@@ -174,7 +190,7 @@ export default function createTextMaskInputElement({
 
 function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
-    element.setSelectionRange(selectionPosition, selectionPosition, 'none')
+    element.setSelectionRange(selectionPosition, selectionPosition, strNone)
   }
 }
 
@@ -184,7 +200,7 @@ function getSafeRawValue(inputValue) {
   } else if (isNumber(inputValue)) {
     return String(inputValue)
   } else if (inputValue === undefined || inputValue === null) {
-    return ''
+    return emptyString
   } else {
     throw new Error(
       "The 'value' provided to Text Mask needs to be a string or a number. The value " +

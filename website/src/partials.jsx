@@ -112,8 +112,16 @@ export const Links = {
   createNumberMask() {
     return (
       <Link
-        url='https://github.com/msafi/text-mask/tree/master/addons#createNumberMask'
+        url='https://github.com/msafi/text-mask/tree/master/addons#createnumbermask'
         text='createNumberMask'
+      />
+    )
+  },
+  emailMask() {
+    return (
+      <Link
+        url='https://github.com/msafi/text-mask/tree/master/addons#emailmask'
+        text='emailMask'
       />
     )
   }

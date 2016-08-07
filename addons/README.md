@@ -8,9 +8,9 @@ These addons are ready-to-use pipes and masks that can be used with Text Mask.
 npm i text-mask-addons --save
 ```
 
-## Mask functions
+## Masks
 
-These functions here can be passed as a
+These can be passed as a
 [`mask`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask)
 to Text Mask.
 
@@ -29,7 +29,7 @@ to Text Mask.
 1. `requireDecimal` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
 after the integer. Defaults to `false`.
 
-### Usage
+#### Usage
 
 ```js
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js'
@@ -41,6 +41,21 @@ const numberMask = createNumberMask({
 
 // ...then pass `numberMask` to the Text Mask component
 ```
+
+### `emailMask`
+
+`emailMask` formats user input as an email address.
+
+#### Usage
+
+```js
+import emailMask from 'text-mask-addons/dist/emailMask.js'
+
+// ...then pass `emailMask` to the Text Mask component
+```
+
+*Technical side note*: even though `emailMask` is passed as a `mask`, it is actually made of both a `mask` and a `pipe` bundled 
+together for convenience. The Text Mask component knows how to unwrap and separate the `pipe` and `mask` functions to use them. 
 
 ## Pipes
 
