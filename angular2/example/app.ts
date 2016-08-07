@@ -1,7 +1,5 @@
-import 'es6-shim'
-import 'es6-promise'
+import 'core-js/es7/reflect'
 import 'zone.js/dist/zone'
-import 'reflect-metadata'
 
 import {Component} from '@angular/core'
 import {disableDeprecatedForms, provideForms} from '@angular/forms'
@@ -15,8 +13,10 @@ import MaskedInput from '../src/angular2TextMask'
 })
 class AppComponent {
   public myModel
+  public mask
 
   constructor() {
+    this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.myModel = ''
   }
 }

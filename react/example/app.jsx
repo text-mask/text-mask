@@ -10,7 +10,7 @@ export default React.createClass({
 
           <div className='col-sm-10'>
             <MaskedInput
-              mask='(111) 111-1111'
+              mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
               className='form-control'
               id='1'
               type='text'

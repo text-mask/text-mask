@@ -18,7 +18,7 @@ var MyComponent = React.createClass({
   render() {
     return (
       <div>
-        <MaskedInput mask="(111) 111-1111" />
+        <MaskedInput mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} />
       </div>
     )
   }
@@ -30,9 +30,9 @@ pass to it CSS classes, a placeholder attribute, or whatever.
 
 For example, the following works:
 
-```html
+```js
 <MaskedTextInput
-  mask="11111"
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   className="form-control"
   placeholder="Enter zip code"
   guide={false}

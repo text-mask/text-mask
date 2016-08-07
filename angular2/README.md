@@ -15,11 +15,6 @@ npm i angular2-text-mask --save
 Then, require it and use it:
 
 ```typescript
-import 'es6-shim';
-import 'es6-promise';
-import 'zone.js/dist/zone';
-import 'reflect-metadata';
-
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import {Component} from '@angular/core';
 import MaskedInput from 'angular2-text-mask'
@@ -27,12 +22,13 @@ import MaskedInput from 'angular2-text-mask'
 @Component({
   selector: 'app',
   templateUrl: `
-    <input [textMask]="{mask: '(111) 111 1111'}" [(ngModel)]="myModel" type="text"/>
+    <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
   `,
   directives: [MaskedInput]
 })
 export class AppComponent {
-  private myModel = ''
+  public myModel = ''
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 }
 
 bootstrap(AppComponent);
