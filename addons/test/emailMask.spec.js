@@ -1,6 +1,8 @@
-import packageJson from '../package.json'
-import emailMask from '../src/emailMask.js'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+
+const emailMask = (isVerify()) ?
+  require('../dist/emailMask.js').default :
+  require('../src/emailMask.js').default
 
 describe('emailMask', () => {
   let inputElement
@@ -89,7 +91,7 @@ describe('emailMask', () => {
     expectResults('a@a.com', 4)
   })
 
-  it.only('works as expected', () => {
+  it('works as expected', () => {
     input('a', 1)
     expectResults('a@ .', 1)
 
