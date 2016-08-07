@@ -4,6 +4,7 @@ const emptyString = ''
 const atDot = '@.'
 const dot = '.'
 const dotDot = '..'
+const emptyArray = []
 
 export default function emailPipe(conformedValue, config) {
   const {currentCaretPosition, rawValue, previousConformedValue, placeholderChar} = config
@@ -32,7 +33,7 @@ export default function emailPipe(conformedValue, config) {
   const domainPart = value.slice(indexOfAtSymbol + 1, value.length)
 
   if (
-    (domainPart.match(/\./g) || []).length > 1 &&
+    (domainPart.match(/\./g) || emptyArray).length > 1 &&
     value.substr(-1) === dot &&
     currentCaretPosition !== rawValue.length
   ) {

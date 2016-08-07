@@ -2,8 +2,6 @@ const emailMask = (isVerify()) ?
   require('../dist/emailMask.js').default :
   require('../src/emailMask.js').default
 
-console.clear = () => null
-
 const config = {placeholderChar: '_'}
 
 describe.only('emailMask', () => {
