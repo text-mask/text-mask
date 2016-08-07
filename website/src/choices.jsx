@@ -48,7 +48,7 @@ export default map(
     name: 'Percentage amount',
     mask: createNumberMask({suffix: '%', prefix: ''}),
     placeholder: 'Enter an amount',
-  },{
+  }, {
     name: 'Email',
     mask: emailMask,
     placeholder: 'john@smith.com',
