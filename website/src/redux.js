@@ -36,7 +36,6 @@ export const reducer = handleActions({
   [actionCreators.setOnRejectMessage]: (state, action) => ({...state, rejectionMessage: action.payload})
 }, initialState)
 
-
 export const selectors = {
   getTextMaskComponentUniqueKey(state) {
     return JSON.stringify(pick([...textMaskProps, 'name'])(state))
