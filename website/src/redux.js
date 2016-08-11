@@ -1,26 +1,18 @@
-import mapValues from 'lodash/fp/mapValues'
 import find from 'lodash/fp/find'
 import pick from 'lodash/fp/pick'
 import choices from './choices.jsx'
 import {textMaskProps} from './constants.js'
+import {createAction, handleActions} from 'redux-actions'
 
-export const actionPayloaders = {
-  setMask(mask) { return mask },
-  setGuide(guide) { return guide },
-  setKeepCharPositions(keepCharPositions) { return keepCharPositions },
-  setPlaceholderChar(placeholderChar) { return placeholderChar },
-  populateFromChoice(choice) { return choice },
-  setOnRejectMessage(message) { return message },
-  setOnAcceptMessage(message) { return message }
+export const actionCreators = {
+  setMask: createAction('setMask'),
+  setGuide: createAction('setGuide'),
+  setKeepCharPositions: createAction('setKeepCharPositions'),
+  setPlaceholderChar: createAction('setPlaceholderChar'),
+  setOnRejectMessage: createAction('setOnRejectMessage'),
+  setOnAcceptMessage: createAction('setOnAcceptMessage'),
+  populateFromChoice: createAction('populateFromChoice'),
 }
-
-const types = mapValues((actionPayloader) => actionPayloader.name)(actionPayloaders)
-
-export const actionCreators = mapValues(
-  (actionPayloader) => (...args) => ({type: actionPayloader.name, payload: actionPayloader(...args)})
-)(
-  actionPayloaders
-)
 
 const initialState = {
   mask: '',
@@ -30,32 +22,19 @@ const initialState = {
   ...choices[0]
 }
 
-export const reducer = (state = initialState, action) => {
-  const {payload} = action
+export const reducer = handleActions({
+  [actionCreators.setMask]: (state, action) => ({...state, mask: action.payload}),
+  [actionCreators.setGuide]: (state, action) => ({...state, guide: action.payload}),
+  [actionCreators.setKeepCharPositions]: (state, action) => ({...state, keepCharPositions: action.payload}),
+  [actionCreators.setPlaceholderChar]: (state, action) => ({...state, placeholderChar: action.payload}),
+  [actionCreators.populateFromChoice]: (state, action) => {
+    const choice = find({name: action.payload})(choices)
 
-  state = {...state, shouldFocusMaskedInput: false}
-
-  switch(action.type) {
-    case types.setMask:
-      return {...state, mask: payload}
-    case types.setGuide:
-      return {...state, guide: payload}
-    case types.setKeepCharPositions:
-      return {...state, keepCharPositions: payload}
-    case types.setPlaceholderChar:
-      return {...state, placeholderChar: payload}
-    case types.populateFromChoice:
-      const choice = find({name: payload})(choices)
-
-      return {...initialState, ...choice, shouldFocusMaskedInput: true}
-    case types.setOnAcceptMessage:
-      return {...state, acceptanceMessage: payload}
-    case types.setOnRejectMessage:
-      return {...state, rejectionMessage: payload}
-    default:
-      return {...state}
-  }
-}
+    return {...initialState, ...choice, shouldFocusMaskedInput: true}
+  },
+  [actionCreators.setOnAcceptMessage]: (state, action) => ({...state, acceptanceMessage: action.payload}),
+  [actionCreators.setOnRejectMessage]: (state, action) => ({...state, rejectionMessage: action.payload})
+}, initialState)
 
 export const selectors = {
   getTextMaskComponentUniqueKey(state) {
