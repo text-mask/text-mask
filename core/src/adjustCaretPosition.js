@@ -26,7 +26,7 @@ export default function adjustCaretPosition({
   // If the edit length is positive, that means the user is adding characters, not deleting.
   const isAddition = editLength > 0
 
-  // This is the first character the user entered that needs to be conformed to mask
+  // This is the first raw value the user entered that needs to be conformed to mask
   const isFirstRawValue = previousConformedValueLength === 0
 
   // A partial multi-character edit happens when the user makes a partial selection in their
@@ -79,7 +79,7 @@ export default function adjustCaretPosition({
     // value and the one we want to adjust the caret close to
     const targetChar = intersection[intersection.length - 1]
 
-    // It is possible that  will could appear multiple times in the conformed value.
+    // It is possible that `targetChar` will appear multiple times in the conformed value.
     // We need to know not to select a character that looks like our target character from the placeholder or
     // the piped characters, so we inspect the piped characters and the placeholder to see if they contain
     // characters that match our target character.
