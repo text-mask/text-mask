@@ -27,7 +27,7 @@ export default function adjustCaretPosition({
   const isAddition = editLength > 0
 
   // This is the first character the user entered that needs to be conformed to mask
-  const isFirstChar = rawValueLength === 1
+  const isFirstChar = previousConformedValueLength === 0
 
   // A partial multi-character edit happens when the user makes a partial selection in their
   // input and edits that selection. That is going from `(123) 432-4348` to `() 432-4348` by
@@ -78,6 +78,11 @@ export default function adjustCaretPosition({
     // value and the one we want to adjust the caret close to
     const targetChar = intersection[intersection.length - 1]
 
+    // It is possible that our target character will could appear multiple times in the conformed value.
+    // We need to know not to select a character that looks like our target character from the placeholder or
+    // the piped characters, so we inspect the piped characters and the placeholder to see if they contain
+    // characters that match our target character.
+
     // If the `conformedValue` got piped, we need to know which characters were piped in so that when we look for
     // our `targetChar`, we don't select a piped char by mistake
     const pipedChars = indexesOfPipedChars.map((index) => normalizedConformedValue[index])
@@ -85,12 +90,26 @@ export default function adjustCaretPosition({
     // We need to know how many times the `targetChar` occurs in the piped characters.
     const countTargetCharInPipedChars = pipedChars.filter((char) => char === targetChar).length
 
+    // If this is the first character, `previousConformedValue` will be an empty string, so we need to know if it
+    // contains characters that look like our `targetChar`, so we don't select one of those by mistake.
+    const countTargetCharInPlaceholder = (isFirstChar)
+      ? placeholder
+        .substr(0, placeholder.indexOf(placeholderChar))
+        .split(emptyString)
+        .filter((char, index) => char === targetChar && char !== rawValue[index])
+        .length
+      : 0
+
     // And we need to know how many times it occurs in the intersection
     const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
 
     // The number of times we need to see occurrences of the `targetChar` before we know it is the one we're looking
     // for is:
-    const requiredNumberOfMatches = countTargetCharInIntersection + countTargetCharInPipedChars
+    const requiredNumberOfMatches = (
+      countTargetCharInPlaceholder +
+      countTargetCharInIntersection +
+      countTargetCharInPipedChars
+    )
 
     // Now we start looking for the location of the `targetChar`.
     // We keep looping forward and store the index in every iteration. Once we have encountered
