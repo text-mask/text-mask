@@ -1302,6 +1302,30 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (2__) ___-____',
+  rawValue: '1+1 (2__) ___-____',
+  currentCaretPosition: 1,
+
+  conformedValue: '+1 (12_) ___-____',
+  adjustedCaretPosition: 5,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (2__) ___-____',
+  rawValue: '+11 (2__) ___-____',
+  currentCaretPosition: 2,
+
+  conformedValue: '+1 (12_) ___-____',
+  adjustedCaretPosition: 4,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
   // placeholder +1 (___) ___-____
   mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
   previousConformedValue: '+1 (1__) ___-____',

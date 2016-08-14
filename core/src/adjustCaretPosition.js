@@ -94,23 +94,21 @@ export default function adjustCaretPosition({
     // We need to know how many times it occurs in the intersection
     const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
 
-    // If this is the first raw value, we need to know if the placeholder contains characters that look like
+    // We need to know if the placeholder contains characters that look like
     // our `targetChar`, so we don't select one of those by mistake.
-    const countTargetCharInPlaceholder = (isFirstRawValue) ?
-      placeholder
-        .substr(0, placeholder.indexOf(placeholderChar))
-        .split(emptyString)
-        .filter((char, index) => (
-          // Check if `char` is the same as our `targetChar`, so we account for it
-          char === targetChar &&
+    const countTargetCharInPlaceholder = placeholder
+      .substr(0, placeholder.indexOf(placeholderChar))
+      .split(emptyString)
+      .filter((char, index) => (
+        // Check if `char` is the same as our `targetChar`, so we account for it
+        char === targetChar &&
 
-          // but also make sure that both the `rawValue` and placeholder don't have the same character at the same
-          // index because if they are equal, that means we are already counting those characters in
-          // `countTargetCharInIntersection`
-          rawValue[index] !== char
-        ))
-        .length :
-      0
+        // but also make sure that both the `rawValue` and placeholder don't have the same character at the same
+        // index because if they are equal, that means we are already counting those characters in
+        // `countTargetCharInIntersection`
+        rawValue[index] !== char
+      ))
+      .length
 
     // The number of times we need to see occurrences of the `targetChar` before we know it is the one we're looking
     // for is:
