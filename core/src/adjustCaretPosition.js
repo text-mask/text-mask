@@ -92,13 +92,13 @@ export default function adjustCaretPosition({
 
     // If this is the first character, `previousConformedValue` will be an empty string, so we need to know if it
     // contains characters that look like our `targetChar`, so we don't select one of those by mistake.
-    const countTargetCharInPlaceholder = (isFirstChar)
-      ? placeholder
+    const countTargetCharInPlaceholder = (isFirstChar) ?
+      placeholder
         .substr(0, placeholder.indexOf(placeholderChar))
         .split(emptyString)
         .filter((char, index) => char === targetChar && char !== rawValue[index])
-        .length
-      : 0
+        .length :
+      0
 
     // And we need to know how many times it occurs in the intersection
     const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
