@@ -27,7 +27,7 @@ export default function adjustCaretPosition({
   const isAddition = editLength > 0
 
   // This is the first character the user entered that needs to be conformed to mask
-  const isFirstChar = previousConformedValueLength === 0
+  const isFirstRawValue = previousConformedValueLength === 0
 
   // A partial multi-character edit happens when the user makes a partial selection in their
   // input and edits that selection. That is going from `(123) 432-4348` to `() 432-4348` by
@@ -35,7 +35,7 @@ export default function adjustCaretPosition({
   //
   // Such cases can also happen when the user presses the backspace while holding down the ALT
   // key.
-  const isPartialMultiCharEdit = editLength > 1 && !isAddition && !isFirstChar
+  const isPartialMultiCharEdit = editLength > 1 && !isAddition && !isFirstRawValue
 
   // This algorithm doesn't support all cases of multi-character edits, so we just return
   // the current caret position.
@@ -72,13 +72,14 @@ export default function adjustCaretPosition({
     const leftHalfChars = normalizedRawValue.substr(0, currentCaretPosition).split(emptyString)
 
     // Now we find all the characters in the left half that exist in the conformed input
+    // This step ensures that we don't look for a character that was filtered out or rejected by `conformToMask`.
     const intersection = leftHalfChars.filter((char) => normalizedConformedValue.indexOf(char) !== -1)
 
     // The last character in the intersection is the character we want to look for in the conformed
     // value and the one we want to adjust the caret close to
     const targetChar = intersection[intersection.length - 1]
 
-    // It is possible that our target character will could appear multiple times in the conformed value.
+    // It is possible that  will could appear multiple times in the conformed value.
     // We need to know not to select a character that looks like our target character from the placeholder or
     // the piped characters, so we inspect the piped characters and the placeholder to see if they contain
     // characters that match our target character.
@@ -90,18 +91,26 @@ export default function adjustCaretPosition({
     // We need to know how many times the `targetChar` occurs in the piped characters.
     const countTargetCharInPipedChars = pipedChars.filter((char) => char === targetChar).length
 
-    // If this is the first character, `previousConformedValue` will be an empty string, so we need to know if it
-    // contains characters that look like our `targetChar`, so we don't select one of those by mistake.
-    const countTargetCharInPlaceholder = (isFirstChar) ?
+    // We need to know how many times it occurs in the intersection
+    const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
+
+    // If this is the first raw value, we need to know if the placeholder contains characters that look like
+    // our `targetChar`, so we don't select one of those by mistake.
+    const countTargetCharInPlaceholder = (isFirstRawValue) ?
       placeholder
         .substr(0, placeholder.indexOf(placeholderChar))
         .split(emptyString)
-        .filter((char, index) => char === targetChar && char !== rawValue[index])
+        .filter((char, index) => (
+          // Check if `char` is the same as our `targetChar`, so we account for it
+          char === targetChar &&
+
+          // but also make sure that both the `rawValue` and placeholder don't have the same character at the same
+          // index because if they are equal, that means we are already counting those characters in
+          // `countTargetCharInIntersection`
+          rawValue[index] !== char
+        ))
         .length :
       0
-
-    // And we need to know how many times it occurs in the intersection
-    const countTargetCharInIntersection = intersection.filter((char) => char === targetChar).length
 
     // The number of times we need to see occurrences of the `targetChar` before we know it is the one we're looking
     // for is:
