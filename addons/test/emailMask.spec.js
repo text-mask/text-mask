@@ -31,7 +31,7 @@ describe('emailMask', () => {
     expectResults('a@ .', 1)
 
     input('a@@ .', 2)
-    expectResults('a@_.', 2)
+    expectResults('a@.', 2)
   })
 
   it('moves the caret to after the TLD dot when user enters a dot where the current TLD dot is', () => {
@@ -102,7 +102,7 @@ describe('emailMask', () => {
     expectResults('a@ .', 1)
 
     input('a@@ .', 2)
-    expectResults('a@_.', 2)
+    expectResults('a@.', 2)
 
     input('a@f_.', 3)
     expectResults('a@f.', 3)

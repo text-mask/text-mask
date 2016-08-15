@@ -1149,7 +1149,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   currentCaretPosition: 3,
 
   conformedValue: '0 3 0 __',
-  adjustedCaretPosition: 3
+  adjustedCaretPosition: 6
 
   // only: true
 }, {
@@ -1175,7 +1175,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   currentCaretPosition: 2,
 
   conformedValue: '0 _ 0 __',
-  adjustedCaretPosition: 2
+  adjustedCaretPosition: 0
 
   // only: true
 }, {
@@ -1187,7 +1187,7 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   currentCaretPosition: 1,
 
   conformedValue: '0 _ 0 __',
-  adjustedCaretPosition: 3
+  adjustedCaretPosition: 2
 
   // only: true
 }, {
@@ -1235,19 +1235,20 @@ export const acceptedCharInMask = _.filter((t) => t, [{
   currentCaretPosition: 1,
 
   conformedValue: '00 (1__) 00 83 ___ 93 ___',
-  adjustedCaretPosition: 1
+  adjustedCaretPosition: 5
 
   // only: true
 }, {
   line: getLineNumber(),
 
+  // placeholder 00 (___) 00 83 ___ 93 ___
   mask: ['0', '0', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', '0', '0', ' ', '8', '3', ' ', /\d/, /\d/, /\d/, ' ', '9', '3', ' ', /\d/, /\d/, /\d/],
   previousConformedValue: '',
   rawValue: '0000',
   currentCaretPosition: 4,
 
   conformedValue: '00 (00_) 00 83 ___ 93 ___',
-  adjustedCaretPosition: 16
+  adjustedCaretPosition: 6,
 
   // only: true,
 }, {
@@ -1272,6 +1273,67 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 
   conformedValue: '00 (34_) 00 83 ___ 93 ___',
   adjustedCaretPosition: 5
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '',
+  rawValue: '1',
+  currentCaretPosition: 1,
+
+  conformedValue: '+1 (1__) ___-____',
+  adjustedCaretPosition: 5,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (___) ___-____',
+  rawValue: '+1 (1___) ___-____',
+  currentCaretPosition: 5,
+
+  conformedValue: '+1 (1__) ___-____',
+  adjustedCaretPosition: 5,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (2__) ___-____',
+  rawValue: '1+1 (2__) ___-____',
+  currentCaretPosition: 1,
+
+  conformedValue: '+1 (12_) ___-____',
+  adjustedCaretPosition: 5,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (2__) ___-____',
+  rawValue: '+11 (2__) ___-____',
+  currentCaretPosition: 2,
+
+  conformedValue: '+1 (12_) ___-____',
+  adjustedCaretPosition: 4,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder +1 (___) ___-____
+  mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '+1 (1__) ___-____',
+  rawValue: '1 (1__) ___-____',
+  currentCaretPosition: 0,
+
+  conformedValue: '+1 (1__) ___-____',
+  adjustedCaretPosition: 0,
 
   // only: true
 }])

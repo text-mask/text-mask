@@ -79,7 +79,7 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
     const {char} = rawValueArr[i]
 
     if (char !== placeholderChar) {
-      const shouldOffset = i > indexOfFirstChange && previousConformedValueLength === maskLength
+      const shouldOffset = i >= indexOfFirstChange && previousConformedValueLength === maskLength
 
       if (char === placeholder[(shouldOffset) ? i - editDistance : i]) {
         rawValueArr.splice(i, 1)
