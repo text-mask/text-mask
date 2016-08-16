@@ -62,6 +62,9 @@
     "url": "https://github.com/msafi/text-mask/issues"
   },
   "homepage": "https://github.com/msafi/text-mask#readme",
+  "greenkeeper": {
+    "ignore": ["awesome-typescript-loader"]
+  },
   "devDependencies": {
     "@angular/common": "2.0.0-rc.4",
     "@angular/compiler": "2.0.0-rc.4",
@@ -73,7 +76,7 @@
     "@angular/router": "3.0.0-beta.1",
     "@angular/router-deprecated": "2.0.0-rc.2",
     "@angular/upgrade": "2.0.0-rc.4",
-    "awesome-typescript-loader": "^2.0.1",
+    "awesome-typescript-loader": "^1.0.0",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
