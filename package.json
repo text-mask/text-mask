@@ -63,7 +63,9 @@
   },
   "homepage": "https://github.com/msafi/text-mask#readme",
   "greenkeeper": {
-    "ignore": ["awesome-typescript-loader"]
+    "ignore": [
+      "awesome-typescript-loader"
+    ]
   },
   "devDependencies": {
     "@angular/common": "2.0.0-rc.4",
@@ -125,7 +127,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1",
-    "zone.js": "^0.6.6"
+    "zone.js": "^0.6.13"
   },
   "keywords": [
     "text mask",
