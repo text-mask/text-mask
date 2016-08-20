@@ -3,9 +3,8 @@ import 'zone.js/dist/zone'
 
 import {Component, NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import {disableDeprecatedForms, provideForms, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms'
-import {bootstrap} from '@angular/platform-browser-dynamic'
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
 @Component({
@@ -31,11 +30,5 @@ class AppComponent {
   bootstrap: [AppComponent]
 })
 export class AppModule {}
-
-// noinspection TypeScriptValidateTypes
-// bootstrap(AppComponent, [
-//   provideForms(),
-//   disableDeprecatedForms()
-// ])
 
 platformBrowserDynamic().bootstrapModule(AppModule);

@@ -31,7 +31,9 @@ export default class MaskedInputDirective {
   }
 
   ngOnInit() {
-    this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement, }, this.textMaskConfig))
+    this.textMaskInputElement = createTextMaskInputElement(
+      Object.assign({inputElement: this.inputElement, }, this.textMaskConfig)
+    )
 
     // This ensures that initial model value gets masked
     setTimeout(() => this.onInput())
