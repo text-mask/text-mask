@@ -1,16 +1,31 @@
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="1" class="col-sm-2 control-label">Masked input</label>
+<h1>TextMask Test</h1>
+<label for="1" class="col-sm-2 control-label">Template-driven Masked input</label>
 
-    <div class="col-sm-10">
-      <input
-        id="1"
-        name="phone"
-        [(ngModel)]="myModel"
-        [textMask]="{mask: mask}"
-        type="text"
-        class="form-control"
-      />
-    </div>
-  </div>
-</form>
+<div class="col-sm-10">
+  <input
+    id="1"
+    name="phone"
+    [(ngModel)]="myModel"
+    [textMask]="{mask: mask}"
+    type="text"
+    class="form-control"
+  />
+</div>
+
+Model Value: {{myModel}}
+
+<br>
+<br>
+
+<label for="2" class="col-sm-2 control-label">Model-driven Masked input</label>
+<div class="col-sm-10">
+  <input
+    id="2"
+    name="phone"
+    [formControl]='maskedInput'
+    [textMask]="{mask: mask}"
+    type="text"
+    class="form-control"
+  />
+</div>
+Form Model Value: {{maskedInput.value}}

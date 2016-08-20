@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Input} from '@angular/core'
-import {NgControl} from '@angular/forms'
+import {NgControl, FormControl} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
@@ -23,6 +23,9 @@ export default class MaskedInputDirective {
     onAccept: undefined
   }
 
+  @Input('formControl')
+  formControl: FormControl
+
   constructor(inputElement: ElementRef, private ngControl: NgControl) {
     this.inputElement = inputElement.nativeElement
   }
@@ -37,6 +40,15 @@ export default class MaskedInputDirective {
   onInput() {
     this.textMaskInputElement.update()
     this.ngControl.viewToModelUpdate(this.inputElement.value)
+
+    if (this.formControl) {
+      this.formControl.setValue(this.inputElement.value, {
+        onlySelf: false,
+        emitEvent: false,
+        emitModelToViewChange: false,
+        emitViewToModelChange: true
+      })
+    }
   }
 }
 
