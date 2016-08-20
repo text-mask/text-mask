@@ -8,7 +8,7 @@ There are convenient wrappers for React and Angular 2. I need help creating wrap
 
 ## Live demo
 
-See it in action, [check out the demo page](https://msafi.github.io/text-mask/).
+See it in action, [check out the demo page](https://text-mask.github.io/text-mask/).
 
 ## Installation and usage
 
