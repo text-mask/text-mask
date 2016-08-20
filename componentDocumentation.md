@@ -94,8 +94,13 @@ characters when the user reaches them as they're typing.
 The placeholder character represents the fillable spot in the mask. The default placeholder
 character is underscore, `_`.
 
-For example, with mask `(111) 111-1111`, the user would fill out
-`(___) ___-____`.
+For example, with mask...
+
+```js
+['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+```
+ 
+ ...the user would fill out `(___) ___-____`.
 
 You can pass a different placeholder character. For example, the unicode character `U+2000` would
 make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character
