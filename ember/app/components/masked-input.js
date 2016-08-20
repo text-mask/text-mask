@@ -1,0 +1,1 @@
+export { default } from 'ember-text-mask/components/masked-input';
