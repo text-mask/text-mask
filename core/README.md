@@ -71,7 +71,7 @@ This function takes three arguments:
 
 * rawValue (string): the string value that you want to conform to the mask
 * mask (string): the mask to which you want the string to conform. You can find
-[mask documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+[mask documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 * config (object): config object. See below for details
 
 This function returns the conformed value as a string.
@@ -89,7 +89,7 @@ mask hard characters. For example, with mask `(111) 111-1111`, input `123` with 
 If you're calling `conformToMask` for the first time, you don't have to pass this value.
 
 * `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
-documentation page](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#placeholderChar).
+documentation page](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#placeholderChar).
 
 ```js
 const results = conformToMask('5554833902', '(111) 111-1111')

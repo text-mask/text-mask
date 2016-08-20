@@ -54,14 +54,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/msafi/text-mask.git"
+    "url": "git+https://github.com/text-mask/text-mask.git"
   },
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/msafi/text-mask/issues"
+    "url": "https://github.com/text-mask/text-mask/issues"
   },
-  "homepage": "https://github.com/msafi/text-mask#readme",
+  "homepage": "https://github.com/text-mask/text-mask#readme",
   "greenkeeper": {
     "ignore": [
       "awesome-typescript-loader",
