@@ -1,6 +1,6 @@
 # [![Text Mask](assets/logo.png)](https://github.com/msafi/text-mask/#readme)
 
-[![Build Status](https://travis-ci.org/msafi/text-mask.svg?branch=master)](https://travis-ci.org/msafi/text-mask)
+[![Build Status](https://travis-ci.org/text-mask/text-mask.svg?branch=master)](https://travis-ci.org/text-mask/text-mask)
 
 Text Mask is an input mask library. It can create input masks for phone, date, currency, zip code, percentage, email, and literally anything!
 
