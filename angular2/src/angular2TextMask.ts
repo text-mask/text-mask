@@ -43,13 +43,9 @@ export default class MaskedInputDirective {
     this.textMaskInputElement.update()
     this.ngControl.viewToModelUpdate(this.inputElement.value)
 
+    // If Text Mask is used with model-driven form, update `formControl`
     if (this.formControl) {
-      this.formControl.setValue(this.inputElement.value, {
-        onlySelf: false,
-        emitEvent: false,
-        emitModelToViewChange: false,
-        emitViewToModelChange: true
-      })
+      this.formControl.setValue(this.inputElement.value, {onlySelf: true, emitModelToViewChange: false})
     }
   }
 }
