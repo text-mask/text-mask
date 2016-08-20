@@ -43,8 +43,8 @@ This feature is useful when we want to format a user input of unknown length, su
 formatting a number to currency or formatting a string to email address mask.
 
 For an example of a mask function, see the source code of
-[`createNumberMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createNumberMask.js),
-which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
+[`createNumberMask`](https://github.com/text-mask/text-mask/blob/master/addons/src/createNumberMask.js),
+which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 <p align="center">
 <img src="assets/dynamicMask.gif"/>
@@ -176,8 +176,8 @@ If the `pipe` adds new characters to the string, it must return an object with t
 `pipe` to the conformed value
 
 For an example of a pipe, see the code for
-[`autoCorrectedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
-which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
+[`autoCorrectedMmddyyyyPipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
+which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 ## `onReject`
 

@@ -1,4 +1,4 @@
-# [![Text Mask](assets/logo.png)](https://github.com/msafi/text-mask/#readme)
+# [![Text Mask](assets/logo.png)](https://github.com/text-mask/text-mask/#readme)
 
 [![Build Status](https://travis-ci.org/text-mask/text-mask.svg?branch=master)](https://travis-ci.org/text-mask/text-mask)
 
@@ -23,7 +23,7 @@ IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and
 ## Flexible
 
 Text Mask is very configurable and allows you to create any type of input mask with very minimal APIs.
-[See the documentation for details](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+[See the documentation for details](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Robust
 
@@ -34,7 +34,7 @@ It works on mobile, has no 3rd party dependencies, and has a tiny footprint (les
 
 ## For any questions, suggestions, or feature requests
 
-[Please file an issue](https://github.com/msafi/text-mask/issues)!
+[Please file an issue](https://github.com/text-mask/text-mask/issues)!
 
 ## License
 
