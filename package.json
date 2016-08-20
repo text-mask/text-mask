@@ -64,7 +64,8 @@
   "homepage": "https://github.com/msafi/text-mask#readme",
   "greenkeeper": {
     "ignore": [
-      "awesome-typescript-loader"
+      "awesome-typescript-loader",
+      "ts-node"
     ]
   },
   "devDependencies": {
@@ -120,7 +121,7 @@
     "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.0",
     "testdom": "^2.0.0",
-    "ts-node": "^1.1.0",
+    "ts-node": "~1.2.0",
     "tslint": "^3.13.0",
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
