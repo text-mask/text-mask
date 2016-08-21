@@ -7,18 +7,13 @@ import { createTextMaskInputElement } from 'ember-text-mask';
 
   Add the following markup to your template to render a masked input component.
 
+  ```hbs
+  {{masked-input mask=mask}}
   ```
-  {{masked-input}}
-  ```
-
-  By default, with no `mask` specified, the rendered `input` element will not allow any input.
-
-  ### Mask
 
   In the template's controller, specify a `mask`.
 
-
-  ```
+  ```js
   import Ember from 'ember';
 
   export default Ember.Controller.extend({
@@ -26,21 +21,6 @@ import { createTextMaskInputElement } from 'ember-text-mask';
     mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   });
-  ```
-
-  Then pass the `mask` to the component in the template.
-
-  template.hbs
-  ```
-  {{masked-input mask=mask}}
-  ```
-
-  ### Value
-
-  You can access the `value` of the component as you would with any `input` element.
-
-  ```
-  {{masked-input mask=mask value=theValue}}
   ```
 */
 export default Ember.TextField.extend({
