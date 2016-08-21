@@ -1,8 +1,12 @@
-# Ember-text-mask
+# Ember Input Mask
 
-## Installation
+## Getting started
 
-* `ember install ember-text-mask`
+First, install it.
+
+```bash
+ember install ember-text-mask
+```
 
 
 ## MaskedInputComponent
@@ -78,3 +82,11 @@ export default MaskedInput.extend({
 * `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
+
+## Contributing
+
+We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
+
+## License
+
+Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
