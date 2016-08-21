@@ -16,9 +16,6 @@ Add the following markup to your template to render a masked input component.
 {{masked-input mask=mask}}
 ```
 
-
-### Mask
-
 In the template's controller, specify a `mask`.
 
 ```js
@@ -33,8 +30,6 @@ export default Ember.Controller.extend({
 
 ## Documentation
 
-As you can see in the code above, you are passing an array to the `{{masked-input}}` component.
-
 For more information about the attributes that the `masked-input` component accepts, see the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Example
@@ -48,7 +43,7 @@ To see an example of the code running, follow these steps:
 * `ember server`
 * Open [http://localhost:4200](http://localhost:4200)
 
-You should have a working demo with examples. 
+You should have a working demo.
 
 ## License
 
