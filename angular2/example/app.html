@@ -1,10 +1,16 @@
-<div class="col-sm-10">
-  <input
-    id="1"
-    name="phone"
-    [(ngModel)]="myModel"
-    [textMask]="{mask: mask}"
-    type="text"
-    class="form-control"
-  />
-</div>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="1" class="col-sm-2 control-label">Masked input</label>
+
+    <div class="col-sm-10">
+      <input
+        id="1"
+        name="phone"
+        [(ngModel)]="myModel"
+        [textMask]="{mask: mask}"
+        type="text"
+        class="form-control"
+      />
+    </div>
+  </div>
+</form>
