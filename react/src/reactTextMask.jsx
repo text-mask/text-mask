@@ -35,9 +35,9 @@ export const MaskedInput = React.createClass({
 
   render() {
     const props = {...this.props}
-    const InputElement = props.inputElement || "input";
+    const InputElement = props.inputElement || 'input'
 
-    delete props.inputElement;
+    delete props.inputElement
     delete props.mask
     delete props.guide
     delete props.pipe
