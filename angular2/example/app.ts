@@ -3,7 +3,7 @@ import 'zone.js/dist/zone'
 
 import {Component, NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {FormControl, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms'
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
@@ -22,6 +22,10 @@ class AppComponent {
   }
 
   maskedInput = new FormControl()
+
+  maskedInputFormGroup = new FormGroup({
+    groupControl: new FormControl()
+  })
 }
 
 @NgModule({
