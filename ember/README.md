@@ -31,6 +31,25 @@ export default Ember.Controller.extend({
 });
 ```
 
+## Documentation
+
+As you can see in the code above, you are passing an array to the `{{masked-input}}` component.
+
+For more information about the attributes that the `masked-input` component accepts, see the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
+
+## Example
+
+To see an example of the code running, follow these steps:
+
+* Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
+* `cd text-mask/ember`
+* `npm install`
+* `bower install`
+* `ember server`
+* Open [http://localhost:4200](http://localhost:4200)
+
+You should have a working demo with examples. 
+
 ## License
 
 Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
