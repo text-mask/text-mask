@@ -5,38 +5,6 @@
 * `ember install ember-text-mask`
 
 
-## TextMask library
-
-You can import the `TextMask` core library into your Ember project.
-
-```
-import TextMask from 'ember-text-mask';
-
-// ... do something with the `TextMask` core library
-```
-
-If you wanted to use the `createTextMaskInputElement()` method in a component...
-
-```
-import Ember from 'ember';
-import { createTextMaskInputElement } from 'ember-text-mask';
-
-export default Ember.Component.extend({
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    createTextMaskInputElement(this.getProperties('inputElement', 'mask'));
-
-  }
-});
-
-```
-
-Check the `TextMask` documentation for more information on how to use the library.
-[https://github.com/text-mask/text-mask/blob/master/core/README.md](https://github.com/text-mask/text-mask/blob/master/core/README.md)
-
-
 ## MaskedInputComponent
 
 Add the following markup to your template to render a masked input component.
