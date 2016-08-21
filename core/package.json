@@ -1,18 +1,18 @@
 {
   "name": "text-mask-core",
   "version": "0.15.2",
-  "description": "Core of https://github.com/msafi/text-mask",
+  "description": "Core of https://github.com/text-mask/text-mask",
   "main": "dist/textMaskCore.js",
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/msafi/text-mask/issues"
+    "url": "https://github.com/text-mask/text-mask/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/msafi/text-mask.git"
+    "url": "https://github.com/text-mask/text-mask.git"
   },
-  "homepage": "https://github.com/msafi/text-mask/core/#readme",
+  "homepage": "https://github.com/text-mask/text-mask/core/#readme",
   "keywords": [
     "text mask",
     "input mask",
