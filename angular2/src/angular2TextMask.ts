@@ -26,7 +26,7 @@ export default class MaskedInputDirective {
     onAccept: undefined
   }
 
-  formControl = new FormControl()
+  formControl: FormControl = new FormControl()
 
   constructor(inputElement: ElementRef) {
       this.inputElement = inputElement.nativeElement
