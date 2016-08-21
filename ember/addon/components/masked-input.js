@@ -45,6 +45,8 @@ import { createTextMaskInputElement } from 'ember-text-mask';
 */
 export default Ember.TextField.extend({
 
+  mask: [],
+
   inputElement: Ember.computed.readOnly('element'),
 
   didInsertElement() {

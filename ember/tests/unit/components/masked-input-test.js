@@ -1,8 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('masked-input', 'Unit | Component | masked input', {
-  // Specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar'],
   unit: true
 });
 
@@ -16,6 +14,25 @@ test('it renders', function(assert) {
 
   this.render();
   assert.equal(component._state, 'inDOM');
+});
+
+test('mask should not be undefined', function(assert) {
+  assert.expect(1);
+
+  var component = this.subject();
+  this.render();
+
+  component.get('textMaskInputElement').update('a');
+  assert.ok(component);
+});
+
+test('mask defaults to an empty array', function(assert) {
+  assert.expect(1);
+
+  var component = this.subject();
+  this.render();
+
+  assert.deepEqual(component.get('mask'), []);
 });
 
 test('input() method calls textMaskInputElement.update()', function(assert) {
