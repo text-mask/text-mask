@@ -21,7 +21,7 @@ import MaskedInput from 'angular2-text-mask'
 
 @Component({
   selector: 'app',
-  templateUrl: `
+  template: `
     <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
   `,
   directives: [MaskedInput]
