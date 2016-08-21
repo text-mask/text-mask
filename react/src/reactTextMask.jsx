@@ -18,7 +18,7 @@ export const MaskedInput = React.createClass({
     onAccept: PropTypes.func,
     onReject: PropTypes.func,
     keepCharPositions: PropTypes.bool,
-    inputElement: PropTypes.element,
+    inputElement: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   },
 
   componentDidMount() {
