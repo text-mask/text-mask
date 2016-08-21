@@ -31,9 +31,6 @@ export default Ember.Controller.extend({
 });
 ```
 
-Then pass the `mask` to the component in the template.
-
-
 ## License
 
 Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
