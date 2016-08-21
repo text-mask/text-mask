@@ -1,7 +1,7 @@
 {
   "name": "ember-text-mask",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Ember input component that accepts mask pattern",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,12 +11,19 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "bugs": {
+    "url": "https://github.com/text-mask/text-mask/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/text-mask/text-mask.git"
+  },
+  "homepage": "https://github.com/text-mask/text-mask/tree/master/ember/#readme",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
-  "license": "MIT",
+  "author": "Loz Jackson",
+  "license": "CC0-1.0",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
     "ember-ajax": "0.7.1",
@@ -41,7 +48,15 @@
     "loader.js": "^4.0.0"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "ember-component",
+    "text mask",
+    "input mask",
+    "string mask",
+    "input formatting",
+    "text formatting",
+    "string formatting"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
