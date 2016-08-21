@@ -26,18 +26,18 @@ export default class MaskedInputDirective {
     onAccept: undefined
   }
 
-  formControl = new FormControl();
+  formControl = new FormControl()
 
   constructor(inputElement: ElementRef) {
       this.inputElement = inputElement.nativeElement
   }
 
   writeValue(value: any) {
-    this.formControl.setValue(value);
+    this.formControl.setValue(value)
   }
 
   registerOnChange(fn: (value: any) => void) {
-    this.formControl.valueChanges.subscribe(fn);
+    this.formControl.valueChanges.subscribe(fn)
   }
 
   registerOnTouched() {}
