@@ -29,7 +29,7 @@ export default class MaskedInputDirective {
   formControl: FormControl = new FormControl()
 
   constructor(inputElement: ElementRef) {
-      this.inputElement = inputElement.nativeElement
+    this.inputElement = inputElement.nativeElement
   }
 
   writeValue(value: any) {
@@ -44,7 +44,7 @@ export default class MaskedInputDirective {
 
   ngOnInit() {
     this.textMaskInputElement = createTextMaskInputElement(
-      Object.assign({inputElement: this.inputElement, }, this.textMaskConfig)
+      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
 
     // This ensures that initial model value gets masked

@@ -3,7 +3,7 @@ import 'zone.js/dist/zone'
 
 import {Component, NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import {FormControl, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms'
+import {FormsModule} from '@angular/forms'
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
@@ -20,19 +20,13 @@ class AppComponent {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.myModel = ''
   }
-
-  maskedInput = new FormControl()
-
-  maskedInputFormGroup = new FormGroup({
-    groupControl: new FormControl()
-  })
 }
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule],
   declarations: [AppComponent, MaskedInput],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule)

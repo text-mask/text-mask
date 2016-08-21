@@ -76,9 +76,9 @@ causing regressions.
 
 #### What you see in `http://localhost:3000`
 
-`http://localhost:3000` shows one thing: a masked input with a phone mask. Nothing else.
+`http://localhost:3000` shows a masked input with a phone mask.
 
-If you wanna change any Text Mask configurations, you would do that from the code itself.
+You can tweak the code in the `example` folder and reload the page to see the changes.
 
 #### More details about folder structure
 
