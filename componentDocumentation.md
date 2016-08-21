@@ -43,8 +43,8 @@ This feature is useful when we want to format a user input of unknown length, su
 formatting a number to currency or formatting a string to email address mask.
 
 For an example of a mask function, see the source code of
-[`createNumberMask`](https://github.com/msafi/text-mask/blob/master/addons/src/createNumberMask.js),
-which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
+[`createNumberMask`](https://github.com/text-mask/text-mask/blob/master/addons/src/createNumberMask.js),
+which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 <p align="center">
 <img src="assets/dynamicMask.gif"/>
@@ -94,8 +94,13 @@ characters when the user reaches them as they're typing.
 The placeholder character represents the fillable spot in the mask. The default placeholder
 character is underscore, `_`.
 
-For example, with mask `(111) 111-1111`, the user would fill out
-`(___) ___-____`.
+For example, with mask...
+
+```js
+['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+```
+ 
+ ...the user would fill out `(___) ___-____`.
 
 You can pass a different placeholder character. For example, the unicode character `U+2000` would
 make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character
@@ -171,8 +176,8 @@ If the `pipe` adds new characters to the string, it must return an object with t
 `pipe` to the conformed value
 
 For an example of a pipe, see the code for
-[`autoCorrectedMmddyyyyPipe`](https://github.com/msafi/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
-which is a [Text Mask addon](https://github.com/msafi/text-mask/tree/master/addons/#readme).
+[`autoCorrectedMmddyyyyPipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
+which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 ## `onReject`
 

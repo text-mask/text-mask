@@ -6,7 +6,7 @@ import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 const strPlaceholder = 'placeholder'
 const strFunction = 'function'
 const emptyString = ''
-const strNone = ''
+const strNone = 'none'
 
 export default function createTextMaskInputElement({
   inputElement,

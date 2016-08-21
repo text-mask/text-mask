@@ -11,7 +11,7 @@ npm i text-mask-addons --save
 ## Masks
 
 These can be passed as a
-[`mask`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#mask)
+[`mask`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#mask)
 to Text Mask.
 
 ### `createNumberMask`
@@ -60,7 +60,7 @@ together for convenience. The Text Mask component knows how to unwrap and separa
 ## Pipes
 
 These functions here can be passed as a
-[`pipe`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#pipe)
+[`pipe`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
 ### `autoCorrectedMmddyyyyPipe`
@@ -77,7 +77,7 @@ It also blocks the user from entering invalid days or months such as `33/44`.
 
 For `autoCorrectedMmddyyyyPipe` to work properly, the Text Mask component needs to be
 configured with
-[`keepCharPositions`](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
+[`keepCharPositions`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
 set to `true`.
 
 #### Usage
