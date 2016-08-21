@@ -40,6 +40,22 @@ For example, the following works:
 />
 ```
 
+You can additionally use your own custom input component by passing in the prop `inputElement`.
+If you're using `react-bootstrap` you can pass in `FormControl`
+
+For example:
+
+```js
+<MaskedTextInput
+  inputElement={FormControl}
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+  placeholder="Enter a phone number"
+  guide={false}
+  id="my-input-id"
+/>
+```
+
+
 ## Documentation
 
 For more information about the `props` that you can pass to the component, see
