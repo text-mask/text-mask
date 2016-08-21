@@ -1,12 +1,15 @@
 import {Directive, ElementRef, Input} from '@angular/core'
-import {NgControl, FormControl, FormControlName} from '@angular/forms'
+import {FormControl, NG_VALUE_ACCESSOR} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
   host: {
     '(input)': 'onInput()'
   },
-  selector: 'input[textMask]'
+  selector: 'input[textMask]',
+  providers: [
+    {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
+  ]
 })
 export default class MaskedInputDirective {
   private textMaskInputElement: any
@@ -23,15 +26,21 @@ export default class MaskedInputDirective {
     onAccept: undefined
   }
 
-  @Input('formControl')
-  formControl: FormControl
+  formControl = new FormControl();
 
-  @Input('formControlName')
-  formControlName: FormControlName
-
-  constructor(inputElement: ElementRef, private ngControl: NgControl) {
-    this.inputElement = inputElement.nativeElement
+  constructor(inputElement: ElementRef) {
+      this.inputElement = inputElement.nativeElement
   }
+
+  writeValue(value: any) {
+    this.formControl.setValue(value);
+  }
+
+  registerOnChange(fn: (value: any) => void) {
+    this.formControl.valueChanges.subscribe(fn);
+  }
+
+  registerOnTouched() {}
 
   ngOnInit() {
     this.textMaskInputElement = createTextMaskInputElement(
@@ -44,16 +53,7 @@ export default class MaskedInputDirective {
 
   onInput() {
     this.textMaskInputElement.update()
-
-    this.ngControl.viewToModelUpdate(this.inputElement.value)
-
-    // If Text Mask is used with model-driven form, update `formControl`
-    if (this.formControl) {
-      this.formControl.setValue(this.inputElement.value, {
-        onlySelf: false,
-        emitModelToViewChange: false
-      })
-    }
+    this.writeValue(this.inputElement.value)
   }
 }
 
