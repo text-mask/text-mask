@@ -1,19 +1,19 @@
 {
   "name": "angular2-text-mask",
-  "version": "0.18.0-2",
+  "version": "0.18.1",
   "description": "Angular 2 directive for input text masking",
   "main": "dist/angular2TextMask.js",
   "typings": "./dist/angular2TextMask.d.ts",
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/msafi/text-mask/issues"
+    "url": "https://github.com/text-mask/text-mask/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/msafi/text-mask.git"
+    "url": "https://github.com/text-mask/text-mask.git"
   },
-  "homepage": "https://github.com/msafi/text-mask/tree/master/angular2/#readme",
+  "homepage": "https://github.com/text-mask/text-mask/tree/master/angular2/#readme",
   "keywords": [
     "angular2",
     "ng2",

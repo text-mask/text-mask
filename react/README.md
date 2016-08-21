@@ -43,23 +43,23 @@ For example, the following works:
 ## Documentation
 
 For more information about the `props` that you can pass to the component, see
-the [documentation here](https://github.com/msafi/text-mask/blob/master/componentDocumentation.md#readme).
+the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Example
 
 To see an example of the code running, follow these steps:
 
-1. Clone the repo, `git clone git@github.com:msafi/text-mask.git`
+1. Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
 1. `cd text-mask`
 1. `npm install`
 1. `npm run react:dev`
 1. Open [http://localhost:3000](http://localhost:3000)
 
-The code of the example is in [`react/example`](https://github.com/msafi/text-mask/tree/master/react/example).
+The code of the example is in [`react/example`](https://github.com/text-mask/text-mask/tree/master/react/example).
 
 ## Contributing
 
-We would love some contributions! Check out [this document](https://github.com/msafi/text-mask/blob/master/howToContribute.md#readme) to get started.
+We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
 
 ## License
 
