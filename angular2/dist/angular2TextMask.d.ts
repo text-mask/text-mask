@@ -1,7 +1,6 @@
 import { ElementRef } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 export default class MaskedInputDirective {
-    private ngControl;
     private textMaskInputElement;
     private inputElement;
     textMaskConfig: {
@@ -13,7 +12,11 @@ export default class MaskedInputDirective {
         onReject: any;
         onAccept: any;
     };
-    constructor(inputElement: ElementRef, ngControl: NgControl);
+    formControl: FormControl;
+    constructor(inputElement: ElementRef);
+    writeValue(value: any): void;
+    registerOnChange(fn: (value: any) => void): void;
+    registerOnTouched(): void;
     ngOnInit(): void;
     onInput(): void;
 }
