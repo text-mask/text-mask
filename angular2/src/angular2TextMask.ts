@@ -1,12 +1,15 @@
 import {Directive, ElementRef, Input} from '@angular/core'
-import {NgControl} from '@angular/forms'
+import {FormControl, NG_VALUE_ACCESSOR} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
   host: {
     '(input)': 'onInput()'
   },
-  selector: 'input[textMask]'
+  selector: 'input[textMask]',
+  providers: [
+    {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
+  ]
 })
 export default class MaskedInputDirective {
   private textMaskInputElement: any
@@ -23,12 +26,26 @@ export default class MaskedInputDirective {
     onAccept: undefined
   }
 
-  constructor(inputElement: ElementRef, private ngControl: NgControl) {
+  formControl: FormControl = new FormControl()
+
+  constructor(inputElement: ElementRef) {
     this.inputElement = inputElement.nativeElement
   }
 
+  writeValue(value: any) {
+    this.formControl.setValue(value)
+  }
+
+  registerOnChange(fn: (value: any) => void) {
+    this.formControl.valueChanges.subscribe(fn)
+  }
+
+  registerOnTouched() {}
+
   ngOnInit() {
-    this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement, }, this.textMaskConfig))
+    this.textMaskInputElement = createTextMaskInputElement(
+      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+    )
 
     // This ensures that initial model value gets masked
     setTimeout(() => this.onInput())
@@ -36,7 +53,7 @@ export default class MaskedInputDirective {
 
   onInput() {
     this.textMaskInputElement.update()
-    this.ngControl.viewToModelUpdate(this.inputElement.value)
+    this.writeValue(this.inputElement.value)
   }
 }
 
