@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Input} from '@angular/core'
-import {FormControl, NG_VALUE_ACCESSOR} from '@angular/forms'
+import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
@@ -11,7 +11,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
   ]
 })
-export default class MaskedInputDirective {
+export default class MaskedInputDirective implements ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -33,6 +33,7 @@ export default class MaskedInputDirective {
   }
 
   writeValue(value: any) {
+    this.textMaskInputElement.update(value)
     this.formControl.setValue(value)
   }
 
