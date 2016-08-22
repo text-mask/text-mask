@@ -29,7 +29,7 @@ export default class MaskedInputDirective implements ControlValueAccessor{
   formControl: FormControl = new FormControl()
 
   constructor(inputElement: ElementRef) {
-      this.inputElement = inputElement.nativeElement
+    this.inputElement = inputElement.nativeElement
   }
 
   writeValue(value: any) {
