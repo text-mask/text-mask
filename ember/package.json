@@ -45,7 +45,8 @@
     "ember-load-initializers": "^0.5.0",
     "ember-resolver": "^2.0.3",
     "ember-try": "^0.1.2",
-    "loader.js": "^4.0.0"
+    "loader.js": "^4.0.0",
+    "phantomjs-prebuilt": "^2.1.12"
   },
   "keywords": [
     "ember-addon",
