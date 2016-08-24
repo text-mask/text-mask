@@ -45,7 +45,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
-    "phantomjs-prebuilt": "^2.1.12"
+    "phantomjs-prebuilt": "^2.1.12",
     "loader.js": "^4.0.1"
   },
   "keywords": [
@@ -60,7 +60,7 @@
     "string formatting"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.1.5",
+    "ember-cli-babel": "^5.1.6",
     "text-mask-core": "^0.15.2"
   },
   "ember-addon": {
