@@ -34,7 +34,7 @@ For example, the following works:
 <MaskedTextInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   className="form-control"
-  placeholder="Enter zip code"
+  placeholder="Enter a phone number"
   guide={false}
   id="my-input-id"
 />

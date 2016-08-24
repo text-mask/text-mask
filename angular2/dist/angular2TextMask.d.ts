@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
-export default class MaskedInputDirective {
+import { FormControl, ControlValueAccessor } from '@angular/forms';
+export default class MaskedInputDirective implements ControlValueAccessor {
     private textMaskInputElement;
     private inputElement;
     textMaskConfig: {

@@ -1,9 +1,5 @@
 # Angular 2 Input Mask
 
-&#x1F6A7; **This Angular 2 directive is experimental**. It may not work properly or at all. However,
-making it work should be pretty simple for someone who knows TypeScript and Angular 2.
-If you're interested in helping out, please [email me](mailto:msafi@msafi.com).
-
 ## Getting started
 
 First, install it.
@@ -15,31 +11,35 @@ npm i angular2-text-mask --save
 Then, require it and use it:
 
 ```typescript
-import {bootstrap} from '@angular/platform-browser-dynamic'
 import {Component} from '@angular/core';
 import MaskedInput from 'angular2-text-mask'
 
 @Component({
   selector: 'app',
-  templateUrl: `
+  template: `
     <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
   `,
   directives: [MaskedInput]
 })
-export class AppComponent {
+export class SomeComponent {
   public myModel = ''
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 }
-
-bootstrap(AppComponent);
 ```
 
 ## Documentation
 
 As you can see in the code above, you are passing an object to the `textMask` directive.
 
-For more information about the values that the `textMask` object accepts, see
-the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
+&#x1F4CD; For more information about the values that the `textMask` object accepts, see 
+**[this page](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme)**.
+
+#### Other use-cases
+
+##### Unmasking the value that is stored in the model
+
+Text Mask does not provide an option to unmask the model before storing it. You can sanitize the model on your
+side. See [here](https://github.com/text-mask/text-mask/issues/109) for details.
 
 ## Example
 
