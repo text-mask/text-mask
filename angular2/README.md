@@ -38,7 +38,7 @@ As you can see in the code above, you are passing an object to the `textMask` di
 
 ##### Unmasking the value that is stored in the model
 
-Text Mask does not provide an option to unmask the model before storing it. You can do perform the sanitization on your
+Text Mask does not provide an option to unmask the model before storing it. You can sanitize the model on your
 side. See [here](https://github.com/text-mask/text-mask/issues/109) for details.
 
 ## Example
