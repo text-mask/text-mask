@@ -34,12 +34,13 @@ after the integer. Defaults to `false`.
 ```js
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js'
 
+// First, you need to create the `numberMask` with your desired configurations
 const numberMask = createNumberMask({
   prefix: '',
   suffix: ' $' // This will put the dollar sign at the end, with a space.
 })
 
-// ...then pass `numberMask` to the Text Mask component
+// ...then pass `numberMask` to the Text Mask component as the mask
 ```
 
 ### `emailMask`
@@ -51,7 +52,7 @@ const numberMask = createNumberMask({
 ```js
 import emailMask from 'text-mask-addons/dist/emailMask.js'
 
-// ...then pass `emailMask` to the Text Mask component
+// ...then pass `emailMask` to the Text Mask component as the mask
 ```
 
 *Technical side note*: even though `emailMask` is passed as a `mask`, it is actually made of both a `mask` and a `pipe` bundled 
@@ -85,5 +86,5 @@ set to `true`.
 ```js
 import autoCorrectedMmddyyyyPipe from 'text-mask-addons/dist/autoCorrectedMmddyyyyPipe.js'
 
-// ...then pass `autoCorrectedMmddyyyyPipe` to the Text Mask component
+// ...then pass `autoCorrectedMmddyyyyPipe` to the Text Mask component as the pipe
 ```
