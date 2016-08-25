@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
 import packageJson from '../package.json'
+import {mount} from 'enzyme'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
@@ -8,18 +8,26 @@ const MaskedInput = (isVerify()) ?
 
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
-    expect(() => ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask='111-111' guide={true}/>
+    expect(() => mount(
+      <MaskedInput mask={[/\d/, /\d/, /\d/, /\d/]} guide={true}/>
     )).not.to.throw()
   })
 
   it('renders a single input element', () => {
-    const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask='111-111' guide={true}/>
+    const maskedInput = mount(
+      <MaskedInput mask={[/\d/, /\d/, /\d/, /\d/]} guide={true}/>
     )
 
-    expect(
-      () => ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
-    ).not.to.throw()
+    expect(maskedInput.find('input').length).to.equal(1)
+  })
+
+  it('renders a single custom input element', () => {
+    const Input = (props) => <input {...props} data-custom='true' />
+    const maskedInput = mount(
+      <MaskedInput mask={[/\d/, /\d/, /\d/, /\d/]} guide={true} inputElement={Input}/>
+    )
+
+    expect(maskedInput.find('input').length).to.equal(1)
+    expect(maskedInput.find('input').prop('data-custom')).to.equal('true')
   })
 })

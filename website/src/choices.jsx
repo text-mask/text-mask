@@ -55,7 +55,7 @@ export default map(
     placeholderChar: placeholderChars.whitespace
   }, {
     name: 'US zip code',
-    mask: [/[1-9]/, /\d/, /\d/, /\d/, /\d/],
+    mask: [/\d/, /\d/, /\d/, /\d/, /\d/],
     placeholder: '94303',
     placeholderChar: placeholderChars.underscore
   }, {
