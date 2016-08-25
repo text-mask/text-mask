@@ -41,7 +41,7 @@ test('inputElement is an alias of element', function(assert) {
   var component = this.subject();
   this.render();
 
-  assert.deepEqual(component.get('inputElement'), component.get('element'));
+  assert.equal(component.get('inputElement'), component.get('element'));
 });
 
 test('createTextMaskInputElement() method exists', function(assert) {
@@ -58,8 +58,11 @@ test('createTextMaskInputElement() method exists', function(assert) {
 
 test('initTextMaskInputElement() method sets textMaskInputElement property', function(assert) {
   assert.expect(4);
-  var component = this.subject();
+  var component = this.subject({ didInsertElement: null });
   this.render();
+
+  component.initTextMaskInputElement();
+
   const textMaskInputElement = component.get('textMaskInputElement');
   assert.equal(typeof textMaskInputElement, 'object');
   assert.equal(typeof textMaskInputElement.state, 'object');
