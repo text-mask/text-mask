@@ -12,9 +12,9 @@
     "declaration": true
   },
   "files": [
-    "src/ionic2InputMask.ts",
+    "src/**/*.ts",
     "typings/index.d.ts",
-    "../core/src/createTextMaskInputElement.d.ts"
+    "../core/**/*.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "resolveGlobs": true,

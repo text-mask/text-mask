@@ -2,3 +2,6 @@ src
 tsconfig.json
 typings
 node_modules
+webpack.buildIonic2Integration.js
+stats.json
+.npmignore
