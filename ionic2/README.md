@@ -12,14 +12,14 @@ Then, require it and use it:
 
 ```typescript
 import {Component} from '@angular/core';
-import MaskedInput from 'ionic2-text-mask'
+import {Directive} from 'ionic2-text-mask'
 
 @Component({
   selector: 'app',
   template: `
     <ion-input [textMask]="{mask: mask}" [(ngModel)]="myModel"/>
   `,
-  directives: [MaskedInput]
+  directives: [Directive]
 })
 export class SomeComponent {
   public myModel = ''
