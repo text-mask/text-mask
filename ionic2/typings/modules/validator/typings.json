@@ -1,0 +1,12 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/types/npm-validator/ac54245c62cfc865f7dc5fff78b44bf8fa8c2d05/typings.json",
+    "raw": "registry:npm/validator#4.5.1+20160723033700",
+    "main": "index.d.ts",
+    "version": "4.5.1",
+    "global": false,
+    "name": "validator",
+    "type": "typings"
+  }
+}
