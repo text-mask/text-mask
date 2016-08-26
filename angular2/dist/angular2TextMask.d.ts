@@ -1,9 +1,10 @@
 import { ElementRef } from '@angular/core';
-import { NgControl } from '@angular/forms';
 export default class MaskedInputDirective {
-    private ngControl;
     private textMaskInputElement;
     private inputElement;
+    private value;
+    private propagateChange;
+    private propagateTouched;
     textMaskConfig: {
         mask: string;
         guide: boolean;
@@ -13,8 +14,11 @@ export default class MaskedInputDirective {
         onReject: any;
         onAccept: any;
     };
-    constructor(inputElement: ElementRef, ngControl: NgControl);
-    ngOnInit(): void;
+    constructor(inputElement: ElementRef);
+    writeValue(value: any): void;
+    registerOnChange(fn: any): void;
+    registerOnTouched(fn: any): void;
+    ngAfterContentInit(): void;
     onInput(): void;
 }
 export { MaskedInputDirective as Directive };
