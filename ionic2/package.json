@@ -1,6 +1,6 @@
 {
   "name": "ionic2-input-mask",
-  "version": "0.18.5",
+  "version": "0.18.6",
   "description": "Input mask for Ionic2 apps",
   "main": "dist/ionic2InputMask.js",
   "typings": "./dist/ionic2InputMask.d.ts",
