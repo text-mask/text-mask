@@ -4,14 +4,14 @@
 module.exports = {
   name: 'ember-text-mask',
 
-  init: function(name) {
-    this._super.init && this._super.init.apply(this, arguments);
-    var assets_path = require('path').join('text-mask-core','dist','textMaskCore.js');
-    this.treePaths['vendor'] = require.resolve('text-mask-core').replace(assets_path, '');
-  },
+  treeForAddon: function(tree) {
+    var textMaskAddonsPath = path.dirname(require.resolve('text-mask-core/dist/textMaskCore.js'));
+    var textMaskAddonsTree = this.treeGenerator(textMaskAddonsPath);
 
-  included: function(app) {
-    this._super.included.apply(this, arguments);
-    app.import('vendor/text-mask-core/dist/textMaskCore.js');
+    var trees = mergeTrees([textMaskAddonsTree, tree], {
+      overwrite: true
+    });
+
+    return this._super.treeForAddon.call(this, trees);
   }
 };
