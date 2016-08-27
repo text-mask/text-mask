@@ -60,6 +60,7 @@
     "string formatting"
   ],
   "dependencies": {
+    "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^5.1.6",
     "text-mask-core": "^0.15.2"
   },
