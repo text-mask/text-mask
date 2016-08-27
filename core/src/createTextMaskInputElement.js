@@ -44,7 +44,7 @@ export default function createTextMaskInputElement({
   }
 
   // If the `inputElement`, doesn't have a placeholder. Text Mask will set a default placeholder on it.
-  if (inputElement.placeholder === emptyString) {
+  if (inputElement.placeholder === emptyString && placeholder !== undefined) {
     inputElement.setAttribute(strPlaceholder, placeholder)
   }
 
