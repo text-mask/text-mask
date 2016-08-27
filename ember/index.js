@@ -1,6 +1,9 @@
 /* jshint node: true */
 'use strict';
 
+var path = require('path');
+var mergeTrees = require('broccoli-merge-trees');
+
 module.exports = {
   name: 'ember-text-mask',
 
