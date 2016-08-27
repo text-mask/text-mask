@@ -5,10 +5,10 @@ module.exports = {
   name: 'ember-text-mask',
 
   treeForAddon: function(tree) {
-    var textMaskAddonsPath = path.dirname(require.resolve('text-mask-core/dist/textMaskCore.js'));
-    var textMaskAddonsTree = this.treeGenerator(textMaskAddonsPath);
+    var textMaskPath = path.dirname(require.resolve('text-mask-core/dist/textMaskCore.js'));
+    var textMaskTree = this.treeGenerator(textMaskPath);
 
-    var trees = mergeTrees([textMaskAddonsTree, tree], {
+    var trees = mergeTrees([textMaskTree, tree], {
       overwrite: true
     });
 
