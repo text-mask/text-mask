@@ -1,20 +1,9 @@
 
 const find = function(arr, predicate) {
-  'use strict'
-  if (arr == null) {
-    throw new TypeError('Array.prototype.find called on null or undefined')
-  }
-  if (typeof predicate !== 'function') {
-    throw new TypeError('predicate must be a function')
-  }
-  var list = Object(arr)
-  var length = list.length >>> 0
-  var thisArg = arguments[2]
-  var value
-
-  for (var i = 0; i < length; i++) {
-    value = list[i]
-    if (predicate.call(thisArg, value, i, list)) {
+  let value
+  for (let i = 0; i < arr.length; i++) {
+    value = arr[i]
+    if (predicate(value, i, arr)) {
       return value
     }
   }
