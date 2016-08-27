@@ -1,15 +1,3 @@
-
-const find = function(arr, predicate) {
-  let value
-  for (let i = 0; i < arr.length; i++) {
-    value = arr[i]
-    if (predicate(value, i, arr)) {
-      return value
-    }
-  }
-  return undefined
-}
-
 export default function autoCorrectedMmddyyyyPipe(conformedValue) {
   const conformedValueArr = conformedValue.split('')
   const indexesOfPipedChars = []
@@ -71,4 +59,15 @@ function parseDigit(value) {
   } else {
     return Number(digit)
   }
+}
+
+function find(arr, predicate) {
+  let value
+  for (let i = 0; i < arr.length; i++) {
+    value = arr[i]
+    if (predicate(value, i, arr)) {
+      return value
+    }
+  }
+  return undefined
 }
