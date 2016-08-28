@@ -12,7 +12,8 @@ const defaultValues = {
   keepCharPositions: false,
   onReject: null,
   onAccept: null,
-  help: null
+  help: null,
+  placeholder: null
 }
 
 export default map(
