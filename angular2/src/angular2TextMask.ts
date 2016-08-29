@@ -6,7 +6,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
   host: {
     '(input)': 'onInput()'
   },
-  selector: 'input[textMask]',
+  selector: '[textMask]',
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
   ]
@@ -28,8 +28,22 @@ export default class MaskedInputDirective implements ControlValueAccessor{
 
   formControl: FormControl = new FormControl()
 
-  constructor(inputElement: ElementRef) {
-    this.inputElement = inputElement.nativeElement
+  constructor(private element: ElementRef) {}
+
+  ngAfterViewInit() {
+    if(this.element.nativeElement.tagName === 'INPUT'){
+      // Angular 2
+      this.inputElement = this.element.nativeElement
+    } else {
+      // Ionic 2
+      this.inputElement = this.element.nativeElement.children[0]
+    }
+    this.textMaskInputElement = createTextMaskInputElement(
+      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+    )
+
+    // This ensures that initial model value gets masked
+    setTimeout(() => this.onInput())
   }
 
   writeValue(value: any) {
@@ -42,15 +56,6 @@ export default class MaskedInputDirective implements ControlValueAccessor{
   }
 
   registerOnTouched() {}
-
-  ngOnInit() {
-    this.textMaskInputElement = createTextMaskInputElement(
-      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
-    )
-
-    // This ensures that initial model value gets masked
-    setTimeout(() => this.onInput())
-  }
 
   onInput() {
     this.textMaskInputElement.update()
