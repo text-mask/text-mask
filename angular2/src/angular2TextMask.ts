@@ -28,11 +28,10 @@ export default class MaskedInputDirective implements ControlValueAccessor{
 
   formControl: FormControl = new FormControl()
 
-  constructor(private element: ElementRef) {
-  }
+  constructor(private element: ElementRef) {}
 
   ngAfterViewInit() {
-    if(this.element.nativeElement.tagName == 'INPUT'){
+    if(this.element.nativeElement.tagName === 'INPUT'){
       // Angular 2
       this.inputElement = this.element.nativeElement
     } else {
