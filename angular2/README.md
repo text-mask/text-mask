@@ -1,4 +1,5 @@
-# Angular 2 / Ionic 2 Input Mask
+# Angular 2 Input Mask
+This Angular 2 Directive is also compatible with Ionic 2 `ion-input`.
 
 ## Getting started
 
@@ -17,11 +18,7 @@ import MaskedInput from 'angular2-text-mask'
 @Component({
   selector: 'app',
   template: `
-    <!-- Usage on Angular 2 -->
     <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
-    
-    <!-- Usage on Ionic 2 -->
-    <ion-input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"></ion-input>
   `,
   directives: [MaskedInput]
 })
