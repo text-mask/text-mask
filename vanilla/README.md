@@ -22,7 +22,7 @@ Then, use it as follows:
   // Assuming you have an input element in your HTML with the class .myInput
   var myInput = document.querySelector('.myInput')
 
-  textMask.maskInput({
+  vanillaTextMask.maskInput({
     inputElement: myInput,
     mask: phoneMask
   })
