@@ -192,5 +192,5 @@ The `onReject` callback will receive an object with the following keys:
 
 ## `onAccept`
 
-You can provide an `onAccet` callback function which will be called when the user enters
+You can provide an `onAccept` callback function which will be called when the user enters
 a character that is accepted and displayed on the input element.
