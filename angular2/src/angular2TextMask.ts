@@ -31,7 +31,7 @@ export default class MaskedInputDirective implements ControlValueAccessor{
   constructor(private element: ElementRef) {}
 
   ngAfterViewInit() {
-    if(this.element.nativeElement.tagName === 'INPUT'){
+    if (this.element.nativeElement.tagName === 'INPUT') {
       // Angular 2
       this.inputElement = this.element.nativeElement
     } else {
@@ -47,7 +47,10 @@ export default class MaskedInputDirective implements ControlValueAccessor{
   }
 
   writeValue(value: any) {
-    this.textMaskInputElement.update(value)
+    if (this.textMaskInputElement !== undefined) {
+      this.textMaskInputElement.update(value)
+    }
+
     this.formControl.updateValue(value)
   }
 
