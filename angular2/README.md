@@ -1,4 +1,5 @@
 # Angular 2 Input Mask
+This Angular 2 Directive is also compatible with Ionic 2 `ion-input`.
 
 ## Getting started
 
