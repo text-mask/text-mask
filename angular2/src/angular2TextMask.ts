@@ -51,7 +51,7 @@ export default class MaskedInputDirective implements ControlValueAccessor{
       this.textMaskInputElement.update(value)
     }
 
-    this.formControl.updateValue(value)
+    this.formControl.setValue(value)
   }
 
   registerOnChange(fn: (value: any) => void) {
