@@ -22,10 +22,14 @@ Then, use it as follows:
   // Assuming you have an input element in your HTML with the class .myInput
   var myInput = document.querySelector('.myInput')
 
-  vanillaTextMask.maskInput({
+  var maskedInputController = vanillaTextMask.maskInput({
     inputElement: myInput,
     mask: phoneMask
   })
+  
+  // Calling `vanillaTextMask.maskInput` adds event listeners to the input element. 
+  // If you need to remove those event listeners, you can call
+  maskedInputController.destroy()
 </script>
 ```
 
@@ -33,32 +37,9 @@ Then, use it as follows:
 
 As you can see in the code above, you are passing an object to `vanillaTextMask.maskInput(...)`.
 
-The object takes `element`, which is the `<input/>` element that you are masking. It also
+The object takes `inputElement`, which is the `<input/>` element that you are masking. It also
 accepts other values which are
 [documented here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
-
-## Vanilla Specific Documentation
-
-### Destroy - Removing Event Listener
-
-If you need to remove the event listener and stop masking the element, you can use the [`destroy` method](https://github.com/text-mask/text-mask/blob/master/vanilla/src/vanillaTextMask.js#L13-L15). Usage:
-
-```js
-import maskInput from 'vanilla-text-mask'
-
-//...
-
-let masker = maskInput({
-  inputElement: inputEl,
-  mask: []
-})
-
-//...
-
-const aLaterFunction = () => {
-  masker.destroy()
-}
-```
 
 ## Example
 
