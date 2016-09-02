@@ -37,6 +37,29 @@ The object takes `element`, which is the `<input/>` element that you are masking
 accepts other values which are
 [documented here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
+## Vanilla Specific Documentation
+
+### Destroy - Removing Event Listener
+
+If you need to remove the event listener and stop masking the element, you can use the [`destroy` method](https://github.com/text-mask/text-mask/blob/master/vanilla/src/vanillaTextMask.js#L13-L15). Usage:
+
+```js
+import maskInput from 'vanilla-text-mask'
+
+//...
+
+let masker = maskInput({
+  inputElement: inputEl,
+  mask: []
+})
+
+//...
+
+const aLaterFunction = () => {
+  masker.destroy()
+}
+```
+
 ## Example
 
 To see an example of the code running, follow these steps:
