@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input} from '@angular/core'
+import {Directive, ElementRef, Input, OnInit, AfterViewInit} from '@angular/core'
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
@@ -11,7 +11,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
   ]
 })
-export default class MaskedInputDirective implements ControlValueAccessor{
+export default class MaskedInputDirective implements OnInit, AfterViewInit, ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -30,20 +30,18 @@ export default class MaskedInputDirective implements ControlValueAccessor{
 
   constructor(private element: ElementRef) {}
 
-  ngAfterViewInit() {
-    if (this.element.nativeElement.tagName === 'INPUT') {
-      // Angular 2
-      this.inputElement = this.element.nativeElement
-    } else {
-      // Ionic 2
-      this.inputElement = this.element.nativeElement.children[0]
-    }
+  ngOnInit() {
+    this.inputElement = this.element.nativeElement
     this.textMaskInputElement = createTextMaskInputElement(
       Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
+  }
 
-    // This ensures that initial model value gets masked
-    setTimeout(() => this.onInput())
+  ngAfterViewInit() {
+    if(this.element.nativeElement.tagName !== 'INPUT'){
+      // Ionic 2
+      this.inputElement = this.element.nativeElement.children[0]
+    }
   }
 
   writeValue(value: any) {
