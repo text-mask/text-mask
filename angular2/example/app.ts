@@ -3,7 +3,7 @@ import 'zone.js/dist/zone'
 
 import {Component, NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
-import {FormsModule} from '@angular/forms'
+import {FormsModule, FormControl, ReactiveFormsModule} from '@angular/forms'
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic'
 import MaskedInput from '../src/angular2TextMask'
 
@@ -13,17 +13,21 @@ import MaskedInput from '../src/angular2TextMask'
   directives: [MaskedInput]
 })
 class AppComponent {
-  public myModel
-  public mask
+  public myModel: string
+  public modelWithValue: string
+  public formControlInput: FormControl = new FormControl()
+  public mask: Array<string | RegExp>
 
   constructor() {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.myModel = ''
+    this.modelWithValue = '(555)-444-1234'
+    this.formControlInput.setValue('(555)-555-1234')
   }
 }
 
 @NgModule({
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
   declarations: [AppComponent, MaskedInput],
   bootstrap: [AppComponent]
 })
