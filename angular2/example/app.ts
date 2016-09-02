@@ -9,8 +9,7 @@ import MaskedInput from '../src/angular2TextMask'
 
 @Component({
   selector: 'app',
-  templateUrl: 'app.html',
-  directives: [MaskedInput]
+  templateUrl: 'app.html'
 })
 class AppComponent {
   public myModel: string
