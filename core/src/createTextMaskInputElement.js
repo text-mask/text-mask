@@ -16,7 +16,8 @@ export default function createTextMaskInputElement({
   placeholderChar = defaultPlaceholderChar,
   onAccept,
   onReject,
-  keepCharPositions = false
+  keepCharPositions = false,
+  disableDefaultPlaceholder = false
 }) {
   // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
   // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
@@ -44,7 +45,7 @@ export default function createTextMaskInputElement({
   }
 
   // If the `inputElement`, doesn't have a placeholder. Text Mask will set a default placeholder on it.
-  if (inputElement.placeholder === emptyString && placeholder !== undefined) {
+  if (inputElement.placeholder === emptyString && placeholder !== undefined && disableDefaultPlaceholder !== true) {
     inputElement.setAttribute(strPlaceholder, placeholder)
   }
 

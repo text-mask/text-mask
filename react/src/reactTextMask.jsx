@@ -17,7 +17,8 @@ export const MaskedInput = React.createClass({
     placeholderChar: PropTypes.string,
     onAccept: PropTypes.func,
     onReject: PropTypes.func,
-    keepCharPositions: PropTypes.bool
+    keepCharPositions: PropTypes.bool,
+    disableDefaultPlaceholder: PropTypes.bool
   },
 
   componentDidMount() {
@@ -43,6 +44,7 @@ export const MaskedInput = React.createClass({
     delete props.keepCharPositions
     delete props.value
     delete props.onChange
+    delete props.disableDefaultPlaceholder
 
     return (
       <input
