@@ -20,8 +20,8 @@ class AppComponent {
   constructor() {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     this.myModel = ''
-    this.modelWithValue = '(555)-444-1234'
-    this.formControlInput.setValue('(555)-555-1234')
+    this.modelWithValue = '5554441234'
+    this.formControlInput.setValue('5555551234')
   }
 }
 
