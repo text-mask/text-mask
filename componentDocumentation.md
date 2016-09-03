@@ -100,7 +100,7 @@ For example, with mask...
 ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 ```
  
- ...the user would fill out `(___) ___-____`.
+...the user would fill out `(___) ___-____`.
 
 You can pass a different placeholder character. For example, the unicode character `U+2000` would
 make the mask above look like `(   )    -    `. In JavaScript, you would pass such unicode character

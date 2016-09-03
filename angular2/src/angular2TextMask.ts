@@ -23,8 +23,7 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     pipe: undefined,
     keepCharPositions: false,
     onReject: undefined,
-    onAccept: undefined,
-    disableDefaultPlaceholder: false
+    onAccept: undefined
   }
 
   formControl: FormControl = new FormControl()
