@@ -19,7 +19,7 @@ describe('MaskedInput', () => {
     expect(() => {
       const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
 
-      maskedInput.ngAfterViewInit({mask: '(111)'})
+      maskedInput.ngOnInit({mask: '(111)'})
 
       return maskedInput
     }).not.to.throw()
