@@ -1,6 +1,6 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, OnInit } from '@angular/core';
 import { FormControl, ControlValueAccessor } from '@angular/forms';
-export default class MaskedInputDirective implements ControlValueAccessor {
+export default class MaskedInputDirective implements OnInit, ControlValueAccessor {
     private element;
     private textMaskInputElement;
     private inputElement;
@@ -15,7 +15,7 @@ export default class MaskedInputDirective implements ControlValueAccessor {
     };
     formControl: FormControl;
     constructor(element: ElementRef);
-    ngAfterViewInit(): void;
+    ngOnInit(): void;
     writeValue(value: any): void;
     registerOnChange(fn: (value: any) => void): void;
     registerOnTouched(): void;

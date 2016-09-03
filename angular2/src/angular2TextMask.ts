@@ -32,12 +32,13 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
 
   ngOnInit() {
     if (this.element.nativeElement.tagName === 'INPUT') {
-      // Angular 2
+      // `textMask` directive is used directly on an input element
       this.inputElement = this.element.nativeElement
     } else {
-      // Ionic 2
-      this.inputElement = this.element.nativeElement.children[0]
+      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+      this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
     }
+
     this.textMaskInputElement = createTextMaskInputElement(
       Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
