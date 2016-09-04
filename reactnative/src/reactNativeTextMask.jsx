@@ -35,13 +35,20 @@ class MaskedInput extends Component {
       rawValue: nextProps.value,
       previousConformedValue: this.state.value
     })
-    //TODO: We will need to check if there is stuff selected before we do this so we don't destroy selections'
+
+    let selection = {
+      start: adjustedCaretPosition,
+      end: adjustedCaretPosition
+    }
+
+    //We will need to check if there is stuff selected before we set the new selection so we don't destroy selections
+    if (this.state.selection.start !== this.state.selection.end) {
+      selection = this.state.selection
+    }
+
     this.setState({
       value,
-      selection: {
-        start: adjustedCaretPosition,
-        end: adjustedCaretPosition
-      }
+      selection,
     })
   }
 
