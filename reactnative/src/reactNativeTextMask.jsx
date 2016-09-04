@@ -42,7 +42,9 @@ class MaskedInput extends Component {
     }
 
     //We will need to check if there is stuff selected before we set the new selection so we don't destroy selections
-    if (this.state.selection.start !== this.state.selection.end) {
+    //But also making sure they actually typed a value in
+    //If they did then we'll collapse the selection'
+    if (this.state.selection.start !== this.state.selection.end && nextProps.value !== this.state.value) {
       selection = this.state.selection
     }
 
