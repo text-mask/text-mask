@@ -18,7 +18,7 @@ export default function createTextMaskInputElement({
   keepCharPositions = false
 }) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  let previousConformedValue = emptyString
+  const previousConformedValue = emptyString
   let state = {previousConformedValue}
 
   return {
