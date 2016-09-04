@@ -32,7 +32,7 @@ export default function createTextMaskInputElement({
 
       const {value = '', adjustedCaretPosition} = getNextMask({
         rawValue,
-        previousConformedValue,
+        previousConformedValue: state.previousConformedValue,
         guide,
         pipe,
         providedMask,
@@ -45,7 +45,6 @@ export default function createTextMaskInputElement({
 
       inputElement.value = value // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
-      previousConformedValue = value
       state.previousConformedValue = value // store value for access for next time
     }
   }
