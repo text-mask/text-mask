@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from 'react'
-import { TextInput } from "react-native"
-import {getNextMask} from '../../core/src/createTextMaskInputElement.js'
+import { TextInput } from 'react-native'
+import {getNextMask} from '../../core/src/createTextMaskInputElement'
 
 class MaskedInput extends Component {
 
@@ -19,8 +19,8 @@ class MaskedInput extends Component {
     this.nextSelection = {
       start: value.length,
       end: value.length
-    };
-    this.prevValue = value;
+    }
+    this.prevValue = value
 
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -65,12 +65,12 @@ class MaskedInput extends Component {
 
     // If someone highlights we need to set it and update our new selection
     if (this.changeValue === undefined) {
-      this.nextSelection = selection;
+      this.nextSelection = selection
       this._inputRef._inputRef.setNativeProps({
         selection
       })
-      return;
-    };
+      return
+    }
 
     const {value, adjustedCaretPosition} = getNextMask({
       ...this.props,
@@ -90,9 +90,9 @@ class MaskedInput extends Component {
       selection: this.nextSelection
     })
 
-    this.skipNext = true;
-    this.prevValue = value;
-    this.changeValue = undefined;
+    this.skipNext = true
+    this.prevValue = value
+    this.changeValue = undefined
   }
 
   onChangeText(text) {
@@ -120,9 +120,9 @@ class MaskedInput extends Component {
       previousConformedValue: this.prevValue
     })
 
-    event.nativeEvent.text = value;
+    event.nativeEvent.text = value
     
-    console.log(value);
+    console.log(value)
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
     }
