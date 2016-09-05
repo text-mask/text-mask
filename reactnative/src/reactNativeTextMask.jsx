@@ -105,10 +105,10 @@ class MaskedInput extends Component {
       ...this.props,
       providedMask: this.props.mask,
       currentCaretPosition: this.state.selection.start,
-      rawValue: event.target.value,
+      rawValue: event.nativeEvent.text,
       previousConformedValue: this.state.value
     })
-    event.target.value = value
+    event.nativeEvent.text = value
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
     }
