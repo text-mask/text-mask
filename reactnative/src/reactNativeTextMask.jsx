@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react'
-import { TextInput } from "react-native";
+import { TextInput } from "react-native"
 import {getNextMask} from '../../core/src/createTextMaskInputElement.js'
 
 class MaskedInput extends Component {
@@ -15,46 +15,19 @@ class MaskedInput extends Component {
       previousConformedValue: ''
     })
 
-    this.state = {
-      value,
-      selection: {
-        start: value.length,
-        end: value.length
-      }
-    }
+    this.state = {value}
+    this.nextSelection = {
+      start: value.length,
+      end: value.length
+    };
+    this.prevValue = value;
 
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onChangeText = this.onChangeText.bind(this)
+
   }
-
-  componentWillReceiveProps(nextProps) {
-    const {value, adjustedCaretPosition} = getNextMask({
-      ...nextProps,
-      providedMask: nextProps.mask,
-      currentCaretPosition: this.state.selection.start,
-      rawValue: nextProps.value,
-      previousConformedValue: this.state.value
-    })
-
-    let selection = {
-      start: adjustedCaretPosition,
-      end: adjustedCaretPosition
-    }
-
-    //We will need to check if there is stuff selected before we set the new selection so we don't destroy selections
-    //But also making sure they actually typed a value in
-    //If they did then we'll collapse the selection'
-    if (this.state.selection.start !== this.state.selection.end && nextProps.value !== this.state.value) {
-      selection = this.state.selection
-    }
-
-    this.setState({
-      value,
-      selection,
-    })
-  }
-
+  
   render() {
     const props = {...this.props}
 
@@ -70,21 +43,56 @@ class MaskedInput extends Component {
     return (
       <TextInput
         {...props}
-        selection={this.state.selection}
+        ref={(ref) => this._inputRef = ref}
+        defaultValue={this.state.value}
         onSelectionChange={this.onSelectionChange}
         onChange={this.onChange}
         onChangeText={this.onChangeText}
-        value={this.state.value}
       />
     )
   }
 
   onSelectionChange(event) {
+    // We do all the work here because we don't have the new cursor selection in the onChange event
+    // This is different than how the web works where the new cursor position is sync
     const {nativeEvent: {selection}} = event
-    this.setState({selection})
-    if (typeof this.props.onSelectionChange === 'function') {
-      this.props.onSelectionChange(event)
+
+    if (typeof this.props.onSelectionChange === 'function') this.props.onSelectionChange(event)
+
+    // When we set the new selection this callback is called but to the wrong selection
+    // We want to skip it
+    if (this.skipNext) return this.skipNext = false
+
+    // If someone highlights we need to set it and update our new selection
+    if (this.changeValue === undefined) {
+      this.nextSelection = selection;
+      this._inputRef._inputRef.setNativeProps({
+        selection
+      })
+      return;
+    };
+
+    const {value, adjustedCaretPosition} = getNextMask({
+      ...this.props,
+      providedMask: this.props.mask,
+      currentCaretPosition: selection.start,
+      rawValue: this.changeValue,
+      previousConformedValue: this.prevValue
+    })
+
+    this.nextSelection = {
+      start: adjustedCaretPosition,
+      end: adjustedCaretPosition,
     }
+
+    this._inputRef._inputRef.setNativeProps({
+      text: value,
+      selection: this.nextSelection
+    })
+
+    this.skipNext = true;
+    this.prevValue = value;
+    this.changeValue = undefined;
   }
 
   onChangeText(text) {
@@ -92,45 +100,33 @@ class MaskedInput extends Component {
       const {value} = getNextMask({
         ...this.props,
         providedMask: this.props.mask,
-        currentCaretPosition: this.state.selection.start,
+        currentCaretPosition: this.nextSelection.start,
         rawValue: text,
-        previousConformedValue: this.state.value
+        previousConformedValue: this.prevValue
       })
       this.props.onChangeText(value)
     }
   }
 
   onChange(event) {
+    // This will drive new value being set and selection set in onSelectionChange
+    this.changeValue = event.nativeEvent.text
+
     const {value} = getNextMask({
       ...this.props,
       providedMask: this.props.mask,
-      currentCaretPosition: this.state.selection.start,
-      rawValue: event.nativeEvent.text,
-      previousConformedValue: this.state.value
+      currentCaretPosition: this.nextSelection.start,
+      rawValue: this.changeValue,
+      previousConformedValue: this.prevValue
     })
-    event.nativeEvent.text = value
+
+    event.nativeEvent.text = value;
+    
+    console.log(value);
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
     }
   }
-}
-
-MaskedInput.propTypes = {
-  mask: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.func,
-    PropTypes.shape({
-      mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-      pipe: PropTypes.func
-    })
-  ]).isRequired,
-  guide: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  pipe: PropTypes.func,
-  placeholderChar: PropTypes.string,
-  onAccept: PropTypes.func,
-  onReject: PropTypes.func,
-  keepCharPositions: PropTypes.bool
 }
 
 export default MaskedInput
