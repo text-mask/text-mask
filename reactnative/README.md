@@ -1,42 +1,43 @@
-# React Input Mask
+# React Native Input Mask
+
+### This is beta and is a still a WIP!
 
 ## Getting started
 
 First, install it.
 
 ```bash
-npm i react-text-mask --save
+npm i react-native-text-mask --save
 ```
 
 Then, require it and use it.
 
 ```js
-var React = require('react')
-var MaskedInput = require('react-text-mask')
+import React, { Component } from 'react'
+import { View } from 'react-native'
+import MaskedInput from 'react-native-text-mask'
 
-var MyComponent = React.createClass({
+class MyComponent extends Component {
   render() {
     return (
-      <div>
+      <View>
         <MaskedInput mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} />
-      </div>
+      </View>
     )
   }
-})
+}
 ```
 
-`<MaskedInput/>` is fully compatible with `<input/>` element. So, you can
-pass to it CSS classes, a placeholder attribute, or whatever.
+`<MaskedInput/>` is fully compatible with the `<TextInput/>` element. So, you can
+pass any style, a placeholder attribute, and all other `TextInput` props.
 
 For example, the following works:
 
 ```js
-<MaskedTextInput
+<MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-  className="form-control"
   placeholder="Enter a phone number"
   guide={false}
-  id="my-input-id"
 />
 ```
 
@@ -49,13 +50,12 @@ the [documentation here](https://github.com/text-mask/text-mask/blob/master/comp
 
 To see an example of the code running, follow these steps:
 
-1. Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
-1. `cd text-mask`
-1. `npm install`
-1. `npm run react:dev`
-1. Open [http://localhost:3000](http://localhost:3000)
+1. Setup a custom project with `react-native init` command
+1. Install `react-native-text-mask`
+1. Copy example into your project
+1. Run iOS/Android project
 
-The code of the example is in [`react/example`](https://github.com/text-mask/text-mask/tree/master/react/example).
+The code of the example is in [`reactNative/example`](https://github.com/text-mask/text-mask/tree/master/reactNative/example).
 
 ## Contributing
 

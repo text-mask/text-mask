@@ -2,8 +2,8 @@
   "name": "react-native-text-mask",
   "version": "0.18.0",
   "description": "React native input component that accepts mask pattern",
-  "main": "dist/reactNativeTextMask.js",
-  "author": "M.K. Safi <msafi@msafi.com>",
+  "main": "src/reactNativeTextMask.js",
+  "author": "Jason Brown <browniefed@gmail.com>",
   "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/text-mask/text-mask/issues"
@@ -12,14 +12,7 @@
     "type": "git",
     "url": "https://github.com/text-mask/text-mask.git"
   },
-  "homepage": "https://github.com/text-mask/text-mask/tree/master/reactnative/#readme",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-0"
-    ]
-  },
+  "homepage": "https://github.com/text-mask/text-mask/tree/master/reactNative/#readme",
   "keywords": [
     "react",
     "react-native",

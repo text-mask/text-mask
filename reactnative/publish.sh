@@ -8,10 +8,10 @@ if [ -z "$version" ]; then
 fi
 
 
-cd ./reactnative
+cd ./reactNative
 
 generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
 
-git tag "reactnative-${generatedNpmVersion}"
+git tag "reactNative-${generatedNpmVersion}"
