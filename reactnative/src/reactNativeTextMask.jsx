@@ -1,4 +1,5 @@
 import React, {PropTypes, Component} from 'react'
+import { TextInput } from "react-native";
 import {getNextMask} from '../../core/src/createTextMaskInputElement.js'
 
 class MaskedInput extends Component {
@@ -67,7 +68,7 @@ class MaskedInput extends Component {
     delete props.value
 
     return (
-      <input
+      <TextInput
         {...props}
         selection={this.state.selection}
         onSelectionChange={this.onSelectionChange}

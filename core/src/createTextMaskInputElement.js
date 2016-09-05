@@ -62,7 +62,7 @@ export function getNextMask({
   onReject,
   keepCharPositions = false,
 }) {
-  if (rawValue === previousConformedValue) { return {previousConformedValue, currentCaretPosition} }
+  if (rawValue === previousConformedValue) { return {value: previousConformedValue, currentCaretPosition} }
 
   // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
   // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
@@ -122,7 +122,7 @@ export function getNextMask({
   // `conformToMask` returns the information below: we need the `conformedValue` and we need to know whether
   // some characters were rejected. We'll use `someCharsRejected` to know whether we should call the `onReject`
   // callback
-  const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
+  const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, adjustedCaretPosition: conformToMaskConfig)
 
   // The following few lines are to support the `pipe` feature.
   const piped = typeof pipe === strFunction
