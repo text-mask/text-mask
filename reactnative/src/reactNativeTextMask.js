@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react'
-import { TextInput } from 'react-native'
+import {TextInput} from 'react-native'
 import {getNextMask} from '../../core/src/createTextMaskInputElement'
 
 class MaskedInput extends Component {
@@ -25,9 +25,8 @@ class MaskedInput extends Component {
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onChangeText = this.onChangeText.bind(this)
-
   }
-  
+
   render() {
     const props = {...this.props}
 
@@ -43,7 +42,7 @@ class MaskedInput extends Component {
     return (
       <TextInput
         {...props}
-        ref={(ref) => this._inputRef = ref}
+        ref={(ref) => (this._inputRef = ref)}
         defaultValue={this.state.value}
         onSelectionChange={this.onSelectionChange}
         onChange={this.onChange}
@@ -61,7 +60,10 @@ class MaskedInput extends Component {
 
     // When we set the new selection this callback is called but to the wrong selection
     // We want to skip it
-    if (this.skipNext) return this.skipNext = false
+    if (this.skipNext) {
+      this.skipNext = false
+      return
+    }
 
     // If someone highlights we need to set it and update our new selection
     if (this.changeValue === undefined) {
@@ -121,12 +123,29 @@ class MaskedInput extends Component {
     })
 
     event.nativeEvent.text = value
-    
-    console.log(value)
+
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
     }
   }
+}
+
+MaskedInput.propTypes = {
+  mask: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.func,
+    PropTypes.shape({
+      mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+      pipe: PropTypes.func
+    })
+  ]).isRequired,
+  guide: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  pipe: PropTypes.func,
+  placeholderChar: PropTypes.string,
+  onAccept: PropTypes.func,
+  onReject: PropTypes.func,
+  keepCharPositions: PropTypes.bool
 }
 
 export default MaskedInput

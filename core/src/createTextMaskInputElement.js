@@ -30,7 +30,7 @@ export default function createTextMaskInputElement({
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      const {value = '', adjustedCaretPosition} = getNextMask({
+      const nextMask = getNextMask({
         rawValue,
         previousConformedValue: state.previousConformedValue,
         guide,
@@ -43,9 +43,12 @@ export default function createTextMaskInputElement({
         currentCaretPosition,
       })
 
-      inputElement.value = value // set the input value
-      safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
-      state.previousConformedValue = value // store value for access for next time
+      if (nextMask !== undefined) {
+        const {value = '', adjustedCaretPosition} = nextMask
+        inputElement.value = value // set the input value
+        safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
+        state.previousConformedValue = value // store value for access for next time
+      }
     }
   }
 }
@@ -62,7 +65,7 @@ export function getNextMask({
   onReject,
   keepCharPositions = false,
 }) {
-  if (rawValue === previousConformedValue) { return {value: previousConformedValue, currentCaretPosition} }
+  if (rawValue === previousConformedValue) { return }
 
   // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
   // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
@@ -122,7 +125,7 @@ export function getNextMask({
   // `conformToMask` returns the information below: we need the `conformedValue` and we need to know whether
   // some characters were rejected. We'll use `someCharsRejected` to know whether we should call the `onReject`
   // callback
-  const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, adjustedCaretPosition: conformToMaskConfig)
+  const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
 
   // The following few lines are to support the `pipe` feature.
   const piped = typeof pipe === strFunction
