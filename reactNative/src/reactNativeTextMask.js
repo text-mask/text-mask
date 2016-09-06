@@ -1,7 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import {TextInput} from 'react-native'
-import {getConformedInputState} from '../../core/src/createTextMaskInputElement'
-import {convertMaskToPlaceholder} from '../../core/src/utilities'
+import {getConformedInputState, processMaskAndPlaceholder} from '../../core/src/createTextMaskInputElement'
 import {placeholderChar as defaultPlaceholderChar} from '../../core/constants.js'
 
 class MaskedInput extends Component {
@@ -10,7 +9,11 @@ class MaskedInput extends Component {
 
     const {value} = getConformedInputState({
       ...props,
-      placeholder: getPlaceholder(props.mask, props.placeholderChar),
+      ...processMaskAndPlaceholder({
+        mask: props.mask,
+        pipe: props.pipe,
+        placeholderChar: props.placeholderChar,
+      }),
       currentCaretPosition: props.value.length,
       rawValue: props.value,
       previousConformedValue: ''
@@ -78,7 +81,11 @@ class MaskedInput extends Component {
 
     const {value, adjustedCaretPosition} = getConformedInputState({
       ...this.props,
-      placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
+      ...processMaskAndPlaceholder({
+        mask: this.props.mask,
+        pipe: this.props.pipe,
+        placeholderChar: this.props.placeholderChar,
+      }),
       currentCaretPosition: selection.start,
       rawValue: this.changeValue,
       previousConformedValue: this.previousValue
@@ -105,7 +112,11 @@ class MaskedInput extends Component {
 
     const {value} = getConformedInputState({
       ...this.props,
-      placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
+      ...processMaskAndPlaceholder({
+        mask: this.props.mask,
+        pipe: this.props.pipe,
+        placeholderChar: this.props.placeholderChar,
+      }),
       currentCaretPosition: this.nextSelection.start,
       rawValue: this.changeValue,
       previousConformedValue: this.previousValue
@@ -120,12 +131,6 @@ class MaskedInput extends Component {
     if (typeof this.props.onChangeText === 'function') {
       this.props.onChangeText(value)
     }
-  }
-}
-
-function getPlaceholder(mask, placeholderChar) {
-  if (mask instanceof Array) {
-    return convertMaskToPlaceholder(mask, placeholderChar)
   }
 }
 
