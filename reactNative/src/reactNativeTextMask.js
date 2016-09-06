@@ -99,19 +99,6 @@ class MaskedInput extends Component {
     this.changeValue = undefined
   }
 
-  onChangeText(text) {
-    if (typeof this.props.onChangeText === 'function') {
-      const {value} = getConformedInputState({
-        ...this.props,
-        placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
-        currentCaretPosition: this.nextSelection.start,
-        rawValue: text,
-        previousConformedValue: this.previousValue
-      })
-      this.props.onChangeText(value)
-    }
-  }
-
   onChange(event) {
     // This will drive new value being set and selection set in onSelectionChange
     this.changeValue = event.nativeEvent.text
@@ -128,6 +115,10 @@ class MaskedInput extends Component {
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
+    }
+
+    if (typeof this.props.onChangeText === 'function') {
+      this.props.onChangeText(value)
     }
   }
 }
