@@ -81,7 +81,7 @@ export function getConformedInputState({
   placeholderChar = defaultPlaceholderChar,
   onAccept,
   onReject,
-  placeholder: providedPlaceholder,
+  placeholder,
   keepCharPositions = false,
 }) {
   if (rawValue === previousConformedValue) { return }
