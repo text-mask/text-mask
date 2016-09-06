@@ -53,10 +53,10 @@ the [documentation here](https://github.com/text-mask/text-mask/blob/master/comp
 To see an example of the code running, follow these steps:
 
 1. Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
-1. `cd text-mask/vue`
-1. `npm install`
-1. `npm run dev`
-1. Open [http://localhost:8080](http://localhost:8080)
+2. `cd text-mask/vue`
+3. `npm install`
+4. `npm run dev`
+5. Open [http://localhost:8080](http://localhost:8080)
 
 ## Contributing
 
