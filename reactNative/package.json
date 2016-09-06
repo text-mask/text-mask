@@ -1,7 +1,7 @@
 {
   "name": "react-native-text-mask",
-  "version": "0.18.0",
-  "description": "React native input component that accepts mask pattern",
+  "version": "0.1.0",
+  "description": "React Native input masking component",
   "main": "src/reactNativeTextMask.js",
   "author": "Jason Brown <browniefed@gmail.com>",
   "license": "CC0-1.0",
@@ -17,6 +17,7 @@
     "react",
     "react-native",
     "react-component",
+    "TextInput mask",
     "text mask",
     "input mask",
     "string mask",

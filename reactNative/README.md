@@ -1,6 +1,6 @@
 # React Native Input Mask
 
-### This is beta and is a still a WIP!
+&#x1F6A7; **This component is experimental**. It works but it's not production-ready yet.
 
 ## Getting started
 
@@ -13,8 +13,8 @@ npm i react-native-text-mask --save
 Then, require it and use it.
 
 ```js
-import React, { Component } from 'react'
-import { View } from 'react-native'
+import React, {Component} from 'react'
+import {View} from 'react-native'
 import MaskedInput from 'react-native-text-mask'
 
 class MyComponent extends Component {
@@ -37,7 +37,6 @@ For example, the following works:
 <MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   placeholder="Enter a phone number"
-  guide={false}
 />
 ```
 

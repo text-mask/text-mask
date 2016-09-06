@@ -3,14 +3,12 @@ import {TextInput} from 'react-native'
 import {getConformedInputState} from '../../core/src/createTextMaskInputElement'
 
 class MaskedInput extends Component {
-
   constructor(props, context) {
     super(props, context)
 
     const {value} = getConformedInputState({
       ...props,
       currentCaretPosition: props.value.length,
-      providedMask: props.mask,
       rawValue: props.value,
       previousConformedValue: ''
     })
@@ -20,7 +18,7 @@ class MaskedInput extends Component {
       start: value.length,
       end: value.length
     }
-    this.prevValue = value
+    this.previousValue = value
 
     this.onSelectionChange = this.onSelectionChange.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -56,8 +54,9 @@ class MaskedInput extends Component {
     // This is different than how the web works where the new cursor position is sync
     const {nativeEvent: {selection}} = event
 
-    if (typeof this.props.onSelectionChange === 'function') this.props.onSelectionChange(event)
-
+    if (typeof this.props.onSelectionChange === 'function') {
+      this.props.onSelectionChange(event)
+    }
     // When we set the new selection this callback is called but to the wrong selection
     // We want to skip it
     if (this.skipNext) {
@@ -76,10 +75,9 @@ class MaskedInput extends Component {
 
     const {value, adjustedCaretPosition} = getConformedInputState({
       ...this.props,
-      providedMask: this.props.mask,
       currentCaretPosition: selection.start,
       rawValue: this.changeValue,
-      previousConformedValue: this.prevValue
+      previousConformedValue: this.previousValue
     })
 
     this.nextSelection = {
@@ -93,7 +91,7 @@ class MaskedInput extends Component {
     })
 
     this.skipNext = true
-    this.prevValue = value
+    this.previousValue = value
     this.changeValue = undefined
   }
 
@@ -101,10 +99,9 @@ class MaskedInput extends Component {
     if (typeof this.props.onChangeText === 'function') {
       const {value} = getConformedInputState({
         ...this.props,
-        providedMask: this.props.mask,
         currentCaretPosition: this.nextSelection.start,
         rawValue: text,
-        previousConformedValue: this.prevValue
+        previousConformedValue: this.previousValue
       })
       this.props.onChangeText(value)
     }
@@ -116,10 +113,9 @@ class MaskedInput extends Component {
 
     const {value} = getConformedInputState({
       ...this.props,
-      providedMask: this.props.mask,
       currentCaretPosition: this.nextSelection.start,
       rawValue: this.changeValue,
-      previousConformedValue: this.prevValue
+      previousConformedValue: this.previousValue
     })
 
     event.nativeEvent.text = value
