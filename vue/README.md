@@ -7,6 +7,7 @@
 
 import Vue from 'vue'
 import App from './App.vue'
+
 // Import Text Mask Directive
 import textMask from './text-mask'
 
@@ -20,7 +21,7 @@ new Vue({
 ```
 
 ```html
-// Template/Markup
+<!-- Template/Markup -->
 <label>Phone Number</label>
 <input
   type="text"
