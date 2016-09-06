@@ -101,8 +101,8 @@ class MaskedInput extends Component {
       selection: this.nextSelection
     })
 
-    this.skipNext = true
     this.previousValue = value
+    this.skipNext = true
     this.changeValue = undefined
   }
 

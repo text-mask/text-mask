@@ -39,7 +39,7 @@ export default function createTextMaskInputElement({
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      const nextMask = getConformedInputState({
+      const {value = '', adjustedCaretPosition} = getConformedInputState({
         rawValue,
         previousConformedValue: state.previousConformedValue,
         guide,
@@ -53,12 +53,9 @@ export default function createTextMaskInputElement({
         currentCaretPosition,
       })
 
-      if (nextMask !== undefined) {
-        const {value = '', adjustedCaretPosition} = nextMask
-        inputElement.value = value // set the input value
-        safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
-        state.previousConformedValue = value // store value for access for next time
-      }
+      inputElement.value = value // set the input value
+      safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
+      state.previousConformedValue = value // store value for access for next time
     }
   }
 }
@@ -106,7 +103,9 @@ export function getConformedInputState({
   placeholder,
   keepCharPositions = false,
 }) {
-  if (rawValue === previousConformedValue) { return }
+  if (rawValue === previousConformedValue) {
+    return {value: rawValue, adjustedCaretPosition: currentCaretPosition}
+  }
 
   // We check the provided `rawValue` before moving further.
   // If it's something we can't work with `getSafeRawValue` will throw.
