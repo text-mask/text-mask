@@ -86,11 +86,6 @@ export function getConformedInputState({
 }) {
   if (rawValue === previousConformedValue) { return }
 
-  let placeholder = providedPlaceholder
-  if (!placeholder && providedMask instanceof Array) {
-    placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
-  }
-
   // We check the provided `rawValue` before moving further.
   // If it's something we can't work with `getSafeRawValue` will throw.
   const safeRawValue = getSafeRawValue(rawValue)

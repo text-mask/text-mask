@@ -1,6 +1,8 @@
 import React, {PropTypes, Component} from 'react'
 import {TextInput} from 'react-native'
 import {getConformedInputState} from '../../core/src/createTextMaskInputElement'
+import {convertMaskToPlaceholder} from '../../core/src/utilities'
+import {placeholderChar as defaultPlaceholderChar} from '../../core/constants.js'
 
 class MaskedInput extends Component {
   constructor(props, context) {
@@ -8,6 +10,7 @@ class MaskedInput extends Component {
 
     const {value} = getConformedInputState({
       ...props,
+      placeholder: getPlaceholder(props.mask, props.placeholderChar),
       currentCaretPosition: props.value.length,
       rawValue: props.value,
       previousConformedValue: ''
@@ -75,6 +78,7 @@ class MaskedInput extends Component {
 
     const {value, adjustedCaretPosition} = getConformedInputState({
       ...this.props,
+      placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
       currentCaretPosition: selection.start,
       rawValue: this.changeValue,
       previousConformedValue: this.previousValue
@@ -99,6 +103,7 @@ class MaskedInput extends Component {
     if (typeof this.props.onChangeText === 'function') {
       const {value} = getConformedInputState({
         ...this.props,
+        placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
         currentCaretPosition: this.nextSelection.start,
         rawValue: text,
         previousConformedValue: this.previousValue
@@ -113,6 +118,7 @@ class MaskedInput extends Component {
 
     const {value} = getConformedInputState({
       ...this.props,
+      placeholder: getPlaceholder(this.props.mask, this.props.placeholderChar),
       currentCaretPosition: this.nextSelection.start,
       rawValue: this.changeValue,
       previousConformedValue: this.previousValue
@@ -124,6 +130,16 @@ class MaskedInput extends Component {
       this.props.onChange(event)
     }
   }
+}
+
+function getPlaceholder(mask, placeholderChar) {
+  if (mask instanceof Array) {
+    return convertMaskToPlaceholder(mask, placeholderChar)
+  }
+}
+
+MaskedInput.defaultProps = {
+  placeholderChar: defaultPlaceholderChar
 }
 
 MaskedInput.propTypes = {
