@@ -22,7 +22,7 @@ export default {
    * just use the element as the only option. Send all options together in an
    * object.
    */
-  bind (){
+  bind() {
     let options = this.params.maskOptions
     options.inputElement = this.el
     this.masker = maskInput(options)
@@ -33,7 +33,7 @@ export default {
    * Destroy the event listener attached to the input via text mask. This will
    * protect the application tidy from memory leaks.
    */
-  unbind (){
+  unbind() {
     this.masker.destroy()
   }
 }
