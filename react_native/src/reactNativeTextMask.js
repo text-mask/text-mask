@@ -1,13 +1,13 @@
 import React, {PropTypes, Component} from 'react'
 import {TextInput} from 'react-native'
-import {getNextMask} from '../../core/src/createTextMaskInputElement'
+import {getConformedInputState} from '../../core/src/createTextMaskInputElement'
 
 class MaskedInput extends Component {
 
   constructor(props, context) {
     super(props, context)
 
-    const {value} = getNextMask({
+    const {value} = getConformedInputState({
       ...props,
       currentCaretPosition: props.value.length,
       providedMask: props.mask,
@@ -74,7 +74,7 @@ class MaskedInput extends Component {
       return
     }
 
-    const {value, adjustedCaretPosition} = getNextMask({
+    const {value, adjustedCaretPosition} = getConformedInputState({
       ...this.props,
       providedMask: this.props.mask,
       currentCaretPosition: selection.start,
@@ -99,7 +99,7 @@ class MaskedInput extends Component {
 
   onChangeText(text) {
     if (typeof this.props.onChangeText === 'function') {
-      const {value} = getNextMask({
+      const {value} = getConformedInputState({
         ...this.props,
         providedMask: this.props.mask,
         currentCaretPosition: this.nextSelection.start,
@@ -114,7 +114,7 @@ class MaskedInput extends Component {
     // This will drive new value being set and selection set in onSelectionChange
     this.changeValue = event.nativeEvent.text
 
-    const {value} = getNextMask({
+    const {value} = getConformedInputState({
       ...this.props,
       providedMask: this.props.mask,
       currentCaretPosition: this.nextSelection.start,

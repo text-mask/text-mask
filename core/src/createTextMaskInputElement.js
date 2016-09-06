@@ -18,8 +18,7 @@ export default function createTextMaskInputElement({
   keepCharPositions = false
 }) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const previousConformedValue = emptyString
-  let state = {previousConformedValue}
+  const state = {previousConformedValue: emptyString}
 
   return {
     state,
@@ -30,7 +29,7 @@ export default function createTextMaskInputElement({
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      const nextMask = getNextMask({
+      const nextMask = getConformedInputState({
         rawValue,
         previousConformedValue: state.previousConformedValue,
         guide,
@@ -53,7 +52,7 @@ export default function createTextMaskInputElement({
   }
 }
 
-export function getNextMask({
+export function getConformedInputState({
   rawValue,
   previousConformedValue,
   currentCaretPosition,
@@ -75,7 +74,7 @@ export function getNextMask({
     providedMask = providedMask.mask
   }
 
- // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
+  // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
   let placeholder
 
