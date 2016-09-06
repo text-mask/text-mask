@@ -20,6 +20,24 @@ export default function createTextMaskInputElement({
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: emptyString}
 
+  // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
+  // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
+  // were passed.
+  if (typeof providedMask === 'object' && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
+    pipe = providedMask.pipe
+    providedMask = providedMask.mask
+  }
+
+  // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
+  // `(___)` if the `placeholderChar` is set to `_`.
+  let placeholder
+
+  // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
+  // correct `placeholder`.
+  if (providedMask instanceof Array) {
+    placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
+  }
+
   return {
     state,
     // `update` is called by framework components whenever they want to update the `value` of the input element.
@@ -38,6 +56,7 @@ export default function createTextMaskInputElement({
         placeholderChar,
         onAccept,
         onReject,
+        placeholder,
         keepCharPositions,
         currentCaretPosition,
       })
@@ -62,25 +81,13 @@ export function getConformedInputState({
   placeholderChar = defaultPlaceholderChar,
   onAccept,
   onReject,
+  placeholder: providedPlaceholder,
   keepCharPositions = false,
 }) {
   if (rawValue === previousConformedValue) { return }
 
-  // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
-  // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
-  // were passed.
-  if (typeof providedMask === 'object' && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
-    pipe = providedMask.pipe
-    providedMask = providedMask.mask
-  }
-
-  // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
-  // `(___)` if the `placeholderChar` is set to `_`.
-  let placeholder
-
-  // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
-  // correct `placeholder`.
-  if (providedMask instanceof Array) {
+  let placeholder = providedPlaceholder
+  if (!placeholder && providedMask instanceof Array) {
     placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
   }
 
