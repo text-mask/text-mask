@@ -42,6 +42,9 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     this.textMaskInputElement = createTextMaskInputElement(
       Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
+
+    // This ensures that initial model value gets masked
+    setTimeout(() => this.onInput())
   }
 
   writeValue(value: any) {
