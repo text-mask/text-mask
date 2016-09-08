@@ -48,6 +48,7 @@
     "angular2:dev": "./node_modules/.bin/webpack-dev-server --content-base angular2/example --port 3000 --config angular2/example/webpack.runAngular2Example.js",
     "angular2:watch": "./node_modules/.bin/webpack --watch --config angular2/webpack.buildAngular2Integration.js",
     "ember:publish": "sh ember/publish.sh",
+    "vue:dev": "node_modules/.bin/webpack-dev-server --content-base vue/example --port 3000 --config vue/example/webpack.runVueExample.js",
     "git:done": "git checkout gh-pages && git rebase master && git checkout master && git push origin master --tags && git push origin gh-pages",
     "ci": "npm run test && npm run build && npm run verify",
     "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx && node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts",
