@@ -22,7 +22,7 @@ export function isString(value) {
 }
 
 export function isNumber(value) {
-  return value && value.length === undefined && !isNaN(value)
+  return typeof value === 'number' && value.length === undefined && !isNaN(value)
 }
 
 const strCaretTrap = '[]'
