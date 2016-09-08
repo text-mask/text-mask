@@ -32,6 +32,7 @@ export default function createTextMaskInputElement({
 
   return {
     state,
+    
     // `update` is called by framework components whenever they want to update the `value` of the input element.
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
@@ -39,7 +40,7 @@ export default function createTextMaskInputElement({
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      const {value = '', adjustedCaretPosition} = getConformedInputState({
+      const {value = emptyString, adjustedCaretPosition} = getConformedInputState({
         rawValue,
         previousConformedValue: state.previousConformedValue,
         guide,

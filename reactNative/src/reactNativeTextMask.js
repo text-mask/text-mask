@@ -7,15 +7,10 @@ class MaskedInput extends Component {
   constructor(props, context) {
     super(props, context)
 
-    const {value} = getConformedInputState({
+    const {value} = conformedInputState({
       ...props,
-      ...processMaskAndPlaceholder({
-        mask: props.mask,
-        pipe: props.pipe,
-        placeholderChar: props.placeholderChar,
-      }),
       currentCaretPosition: props.value.length,
-      rawValue: props.value,
+      value: props.value,
       previousConformedValue: ''
     })
 
@@ -79,15 +74,10 @@ class MaskedInput extends Component {
       return
     }
 
-    const {value, adjustedCaretPosition} = getConformedInputState({
+    const {value, adjustedCaretPosition} = conformedInputState({
       ...this.props,
-      ...processMaskAndPlaceholder({
-        mask: this.props.mask,
-        pipe: this.props.pipe,
-        placeholderChar: this.props.placeholderChar,
-      }),
       currentCaretPosition: selection.start,
-      rawValue: this.changeValue,
+      value: this.changeValue,
       previousConformedValue: this.previousValue
     })
 
@@ -110,15 +100,10 @@ class MaskedInput extends Component {
     // This will drive new value being set and selection set in onSelectionChange
     this.changeValue = event.nativeEvent.text
 
-    const {value} = getConformedInputState({
+    const {value} = conformedInputState({
       ...this.props,
-      ...processMaskAndPlaceholder({
-        mask: this.props.mask,
-        pipe: this.props.pipe,
-        placeholderChar: this.props.placeholderChar,
-      }),
       currentCaretPosition: this.nextSelection.start,
-      rawValue: this.changeValue,
+      value: this.changeValue,
       previousConformedValue: this.previousValue
     })
 
@@ -133,6 +118,36 @@ class MaskedInput extends Component {
     }
   }
 }
+
+function conformedInputState ({
+  mask,
+  guide,
+  pipe,
+  placeholderChar,
+  onAccept,
+  onReject,
+  keepCharPositions,
+  currentCaretPosition,
+  value,
+  previousConformedValue
+}) {
+
+  return getConformedInputState({
+      guide,
+      onAccept,
+      obReject,
+      keepCharPositions,
+      currentCaretPosition,
+      rawValue: value,
+      previousConformedValue,
+      ...processMaskAndPlaceholder({
+        mask,
+        pipe
+        placeholderChar,
+      })
+  })
+}
+
 
 MaskedInput.defaultProps = {
   placeholderChar: defaultPlaceholderChar
