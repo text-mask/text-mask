@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input} from '@angular/core'
+import {Directive, ElementRef, Input, OnInit} from '@angular/core'
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
@@ -11,7 +11,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
   ]
 })
-export default class MaskedInputDirective implements ControlValueAccessor{
+export default class MaskedInputDirective implements OnInit, ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -30,14 +30,15 @@ export default class MaskedInputDirective implements ControlValueAccessor{
 
   constructor(private element: ElementRef) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (this.element.nativeElement.tagName === 'INPUT') {
-      // Angular 2
+      // `textMask` directive is used directly on an input element
       this.inputElement = this.element.nativeElement
     } else {
-      // Ionic 2
-      this.inputElement = this.element.nativeElement.children[0]
+      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+      this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
     }
+
     this.textMaskInputElement = createTextMaskInputElement(
       Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
@@ -51,7 +52,12 @@ export default class MaskedInputDirective implements ControlValueAccessor{
       this.textMaskInputElement.update(value)
     }
 
-    this.formControl.updateValue(value)
+    try { //Try RC.5+ setValue
+      this.formControl.setValue(value)
+    }
+    catch (e) { //Fallback to RC.4 updateValue
+      this.formControl.updateValue(value)
+    }
   }
 
   registerOnChange(fn: (value: any) => void) {

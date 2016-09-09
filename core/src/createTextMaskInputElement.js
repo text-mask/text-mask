@@ -3,7 +3,6 @@ import conformToMask from './conformToMask.js'
 import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
 import {placeholderChar as defaultPlaceholderChar} from './constants.js'
 
-const strPlaceholder = 'placeholder'
 const strFunction = 'function'
 const emptyString = ''
 const strNone = 'none'
@@ -41,11 +40,6 @@ export default function createTextMaskInputElement({
   // correct `placeholder`.
   if (providedMask instanceof Array) {
     placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
-  }
-
-  // If the `inputElement`, doesn't have a placeholder. Text Mask will set a default placeholder on it.
-  if (inputElement.placeholder === emptyString && placeholder !== undefined) {
-    inputElement.setAttribute(strPlaceholder, placeholder)
   }
 
   return {

@@ -1,7 +1,6 @@
 require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 
 import packageJson from '../package.json'
-import {convertMaskToPlaceholder} from '../src/utilities'
 import conformToMask from '../src/conformToMask.js'
 import {placeholderChar} from '../src/constants.js'
 
@@ -24,24 +23,6 @@ describe('createTextMaskInputElement', () => {
     })
 
     expect(maskedInputElementControl.update).to.be.a('function')
-  })
-
-  it('sets a default placeholder if the input element does not have one', () => {
-    const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-
-    createTextMaskInputElement({inputElement, mask})
-
-    expect(inputElement.placeholder).to.equal(convertMaskToPlaceholder(mask))
-  })
-
-  it('leaves current placeholder as is if it exists', () => {
-    const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-
-    inputElement.placeholder = 'hello'
-
-    createTextMaskInputElement({inputElement, mask})
-
-    expect(inputElement.placeholder).to.equal('hello')
   })
 
   it('works with mask functions', () => {

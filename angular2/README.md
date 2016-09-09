@@ -9,20 +9,29 @@ First, install it.
 npm i angular2-text-mask --save
 ```
 
-Then, require it and use it:
+Then, import it into your `@NgModule` and declare it:
 
 ```typescript
-import {Component} from '@angular/core';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import MaskedInput from 'angular2-text-mask'
 
+@NgModule({
+  imports: [FormsModule],
+  declarations: [MaskedInput]
+})
+export class TextMaskModule {}
+```
+
+Then, use it in your component:
+```typescript
 @Component({
   selector: 'app',
   template: `
     <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
-  `,
-  directives: [MaskedInput]
+  `
 })
-export class SomeComponent {
+export class AppComponent {
   public myModel = ''
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 }

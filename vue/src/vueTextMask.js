@@ -1,7 +1,7 @@
 /**
  * npm i --save-dev vanilla-text-mask
  */
-import maskInput from 'vanilla-text-mask'
+import maskInput from '../../vanilla/dist/vanillaTextMask'
 
 /*
  * Vue Directive - Text Masking with Vanilla Text Mask
