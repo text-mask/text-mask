@@ -16,7 +16,7 @@ test('placeholder attribute can be passed in', function(assert) {
   this.set('mask', mask);
 
   this.render(hbs`{{masked-input mask=mask placeholder=placeholder}}`);
-  assert.equal(this.$('input').attr('placeholder'), '(___) ___-____');
+  assert.ok( ! this.$('input').attr('placeholder') );
 
   this.set('placeholder', "Some Placeholder Text");
   assert.equal(this.$('input').attr('placeholder'), 'Some Placeholder Text');
