@@ -6,7 +6,7 @@ const minus = '-'
 const nonDigitsRegExp = /\D+/g
 const number = 'number'
 const digitRegExp = /\d/
-const minusRegExp = /\-/
+const minusRegExp = /-/
 
 export default function createNumberMask({
   prefix = dollarSign,
