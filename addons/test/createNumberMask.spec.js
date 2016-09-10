@@ -108,5 +108,14 @@ describe('createNumberMask', () => {
     it('accepts any string and strips out any non-digit characters', () => {
       expect(numberMask('h4x0r sp43k')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/])
     })
+
+    it('accepts negative integers', function() {
+      expect(numberMask('$-12')).to.deep.equal(["$", /\-/, /\d/, /\d/])
+    })
+
+    it('ignores multiple minus signs', function() {
+      expect(numberMask('$--12')).to.deep.equal(["$", /\-/, /\d/, /\d/])
+    })
+
   })
 })
