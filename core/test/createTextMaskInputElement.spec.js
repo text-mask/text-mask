@@ -197,6 +197,18 @@ describe('createTextMaskInputElement', () => {
 
         expect(onAccept.callCount).to.equal(1)
       })
+
+      it('is not called when the change is from empty string to placeholder (i.e. rejected initial value)', () => {
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        const onAccept = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
+
+        inputElement.value = 'r'
+        inputElement.selectionStart = 1
+        textMaskControl.update() // after this, value is (___) ___-____
+
+        expect(onAccept.callCount).to.equal(0)
+      })
     })
 
     describe('`onReject` callback', () => {
@@ -276,6 +288,27 @@ describe('createTextMaskInputElement', () => {
         textMaskControl.update() // after this, value is still (2__) ___-____
 
         expect(onReject.callCount).to.equal(0)
+      })
+
+      it('does not cause an infinite loop when the component `update`s with the same value as part of ' +
+        '`onReject`', () => {
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        const fixedInitialValue = 'rejected!'
+        const onRejectSpy = sinon.spy(onReject)
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onReject: onRejectSpy
+        })
+
+        function onReject() {
+          textMaskControl.update(fixedInitialValue)
+        }
+
+        inputElement.value = fixedInitialValue
+        textMaskControl.update()
+
+        expect(onRejectSpy.callCount).to.equal(1)
       })
     })
   })
