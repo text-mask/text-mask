@@ -69,6 +69,16 @@ describe('createNumberMask', () => {
     expect(numberMask('1000')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
   })
 
+  it('accepts negative integers', function() {
+    let numberMask = createNumberMask({allowNegative: true})
+    expect(numberMask('-$12')).to.deep.equal(['-', '$', /\d/, /\d/])
+  })
+
+  it('ignores multiple minus signs', function() {
+    let numberMask = createNumberMask({allowNegative: true})
+    expect(numberMask('--$12')).to.deep.equal(['-', '$', /\d/, /\d/])
+  })
+
   describe('numberMask default behavior', () => {
     let numberMask = null
 

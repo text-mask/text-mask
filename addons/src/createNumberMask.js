@@ -2,6 +2,7 @@ const dollarSign = '$'
 const emptyString = ''
 const comma = ','
 const period = '.'
+const minus = '-'
 const nonDigitsRegExp = /\D+/g
 const number = 'number'
 const digitRegExp = /\d/
@@ -14,7 +15,8 @@ export default function createNumberMask({
   allowDecimal = false,
   decimalSymbol = period,
   decimalLimit = 2,
-  requireDecimal = false
+  requireDecimal = false,
+  allowNegative = false,
 } = {}) {
   function numberMask(rawValue) {
     const rawValueLength = rawValue.length
@@ -28,6 +30,7 @@ export default function createNumberMask({
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
     const hasDecimal = indexOfLastDecimal !== -1
+    const isNegative = (rawValue[0] === minus) && allowNegative
 
     let integer
     let fraction
@@ -70,6 +73,10 @@ export default function createNumberMask({
 
     if (prefix.length > 0) {
       mask = prefix.split(emptyString).concat(mask)
+    }
+
+    if (isNegative) {
+      mask = [minus].concat(mask)
     }
 
     if (suffix.length > 0) {

@@ -28,6 +28,7 @@ to Text Mask.
 1. `decimalLimit` (number): how many digits to allow after the decimal. Defaults to `2`
 1. `requireDecimal` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
 after the integer. Defaults to `false`.
+1. `allowNegative` (boolean): whether or not to allow negative numbers. Defaults to `false`
 
 #### Usage
 
