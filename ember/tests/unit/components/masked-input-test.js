@@ -1,5 +1,7 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 
+const { run } = Ember;
 const mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
 moduleForComponent('masked-input', 'Unit | Component | masked input', {
@@ -61,7 +63,7 @@ test('initTextMaskInputElement() method sets textMaskInputElement property', fun
   var component = this.subject({ didInsertElement: null });
   this.render();
 
-  component.initTextMaskInputElement();
+  run(() => component.initTextMaskInputElement());
 
   const textMaskInputElement = component.get('textMaskInputElement');
   assert.equal(typeof textMaskInputElement, 'object');
@@ -110,9 +112,9 @@ test('update() method calls textMaskInputElement.update()', function(assert) {
   this.render();
 
   // stub the textMaskInputElement
-  component.set('textMaskInputElement', {
+  run(() => component.set('textMaskInputElement', {
     update: () => assert.ok(true)
-  });
+  }));
 
   component.update();
 });
