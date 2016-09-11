@@ -28,6 +28,7 @@ const App = React.createClass({
           <form className='form-horizontal'>
             <Row name='Masked input' value='maskedInput' noHelpLink>
               <MaskedInput
+                value={props.value}
                 style={props.textMaskComponentStyle}
                 key={props.textMaskComponentUniqueKey}
                 placeholder={props.placeholder}
@@ -37,6 +38,7 @@ const App = React.createClass({
                 ref='maskedInput'
                 mask={props.mask}
                 guide={props.guide}
+                onChange={({target: {value}}) => props.setValue(value)}
                 onReject={() => props.setOnRejectMessage(props.onRejectMessage)}
                 onAccept={() => props.setOnAcceptMessage(props.onAcceptMessage)}
                 className='form-control'

@@ -12,9 +12,11 @@ export const actionCreators = {
   setOnRejectMessage: createAction('setOnRejectMessage'),
   setOnAcceptMessage: createAction('setOnAcceptMessage'),
   populateFromChoice: createAction('populateFromChoice'),
+  setValue: createAction('setValue')
 }
 
 const initialState = {
+  value: '',
   mask: '',
   placeholderChar: '\u2000',
   guide: true,
@@ -33,7 +35,8 @@ export const reducer = handleActions({
     return {...initialState, ...choice, shouldFocusMaskedInput: true}
   },
   [actionCreators.setOnAcceptMessage]: (state, action) => ({...state, acceptanceMessage: action.payload}),
-  [actionCreators.setOnRejectMessage]: (state, action) => ({...state, rejectionMessage: action.payload})
+  [actionCreators.setOnRejectMessage]: (state, action) => ({...state, rejectionMessage: action.payload}),
+  [actionCreators.setValue]: (state, action) => ({...state, value: action.payload})
 }, initialState)
 
 export const selectors = {
