@@ -71,12 +71,17 @@ describe('createNumberMask', () => {
 
   it('accepts negative integers', function() {
     let numberMask = createNumberMask({allowNegative: true})
-    expect(numberMask('-$12')).to.deep.equal(['-', '$', /\d/, /\d/])
+    expect(numberMask('-$12')).to.deep.equal([/-/, '$', /\d/, /\d/])
   })
 
   it('ignores multiple minus signs', function() {
     let numberMask = createNumberMask({allowNegative: true})
-    expect(numberMask('--$12')).to.deep.equal(['-', '$', /\d/, /\d/])
+    expect(numberMask('--$12')).to.deep.equal([/-/, '$', /\d/, /\d/])
+  })
+
+  it('adds a digit placeholder if the input is nothing but a minus sign in order to attract the caret', () => {
+    let numberMask = createNumberMask({allowNegative: true})
+    expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
   describe('numberMask default behavior', () => {
