@@ -156,7 +156,6 @@ export default function createTextMaskInputElement({
       if (
         typeof onAccept === strFunction &&
         inputElementValue !== previousConformedValue &&
-        previousConformedValue !== emptyString &&
         inputElementValue !== placeholder
       ) {
         state.previousOnRejectRawValue = null // See `onReject` comments for explanation for this
