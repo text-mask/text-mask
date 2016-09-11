@@ -103,7 +103,7 @@ test('config is correctly passed to createTextMaskInputElement() method', functi
   this.render();
 });
 
-test('input() method calls textMaskInputElement.update()', function(assert) {
+test('update() method calls textMaskInputElement.update()', function(assert) {
   assert.expect(1);
 
   var component = this.subject({ mask });
@@ -114,5 +114,5 @@ test('input() method calls textMaskInputElement.update()', function(assert) {
     update: () => assert.ok(true)
   });
 
-  component.input();
+  component.update();
 });
