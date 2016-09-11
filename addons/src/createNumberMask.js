@@ -22,7 +22,7 @@ export default function createNumberMask({
 } = {}) {
   const prefixLength = prefix.length
 
-  return function numberMask(rawValue) {
+  function numberMask(rawValue) {
     const rawValueLength = rawValue.length
 
     if (
@@ -94,6 +94,10 @@ export default function createNumberMask({
 
     return mask
   }
+
+  numberMask.instanceOf = 'createNumberMask'
+
+  return numberMask
 }
 
 function convertToMask(strNumber) {
