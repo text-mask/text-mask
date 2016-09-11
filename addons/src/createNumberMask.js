@@ -3,9 +3,11 @@ const emptyString = ''
 const comma = ','
 const period = '.'
 const minus = '-'
+const minusRegExp = /-/
 const nonDigitsRegExp = /\D+/g
 const number = 'number'
 const digitRegExp = /\d/
+const caretTrap = '[]'
 
 export default function createNumberMask({
   prefix = dollarSign,
@@ -18,6 +20,8 @@ export default function createNumberMask({
   requireDecimal = false,
   allowNegative = false,
 } = {}) {
+  const prefixLength = prefix.length
+
   function numberMask(rawValue) {
     const rawValueLength = rawValue.length
 
@@ -53,10 +57,10 @@ export default function createNumberMask({
 
     if ((hasDecimal && allowDecimal) || requireDecimal === true) {
       if (rawValue[indexOfLastDecimal - 1] !== decimalSymbol) {
-        mask.push('[]')
+        mask.push(caretTrap)
       }
 
-      mask.push(decimalSymbol, '[]')
+      mask.push(decimalSymbol, caretTrap)
 
       if (fraction) {
         if (typeof decimalLimit === number) {
@@ -71,12 +75,17 @@ export default function createNumberMask({
       }
     }
 
-    if (prefix.length > 0) {
+    if (prefixLength > 0) {
       mask = prefix.split(emptyString).concat(mask)
     }
 
     if (isNegative) {
-      mask = [minus].concat(mask)
+      // If user is entering a negative number, add a mask placeholder spot to attract the caret to it.
+      if (mask.length === prefixLength) {
+        mask.push(digitRegExp)
+      }
+
+      mask = [minusRegExp].concat(mask)
     }
 
     if (suffix.length > 0) {
