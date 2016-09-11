@@ -40,7 +40,11 @@ export default Ember.TextField.extend({
     this.initTextMaskInputElement();
   },
 
-  input() {
-    this.get('textMaskInputElement').update();
-  }
+  update() {
+    this.get('textMaskInputElement').update(...arguments);
+  },
+
+  _input: Ember.on('input', function() {
+    this.update();
+  })
 });

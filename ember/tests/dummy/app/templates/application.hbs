@@ -6,11 +6,16 @@
 
 {{code-snippet name="masked-input-basic-example.hbs"}}
 
-{{! BEGIN-SNIPPET masked-input-basic-example}}
-{{masked-input mask=mask}}
-{{! END-SNIPPET}}
-
 <p>
   In the template's controller, specify a <code>mask</code>.
 </p>
 {{code-snippet name="controller-mask-example.js"}}
+
+
+<div class="masked-input">
+  {{! BEGIN-SNIPPET masked-input-basic-example}}
+  {{masked-input value=value mask=mask}}
+  {{! END-SNIPPET}}
+</div>
+
+<p>value: <span class="output">{{value}}</span></p>
