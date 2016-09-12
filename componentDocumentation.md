@@ -1,14 +1,14 @@
 # Text Mask documentation
 
-Text Mask accepts the following values:
-
-* [`mask`](#mask) (array or function)
-* [`guide`](#guide) (boolean)
-* [`placeholderChar`](#placeholderchar) (string)
-* [`keepCharPositions`](#keepcharpositions) (boolean)
-* [`pipe`](#pipe) (function)
-* [`onReject`](#onreject) (function)
-* [`onAccept`](#onaccept) (function)
+* Text Mask accepts the following values:
+  * [`mask`](#mask) (array or function)
+  * [`guide`](#guide) (boolean)
+  * [`placeholderChar`](#placeholderchar) (string)
+  * [`keepCharPositions`](#keepcharpositions) (boolean)
+  * [`pipe`](#pipe) (function)
+  * [`onReject`](#onreject) (function)
+  * [`onAccept`](#onaccept) (function)
+* [Supported `<input>` types](#supported-input-types)
 
 ## `mask`
 
@@ -194,3 +194,11 @@ The `onReject` callback will receive an object with the following keys:
 
 You can provide an `onAccept` callback function which will be called when the user enters
 a character that is accepted and displayed on the input element.
+
+---
+
+## Supported `<input>` types
+
+Please note that Text Mask supports input type of `text`, `tel`, `url`, `password`, and `search`. Due to a limitation
+in browser API, other input types, such as `email` or `number`, cannot be supported. However, it is normal to let the 
+user enter an email or a number in an input type `text` combined the appropriate input mask.
