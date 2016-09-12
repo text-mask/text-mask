@@ -7,7 +7,7 @@ const MaskFunctionDefinition = ({maskLink}) => (
   <div>
     <p>
       This is a <Links.maskFunction/>, which means it reads user input first and based on user input,
-      it returns a mask string.
+      it returns the mask array.
     </p>
 
     <p>
