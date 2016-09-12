@@ -23,7 +23,7 @@
     "node": ">= 0.10.0"
   },
   "author": "Loz Jackson",
-  "license": "CC0-1.0",
+  "license": "Unlicense",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "ember-ajax": "^2.0.1",

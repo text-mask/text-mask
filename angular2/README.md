@@ -66,7 +66,3 @@ The code of the example is in [`angular2/example`](https://github.com/text-mask/
 ## Contributing
 
 We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
-
-## License
-
-Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

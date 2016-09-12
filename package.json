@@ -58,7 +58,7 @@
     "url": "git+https://github.com/text-mask/text-mask.git"
   },
   "author": "M.K. Safi <msafi@msafi.com>",
-  "license": "CC0-1.0",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/text-mask/text-mask/issues"
   },

@@ -118,7 +118,3 @@ function
 
 `adjustCaretPosition` will return an integer representing the index of where the caret should be
 moved to next.
-
-## License
-
-Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
