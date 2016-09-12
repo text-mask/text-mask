@@ -38,7 +38,3 @@ It works on mobile, has no 3rd party dependencies, and has a tiny footprint (les
 ## For any questions, suggestions, or feature requests
 
 [Please file an issue](https://github.com/text-mask/text-mask/issues)!
-
-## License
-
-Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

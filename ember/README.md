@@ -44,7 +44,3 @@ To see an example of the code running, follow these steps:
 * Open [http://localhost:4200](http://localhost:4200)
 
 You should have a working demo.
-
-## License
-
-Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)

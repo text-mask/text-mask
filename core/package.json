@@ -4,7 +4,7 @@
   "description": "Core of https://github.com/text-mask/text-mask",
   "main": "dist/textMaskCore.js",
   "author": "M.K. Safi <msafi@msafi.com>",
-  "license": "CC0-1.0",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/text-mask/text-mask/issues"
   },
