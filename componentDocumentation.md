@@ -8,7 +8,7 @@
   * [`pipe`](#pipe) (function)
   * [`onReject`](#onreject) (function)
   * [`onAccept`](#onaccept) (function)
-* Supported `<input>` types
+* [Supported `<input>` types](#supported-input-types)
 
 ## `mask`
 
