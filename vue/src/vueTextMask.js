@@ -9,20 +9,13 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
  * normally, as a parameter on the element being bound.
  */
 
-/**
- * Initialize variable to store directive's `this` so that we can use its
- * context in inputHandler called via event listener
- */
-let instance
-
-// Register the input handler to watch for updates
-const inputHandler = ({target: {value}}) => {
-  return instance.textMaskInputElement.update(value)
-}
-
 export default {
-  textMaskInputElement: 0,
   params: ['maskOptions'],
+  textMaskInputElement: null,
+  // Register the input handler to watch for updates
+  inputHandler({target: {value}}) {
+    return this.textMaskInputElement.update(value)
+  },
   /**
    * Use the element (should be a text input) calling the directive as an
    * option for the text mask. Expect options as params, but if none are sent
@@ -31,11 +24,13 @@ export default {
    * watch and update with changes.
    */
   bind() {
-    instance = this
-    let options = instance.params.maskOptions || {}
-    options.inputElement = instance.el
-    instance.textMaskInputElement = createTextMaskInputElement(options)
-    instance.el.addEventListener('input', inputHandler)
+    let options = this.params.maskOptions || {}
+    options.inputElement = this.el
+    this.textMaskInputElement = createTextMaskInputElement(options)
+    // We need to bind the context of this (the directive) to the inputHandler
+    // so that it can access textMaskInputElement from the event listener.
+    this.inputHandler = this.inputHandler.bind(this)
+    this.el.addEventListener('input', this.inputHandler)
   },
   /**
    * via Vue API
@@ -44,6 +39,6 @@ export default {
    * protect the application / tidy from memory leaks.
    */
   unbind() {
-    instance.el.removeEventListener('input', inputHandler)
+    this.el.removeEventListener('input', this.inputHandler)
   }
 }
