@@ -7,12 +7,7 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-
-// Import Text Mask Directive
-import textMask from './text-mask'
-
-// Use text mask directive
-Vue.directive('text-mask', textMask)
+import textMask from 'vueTextMask'
 
 new Vue({
   el: 'body',
@@ -53,10 +48,9 @@ the [documentation here](https://github.com/text-mask/text-mask/blob/master/comp
 To see an example of the code running, follow these steps:
 
 1. Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
-2. `cd text-mask/vue`
-3. `npm install`
-4. `npm run dev`
-5. Open [http://localhost:8080](http://localhost:8080)
+2. `npm install`
+3. `npm run vue:dev`
+4. Open [http://localhost:3000](http://localhost:3000)
 
 ## Contributing
 

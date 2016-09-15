@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
 
 /*
@@ -9,7 +10,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
  * normally, as a parameter on the element being bound.
  */
 
-export default {
+export default Vue.directive('text-mask', {
   params: ['maskOptions'],
   textMaskInputElement: null,
   // Register the input handler to watch for updates
@@ -41,4 +42,4 @@ export default {
   unbind() {
     this.el.removeEventListener('input', this.inputHandler)
   }
-}
+})
