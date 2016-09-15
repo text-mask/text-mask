@@ -52,6 +52,10 @@ To see an example of the code running, follow these steps:
 3. `npm run vue:dev`
 4. Open [http://localhost:3000](http://localhost:3000)
 
+## Browser Support
+
+Modern browsers and IE9+. IE9 does not support ideal backspace/delete features, but is still functional.
+
 ## Contributing
 
 We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
