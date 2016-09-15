@@ -7,7 +7,9 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-import textMask from 'vueTextMask'
+import VueTextMask from 'vueTextMask'
+
+Vue.directive('text-mask', VueTextMask)
 
 new Vue({
   el: 'body',

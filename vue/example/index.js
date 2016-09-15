@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import textMask from '../src/vueTextMask'
+import VueTextMask from '../src/vueTextMask'
+
+Vue.directive('text-mask', VueTextMask)
 
 /* eslint-disable no-new */
 new Vue({
