@@ -25,9 +25,10 @@ new Vue({
   name="phone"
   class="form-control"
   v-model="phone"
-  v-text-mask
-  :mask-options="maskOptions">
+  v-text-mask="maskOptions">
 ```
+
+**Please note that you can only pass reference to an object, not an object literal.** `v-text-mask="{obj: 'literal'}"` **will not work.**
 
 ```js
 // Component JS
