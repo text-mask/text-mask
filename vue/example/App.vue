@@ -10,9 +10,7 @@
           name="phone"
           class="form-control"
           v-model="phone"
-          v-text-mask
-          :mask-options="maskOptions"
-        >
+          v-text-mask="maskOptions">
       </div>
     </div>
 

@@ -10,7 +10,6 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
  */
 
 export default {
-  params: ['maskOptions'],
   textMaskInputElement: null,
   // Register the input handler to watch for updates
   inputHandler({target: {value}}) {
@@ -18,13 +17,13 @@ export default {
   },
   /**
    * Use the element (should be a text input) calling the directive as an
-   * option for the text mask. Expect options as params, but if none are sent
-   * just use the element as the only option. Send all options together in an
-   * object to createTextMaskInputElement (from Core). Add an event listener to
-   * watch and update with changes.
+   * option for the text mask. Expect options array key as directive's
+   * expression, if none passed just use the element selector. Use options
+   * object from directive's parent vm to createTextMaskInputElement (from
+   * Core). Add an event listener to watch and update with changes.
    */
   bind() {
-    let options = this.params.maskOptions || {}
+    let options = this.vm[this.expression] || {}
     options.inputElement = this.el
     this.textMaskInputElement = createTextMaskInputElement(options)
     // We need to bind the context of this (the directive) to the inputHandler
