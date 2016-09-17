@@ -2,14 +2,16 @@
 
 ## Getting started
 
+`npm install --save-dev vue-text-mask`
+
 ```js
 // main.js
 
 import Vue from 'vue'
 import App from './App.vue'
-import vueTextMask from 'vueTextMask'
+import TextMask from 'vue-text-mask'
 
-Vue.directive('text-mask', vueTextMask)
+Vue.directive('text-mask', TextMask)
 
 new Vue({
   el: 'body',
@@ -28,7 +30,7 @@ new Vue({
   v-text-mask="maskOptions">
 ```
 
-**Please note that you can only pass reference to an object, not an object literal.** 
+**Please note that you can only pass reference to an object, not an object literal.**
 `v-text-mask="{obj: 'literal'}"` **will not work.**
 
 ```js
@@ -58,11 +60,11 @@ To see an example of the code running, follow these steps:
 
 ## Browser support
 
-Modern browsers and IE10+. 
+Modern browsers and IE10+.
 
 IE9 does not support caret positioning when backspacing, but is still functional.
 
 ## Contributing
 
-We would love some contributions! Check out 
+We would love some contributions! Check out
 [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
