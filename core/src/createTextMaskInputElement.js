@@ -196,6 +196,8 @@ export default function createTextMaskInputElement({
           maskRejection: someCharsRejected
         })
       }
+
+      return inputElement // This is not necessary, but it's another option
     }
   }
 }
