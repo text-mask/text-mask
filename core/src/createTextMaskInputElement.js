@@ -201,7 +201,7 @@ export default function createTextMaskInputElement({
 }
 
 function safeSetSelection(element, selectionPosition) {
-  if (document.activeElement === element) {
+  if (!document || document.activeElement === element) {
     element.setSelectionRange(selectionPosition, selectionPosition, strNone)
   }
 }
