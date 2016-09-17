@@ -1,17 +1,25 @@
 # Vue Input Mask
 
+**Note:** IE9 is not supported in this module.
+
 ## Getting started
 
-`npm install --save-dev vue-text-mask`
+First, install it.
+
+```bash
+npm i vue-text-mask --save
+```
+
+Then, use it as follows:
 
 ```js
 // main.js
 
 import Vue from 'vue'
-import App from './App.vue'
-import TextMask from 'vue-text-mask'
+import App from './app.vue'
+import textMask from 'vue-text-mask'
 
-Vue.directive('text-mask', TextMask)
+Vue.directive('text-mask', textMask)
 
 new Vue({
   el: 'body',
@@ -57,12 +65,6 @@ To see an example of the code running, follow these steps:
 2. `npm install`
 3. `npm run vue:dev`
 4. Open [http://localhost:3000](http://localhost:3000)
-
-## Browser support
-
-Modern browsers and IE10+.
-
-IE9 does not support caret positioning when backspacing, but is still functional.
 
 ## Contributing
 
