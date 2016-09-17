@@ -1,4 +1,4 @@
-# Vue Input Mask Directive
+# Vue Input Mask
 
 ## Getting started
 
@@ -7,9 +7,9 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-import VueTextMask from 'vueTextMask'
+import vueTextMask from 'vueTextMask'
 
-Vue.directive('text-mask', VueTextMask)
+Vue.directive('text-mask', vueTextMask)
 
 new Vue({
   el: 'body',
@@ -28,7 +28,8 @@ new Vue({
   v-text-mask="maskOptions">
 ```
 
-**Please note that you can only pass reference to an object, not an object literal.** `v-text-mask="{obj: 'literal'}"` **will not work.**
+**Please note that you can only pass reference to an object, not an object literal.** 
+`v-text-mask="{obj: 'literal'}"` **will not work.**
 
 ```js
 // Component JS
@@ -55,15 +56,13 @@ To see an example of the code running, follow these steps:
 3. `npm run vue:dev`
 4. Open [http://localhost:3000](http://localhost:3000)
 
-## Browser Support
+## Browser support
 
-Modern browsers and IE9+. IE9 does not support ideal backspace/delete features, but is still functional.
+Modern browsers and IE10+. 
+
+IE9 does not support caret positioning when backspacing, but is still functional.
 
 ## Contributing
 
-We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
-
-## License
-
-Public domain - [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
-
+We would love some contributions! Check out 
+[this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
