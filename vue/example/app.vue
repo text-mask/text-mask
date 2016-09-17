@@ -35,12 +35,7 @@ export default {
   data () {
     return {
       phone: '',
-      /**
-       * Options that get passed to vanilla text mask.
-       * Object accepts these properties:
-       * https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#text-mask-documentation
-       * @type {Object}
-       */
+
       maskOptions: {
         mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       }
