@@ -30,7 +30,15 @@ export default Ember.Controller.extend({
 
 ## Documentation
 
-For more information about the attributes that the `masked-input` component accepts, see the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
+&#x1F4CD; For more information about the attributes that the `masked-input` component accepts, see the 
+[documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
+
+#### Other use-cases
+
+##### Unmasking the value that is stored in the model
+
+Text Mask does not provide an option to unmask the model before storing it. You can sanitize the model on your
+side. See [here](https://github.com/text-mask/text-mask/issues/109) for details.
 
 ## Example
 
