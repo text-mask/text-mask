@@ -1,9 +1,8 @@
-# Vue 1.x Input Mask
+# Vue Input Mask
 
 **Note:**
 - IE9 is not supported in this module.
-- Works with Vue 1.x. No support for 2.x, yet.
-
+- Works with Vue 1.0. No support for 2.0, yet.
 
 ## Getting started
 
