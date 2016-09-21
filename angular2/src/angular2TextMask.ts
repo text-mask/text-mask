@@ -51,9 +51,9 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
     }
-    
+
     try { //Try RC.5+ setValue
-       this.formControl.setValue(value)
+      this.formControl.setValue(value)
     }
     catch (e) { //Fallback to RC.4 updateValue
       this.formControl.updateValue(value)
