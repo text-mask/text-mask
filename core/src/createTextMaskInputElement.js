@@ -27,7 +27,11 @@ export default function createTextMaskInputElement({
   }
 
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: emptyString, previousOnRejectRawValue: emptyString}
+  const state = {
+    previousConformedValue: emptyString,
+    previousOnRejectRawValue: emptyString,
+    previousRawValue: emptyString
+  }
 
   // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
@@ -50,9 +54,11 @@ export default function createTextMaskInputElement({
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
     update(rawValue = inputElement.value) {
-      // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
+      // If `rawValue` equals `state.previousConformedValue` or `state.previousRawValue`, we don't need to change
+      // anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
-      if (rawValue === state.previousConformedValue) { return }
+      if (rawValue === state.previousConformedValue || rawValue === state.previousRawValue) { return }
+      state.previousRawValue = rawValue
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
