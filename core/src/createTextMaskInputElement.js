@@ -27,11 +27,7 @@ export default function createTextMaskInputElement({
   }
 
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {
-    previousConformedValue: emptyString,
-    previousOnRejectRawValue: emptyString,
-    previousRawValue: emptyString
-  }
+  const state = {previousConformedValue: emptyString, previousOnRejectRawValue: emptyString}
 
   // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
@@ -54,11 +50,9 @@ export default function createTextMaskInputElement({
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
     update(rawValue = inputElement.value) {
-      // If `rawValue` equals `state.previousConformedValue` or `state.previousRawValue`, we don't need to change
-      // anything. So, we return.
+      // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
-      if (rawValue === state.previousConformedValue || rawValue === state.previousRawValue) { return }
-      state.previousRawValue = rawValue
+      if (rawValue === state.previousConformedValue) { return }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
@@ -133,6 +127,13 @@ export default function createTextMaskInputElement({
       // Before we proceed, we need to know which conformed value to use, the one returned by the pipe or the one
       // returned by `conformToMask`.
       const finalConformedValue = (piped) ? pipeResults.value : conformedValue
+
+      // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
+      // and set to `inputElement.value`. The below check guards against further code execution in such case.
+      // See https://github.com/text-mask/text-mask/issues/231
+      if (finalConformedValue === inputElement.value) {
+        return
+      }
 
       // After setting the `finalConformedValue` as the value of the `inputElement`, we will need to know where to set
       // the caret position. `adjustCaretPosition` will tell us.
