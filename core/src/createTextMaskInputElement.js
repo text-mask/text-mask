@@ -128,14 +128,22 @@ export default function createTextMaskInputElement({
       // returned by `conformToMask`.
       const finalConformedValue = (piped) ? pipeResults.value : conformedValue
 
+      // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
+      const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
+      const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
+
+      state.previousConformedValue = inputElementValue // store value for access for next time
+
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against further code execution in such case.
       // See https://github.com/text-mask/text-mask/issues/231
-      if (finalConformedValue === inputElement.value) {
+      if (inputElement.value === inputElementValue) {
         return
       }
 
-      // After setting the `finalConformedValue` as the value of the `inputElement`, we will need to know where to set
+      inputElement.value = inputElementValue // set the input value
+
+      // After setting the value of the `inputElement`, we will need to know where to set
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
@@ -148,13 +156,7 @@ export default function createTextMaskInputElement({
         caretTrapIndexes
       })
 
-      // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
-      const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
-      const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
-
-      inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
-      state.previousConformedValue = inputElementValue // store value for access for next time
 
       // If we set a value to the input element that's different form `previousConformedValue`, it means user input
       // was accepted, and we call the `onAccept` callback if it's a function. However, there's an exception. When
