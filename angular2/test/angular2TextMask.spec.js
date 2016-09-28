@@ -10,14 +10,16 @@ const MaskedInput = (isVerify()) ?
 describe('MaskedInput', () => {
   let inputElement
   let ngModel
+  let renderer
 
   beforeEach(() => {
     inputElement = document.createElement('input')
+    renderer = {}
   })
 
   it('does not throw when instantiated', () => {
     expect(() => {
-      const maskedInput = new MaskedInput({nativeElement: inputElement}, ngModel)
+      const maskedInput = new MaskedInput(renderer, {nativeElement: inputElement}, ngModel)
 
       maskedInput.ngOnInit({mask: '(111)'})
 
