@@ -1,15 +1,17 @@
-import {Directive, ElementRef, Input, OnInit} from '@angular/core'
+import {Directive, ElementRef, forwardRef, Input, OnInit, Renderer} from '@angular/core'
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
   host: {
-    '(input)': 'onInput()'
+    '(input)': 'onInput($event)'
   },
   selector: '[textMask]',
-  providers: [
-    {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
-  ]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => MaskedInputDirective),
+    multi: true
+  }]
 })
 export default class MaskedInputDirective implements OnInit, ControlValueAccessor{
   private textMaskInputElement: any
@@ -26,7 +28,8 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     onAccept: undefined
   }
 
-  formControl: FormControl = new FormControl()
+  private _onTouched = () => {}
+  private _onChange = (_: any) => {}
 
   constructor(private element: ElementRef) {}
 
@@ -42,28 +45,21 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     this.textMaskInputElement = createTextMaskInputElement(
       Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
-
-    // This ensures that initial model value gets masked
-    setTimeout(() => this.onInput())
   }
 
   writeValue(value: any) {
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
     }
-    
-    this.formControl.setValue(value)
   }
 
-  registerOnChange(fn: (value: any) => void) {
-    this.formControl.valueChanges.subscribe(fn)
-  }
+  registerOnChange(fn: (value: any) => any): void { this._onChange = fn }
 
-  registerOnTouched() {}
+  registerOnTouched(fn: () => any): void { this._onTouched = fn }
 
-  onInput() {
-    this.textMaskInputElement.update()
-    this.writeValue(this.inputElement.value)
+  onInput($event) {
+    this.textMaskInputElement.update($event.target.value)
+    this._onChange($event.target.value)
   }
 }
 
