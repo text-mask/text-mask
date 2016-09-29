@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnInit} from '@angular/core'
+import {Directive, ElementRef, forwardRef, Input, OnInit, Renderer} from '@angular/core'
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
@@ -7,9 +7,11 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     '(input)': 'onInput()'
   },
   selector: '[textMask]',
-  providers: [
-    {provide: NG_VALUE_ACCESSOR, useExisting: MaskedInputDirective, multi: true}
-  ]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => MaskedInputDirective),
+    multi: true
+  }]
 })
 export default class MaskedInputDirective implements OnInit, ControlValueAccessor{
   private textMaskInputElement: any
@@ -28,7 +30,7 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
 
   formControl: FormControl = new FormControl()
 
-  constructor(private element: ElementRef) {}
+  constructor(private renderer: Renderer, private element: ElementRef) {}
 
   ngOnInit() {
     if (this.element.nativeElement.tagName === 'INPUT') {
@@ -64,6 +66,10 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
   onInput() {
     this.textMaskInputElement.update()
     this.writeValue(this.inputElement.value)
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled)
   }
 }
 
