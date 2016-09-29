@@ -1,6 +1,7 @@
-import { ElementRef, OnInit } from '@angular/core';
-import { FormControl, ControlValueAccessor } from '@angular/forms';
+import { ElementRef, OnInit, Renderer } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 export default class MaskedInputDirective implements OnInit, ControlValueAccessor {
+    private renderer;
     private element;
     private textMaskInputElement;
     private inputElement;
@@ -13,12 +14,14 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
         onReject: any;
         onAccept: any;
     };
-    formControl: FormControl;
-    constructor(element: ElementRef);
+    private _onTouched;
+    private _onChange;
+    constructor(renderer: Renderer, element: ElementRef);
     ngOnInit(): void;
     writeValue(value: any): void;
-    registerOnChange(fn: (value: any) => void): void;
-    registerOnTouched(): void;
-    onInput(): void;
+    registerOnChange(fn: (value: any) => any): void;
+    registerOnTouched(fn: () => any): void;
+    onInput($event: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }
 export { MaskedInputDirective as Directive };
