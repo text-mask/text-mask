@@ -29,7 +29,7 @@ describe('autoCorrectedMmddyyyyPipe', () => {
     expect(autoCorrectedMmddyyyyPipe('12/00')).to.equal(false)
   })
 
-  it('completes the year to `200` if the 1st digit is 0', () => {
-    expect(autoCorrectedMmddyyyyPipe('12/31/0')).to.deep.equal({value: '12/31/200', indexesOfPipedChars: [6, 7]})
+  it('returns unmodified partial entry if it could develop to correct date', () => {
+    expect(autoCorrectedMmddyyyyPipe('0 /  /    ')).to.deep.equal({value: '0 /  /    ', indexesOfPipedChars: []})
   })
 })

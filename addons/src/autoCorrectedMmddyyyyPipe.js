@@ -1,73 +1,33 @@
-export default function autoCorrectedMmddyyyyPipe(conformedValue) {
-  const conformedValueArr = conformedValue.split('')
+export default function autoCorrectedMmddyyyyPipe(conformedValue, dateFormat = 'mm.dd.yyyy') {
   const indexesOfPipedChars = []
-
-  const month1stDigit = parseDigit(conformedValue[0])
-  const month2ndDigit = parseDigit(conformedValue[1])
-  const day1stDigit = parseDigit(conformedValue[3])
-  const day2ndDigit = parseDigit(conformedValue[4])
-  const year1stDigit = parseDigit(conformedValue[6])
-
-  if (month1stDigit > 1) {
-    conformedValueArr.splice(0, 2, 0, month1stDigit)
-
-    indexesOfPipedChars.push(0)
-  }
-
-  if (
-    (month1stDigit === 1 && month2ndDigit > 2) ||
-    (month1stDigit === 0 && month2ndDigit === 0)
-  ) {
+  const dateFormatArray = dateFormat.split(/[^dmy]+/)
+  const maxValue = {'dd': 31, 'mm': 12, 'yyyy': 9999}
+  const minValue = {'dd': 1, 'mm': 1, 'yyyy': 1}
+  const conformedValueArr = conformedValue.split('')
+  // Check first digit
+  dateFormatArray.forEach((format) => {
+    const position = dateFormat.indexOf(format)
+    const maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10)
+    if (parseInt(conformedValueArr[position], 10) > maxFirstDigit) {
+      conformedValueArr[position + 1] = conformedValueArr[position]
+      conformedValueArr[position] = 0
+      indexesOfPipedChars.push(position)
+    }
+  })
+  // Check for invalid date
+  const isInvalid = dateFormatArray.some((format) => {
+    const position = dateFormat.indexOf(format)
+    const length = format.length
+    const textValue = conformedValue.substr(position, length).trim()
+    const value = parseInt(textValue, 10)
+    return value > maxValue[format] || (textValue.length === length && value < minValue[format])
+  })
+  if (isInvalid) {
     return false
   }
-
-  if (day1stDigit > 3) {
-    conformedValueArr.splice(3, 2, 0, day1stDigit)
-
-    indexesOfPipedChars.push(3)
-  }
-
-  if (
-    (day1stDigit === 3 && day2ndDigit > 1) ||
-    (day1stDigit === 0 && day2ndDigit === 0)
-  ) {
-    return false
-  }
-
-  if (year1stDigit === 0) {
-    conformedValueArr.splice(6, 3, 2, 0, year1stDigit)
-
-    indexesOfPipedChars.push(6, 7)
-  }
-
+  indexesOfPipedChars.sort()
   return {
     value: conformedValueArr.join(''),
     indexesOfPipedChars
   }
-}
-
-const digitsNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-const digitsStrings = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-const allDigits = digitsNumbers.concat(digitsStrings)
-function parseDigit(value) {
-  const digit = find(allDigits, (digit) => {
-    return digit === value
-  })
-
-  if (digit === undefined) {
-    return value
-  } else {
-    return Number(digit)
-  }
-}
-
-function find(arr, predicate) {
-  let value
-  for (let i = 0; i < arr.length; i++) {
-    value = arr[i]
-    if (predicate(value, i, arr)) {
-      return value
-    }
-  }
-  return undefined
 }
