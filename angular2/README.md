@@ -51,6 +51,11 @@ As you can see in the code above, you are passing an object to the `textMask` di
 Text Mask does not provide an option to unmask the model before storing it. You can sanitize the model on your
 side. See [here](https://github.com/text-mask/text-mask/issues/109) for details.
 
+##### `change` doesn't work
+
+`change` on an input field will not work if `[text-mask]` is present. You can use `(ngModelChange)` instead. For more 
+information, see [this page](https://github.com/text-mask/text-mask/issues/236).
+
 ## Example
 
 To see an example of the code running, follow these steps:
