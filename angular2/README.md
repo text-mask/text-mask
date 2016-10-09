@@ -9,7 +9,7 @@ First, install it.
 npm i angular2-text-mask --save
 ```
 
-Then, import it into your `@NgModule` and declare it:
+Then, import it into your `@NgModule`:
 
 ```typescript
 import { NgModule } from '@angular/core';
