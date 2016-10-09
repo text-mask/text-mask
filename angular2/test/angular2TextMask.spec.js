@@ -5,7 +5,7 @@ import packageJson from '../package.json'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
-  require('../src/angular2TextMask.ts').default
+  require('../src/angular2TextMask.ts').MaskedInputDirective
 
 describe('MaskedInput', () => {
   let inputElement
