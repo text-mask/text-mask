@@ -4,7 +4,8 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
 
 @Directive({
   host: {
-    '(input)': 'onInput($event)'
+    '(input)': 'onInput($event)',
+    '(blur)': '_onTouched()'
   },
   selector: '[textMask]',
   providers: [{
