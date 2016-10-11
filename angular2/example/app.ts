@@ -5,7 +5,7 @@ import {Component, NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import {FormsModule, FormControl, ReactiveFormsModule} from '@angular/forms'
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic'
-import MaskedInput from '../src/angular2TextMask'
+import {TextMaskModule} from '../src/angular2TextMask'
 
 @Component({
   selector: 'app',
@@ -26,8 +26,8 @@ class AppComponent {
 }
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
-  declarations: [AppComponent, MaskedInput],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, TextMaskModule],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
