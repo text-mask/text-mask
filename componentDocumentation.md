@@ -8,7 +8,9 @@
   * [`pipe`](#pipe) (function)
   * [`onReject`](#onreject) (function)
   * [`onAccept`](#onaccept) (function)
-* [Supported `<input>` types](#supported-input-types)
+* Known issues
+  * [Supported `<input>` types](#supported-input-types)
+  * [Updating the `mask` or other values after initialization](#updating-the-mask-or-other-values-after-initialization)
 
 ## `mask`
 
@@ -197,8 +199,16 @@ a character that is accepted and displayed on the input element.
 
 ---
 
-## Supported `<input>` types
+## Known issues
+
+### Supported `<input>` types
 
 Please note that Text Mask supports input type of `text`, `tel`, `url`, `password`, and `search`. Due to a limitation
 in browser API, other input types, such as `email` or `number`, cannot be supported. However, it is normal to let the 
 user enter an email or a number in an input type `text` combined the appropriate input mask.
+
+### Updating the `mask` or other values after initialization
+
+Once Text Mask has been initialized on an input field, it's not possible to change the mask or other configurations. In
+frameworks such as React or Ember, you may expect that you can hot-swap values, but that would not work with Text Mask. 
+See [this page](https://github.com/text-mask/text-mask/issues/233) for some workarounds for this limitation.

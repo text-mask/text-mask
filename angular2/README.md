@@ -9,18 +9,21 @@ First, install it.
 npm i angular2-text-mask --save
 ```
 
-Then, import it into your `@NgModule` and declare it:
+Then, import it into your `@NgModule`:
 
 ```typescript
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import MaskedInput from 'angular2-text-mask'
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
-  imports: [FormsModule],
-  declarations: [MaskedInput]
+  imports: [
+    FormsModule,
+    TextMaskModule
+  ],
+  declarations: []
 })
-export class TextMaskModule {}
+export class MyModule {}
 ```
 
 Then, use it in your component:
@@ -50,6 +53,11 @@ As you can see in the code above, you are passing an object to the `textMask` di
 
 Text Mask does not provide an option to unmask the model before storing it. You can sanitize the model on your
 side. See [here](https://github.com/text-mask/text-mask/issues/109) for details.
+
+##### `change` doesn't work
+
+`change` on an input field will not work if `[text-mask]` is present. You can use `(ngModelChange)` instead. For more 
+information, see [this page](https://github.com/text-mask/text-mask/issues/236).
 
 ## Example
 

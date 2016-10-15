@@ -64,6 +64,13 @@ module.exports = {
         commonjs: '@angular/forms',
         commonjs2: '@angular/forms',
         amd: '@angular/forms'
+      },
+
+      '@angular/common': {
+        root: ['ng', 'common'],
+        commonjs: '@angular/common',
+        commonjs2: '@angular/common',
+        amd: '@angular/common'
       }
     }
   ]

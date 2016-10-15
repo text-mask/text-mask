@@ -1,6 +1,6 @@
 import { ElementRef, OnInit, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-export default class MaskedInputDirective implements OnInit, ControlValueAccessor {
+export declare class MaskedInputDirective implements OnInit, ControlValueAccessor {
     private renderer;
     private element;
     private textMaskInputElement;
@@ -24,4 +24,5 @@ export default class MaskedInputDirective implements OnInit, ControlValueAccesso
     onInput($event: any): void;
     setDisabledState(isDisabled: boolean): void;
 }
-export { MaskedInputDirective as Directive };
+export declare class TextMaskModule {
+}
