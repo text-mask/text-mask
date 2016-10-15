@@ -2,7 +2,7 @@ const createAutoCorrectedDatePipe = (isVerify()) ?
   require('../dist/createAutoCorrectedDatePipe.js').default :
   require('../src/createAutoCorrectedDatePipe.js').default
 
-describe.only('createAutoCorrectedDatePipe', () => {
+describe('createAutoCorrectedDatePipe', () => {
   let autoCorrectedDatePipe
 
   it('accepts the date format as the first parameter and returns a date pipe function', () => {
