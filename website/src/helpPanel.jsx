@@ -33,7 +33,7 @@ const HelpPanel = React.createClass({
             </p>
 
             <p>
-              It is using <Links.autoCorrectedMmddyyyyPipe />, which is available as an <Links.addon/>.
+              It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
             </p>
 
             <p style={{marginBottom: 0}}>
