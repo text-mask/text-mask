@@ -22,7 +22,7 @@ export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy') {
     const isInvalid = dateFormatArray.some((format) => {
       const position = dateFormat.indexOf(format)
       const length = format.length
-      const textValue = conformedValue.substr(position, length).trim()
+      const textValue = conformedValue.substr(position, length).replace(/\D/g, '')
       const value = parseInt(textValue, 10)
 
       return value > maxValue[format] || (textValue.length === length && value < minValue[format])
