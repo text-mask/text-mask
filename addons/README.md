@@ -65,19 +65,17 @@ These functions here can be passed as a
 [`pipe`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#pipe)
 to Text Mask.
 
-### `autoCorrectedMmddyyyyPipe`
+### `createAutoCorrectedDatePipe`
 
-The `autoCorrectedMmddyyyyPipe` helps the user in entering a date in the `MM/DD/YYYY` format.
+The `createAutoCorrectedDatePipe` returns a `autoCorrectedDatePipe`, which can help the user in entering a date.
 
 For example, if the user enters a value
 larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
 day slots.
 
-And for the year, when the user enters `0` in the 1st slot of the year, it transforms that to `200`.
-
 It also blocks the user from entering invalid days or months such as `33/44`.
 
-For `autoCorrectedMmddyyyyPipe` to work properly, the Text Mask component needs to be
+For `createAutoCorrectedDatePipe` to work properly, the Text Mask component needs to be
 configured with
 [`keepCharPositions`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
 set to `true`.
@@ -85,7 +83,11 @@ set to `true`.
 #### Usage
 
 ```js
-import autoCorrectedMmddyyyyPipe from 'text-mask-addons/dist/autoCorrectedMmddyyyyPipe.js'
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
 
-// ...then pass `autoCorrectedMmddyyyyPipe` to the Text Mask component as the pipe
+const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy')
+// As you can see in the line above, you can pass a string argument to `createAutoCorrectedDatePipe` to give it the 
+// order of day, month, and year in your `mask`.
+
+// ...now you can pass `autoCorrectedDatePipe` to the Text Mask component as the `pipe`
 ```
