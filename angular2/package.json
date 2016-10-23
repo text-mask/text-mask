@@ -9,6 +9,12 @@
   "bugs": {
     "url": "https://github.com/text-mask/text-mask/issues"
   },
+  "scripts": {
+    "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
+    "lite": "lite-server",
+    "tsc": "tsc -p example",
+    "tsc:w": "tsc -w"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/text-mask/text-mask.git"
@@ -25,5 +31,30 @@
     "input formatting",
     "text formatting",
     "string formatting"
-  ]
+  ],
+  "devDependencies": {
+    "@angular/common": "~2.1.1",
+    "@angular/compiler": "~2.1.1",
+    "@angular/core": "~2.1.1",
+    "@angular/forms": "~2.1.1",
+    "@angular/http": "~2.1.1",
+    "@angular/platform-browser": "~2.1.1",
+    "@angular/platform-browser-dynamic": "~2.1.1",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.39",
+    "zone.js": "^0.6.25",
+    "awesome-typescript-loader": "^1.0.0",
+    "@types/core-js": "^0.9.34",
+    "@types/node": "^6.0.45",
+    "concurrently": "^3.0.0",
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.3",
+    "tslint": "^3.13.0",
+    "ts-node": "~1.2.0"
+  },
+  "dependencies": {
+    "text-mask-core": "^0.16.4"
+  }
 }
