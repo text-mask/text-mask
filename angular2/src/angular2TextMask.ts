@@ -30,8 +30,8 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
     onAccept: undefined
   }
 
-  private _onTouched = () => {}
-  private _onChange = (_: any) => {}
+  _onTouched = () => {}
+  _onChange = (_: any) => {}
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
