@@ -25,5 +25,8 @@
     "input formatting",
     "text formatting",
     "string formatting"
-  ]
+  ],
+  "dependencies": {
+    "text-mask-core": "latest"
+  }
 }
