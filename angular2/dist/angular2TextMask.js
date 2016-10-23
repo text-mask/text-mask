@@ -1,1 +1,92 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t(require("@angular/common"),require("@angular/core"),require("@angular/forms")):"function"==typeof define&&define.amd?define(["@angular/common","@angular/core","@angular/forms"],t):"object"==typeof exports?exports.angular2TextMask=t(require("@angular/common"),require("@angular/core"),require("@angular/forms")):e.angular2TextMask=t(e.ng.common,e.ng.core,e.ng.forms)}(this,function(e,t,r){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={exports:{},id:n,loaded:!1};return e[n].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};return t.m=e,t.c=r,t.p="",t(0)}([function(e,t,r){"use strict";var n=this&&this.__decorate||function(e,t,r,n){var o,i=arguments.length,a=i<3?t:null===n?n=Object.getOwnPropertyDescriptor(t,r):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(e,t,r,n);else for(var u=e.length-1;u>=0;u--)(o=e[u])&&(a=(i<3?o(a):i>3?o(t,r,a):o(t,r))||a);return i>3&&a&&Object.defineProperty(t,r,a),a},o=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)},i=r(7),a=r(6),u=r(8),s=r(5),l=function(){function e(e,t){this.renderer=e,this.element=t,this.textMaskConfig={mask:"",guide:!0,placeholderChar:"_",pipe:void 0,keepCharPositions:!1,onReject:void 0,onAccept:void 0},this._onTouched=function(){},this._onChange=function(e){}}return e.prototype.ngOnInit=function(){"INPUT"===this.element.nativeElement.tagName?this.inputElement=this.element.nativeElement:this.inputElement=this.element.nativeElement.getElementsByTagName("INPUT")[0],this.textMaskInputElement=s["default"](Object.assign({inputElement:this.inputElement},this.textMaskConfig))},e.prototype.writeValue=function(e){void 0!==this.textMaskInputElement&&this.textMaskInputElement.update(e)},e.prototype.registerOnChange=function(e){this._onChange=e},e.prototype.registerOnTouched=function(e){this._onTouched=e},e.prototype.onInput=function(e){this.textMaskInputElement.update(e.target.value),this._onChange(e.target.value)},e.prototype.setDisabledState=function(e){this.renderer.setElementProperty(this.element.nativeElement,"disabled",e)},n([i.Input("textMask"),o("design:type",Object)],e.prototype,"textMaskConfig",void 0),e=n([i.Directive({host:{"(input)":"onInput($event)","(blur)":"_onTouched()"},selector:"[textMask]",providers:[{provide:u.NG_VALUE_ACCESSOR,useExisting:i.forwardRef(function(){return e}),multi:!0}]}),o("design:paramtypes",[i.Renderer,i.ElementRef])],e)}();t.MaskedInputDirective=l;var c=function(){function e(){}return e=n([i.NgModule({declarations:[l],exports:[l],imports:[a.CommonModule]}),o("design:paramtypes",[])],e)}();t.TextMaskModule=c},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.placeholderChar="_"},function(e,t,r){"use strict";function n(){var e=arguments.length<=0||void 0===arguments[0]?s:arguments[0],t=arguments.length<=1||void 0===arguments[1]?u.placeholderChar:arguments[1];if(e.indexOf(t)!==-1)throw new Error("Placeholder character must not be used as part of the mask. Please specify a character that is not present in your mask as your placeholder character.\n\n"+("The placeholder character that was received is: "+JSON.stringify(t)+"\n\n")+("The mask that was received is: "+JSON.stringify(e)));return e.map(function(e){return e instanceof RegExp?t:e}).join("")}function o(e){return"string"==typeof e||e instanceof String}function i(e){return"number"==typeof e&&void 0===e.length&&!isNaN(e)}function a(e){for(var t=[],r=void 0;r=e.indexOf(l),r!==-1;)t.push(r),e.splice(r,1);return{maskWithoutCaretTraps:e,indexes:t}}Object.defineProperty(t,"__esModule",{value:!0}),t.convertMaskToPlaceholder=n,t.isString=o,t.isNumber=i,t.processCaretTraps=a;var u=r(1),s=[],l="[]"},function(e,t){"use strict";function r(e){var t=e.previousConformedValue,r=void 0===t?o:t,i=e.currentCaretPosition,a=void 0===i?0:i,u=e.conformedValue,s=e.rawValue,l=e.placeholderChar,c=e.placeholder,f=e.indexesOfPipedChars,d=void 0===f?n:f,p=e.caretTrapIndexes,h=void 0===p?n:p;if(0===a)return 0;var v=s.length,m=r.length,g=c.length,y=u.length,C=v-m,b=C>0,x=0===m,k=C>1&&!b&&!x;if(k)return a;var O=b&&(r===u||u===c),j=0;if(O?j=a-C:!function(){for(var e=u.toLowerCase(),t=s.toLowerCase(),r=t.substr(0,a).split(o),n=r.filter(function(t){return e.indexOf(t)!==-1}),i=n[n.length-1],f=d.map(function(t){return e[t]}),p=f.filter(function(e){return e===i}).length,h=n.filter(function(e){return e===i}).length,v=c.substr(0,c.indexOf(l)).split(o).filter(function(e,t){return e===i&&s[t]!==e}).length,m=v+h+p,g=0,C=0;C<y;C++){var b=e[C];if(j=C+1,b===i&&g++,g>=m)break}}(),b){for(var P=j,M=j;M<=g;M++)if(c[M]===l&&(P=M),c[M]===l||h.indexOf(M)!==-1||M===g)return P}else for(var R=j;R>=0;R--)if(c[R-1]===l||h.indexOf(R)!==-1||0===R)return R}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=r;var n=[],o=""},function(e,t,r){"use strict";function n(){var e=arguments.length<=0||void 0===arguments[0]?a:arguments[0],t=arguments.length<=1||void 0===arguments[1]?a:arguments[1],r=arguments.length<=2||void 0===arguments[2]?{}:arguments[2],n=r.guide,u=void 0===n||n,s=r.previousConformedValue,l=void 0===s?a:s,c=r.placeholderChar,f=void 0===c?i.placeholderChar:c,d=r.placeholder,p=void 0===d?(0,o.convertMaskToPlaceholder)(t,f):d,h=r.currentCaretPosition,v=r.keepCharPositions,m=u===!1&&void 0!==l,g=e.length,y=l.length,C=p.length,b=t.length,x=g-y,k=x>0,O=h+(k?-x:0),j=O+Math.abs(x);if(v===!0&&!k){for(var P=a,M=O;M<j;M++)p[M]===f&&(P+=f);e=e.slice(0,O)+P+e.slice(O,g)}for(var R=e.split(a).map(function(e,t){return{"char":e,isNew:t>=O&&t<j}}),_=g-1;_>=0;_--){var T=R[_]["char"];if(T!==f){var w=_>=O&&y===b;T===p[w?_-x:_]&&R.splice(_,1)}}var E=a,V=!1;e:for(var S=0;S<C;S++){var N=p[S];if(N===f){if(R.length>0)for(;R.length>0;){var I=R.shift(),q=I["char"],A=I.isNew;if(q===f&&m!==!0){E+=f;continue e}if(t[S].test(q)){if(v===!0&&A!==!1&&l!==a&&u!==!1&&k){for(var D=R.length,J=null,L=0;L<D;L++){var U=R[L];if(U["char"]!==f&&U.isNew===!1)break;if(U["char"]===f){J=L;break}}null!==J?(E+=q,R.splice(J,1)):S--}else E+=q;continue e}V=!0}m===!1&&(E+=p.substr(S,C));break}E+=N}if(m&&k===!1){for(var W=null,B=0;B<E.length;B++)p[B]===f&&(W=B);E=null!==W?E.substr(0,W+1):a}return{conformedValue:E,meta:{someCharsRejected:V}}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=n;var o=r(2),i=r(1),a=""},function(e,t,r){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function o(e){var t=e.inputElement,r=e.mask,n=e.guide,o=e.pipe,l=e.placeholderChar,f=void 0===l?h.placeholderChar:l,g=e.onAccept,C=e.onReject,b=e.keepCharPositions,x=void 0!==b&&b;("undefined"==typeof r?"undefined":s(r))===y&&void 0!==r.pipe&&void 0!==r.mask&&(o=r.pipe,r=r.mask);var k={previousConformedValue:m,previousOnRejectRawValue:m},O=void 0,j=void 0;return r instanceof Array&&(O=(0,p.convertMaskToPlaceholder)(r,f)),{state:k,update:function(){var e=arguments.length<=0||void 0===arguments[0]?t.value:arguments[0];if(e!==k.previousConformedValue){var l=a(e),h=t.selectionStart,y=k.previousConformedValue,b=void 0;if(("undefined"==typeof r?"undefined":s(r))===v){j=r(l,{currentCaretPosition:h,previousConformedValue:y,placeholderChar:f});var P=(0,p.processCaretTraps)(j),M=P.maskWithoutCaretTraps,R=P.indexes;j=M,b=R,O=(0,p.convertMaskToPlaceholder)(j,f)}else j=r;var _={previousConformedValue:y,guide:n,placeholderChar:f,pipe:o,placeholder:O,currentCaretPosition:h,keepCharPositions:x},T=(0,d["default"])(l,j,_),w=T.conformedValue,E=T.meta.someCharsRejected,V=("undefined"==typeof o?"undefined":s(o))===v,S={};V&&(S=o(w,u({rawValue:l},_)),S===!1?S={value:y,rejected:!0}:(0,p.isString)(S)&&(S={value:S}));var N=V?S.value:w,I=(0,c["default"])({previousConformedValue:y,conformedValue:N,placeholder:O,rawValue:l,currentCaretPosition:h,placeholderChar:f,indexesOfPipedChars:S.indexesOfPipedChars,caretTrapIndexes:b}),q=N===O&&0===I,A=q?m:N;if(k.previousConformedValue=A,t.value!==A){t.value=A,i(t,I),("undefined"==typeof g?"undefined":s(g))===v&&A!==y&&A!==O&&(k.previousOnRejectRawValue=null,g());var D=l.length<y.length;("undefined"==typeof C?"undefined":s(C))===v&&(E||S.rejected)&&D===!1&&k.previousOnRejectRawValue!==e&&(k.previousOnRejectRawValue=e,C({conformedValue:N,pipeRejection:S.rejected,maskRejection:E}))}}}}}function i(e,t){document.activeElement===e&&e.setSelectionRange(t,t,g)}function a(e){if((0,p.isString)(e))return e;if((0,p.isNumber)(e))return String(e);if(void 0===e||null===e)return m;throw new Error("The 'value' provided to Text Mask needs to be a string or a number. The value received was:\n\n "+JSON.stringify(e))}Object.defineProperty(t,"__esModule",{value:!0});var u=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n])}return e},s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol?"symbol":typeof e};t["default"]=o;var l=r(3),c=n(l),f=r(4),d=n(f),p=r(2),h=r(1),v="function",m="",g="none",y="object"},function(t,r){t.exports=e},function(e,r){e.exports=t},function(e,t){e.exports=r}])});
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
+var forms_1 = require('@angular/forms');
+var textMaskCore_1 = require('text-mask-core/dist/textMaskCore');
+var MaskedInputDirective = (function () {
+    function MaskedInputDirective(renderer, element) {
+        this.renderer = renderer;
+        this.element = element;
+        this.textMaskConfig = {
+            mask: '',
+            guide: true,
+            placeholderChar: '_',
+            pipe: undefined,
+            keepCharPositions: false,
+            onReject: undefined,
+            onAccept: undefined
+        };
+        this._onTouched = function () { };
+        this._onChange = function (_) { };
+    }
+    MaskedInputDirective.prototype.ngOnInit = function () {
+        if (this.element.nativeElement.tagName === 'INPUT') {
+            // `textMask` directive is used directly on an input element
+            this.inputElement = this.element.nativeElement;
+        }
+        else {
+            // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+            this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0];
+        }
+        this.textMaskInputElement = textMaskCore_1.createTextMaskInputElement(Object.assign({ inputElement: this.inputElement }, this.textMaskConfig));
+    };
+    MaskedInputDirective.prototype.writeValue = function (value) {
+        if (this.textMaskInputElement !== undefined) {
+            this.textMaskInputElement.update(value);
+        }
+    };
+    MaskedInputDirective.prototype.registerOnChange = function (fn) { this._onChange = fn; };
+    MaskedInputDirective.prototype.registerOnTouched = function (fn) { this._onTouched = fn; };
+    MaskedInputDirective.prototype.onInput = function ($event) {
+        this.textMaskInputElement.update($event.target.value);
+        this._onChange($event.target.value);
+    };
+    MaskedInputDirective.prototype.setDisabledState = function (isDisabled) {
+        this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled);
+    };
+    __decorate([
+        core_1.Input('textMask'), 
+        __metadata('design:type', Object)
+    ], MaskedInputDirective.prototype, "textMaskConfig", void 0);
+    MaskedInputDirective = __decorate([
+        core_1.Directive({
+            host: {
+                '(input)': 'onInput($event)',
+                '(blur)': '_onTouched()'
+            },
+            selector: '[textMask]',
+            providers: [{
+                    provide: forms_1.NG_VALUE_ACCESSOR,
+                    useExisting: core_1.forwardRef(function () { return MaskedInputDirective; }),
+                    multi: true
+                }]
+        }), 
+        __metadata('design:paramtypes', [core_1.Renderer, core_1.ElementRef])
+    ], MaskedInputDirective);
+    return MaskedInputDirective;
+}());
+exports.MaskedInputDirective = MaskedInputDirective;
+var TextMaskModule = (function () {
+    function TextMaskModule() {
+    }
+    TextMaskModule = __decorate([
+        core_1.NgModule({
+            declarations: [MaskedInputDirective],
+            exports: [MaskedInputDirective],
+            imports: [common_1.CommonModule]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], TextMaskModule);
+    return TextMaskModule;
+}());
+exports.TextMaskModule = TextMaskModule;
+//# sourceMappingURL=angular2TextMask.js.map

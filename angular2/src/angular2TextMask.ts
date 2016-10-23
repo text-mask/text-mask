@@ -1,7 +1,7 @@
-import {Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer} from '@angular/core'
-import {CommonModule} from '@angular/common'
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
+import { Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
+import {createTextMaskInputElement} from 'text-mask-core/dist/textMaskCore'
 
 @Directive({
   host: {
@@ -30,8 +30,8 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
     onAccept: undefined
   }
 
-  private _onTouched = () => {}
-  private _onChange = (_: any) => {}
+  _onTouched = () => {}
+  _onChange = (_: any) => {}
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 

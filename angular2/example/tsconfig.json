@@ -7,18 +7,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false,
-    "declaration": true,
-    "outDir": "dist",
-    "lib": [
-      "es6",
-      "dom"
-    ]
+    "noImplicitAny": false
   },
   "files": [
-    "src/angular2TextMask.ts"
-  ],
-  "angularCompilerOptions": {
-    "genDir": "aot"
-  }
+    "./main.ts"
+  ]
 }
