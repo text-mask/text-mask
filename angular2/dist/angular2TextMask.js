@@ -2,7 +2,7 @@
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var forms_1 = require('@angular/forms');
-var createTextMaskInputElement_1 = require('text-mask-core/src/createTextMaskInputElement');
+var textMaskCore_1 = require('text-mask-core/dist/textMaskCore');
 var MaskedInputDirective = (function () {
     function MaskedInputDirective(renderer, element) {
         this.renderer = renderer;
@@ -28,7 +28,7 @@ var MaskedInputDirective = (function () {
             // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
             this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0];
         }
-        this.textMaskInputElement = createTextMaskInputElement_1.default(Object.assign({ inputElement: this.inputElement }, this.textMaskConfig));
+        this.textMaskInputElement = textMaskCore_1.createTextMaskInputElement(Object.assign({ inputElement: this.inputElement }, this.textMaskConfig));
     };
     MaskedInputDirective.prototype.writeValue = function (value) {
         if (this.textMaskInputElement !== undefined) {

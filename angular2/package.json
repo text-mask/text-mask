@@ -27,6 +27,6 @@
     "string formatting"
   ],
   "dependencies": {
-    "text-mask-core": "latest"
+    "text-mask-core": "^0.16.4"
   }
 }

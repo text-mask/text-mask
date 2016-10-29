@@ -39,7 +39,7 @@
     "vanilla:verify": "npm run vanilla:test -- --verify",
     "vanilla:build": "./node_modules/.bin/webpack -p --config vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:publish": "sh vanilla/publish.sh",
-    "angular2:build": "npm i --save text-mask-core@latest && ngc -p angular2/tsconfig.json && rm -rf angular2/aot",
+    "angular2:build": "./node_modules/.bin/ngc -p angular2/tsconfig.json && rm -rf angular2/aot",
     "angular2:test": "./node_modules/.bin/mocha --compilers js:babel-core/register angular2/test --require ./common/domSetup.js --recursive",
     "angular2:tdd": "npm run angular2:test -- --watch",
     "angular2:verify": "npm run angular2:test -- --verify",
@@ -124,7 +124,6 @@
     "style-loader": "^0.13.0",
     "systemjs": "0.19.27",
     "testdom": "^2.0.0",
-    "text-mask-core": "^0.16.4",
     "ts-node": "~1.2.0",
     "tslint": "^3.13.0",
     "typescript": "^2.0.3",
@@ -144,8 +143,5 @@
     "input formatting",
     "text formatting",
     "string formatting"
-  ],
-  "dependencies": {
-    "text-mask-core": "^0.16.4"
-  }
+  ]
 }
