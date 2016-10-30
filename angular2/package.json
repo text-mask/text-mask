@@ -10,10 +10,10 @@
     "url": "https://github.com/text-mask/text-mask/issues"
   },
   "scripts": {
-    "start": "node_modules/.bin/tsc -p example && node_modules/.bin/concurrently \"node_modules/.bin/tsc -w -p example\" \"node_modules/.bin/lite-server\" ",
-    "lite": "node_modules/.bin/lite-server",
-    "tsc": "node_modules/.bin/tsc -p example",
-    "tsc:w": "node_modules/.bin/tsc -w"
+    "start": "tsc -p example && concurrently \"tsc -w -p example\" lite-server ",
+    "lite": "lite-server",
+    "tsc": "tsc -p example",
+    "tsc:w": "tsc -w"
   },
   "repository": {
     "type": "git",
