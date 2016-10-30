@@ -8,5 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false
-  }
+  },
+  "files": [
+    "./main.ts"
+  ]
 }

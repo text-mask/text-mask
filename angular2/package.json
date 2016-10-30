@@ -10,7 +10,7 @@
     "url": "https://github.com/text-mask/text-mask/issues"
   },
   "scripts": {
-    "start": "tsc -p example && concurrently \"tsc -w -p example\" lite-server ",
+    "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
     "lite": "lite-server",
     "tsc": "tsc -p example",
     "tsc:w": "tsc -w"
