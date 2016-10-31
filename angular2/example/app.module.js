@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
-// import {TextMaskModule} from '../dist/angular2TextMask'
+var angular2TextMask_1 = require('../dist/angular2TextMask');
 var app_component_1 = require('./app.component');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule /*, TextMaskModule*/],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, angular2TextMask_1.TextMaskModule],
             declarations: [app_component_1.default],
             bootstrap: [app_component_1.default]
         }), 
