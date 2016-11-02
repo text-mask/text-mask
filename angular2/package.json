@@ -14,7 +14,7 @@
     "lite": "lite-server",
     "tsc": "tsc -p example",
     "tsc:w": "tsc -w",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json"
+    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot"
   },
   "repository": {
     "type": "git",
