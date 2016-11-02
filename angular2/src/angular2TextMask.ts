@@ -1,7 +1,7 @@
 import { Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
-import {createTextMaskInputElement} from 'text-mask-core/dist/textMaskCore'
+import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
 
 @Directive({
   host: {

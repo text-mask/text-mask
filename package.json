@@ -52,8 +52,8 @@
     "vue:dev": "node_modules/.bin/webpack-dev-server --content-base vue/example --port 3000 --config vue/example/webpack.runVueExample.js",
     "git:done": "git checkout gh-pages && git rebase master && git checkout master && git push origin master --tags && git push origin gh-pages",
     "ci": "npm run test && npm run build && npm run verify",
-    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx && node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts",
-    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix && node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts || true"
+    "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx && angular2/node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts",
+    "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix && angular2/node_modules/.bin/tslint -c ./angular2/tslint.json ./angular2/src/*.ts ./angular2/test/**/*.ts ./angular2/example/**/*.ts || true"
   },
   "repository": {
     "type": "git",
