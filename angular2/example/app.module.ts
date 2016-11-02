@@ -1,5 +1,5 @@
-import {NgModule}      from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {NgModule}      from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {TextMaskModule} from '../dist/angular2TextMask'
 import AppComponent from './app.component'
