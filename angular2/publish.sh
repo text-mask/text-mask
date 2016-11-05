@@ -7,11 +7,9 @@ if [ -z "$version" ]; then
   exit 1
 fi
 
-npm run angular2:build
-
-npm run angular2:verify
-
 cd ./angular2
+
+npm run build
 
 generatedNpmVersion="$(npm version $version)"
 
