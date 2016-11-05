@@ -2,8 +2,14 @@ language: node_js
 
 node_js: "node"
 
+install: true
+
+env:
+  - SUBPROJECT=ci
+  - SUBPROJECT=angular2:ci
+
 script:
-  - npm run ci
+  - npm run $SUBPROJECT
 
 notifications:
   email: false

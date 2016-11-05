@@ -11,10 +11,11 @@
   },
   "scripts": {
     "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
-    "lite": "lite-server",
-    "tsc": "tsc -p example",
-    "tsc:w": "tsc -w",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot"
+    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot",
+    "test": "# ADD TESTS",
+    "loud-lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts",
+    "lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts || true",
+    "ci": "npm run test && npm run loud-lint"
   },
   "repository": {
     "type": "git",

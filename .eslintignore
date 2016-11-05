@@ -2,4 +2,4 @@
 **/static/*.js
 node_modules/
 ember/
-angular2/example/*.js
+angular2/**/*.js
