@@ -4,7 +4,7 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    autoCorrectedMmddyyyyPipe: path.join(__dirname, './src/autoCorrectedMmddyyyyPipe.js'),
+    createAutoCorrectedDatePipe: path.join(__dirname, './src/createAutoCorrectedDatePipe.js'),
     createNumberMask: path.join(__dirname, './src/createNumberMask.js'),
     emailMask: path.join(__dirname, './src/emailMask.js')
   },

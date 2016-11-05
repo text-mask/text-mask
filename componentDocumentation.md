@@ -178,7 +178,7 @@ If the `pipe` adds new characters to the string, it must return an object with t
 `pipe` to the conformed value
 
 For an example of a pipe, see the code for
-[`autoCorrectedMmddyyyyPipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/autoCorrectedMmddyyyyPipe.js)
+[`createAutoCorrectedDatePipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/createAutoCorrectedDatePipe.js)
 which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 ## `onReject`

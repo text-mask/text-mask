@@ -9,18 +9,21 @@ First, install it.
 npm i angular2-text-mask --save
 ```
 
-Then, import it into your `@NgModule` and declare it:
+Then, import it into your `@NgModule`:
 
 ```typescript
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import MaskedInput from 'angular2-text-mask'
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
-  imports: [FormsModule],
-  declarations: [MaskedInput]
+  imports: [
+    FormsModule,
+    TextMaskModule
+  ],
+  declarations: []
 })
-export class TextMaskModule {}
+export class MyModule {}
 ```
 
 Then, use it in your component:

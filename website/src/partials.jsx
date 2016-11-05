@@ -69,11 +69,11 @@ export const DemoBottom = () => (
 const Link = ({url, text}) => <a className='alert-link' target='_blank' href={url}>{text}</a>
 
 export const Links = {
-  autoCorrectedMmddyyyyPipe() {
+  createAutoCorrectedDatePipe() {
     return (
       <Link
-        url='https://github.com/text-mask/text-mask/tree/master/addons#autocorrectedmmddyyyypipe'
-        text='autoCorrectedMmddyyyyPipe'
+        url='https://github.com/text-mask/text-mask/tree/master/addons#createautocorrecteddatepipe'
+        text='createAutoCorrectedDatePipe'
       />
     )
   },
