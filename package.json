@@ -46,7 +46,7 @@
     "vue:publish": "sh vue/publish.sh",
     "vue:dev": "node_modules/.bin/webpack-dev-server --content-base vue/example --port 3000 --config vue/example/webpack.runVueExample.js",
     "git:done": "git checkout gh-pages && git rebase master && git checkout master && git push origin master --tags && git push origin gh-pages",
-    "ci": "npm run test && npm run build && npm run verify",
+    "ci": "npm i && npm run test && npm run build && npm run verify",
     "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
     "lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx --fix || true"
   },
