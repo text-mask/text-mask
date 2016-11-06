@@ -4,13 +4,16 @@ var coreLoaders = require('../../core/webpack.buildCore.js').module.loaders
 
 module.exports = {
   devtool: 'eval',
-  entry: [path.join(__dirname, '/app.js')],
+  entry: {
+    app: [path.join(__dirname, '../src/angular1TextMask.js'), path.join(__dirname, '/app.js')],
+    vendor: ['angular']
+  },
   output: {
     path: path.join(__dirname, '/'),
     filename: 'bundle.js',
     publicPath: '/'
   },
-  plugins: [new webpack.NoErrorsPlugin()],
+  plugins: [new webpack.NoErrorsPlugin(), new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")],
   resolve: {extensions: ['', '.js']},
   module: {
     loaders: [{

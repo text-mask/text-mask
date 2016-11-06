@@ -1,11 +1,28 @@
-import angular from 'angular'
+(function() {
+  'use strict';
 
-/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "textMaskModule" }]*/
-import textMaskModule from '../src/angular1TextMask'
+  angular
+    .module('app', [
+      'text-mask'
+    ])
+    .component('demo', {
+      controller: 'DemoController as $ctrl',
+      templateUrl: 'demo.html'
+    })
+    .controller('DemoController', DemoController);
 
-let demoModule = angular.module('app', ['text-mask'])
 
-import Demo from './demo.component'
-demoModule.component('demo', Demo)
+  DemoController.$inject = [];
 
-export default demoModule
+  /* @ngInject */
+  function DemoController() {
+    var vm = this;
+
+    this.myModel = ''
+    this.modelWithValue = '5554441234'
+
+    this.mask = {
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    }
+  }
+})();
