@@ -1,4 +1,5 @@
 # Angular 2 Input Mask
+
 This Angular 2 Directive is also compatible with Ionic 2 `ion-input`.
 
 ## Getting started
@@ -65,12 +66,9 @@ To see an example of the code running, follow these steps:
 
 1. Clone the repo, `git clone git@github.com:text-mask/text-mask.git`
 1. `cd text-mask`
+1. `cd angular2`
 1. `npm install`
-1. `npm run angular2:dev`
+1. `npm start`
 1. Open [http://localhost:3000](http://localhost:3000)
 
 The code of the example is in [`angular2/example`](https://github.com/text-mask/text-mask/tree/master/angular2/example).
-
-## Contributing
-
-We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
