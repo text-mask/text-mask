@@ -20,3 +20,4 @@ export default {
     this.el.removeEventListener('input', this.inputHandler)
   }
 }
+export conformToMask from '../../core/src/conformToMask.js'
