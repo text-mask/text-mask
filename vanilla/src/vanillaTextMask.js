@@ -19,4 +19,4 @@ export function maskInput(textMaskConfig) {
 }
 
 export default maskInput
-export conformToMask from '../../core/src/conformToMask.js'
+export {default as conformToMask} from '../../core/src/conformToMask.js'
