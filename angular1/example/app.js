@@ -1,3 +1,5 @@
+/*global angular*/
+
 (function() {
   'use strict'
 
@@ -17,10 +19,10 @@
   function DemoController() {
     var vm = this
 
-    this.myModel = ''
-    this.modelWithValue = '5554441234'
+    vm.myModel = ''
+    vm.modelWithValue = '5554441234'
 
-    this.textMaskConfig = {
+    vm.textMaskConfig = {
       mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     }
   }
