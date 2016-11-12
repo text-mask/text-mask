@@ -214,8 +214,8 @@ package as follows
 import textMask, {conformToMask} from 'where-you-import-text-mask-from' 
 ```
 
-*Note for Ember users*: `conformToMask` is not included in the Ember package. 
-If you need it for Ember, please open an issue.
+*Note to Ember users*: `conformToMask` is not included in the Ember package. If you need it, please 
+[open an issue](https://github.com/text-mask/text-mask/issues/new).
 
 #### Using it
 
