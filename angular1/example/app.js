@@ -21,7 +21,7 @@
     this.myModel = ''
     this.modelWithValue = '5554441234'
 
-    this.mask = {
+    this.textMaskConfig = {
       mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     }
   }

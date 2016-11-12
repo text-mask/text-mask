@@ -40,7 +40,7 @@ function textMask() {
   }
 }
 
-let textMaskModule = angular.module('text-mask', [])
+const textMaskModule = angular.module('text-mask', [])
 textMaskModule.directive('textMask', textMask)
 
 export default textMaskModule

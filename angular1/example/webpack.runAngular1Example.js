@@ -13,7 +13,10 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
-  plugins: [new webpack.NoErrorsPlugin(), new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")],
+  plugins: [
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")
+  ],
   resolve: {extensions: ['', '.js']},
   module: {
     loaders: [{
