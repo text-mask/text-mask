@@ -9,8 +9,6 @@ fi
 
 npm run angular1:build
 
-npm run angular1:verify
-
 cd ./angular1
 
 generatedNpmVersion="$(npm version $version)"
