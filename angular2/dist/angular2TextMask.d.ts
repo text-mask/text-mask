@@ -26,3 +26,4 @@ export declare class MaskedInputDirective implements OnInit, ControlValueAccesso
 }
 export declare class TextMaskModule {
 }
+export { conformToMask } from 'text-mask-core/dist/textMaskCore';
