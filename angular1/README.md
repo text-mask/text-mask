@@ -1,4 +1,4 @@
-# JavaScript Input Mask
+# Angular Input Mask
 
 ## Getting started
 
