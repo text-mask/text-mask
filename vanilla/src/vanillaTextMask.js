@@ -7,6 +7,8 @@ export function maskInput(textMaskConfig) {
 
   inputElement.addEventListener('input', inputHandler)
 
+  textMaskInputElement.update(inputElement.value)
+
   return {
     textMaskInputElement,
 
