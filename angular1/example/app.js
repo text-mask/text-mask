@@ -11,7 +11,6 @@
     })
     .controller('DemoController', DemoController)
 
-
   DemoController.$inject = []
 
   /* @ngInject */
