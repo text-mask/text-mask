@@ -15,7 +15,7 @@ See it in action, [check out the demo page](https://text-mask.github.io/text-mas
 ## Installation and usage
 
 * [React](react#readme)
-* [Angular 2](angular2#readme)
+* [Angular 2](angular2#readme) or [Angular 1](angular1#readme)
 * [Ember](ember#readme)
 * [Vue](vue#readme)
 * [Vanilla JS](vanilla#readme)
