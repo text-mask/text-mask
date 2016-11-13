@@ -8,6 +8,7 @@
   * [`pipe`](#pipe) (function)
   * [`onReject`](#onreject) (function)
   * [`onAccept`](#onaccept) (function)
+* [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
   * [Updating the `mask` or other values after initialization](#updating-the-mask-or-other-values-after-initialization)
@@ -196,6 +197,63 @@ The `onReject` callback will receive an object with the following keys:
 
 You can provide an `onAccept` callback function which will be called when the user enters
 a character that is accepted and displayed on the input element.
+
+---
+
+## Included `conformToMask`
+
+[`conformToMask`](https://github.com/text-mask/text-mask/blob/master/core/src/conformToMask.js)
+ is the function that Text Mask uses to transform text to the given mask.
+
+#### Importing it
+
+It is included with Text Mask components for convenience. So you can import it from the Text Mask
+package as follows
+
+```js
+import textMask, {conformToMask} from 'where-you-import-text-mask-from' 
+```
+
+*Note to Ember users*: `conformToMask` is not included in the Ember package. If you need it, please 
+[open an issue](https://github.com/text-mask/text-mask/issues/new).
+
+#### Using it
+
+`conformToMask` accepts three arguments:
+
+* text (string) (required)
+* [mask](#mask) (array) (required)
+* config (object) (optional)
+
+`config` is [these values]([`conformToMask`](https://github.com/text-mask/text-mask/blob/master/core/src/conformToMask.js)).
+The linked variable names have similar names to properties that are described above in this document. So you can 
+learn what each one is for by reading the documentation above.
+
+The return value of `conformToMask` is an object with the following shape:
+
+```json
+{
+  "conformedValue": "(123) 123-1234",
+  "meta": {
+    "someCharsRejected": false
+  }
+}
+```
+
+So, one way to use `conformToMask` could be as follows:
+
+```js
+var phoneNumber = '5551234444'
+var phoneNumberMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+
+var conformedPhoneNumber = conformToMask(
+  phoneNumber,
+  phoneNumberMask,
+  {guide: false}
+)
+
+console.log(conformedPhoneNumber.conformedValue) // prints (555) 123-4444
+```
 
 ---
 

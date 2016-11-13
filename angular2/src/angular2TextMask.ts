@@ -74,5 +74,5 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
   exports: [MaskedInputDirective],
   imports: [CommonModule]
 })
-export class TextMaskModule {
-}
+export class TextMaskModule {}
+export {conformToMask} from 'text-mask-core/dist/textMaskCore'

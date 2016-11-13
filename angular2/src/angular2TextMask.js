@@ -89,4 +89,6 @@ var TextMaskModule = (function () {
     return TextMaskModule;
 }());
 exports.TextMaskModule = TextMaskModule;
+var textMaskCore_2 = require('text-mask-core/dist/textMaskCore');
+exports.conformToMask = textMaskCore_2.conformToMask;
 //# sourceMappingURL=angular2TextMask.js.map

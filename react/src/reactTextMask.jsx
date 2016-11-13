@@ -64,3 +64,4 @@ export const MaskedInput = React.createClass({
 })
 
 export default MaskedInput
+export {default as conformToMask} from '../../core/src/conformToMask.js'
