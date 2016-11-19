@@ -68,10 +68,10 @@ export default function createNumberMask({
         }
 
         mask = mask.concat(fraction)
-      } else if (requireDecimal === true) {
-        for (let i = 0; i < decimalLimit; i++) {
-          mask.push(digitRegExp)
-        }
+      }
+
+      if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
+        mask.push(digitRegExp)
       }
     }
 
