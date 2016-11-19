@@ -225,7 +225,7 @@ import textMask, {conformToMask} from 'where-you-import-text-mask-from'
 * [mask](#mask) (array) (required)
 * config (object) (optional)
 
-`config` is [these values]([`conformToMask`](https://github.com/text-mask/text-mask/blob/master/core/src/conformToMask.js)).
+`config` is [these values](https://github.com/text-mask/text-mask/blob/master/core/src/conformToMask.js#L9-L14).
 The linked variable names have similar names to properties that are described above in this document. So you can 
 learn what each one is for by reading the documentation above.
 
