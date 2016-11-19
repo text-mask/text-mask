@@ -66,7 +66,7 @@ describe('createNumberMask', () => {
   it('can require a fraction', () => {
     let numberMask = createNumberMask({requireDecimal: true})
 
-    expect(numberMask('1000')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    expect(numberMask('1000')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/, '[]', '.', '[]'])
   })
 
   it('accepts negative integers', function() {
