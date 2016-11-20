@@ -1,8 +1,9 @@
 # Vue Input Mask
 
 **Note:**
+
 - IE9 is not supported in this module.
-- Works with Vue 1.0. No support for 2.0, yet.
+- Works with Vue 2.0 - for Vue 1.0 support use vue-text-mask v0.2
 
 ## Getting started
 
@@ -24,7 +25,7 @@ import textMask from 'vue-text-mask'
 Vue.directive('text-mask', textMask)
 
 new Vue({
-  el: 'body',
+  el: '#app-root',
   components: { App }
 })
 ```

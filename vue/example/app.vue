@@ -18,13 +18,7 @@
       <label for="2" class="col-sm-4 control-label">Model</label>
 
       <div class="col-sm-8">
-        <input
-          id="2"
-          disabled
-          type="text"
-          value="{{ phone | json 2 }}"
-          class="form-control"
-        >
+        <pre>{{ phone }}</pre>
       </div>
     </div>
   </form>
