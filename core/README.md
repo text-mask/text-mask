@@ -14,6 +14,10 @@ To download the script, use npm.
 npm i text-mask-core --save
 ```
 
+---
+
+# &#x1F6A8; the documentation below this point is out-of-date and could be inaccurate
+
 ### Include it
 
 After installing with npm, you could possibly do something like this from your `index.html`:
@@ -47,9 +51,6 @@ Once you do that however, the caret position will be lost. You can then use `adj
 to restore the caret to its proper position.
 
 ## API documentation
-
-&#x1F6A7; The following section is not maintained and out of date. If you would like it to be updated,
-please file an issue.
 
 ### `convertMaskToPlaceholder(mask)`
 
