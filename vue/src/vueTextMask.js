@@ -1,24 +1,19 @@
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
 
-export default {
-  textMaskInputElement: null,
+let textMaskInputElement = null
 
-  inputHandler({target: {value}}) {
-    return this.textMaskInputElement.update(value)
-  },
-
-  bind() {
-    let options = this.vm[this.expression] || {}
-    options.inputElement = this.el
-    this.textMaskInputElement = createTextMaskInputElement(options)
-
-    this.inputHandler = this.inputHandler.bind(this)
-    this.el.addEventListener('input', this.inputHandler)
-  },
-
-  unbind() {
-    this.el.removeEventListener('input', this.inputHandler)
-  }
+const inputHandler = ({target: {value}}) => {
+  return textMaskInputElement.update(value)
 }
 
-export {default as conformToMask} from '../../core/src/conformToMask.js'
+export default {
+  bind(el, binding, vnode) {
+    let options = binding.value || {}
+    options.inputElement = el
+    textMaskInputElement = createTextMaskInputElement(options)
+    el.addEventListener('input', inputHandler)
+  },
+  unbind() {
+    el.removeEventListener('input', inputHandler)
+  }
+}

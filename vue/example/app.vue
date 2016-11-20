@@ -22,9 +22,8 @@
           id="2"
           disabled
           type="text"
-          value="{{ phone | json 2 }}"
-          class="form-control"
-        >
+          v-model="phone"
+          class="form-control">
       </div>
     </div>
   </form>
