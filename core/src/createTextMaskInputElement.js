@@ -43,6 +43,12 @@ export default function createTextMaskInputElement({
     placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
   }
 
+  // Turn autocomplete off on Android devices as it causes wrong selectionStart value.
+  // See #220.
+  if (navigator.userAgent.match(/Android/)) {
+    inputElement.setAttribute('autocomplete', 'off');
+  }
+
   return {
     state,
 
