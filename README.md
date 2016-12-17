@@ -31,7 +31,8 @@ Text Mask is very configurable and allows you to create any type of input mask w
 
 ## Extendable
 
-Text Mask is extendable so you can easily expand the base functionality with addons for more masks. [Read the addon documentation for details](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
+You can easily expand the base functionality of Text Mask with addons for more mask types. 
+[Checkout existing addons](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 ## Robust
 
