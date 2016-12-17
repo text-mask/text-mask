@@ -29,6 +29,11 @@ IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and
 Text Mask is very configurable and allows you to create any type of input mask with minimal APIs.
 [See the documentation for details](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
+## Extendable
+
+You can easily expand the base functionality of Text Mask with addons for more mask types. 
+[Checkout existing addons](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
+
 ## Robust
 
 Text Mask supports pasting, browser auto-fill, and all operations that a user would expect while interacting with
