@@ -64,7 +64,7 @@ const HelpPanel = React.createClass({
             The pipe in this case is a function such as:
           </p>
 
-          <pre>{`function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}`}</pre>
+          <pre>{'function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}'}</pre>
         </Panel>
       </Row>
     ) || props.choiceName === 'Email' && (
