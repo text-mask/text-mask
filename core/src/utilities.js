@@ -1,4 +1,4 @@
-import {placeholderChar as defaultPlaceholderChar} from './constants.js'
+import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 const emptyArray = []
 

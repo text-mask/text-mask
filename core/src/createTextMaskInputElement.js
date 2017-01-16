@@ -1,7 +1,7 @@
-import adjustCaretPosition from './adjustCaretPosition.js'
-import conformToMask from './conformToMask.js'
-import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities.js'
-import {placeholderChar as defaultPlaceholderChar} from './constants.js'
+import adjustCaretPosition from './adjustCaretPosition'
+import conformToMask from './conformToMask'
+import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities'
+import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 const strFunction = 'function'
 const emptyString = ''
