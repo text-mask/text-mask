@@ -21,8 +21,13 @@ function textMask() {
         inputElement = element[0].getElementsByTagName('INPUT')[0]
       }
 
+      var createTextMaskInputElementOpts = {inputElement}
+      for (var key in scope.textMask) {
+        createTextMaskInputElementOpts[key] = scope.textMask[key]
+      }
+
       var textMaskInputElement = createTextMaskInputElement(
-        Object.assign({inputElement: inputElement}, scope.textMask)
+        createTextMaskInputElementOpts
       )
 
       element.on('blur keyup change input', function() {
