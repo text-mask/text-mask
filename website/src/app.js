@@ -1,14 +1,14 @@
 import './styles.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MaskedInput from '../../react/src/reactTextMask.jsx'
+import MaskedInput from '../../react/src/reactTextMask'
 import classnames from 'classnames'
 import appStyles from './app.scss'
-import choices from './choices.jsx'
-import {Row, DemoTop, DemoBottom, OnOffSwitch} from './partials.jsx'
+import choices from './choices'
+import {Row, DemoTop, DemoBottom, OnOffSwitch} from './partials'
 import {connect} from 'react-redux'
-import {actionCreators, selectors} from './redux.js'
-import HelpPanel from './helpPanel.jsx'
+import {actionCreators, selectors} from './redux'
+import HelpPanel from './helpPanel'
 
 const App = React.createClass({
   componentDidUpdate() {

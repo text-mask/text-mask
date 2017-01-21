@@ -4,7 +4,7 @@ import packageJson from '../package.json'
 
 const MaskedInput = (isVerify()) ?
   require(`../${packageJson.main}`).default :
-  require('../src/reactTextMask.jsx').default
+  require('../src/reactTextMask.js').default
 
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {

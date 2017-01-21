@@ -1,4 +1,4 @@
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 const emailMask = (isVerify()) ?
   require('../dist/emailMask.js').default :

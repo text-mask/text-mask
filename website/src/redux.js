@@ -1,7 +1,7 @@
 import find from 'lodash/fp/find'
 import pick from 'lodash/fp/pick'
-import choices from './choices.jsx'
-import {textMaskProps} from './constants.js'
+import choices from './choices'
+import {textMaskProps} from './constants'
 import {createAction, handleActions} from 'redux-actions'
 
 export const actionCreators = {

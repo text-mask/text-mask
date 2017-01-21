@@ -1,7 +1,7 @@
 import './styles.scss'
 import React from 'react'
 import {connect} from 'react-redux'
-import {Links, Panel, Row} from './partials.jsx'
+import {Links, Panel, Row} from './partials'
 
 const MaskFunctionDefinition = ({maskLink}) => (
   <div>
