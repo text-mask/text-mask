@@ -1,9 +1,18 @@
 "use strict";
-var core_1 = require('@angular/core');
-var common_1 = require('@angular/common');
-var forms_1 = require('@angular/forms');
-var textMaskCore_1 = require('text-mask-core/dist/textMaskCore');
-var MaskedInputDirective = (function () {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require("@angular/core");
+var common_1 = require("@angular/common");
+var forms_1 = require("@angular/forms");
+var textMaskCore_1 = require("text-mask-core/dist/textMaskCore");
+var MaskedInputDirective = MaskedInputDirective_1 = (function () {
     function MaskedInputDirective(renderer, element) {
         this.renderer = renderer;
         this.element = element;
@@ -44,46 +53,42 @@ var MaskedInputDirective = (function () {
     MaskedInputDirective.prototype.setDisabledState = function (isDisabled) {
         this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled);
     };
-    MaskedInputDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    host: {
-                        '(input)': 'onInput($event)',
-                        '(blur)': '_onTouched()'
-                    },
-                    selector: '[textMask]',
-                    providers: [{
-                            provide: forms_1.NG_VALUE_ACCESSOR,
-                            useExisting: core_1.forwardRef(function () { return MaskedInputDirective; }),
-                            multi: true
-                        }]
-                },] },
-    ];
-    /** @nocollapse */
-    MaskedInputDirective.ctorParameters = [
-        { type: core_1.Renderer, },
-        { type: core_1.ElementRef, },
-    ];
-    MaskedInputDirective.propDecorators = {
-        'textMaskConfig': [{ type: core_1.Input, args: ['textMask',] },],
-    };
     return MaskedInputDirective;
 }());
+__decorate([
+    core_1.Input('textMask'),
+    __metadata("design:type", Object)
+], MaskedInputDirective.prototype, "textMaskConfig", void 0);
+MaskedInputDirective = MaskedInputDirective_1 = __decorate([
+    core_1.Directive({
+        host: {
+            '(input)': 'onInput($event)',
+            '(blur)': '_onTouched()'
+        },
+        selector: '[textMask]',
+        providers: [{
+                provide: forms_1.NG_VALUE_ACCESSOR,
+                useExisting: core_1.forwardRef(function () { return MaskedInputDirective_1; }),
+                multi: true
+            }]
+    }),
+    __metadata("design:paramtypes", [core_1.Renderer, core_1.ElementRef])
+], MaskedInputDirective);
 exports.MaskedInputDirective = MaskedInputDirective;
 var TextMaskModule = (function () {
     function TextMaskModule() {
     }
-    TextMaskModule.decorators = [
-        { type: core_1.NgModule, args: [{
-                    declarations: [MaskedInputDirective],
-                    exports: [MaskedInputDirective],
-                    imports: [common_1.CommonModule]
-                },] },
-    ];
-    /** @nocollapse */
-    TextMaskModule.ctorParameters = [];
     return TextMaskModule;
 }());
+TextMaskModule = __decorate([
+    core_1.NgModule({
+        declarations: [MaskedInputDirective],
+        exports: [MaskedInputDirective],
+        imports: [common_1.CommonModule]
+    })
+], TextMaskModule);
 exports.TextMaskModule = TextMaskModule;
-var textMaskCore_2 = require('text-mask-core/dist/textMaskCore');
+var textMaskCore_2 = require("text-mask-core/dist/textMaskCore");
 exports.conformToMask = textMaskCore_2.conformToMask;
+var MaskedInputDirective_1;
 //# sourceMappingURL=angular2TextMask.js.map

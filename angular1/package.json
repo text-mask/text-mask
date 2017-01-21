@@ -1,6 +1,6 @@
 {
   "name": "angular1-text-mask",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Angular 1 directive for input text masking",
   "main": "dist/angular1TextMask.js",
   "author": "Thomas (@PerfectPixel)",
