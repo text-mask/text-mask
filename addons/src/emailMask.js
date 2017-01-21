@@ -1,4 +1,4 @@
-import emailPipe from './emailPipe.js'
+import emailPipe from './emailPipe'
 
 const asterisk = '*'
 const dot = '.'
