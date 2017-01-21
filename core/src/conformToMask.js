@@ -1,5 +1,5 @@
-import {convertMaskToPlaceholder} from './utilities.js'
-import {placeholderChar as defaultPlaceholderChar} from './constants.js'
+import {convertMaskToPlaceholder} from './utilities'
+import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 const emptyString = ''
 
