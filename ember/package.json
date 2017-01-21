@@ -62,7 +62,7 @@
   "dependencies": {
     "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^5.1.7",
-    "text-mask-core": "^1.0.0"
+    "text-mask-core": "^1.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
