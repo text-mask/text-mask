@@ -1,8 +1,8 @@
 require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 
 import packageJson from '../package.json'
-import conformToMask from '../src/conformToMask.js'
-import {placeholderChar} from '../src/constants.js'
+import conformToMask from '../src/conformToMask'
+import {placeholderChar} from '../src/constants'
 
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :

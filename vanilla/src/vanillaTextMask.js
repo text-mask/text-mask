@@ -1,4 +1,4 @@
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export function maskInput(textMaskConfig) {
   const {inputElement} = textMaskConfig

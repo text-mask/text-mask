@@ -33,7 +33,7 @@ after the integer. Defaults to `false`.
 #### Usage
 
 ```js
-import createNumberMask from 'text-mask-addons/dist/createNumberMask.js'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
 // First, you need to create the `numberMask` with your desired configurations
 const numberMask = createNumberMask({
@@ -51,7 +51,7 @@ const numberMask = createNumberMask({
 #### Usage
 
 ```js
-import emailMask from 'text-mask-addons/dist/emailMask.js'
+import emailMask from 'text-mask-addons/dist/emailMask'
 
 // ...then pass `emailMask` to the Text Mask component as the mask
 ```
@@ -83,7 +83,7 @@ set to `true`.
 #### Usage
 
 ```js
-import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
 const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy')
 // As you can see in the line above, you can pass a string argument to `createAutoCorrectedDatePipe` 

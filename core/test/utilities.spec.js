@@ -1,4 +1,4 @@
-import {processCaretTraps} from '../src/utilities.js'
+import {processCaretTraps} from '../src/utilities'
 
 describe('processCaretTraps', () => {
   it('returns the mask without caret traps and the caret trap indexes', () => {

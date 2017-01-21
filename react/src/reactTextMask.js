@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export const MaskedInput = React.createClass({
   propTypes: {

@@ -7,7 +7,7 @@ import appStyles from './app.scss'
 import choices from './choices'
 import {Row, DemoTop, DemoBottom, OnOffSwitch} from './partials'
 import {connect} from 'react-redux'
-import {actionCreators, selectors} from './redux.js'
+import {actionCreators, selectors} from './redux'
 import HelpPanel from './helpPanel'
 
 const App = React.createClass({

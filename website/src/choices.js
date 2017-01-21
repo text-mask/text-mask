@@ -1,8 +1,8 @@
 import React from 'react'
-import createAutoCorrectedDatePipe from '../../addons/src/createAutoCorrectedDatePipe.js'
-import createNumberMask from '../../addons/src/createNumberMask.js'
-import emailMask from '../../addons/src/emailMask.js'
-import {placeholderChars, alphabetic, digit} from './constants.js'
+import createAutoCorrectedDatePipe from '../../addons/src/createAutoCorrectedDatePipe'
+import createNumberMask from '../../addons/src/createNumberMask'
+import emailMask from '../../addons/src/emailMask'
+import {placeholderChars, alphabetic, digit} from './constants'
 import map from 'lodash/fp/map'
 
 const defaultValues = {

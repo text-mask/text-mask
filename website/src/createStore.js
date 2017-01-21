@@ -1,5 +1,5 @@
 import {createStore} from 'redux'
-import {reducer} from './redux.js'
+import {reducer} from './redux'
 
 export default function configureStore() {
   const store = createStore(reducer)

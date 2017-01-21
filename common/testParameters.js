@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import _ from 'lodash/fp'
-import {convertMaskToPlaceholder} from '../core/src/utilities.js'
+import {convertMaskToPlaceholder} from '../core/src/utilities'
 
 const alphabetic = /^[A-Z]+$/i
 
