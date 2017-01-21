@@ -1,6 +1,4 @@
-import { textMaskCore } from 'ember-text-mask/textMaskCore';
+import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
+import conformToMask from 'ember-text-mask/conformToMask';
 
-const { createTextMaskInputElement, conformToMask } = textMaskCore;
-
-export default textMaskCore;
 export { createTextMaskInputElement, conformToMask };
