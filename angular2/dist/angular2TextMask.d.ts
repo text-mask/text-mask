@@ -5,6 +5,7 @@ export declare class MaskedInputDirective implements OnInit, ControlValueAccesso
     private element;
     private textMaskInputElement;
     private inputElement;
+    private lastValue;
     textMaskConfig: {
         mask: string;
         guide: boolean;

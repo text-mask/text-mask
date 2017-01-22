@@ -48,7 +48,11 @@ var MaskedInputDirective = MaskedInputDirective_1 = (function () {
     MaskedInputDirective.prototype.registerOnTouched = function (fn) { this._onTouched = fn; };
     MaskedInputDirective.prototype.onInput = function ($event) {
         this.textMaskInputElement.update($event.target.value);
-        this._onChange($event.target.value);
+        // check against the last value to prevent firing ngModelChange despite no changes
+        if (this.lastValue !== $event.target.value) {
+            this.lastValue = $event.target.value;
+            this._onChange($event.target.value);
+        }
     };
     MaskedInputDirective.prototype.setDisabledState = function (isDisabled) {
         this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled);
