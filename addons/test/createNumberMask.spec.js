@@ -84,6 +84,11 @@ describe('createNumberMask', () => {
     expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
+  it('can limit the length of the integer part', () => {
+    let numberMask = createNumberMask({integerLimit: 2})
+    expect(numberMask('1999')).to.deep.equal(['$', /\d/, /\d/])
+  })
+
   describe('numberMask default behavior', () => {
     let numberMask = null
 

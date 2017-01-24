@@ -19,6 +19,7 @@ export default function createNumberMask({
   decimalLimit = 2,
   requireDecimal = false,
   allowNegative = false,
+  integerLimit = null
 } = {}) {
   const prefixLength = prefix.length
 
@@ -47,6 +48,10 @@ export default function createNumberMask({
       fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
     } else {
       integer = rawValue
+    }
+
+    if (integerLimit && typeof integerLimit === number) {
+      integer = integer.slice(0, integerLimit)
     }
 
     integer = integer.replace(nonDigitsRegExp, emptyString)
