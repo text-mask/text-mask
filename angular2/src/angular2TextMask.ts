@@ -1,6 +1,6 @@
-import {Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer} from '@angular/core'
+import {Directive, ElementRef, forwardRef, Input, NgModule, Renderer, AfterViewInit} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
@@ -15,7 +15,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     multi: true
   }]
 })
-export class MaskedInputDirective implements OnInit, ControlValueAccessor{
+export class MaskedInputDirective implements AfterViewInit, ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -35,7 +35,7 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (this.element.nativeElement.tagName === 'INPUT') {
       // `textMask` directive is used directly on an input element
       this.inputElement = this.element.nativeElement
