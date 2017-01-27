@@ -1,6 +1,6 @@
-import {Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer} from '@angular/core'
+import {Directive, ElementRef, forwardRef, Input, NgModule, OnInit, AfterViewInit, Renderer} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms'
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 @Directive({
@@ -15,7 +15,7 @@ import createTextMaskInputElement from '../../core/src/createTextMaskInputElemen
     multi: true
   }]
 })
-export class MaskedInputDirective implements OnInit, ControlValueAccessor{
+export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -33,9 +33,19 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
   private _onTouched = () => {}
   private _onChange = (_: any) => {}
 
+  private isInit: boolean = false
+
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
+  ngAfterViewInit() {
+    !this.isInit && this.setupMask()
+  }
+
   ngOnInit() {
+    this.setupMask()
+  }
+
+  private setupMask() {
     if (this.element.nativeElement.tagName === 'INPUT') {
       // `textMask` directive is used directly on an input element
       this.inputElement = this.element.nativeElement
@@ -44,9 +54,12 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
       this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
     }
 
-    this.textMaskInputElement = createTextMaskInputElement(
-      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
-    )
+    if (this.inputElement) {
+      this.textMaskInputElement = createTextMaskInputElement(
+          Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+      )
+      this.isInit = true
+    }
   }
 
   writeValue(value: any) {
