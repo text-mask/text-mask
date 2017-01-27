@@ -33,12 +33,10 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
   private _onTouched = () => {}
   private _onChange = (_: any) => {}
 
-  private isInit: boolean = false
-
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
   ngAfterViewInit() {
-    !this.isInit && this.setupMask()
+    !this.textMaskInputElement && this.setupMask()
   }
 
   ngOnInit() {
@@ -58,7 +56,6 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
       this.textMaskInputElement = createTextMaskInputElement(
           Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
       )
-      this.isInit = true
     }
   }
 
