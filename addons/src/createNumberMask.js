@@ -23,7 +23,7 @@ export default function createNumberMask({
 } = {}) {
   const prefixLength = prefix.length
 
-  function numberMask(rawValue) {
+  function numberMask(rawValue = emptyString) {
     const rawValueLength = rawValue.length
 
     if (
@@ -42,12 +42,16 @@ export default function createNumberMask({
     let mask
 
     if (hasDecimal && (allowDecimal || requireDecimal)) {
-      integer = rawValue.slice(0, indexOfLastDecimal)
+      integer = rawValue.slice(prefixLength, indexOfLastDecimal)
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
       fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
     } else {
-      integer = rawValue
+      if (rawValue.slice(0, prefixLength) === prefix) {
+        integer = rawValue.slice(prefixLength)
+      } else {
+        integer = rawValue
+      }
     }
 
     if (integerLimit && typeof integerLimit === number) {

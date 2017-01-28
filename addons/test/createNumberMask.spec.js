@@ -84,9 +84,26 @@ describe('createNumberMask', () => {
     expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
-  it('can limit the length of the integer part', () => {
-    let numberMask = createNumberMask({integerLimit: 2})
-    expect(numberMask('1999')).to.deep.equal(['$', /\d/, /\d/])
+  describe('integer limiting', () => {
+    it('can limit the length of the integer part', () => {
+      let numberMask = createNumberMask({integerLimit: 3})
+      expect(numberMask('1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+    })
+
+    it('it works when there is a prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3})
+      expect(numberMask('$1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+    })
+
+    it('works when there is a decimal and a prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, allowDecimal: true})
+      expect(numberMask('$199.34')).to.deep.equal(['$', /\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
+
+    it('works when there is a decimal and no prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, allowDecimal: true, prefix: ''})
+      expect(numberMask('199.34')).to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
   })
 
   describe('numberMask default behavior', () => {
