@@ -42,7 +42,7 @@ export default function createNumberMask({
     let mask
 
     if (hasDecimal && (allowDecimal || requireDecimal)) {
-      integer = rawValue.slice(prefixLength, indexOfLastDecimal)
+      integer = rawValue.slice(rawValue.slice(0, prefixLength) === prefix ? prefixLength : 0, indexOfLastDecimal)
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
       fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
