@@ -36,7 +36,10 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
   ngAfterViewInit() {
-    !this.textMaskInputElement && this.setupMask()
+    if (!this.textMaskInputElement) {
+      // the element was not found when ngOnInit ran, let's try to find it again
+      this.setupMask()
+    }
   }
 
   ngOnInit() {
