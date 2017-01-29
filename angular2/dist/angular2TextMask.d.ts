@@ -1,6 +1,6 @@
-import { ElementRef, OnInit, Renderer } from '@angular/core';
+import { ElementRef, OnInit, AfterViewInit, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-export declare class MaskedInputDirective implements OnInit, ControlValueAccessor {
+export declare class MaskedInputDirective implements OnInit, AfterViewInit, ControlValueAccessor {
     private renderer;
     private element;
     private textMaskInputElement;
