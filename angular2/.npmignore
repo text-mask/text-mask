@@ -7,5 +7,6 @@ tsconfig.json
 tslint.json
 typings.json
 .gitignore
+.npmignore
 src/*.js
 src/*.js.map
