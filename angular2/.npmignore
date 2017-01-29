@@ -1,0 +1,12 @@
+example
+test
+typings
+bs-config.json
+publish.sh
+tsconfig.json
+tslint.json
+typings.json
+.gitignore
+.npmignore
+src/*.js
+src/*.js.map
