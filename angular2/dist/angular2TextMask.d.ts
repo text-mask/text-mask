@@ -16,7 +16,6 @@ export declare class MaskedInputDirective implements OnInit, AfterViewInit, Cont
     };
     private _onTouched;
     private _onChange;
-    private isInit;
     constructor(renderer: Renderer, element: ElementRef);
     ngAfterViewInit(): void;
     ngOnInit(): void;
