@@ -38,7 +38,18 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
+  ngAfterViewInit() {
+    if (!this.textMaskInputElement) {
+      // the element was not found when ngOnInit ran, let's try to find it again
+      this.setupMask()
+    }
+  }
+
   ngOnInit() {
+    this.setupMask()
+  }
+
+  private setupMask() {
     if (this.element.nativeElement.tagName === 'INPUT') {
       // `textMask` directive is used directly on an input element
       this.inputElement = this.element.nativeElement
@@ -48,7 +59,7 @@ export class MaskedInputDirective implements OnInit, ControlValueAccessor{
     }
 
     this.textMaskInputElement = createTextMaskInputElement(
-      Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+        Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
     )
   }
 
