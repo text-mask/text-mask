@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, NgModule, OnInit, Renderer } from '@angular/core'
+import { Directive, ElementRef, forwardRef, Input, NgModule, OnInit, AfterViewInit, Renderer } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
@@ -15,7 +15,7 @@ import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
     multi: true
   }]
 })
-export class MaskedInputDirective implements OnInit, ControlValueAccessor{
+export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
