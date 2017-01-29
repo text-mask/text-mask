@@ -18,7 +18,9 @@ export declare class MaskedInputDirective implements OnInit, ControlValueAccesso
     _onTouched: () => void;
     _onChange: (_: any) => void;
     constructor(renderer: Renderer, element: ElementRef);
+    ngAfterViewInit(): void;
     ngOnInit(): void;
+    private setupMask();
     writeValue(value: any): void;
     registerOnChange(fn: (value: any) => any): void;
     registerOnTouched(fn: () => any): void;
