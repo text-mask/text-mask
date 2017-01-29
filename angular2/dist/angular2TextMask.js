@@ -28,7 +28,16 @@ var MaskedInputDirective = MaskedInputDirective_1 = (function () {
         this._onTouched = function () { };
         this._onChange = function (_) { };
     }
+    MaskedInputDirective.prototype.ngAfterViewInit = function () {
+        if (!this.textMaskInputElement) {
+            // the element was not found when ngOnInit ran, let's try to find it again
+            this.setupMask();
+        }
+    };
     MaskedInputDirective.prototype.ngOnInit = function () {
+        this.setupMask();
+    };
+    MaskedInputDirective.prototype.setupMask = function () {
         if (this.element.nativeElement.tagName === 'INPUT') {
             // `textMask` directive is used directly on an input element
             this.inputElement = this.element.nativeElement;
