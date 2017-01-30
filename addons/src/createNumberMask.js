@@ -21,7 +21,8 @@ export default function createNumberMask({
   allowNegative = false,
   integerLimit = null
 } = {}) {
-  const prefixLength = prefix.length
+  const prefixLength = prefix && prefix.length || 0
+  const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
   function numberMask(rawValue = emptyString) {
     const rawValueLength = rawValue.length
@@ -55,7 +56,9 @@ export default function createNumberMask({
     }
 
     if (integerLimit && typeof integerLimit === number) {
-      integer = integer.slice(0, integerLimit)
+      const numberOfThousandSeparators = (integer.match(new RegExp(`${thousandsSeparatorSymbol}`, 'g')) || []).length
+
+      integer = integer.slice(0, integerLimit + (numberOfThousandSeparators * thousandsSeparatorSymbolLength))
     }
 
     integer = integer.replace(nonDigitsRegExp, emptyString)

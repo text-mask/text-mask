@@ -90,9 +90,17 @@ describe('createNumberMask', () => {
       expect(numberMask('1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
     })
 
-    it('it works when there is a prefix', () => {
-      let numberMask = createNumberMask({integerLimit: 3})
+    it('works when there is a prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, prefix: '$'})
       expect(numberMask('$1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+    })
+
+    it('works when there is a thousands separator', () => {
+      expect(createNumberMask({integerLimit: 4, prefix: ''})('1,9995'))
+        .to.deep.equal([/\d/, ',', /\d/, /\d/, /\d/])
+
+      expect(createNumberMask({integerLimit: 7, prefix: ''})('1,000,0001'))
+        .to.deep.equal([/\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/])
     })
 
     it('works when there is a decimal and a prefix', () => {
