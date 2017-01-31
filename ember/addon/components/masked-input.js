@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { createTextMaskInputElement } from 'ember-text-mask';
+import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
 
 const { computed, observer, on, TextField } = Ember;
 
