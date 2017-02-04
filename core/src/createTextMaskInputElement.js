@@ -52,7 +52,7 @@ export default function createTextMaskInputElement({
     update(rawValue = inputElement.value) {
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
-      if (rawValue === state.previousConformedValue) { return }
+      if (rawValue === state.previousConformedValue || rawValue === false || !providedMask) { return }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
@@ -70,6 +70,9 @@ export default function createTextMaskInputElement({
       // Then we also need to get the `placeholder`
       if (typeof providedMask === strFunction) {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
+
+        // disable masking if `mask` is falsey, or an empty array.
+        if (!mask || !mask.length) { return; }
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
