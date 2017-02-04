@@ -72,7 +72,7 @@ export default function createTextMaskInputElement({
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
 
         // disable masking if `mask` is falsey, or an empty array.
-        if (!mask || !mask.length) { return; }
+        if (!mask || !mask.length) { return }
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
