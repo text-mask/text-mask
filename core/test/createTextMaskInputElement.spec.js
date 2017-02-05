@@ -202,21 +202,10 @@ describe('createTextMaskInputElement', () => {
         inputElement.value = '1234'
         textMaskControl.update()
 
-        expect(onAccept.callCount).to.equal(4)
-      })
-
-      it('is not called when the updated value exceeds the mask length', () => {
-        const mask = [/\d/, /\d/, /\d/, /\d/]
-        const onAccept = sinon.spy()
-        const guide = false
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept, guide})
-
-        textMaskControl.state.previousConformedValue = '1234'
-
         inputElement.value = '12345'
         textMaskControl.update() // this one should not be accepted (the mask length is 4)
 
-        expect(onAccept.callCount).to.equal(1)
+        expect(onAccept.callCount).to.equal(4)
       })
 
       it('is not called when the updated value is the same as the previous value', () => {
