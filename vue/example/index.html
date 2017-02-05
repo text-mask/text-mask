@@ -8,7 +8,7 @@
       padding-top: 50px;
     }
 
-    .starter-template {
+    #app {
       padding: 40px 15px;
       text-align: center;
     }
@@ -20,12 +20,37 @@
 </head>
 
 <body>
-<div class="container">
-  <div class="starter-template">
-    <app></app>
-  </div>
-</div>
+    <div id="app">
+      <div class="container">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="1" class="col-sm-4 control-label">Masked input</label>
 
-<script type="text/javascript" src="bundle.js"></script>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                name="phone"
+                class="form-control"
+                v-model="phone"
+                v-text-mask="maskOptions">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="2" class="col-sm-4 control-label">Model</label>
+
+            <div class="col-sm-8">
+              <input
+                disabled
+                type="text"
+                v-model="phone"
+                class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="bundle.js"></script>
 </body>
 </html>

@@ -113,9 +113,9 @@
     "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
-    "vue": "^1.0.0",
+    "vue": "^2.0.8",
     "vue-html-loader": "^1.2.3",
-    "vue-loader": "^8.2.1",
+    "vue-loader": "^9.9.5",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
   },
