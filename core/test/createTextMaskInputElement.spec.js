@@ -184,6 +184,44 @@ describe('createTextMaskInputElement', () => {
         expect(onAccept.callCount).to.equal(1)
       })
 
+      it('is called for every accepted character when guide is false', () => {
+        const mask = [/\d/, /\d/, /\d/, /\d/]
+        const onAccept = sinon.spy()
+        const guide = false
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept, guide})
+
+        inputElement.value = '1'
+        textMaskControl.update()
+
+        inputElement.value = '12'
+        textMaskControl.update()
+
+        inputElement.value = '123'
+        textMaskControl.update()
+
+        inputElement.value = '1234'
+        textMaskControl.update()
+
+        inputElement.value = '12345'
+        textMaskControl.update() // this one should not be accepted (the mask length is 4)
+
+        expect(onAccept.callCount).to.equal(4)
+      })
+
+      it('should not be accepted when the input exceeds the mask length', () => {
+        const mask = [/\d/, /\d/, /\d/, /\d/]
+        const onAccept = sinon.spy()
+        const guide = false
+        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept, guide})
+
+        textMaskControl.state.previousConformedValue = '1234'
+
+        inputElement.value = '12345'
+        textMaskControl.update() // this one should not be accepted (the mask length is 4)
+
+        expect(onAccept.callCount).to.equal(1)
+      })
+
       it('is not called when the updated value is the same as the previous value', () => {
         const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onAccept = sinon.spy()
