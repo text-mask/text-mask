@@ -202,13 +202,10 @@ describe('createTextMaskInputElement', () => {
         inputElement.value = '1234'
         textMaskControl.update()
 
-        inputElement.value = '12345'
-        textMaskControl.update() // this one should not be accepted (the mask length is 4)
-
         expect(onAccept.callCount).to.equal(4)
       })
 
-      it('should not be accepted when the input exceeds the mask length', () => {
+      it('is not called when the updated value exceeds the mask length', () => {
         const mask = [/\d/, /\d/, /\d/, /\d/]
         const onAccept = sinon.spy()
         const guide = false
