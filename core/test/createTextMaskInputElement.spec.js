@@ -421,7 +421,7 @@ describe('createTextMaskInputElement', () => {
           onReject
         })
 
-        inputElement.value = 'foo12bar34' // keypress 6 should not trigger `onReject`
+        inputElement.value = 'foo12bar34'
         textMaskControl.update() // after this the value is (123) 4__-____
 
         expect(onAccept.callCount).to.equal(1)
