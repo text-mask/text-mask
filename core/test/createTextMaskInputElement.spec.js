@@ -210,7 +210,6 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is called for every accepted character when using `createNumberMask`', () => {
-
         const mask = createNumberMask({
           prefix: '',
           includeThousandsSeparator: true
@@ -279,8 +278,8 @@ describe('createTextMaskInputElement', () => {
         expect(onReject.callCount).to.equal(1)
       })
 
-      it('is called when a non-acceptable character is placed at the end of the input when using `createNumberMask`', () => {
-
+      it('is called when a non-acceptable character is placed at the end of the input when using ' +
+        '`createNumberMask`', () => {
         const mask = createNumberMask({
           prefix: '',
           includeThousandsSeparator: false
@@ -387,7 +386,6 @@ describe('createTextMaskInputElement', () => {
       })
 
       it('is not triggered by the thousands separator when using the `createNumberMask`', () => {
-
         const mask = createNumberMask({
           prefix: '',
           includeThousandsSeparator: true
@@ -413,7 +411,6 @@ describe('createTextMaskInputElement', () => {
     })
     describe('`onAccept` and `onReject` callbacks', () => {
       it('are both triggered when pasting a string that contains both acceptable and non-acceptable characters', () => {
-
         const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onReject = sinon.spy()
         const onAccept = sinon.spy()
