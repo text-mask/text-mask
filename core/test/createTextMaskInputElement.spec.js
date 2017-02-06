@@ -3,6 +3,7 @@ require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 import packageJson from '../package.json'
 import conformToMask from '../src/conformToMask'
 import {placeholderChar} from '../src/constants'
+import createNumberMask from '../../addons/src/createNumberMask'
 
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :
@@ -208,6 +209,34 @@ describe('createTextMaskInputElement', () => {
         expect(onAccept.callCount).to.equal(4)
       })
 
+      it('is called for every accepted character when using `createNumberMask`', () => {
+
+        const mask = createNumberMask({
+          prefix: '',
+          includeThousandsSeparator: true
+        })
+        const onAccept = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onAccept
+        })
+
+        inputElement.value = '1' // should trigger `onAccept`
+        textMaskControl.update()
+
+        inputElement.value = '12' // should trigger `onAccept`
+        textMaskControl.update()
+
+        inputElement.value = '123' // should trigger `onAccept`
+        textMaskControl.update()
+
+        inputElement.value = '1234' // should trigger `onAccept`
+        textMaskControl.update()
+
+        expect(onAccept.callCount).to.equal(4)
+      })
+
       it('is not called when the updated value is the same as the previous value', () => {
         const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
         const onAccept = sinon.spy()
@@ -246,6 +275,28 @@ describe('createTextMaskInputElement', () => {
 
         inputElement.value = '(2B_) ___-____' // the 'B' will be rejected
         textMaskControl.update() // after this, value is (2__) ___-____
+
+        expect(onReject.callCount).to.equal(1)
+      })
+
+      it('is called when a non-acceptable character is placed at the end of the input when using `createNumberMask`', () => {
+
+        const mask = createNumberMask({
+          prefix: '',
+          includeThousandsSeparator: false
+        })
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onReject
+        })
+
+        inputElement.value = '123'
+        textMaskControl.update() // after this the value is 123
+
+        inputElement.value = '123a' // keypress `a` should trigger `onReject`
+        textMaskControl.update() // after this the value is 123
 
         expect(onReject.callCount).to.equal(1)
       })
@@ -333,6 +384,51 @@ describe('createTextMaskInputElement', () => {
         textMaskControl.update()
 
         expect(onRejectSpy.callCount).to.equal(1)
+      })
+
+      it('is not triggered by the thousands separator when using the `createNumberMask`', () => {
+
+        const mask = createNumberMask({
+          prefix: '',
+          includeThousandsSeparator: true
+        })
+        const onReject = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onReject
+        })
+
+        inputElement.value = '1234'
+        textMaskControl.update() // after this the value is 1,234
+
+        inputElement.value = '1,2345' // keypress 5 should not trigger `onReject`
+        textMaskControl.update() // after this the value is 12,345
+
+        inputElement.value = '12,3456' // keypress 6 should not trigger `onReject`
+        textMaskControl.update() // after this the value is 123,456
+
+        expect(onReject.callCount).to.equal(0)
+      })
+    })
+    describe('`onAccept` and `onReject` callbacks', () => {
+      it('are both triggered when pasting a string that contains both acceptable and non-acceptable characters', () => {
+
+        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        const onReject = sinon.spy()
+        const onAccept = sinon.spy()
+        const textMaskControl = createTextMaskInputElement({
+          inputElement,
+          mask,
+          onAccept,
+          onReject
+        })
+
+        inputElement.value = 'foo12bar34' // keypress 6 should not trigger `onReject`
+        textMaskControl.update() // after this the value is (123) 4__-____
+
+        expect(onAccept.callCount).to.equal(1)
+        expect(onReject.callCount).to.equal(1)
       })
     })
   })
