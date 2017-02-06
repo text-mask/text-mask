@@ -145,15 +145,14 @@ export default function createTextMaskInputElement({
       const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
       const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
 
-      state.previousConformedValue = inputElementValue // store value for access for next time
-
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.
       // See https://github.com/text-mask/text-mask/issues/231
-      if (inputElement.value === inputElementValue) {
+      if (inputElement.value === inputElementValue && state.previousConformedValue === inputElementValue) {
         return
       }
 
+      state.previousConformedValue = inputElementValue // store value for access for next time
       inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
 
