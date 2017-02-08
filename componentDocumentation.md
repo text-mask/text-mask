@@ -6,8 +6,6 @@
   * [`placeholderChar`](#placeholderchar) (string)
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
-  * [`onReject`](#onreject) (function)
-  * [`onAccept`](#onaccept) (function)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
@@ -181,22 +179,6 @@ If the `pipe` adds new characters to the string, it must return an object with t
 For an example of a pipe, see the code for
 [`createAutoCorrectedDatePipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/createAutoCorrectedDatePipe.js)
 which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
-
-## `onReject`
-
-You can provide an `onReject` callback function which will be called when the user tries to enter
-a character that ends up being rejected either by the mask or by the `pipe` and not displayed on the input element.
-
-The `onReject` callback will receive an object with the following keys:
-
-1. `conformedValue` (string): containing the conformed value
-1. `maskRejection` (boolean): `true` if the rejection was due to mask incompatibility
-1. `pipeRejection` (boolean): `true` if the rejection was decided by the pipe
-
-## `onAccept`
-
-You can provide an `onAccept` callback function which will be called when the user enters
-a character that is accepted and displayed on the input element.
 
 ---
 
