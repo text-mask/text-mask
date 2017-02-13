@@ -1,5 +1,15 @@
 import Ember from 'ember';
-import { createTextMaskInputElement } from 'ember-text-mask';
+import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
+
+const { computed, observer, on, TextField } = Ember;
+
+function _createTextMaskInputElement(...args) {
+  return computed(...args, function () {
+    let config = this.getProperties(...args);
+    config.inputElement = this.get('element');
+    return createTextMaskInputElement(config);
+  });
+}
 
 /*
 
@@ -23,28 +33,21 @@ import { createTextMaskInputElement } from 'ember-text-mask';
   });
   ```
 */
-export default Ember.TextField.extend({
+export default TextField.extend({
 
   mask: [],
 
-  inputElement: Ember.computed.readOnly('element'),
-
-  createTextMaskInputElement,
-
-  initTextMaskInputElement() {
-    this.set('textMaskInputElement', this.createTextMaskInputElement(this.getProperties('inputElement', 'mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe', 'onReject', 'onAccept')));
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-    this.initTextMaskInputElement();
-  },
+  textMaskInputElement: _createTextMaskInputElement('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe', 'onReject', 'onAccept'),
 
   update() {
     this.get('textMaskInputElement').update(...arguments);
   },
 
-  _input: Ember.on('input', function() {
+  _textMaskInputElementChanged: observer('textMaskInputElement', function () {
+    this.update();
+  }),
+
+  _input: on('input', function() {
     this.update();
   })
 });

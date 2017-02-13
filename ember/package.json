@@ -65,6 +65,9 @@
     "text-mask-core": "^1.1.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "versionCompatibility": {
+      "ember": ">=2.0.0"
+    }
   }
 }
