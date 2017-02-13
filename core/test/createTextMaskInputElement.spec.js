@@ -170,7 +170,7 @@ describe('createTextMaskInputElement', () => {
 
       expect(maskSpy.callCount).to.equal(2)
     })
-    
+
     describe('`onAccept` callback', () => {
       it('is called when the updated value is different than the previous value', () => {
         const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
