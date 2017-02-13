@@ -18,6 +18,10 @@ export default function createTextMaskInputElement({
   onReject,
   keepCharPositions = false
 }) {
+  // In framework components that support reactivity, it's possible to turn off masking by passing `false` for `mask`
+  // after initialization. See https://github.com/text-mask/text-mask/pull/359
+  if (providedMask === false) { return }
+
   // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
   // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
   // were passed.
@@ -52,7 +56,7 @@ export default function createTextMaskInputElement({
     update(rawValue = inputElement.value) {
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
-      if (rawValue === state.previousConformedValue || rawValue === false || !providedMask) { return }
+      if (rawValue === state.previousConformedValue) { return }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
@@ -70,9 +74,6 @@ export default function createTextMaskInputElement({
       // Then we also need to get the `placeholder`
       if (typeof providedMask === strFunction) {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
-
-        // disable masking if `mask` is falsey, or an empty array.
-        if (!mask || !mask.length) { return }
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
