@@ -204,12 +204,14 @@ export default function createTextMaskInputElement({
           maskRejection: someCharsRejected
         })
       }
+
+      return inputElement // This is not necessary, but it's another option
     }
   }
 }
 
 function safeSetSelection(element, selectionPosition) {
-  if (document.activeElement === element) {
+  if (!document || document.activeElement === element) {
     element.setSelectionRange(selectionPosition, selectionPosition, strNone)
   }
 }
