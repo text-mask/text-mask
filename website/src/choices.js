@@ -1,4 +1,3 @@
-import React from 'react'
 import createAutoCorrectedDatePipe from '../../addons/src/createAutoCorrectedDatePipe'
 import createNumberMask from '../../addons/src/createNumberMask'
 import emailMask from '../../addons/src/emailMask'
@@ -10,8 +9,6 @@ const defaultValues = {
   guide: true,
   pipe: null,
   keepCharPositions: false,
-  onReject: null,
-  onAccept: null,
   help: null,
   placeholder: null
 }
@@ -34,7 +31,6 @@ export default map(
     name: 'Date (auto-corrected)',
     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     pipe: createAutoCorrectedDatePipe(),
-    onRejectMessage: <span>Please enter a date with the following format <code>MM/DD/YYYY</code>.</span>,
     placeholder: 'Please enter a date',
     keepCharPositions: true,
   }, {
