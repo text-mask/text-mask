@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
 
-const { computed, observer, on, run: { once }, TextField } = Ember;
+const { computed, observer, on, run: { once }, set, TextField } = Ember;
 
 function _createTextMaskInputElement(...args) {
   return computed(...args, function () {
@@ -49,7 +49,7 @@ export default TextField.extend({
 
   _didInsertElement: on('didInsertElement', function() {
     this.update();
-    once(() => this.set('value', this.get('element.value')));
+    once(() => set(this, 'value', this.element.value));
   }),
 
   _input: on('input', function() {
