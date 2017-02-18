@@ -85,14 +85,6 @@ export const Links = {
       />
     )
   },
-  onReject() {
-    return (
-      <Link
-        url='https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#onreject'
-        text='onReject'
-      />
-    )
-  },
   maskFunction() {
     return (
       <Link

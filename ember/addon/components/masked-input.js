@@ -37,7 +37,7 @@ export default TextField.extend({
 
   mask: [],
 
-  textMaskInputElement: _createTextMaskInputElement('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe', 'onReject', 'onAccept'),
+  textMaskInputElement: _createTextMaskInputElement('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
 
   update() {
     this.get('textMaskInputElement').update(...arguments);
