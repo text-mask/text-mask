@@ -56,6 +56,17 @@ test('changing textMaskInputElement calls textMaskInputElement.update()', functi
   });
 });
 
+test('update() method is called when component is rendered', function(assert) {
+  assert.expect(1);
+
+  this.subject({
+    _textMaskInputElementChanged(){},
+    update: () => assert.ok(true)
+  });
+
+  this.render();
+});
+
 test('update() method calls textMaskInputElement.update()', function(assert) {
   assert.expect(1);
 
@@ -66,6 +77,5 @@ test('update() method calls textMaskInputElement.update()', function(assert) {
     }
   });
 
-  this.render();
   component.update();
 });
