@@ -14,8 +14,6 @@ export default function createTextMaskInputElement({
   guide,
   pipe,
   placeholderChar = defaultPlaceholderChar,
-  onAccept,
-  onReject,
   keepCharPositions = false
 }) {
   // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
@@ -27,7 +25,7 @@ export default function createTextMaskInputElement({
   }
 
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: emptyString, previousOnRejectRawValue: emptyString}
+  const state = {previousConformedValue: emptyString}
 
   // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
@@ -50,6 +48,10 @@ export default function createTextMaskInputElement({
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
     update(rawValue = inputElement.value) {
+      // In framework components that support reactivity, it's possible to turn off masking by passing
+      // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
+      if (providedMask === false) { return }
+
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
       if (rawValue === state.previousConformedValue) { return }
@@ -70,6 +72,9 @@ export default function createTextMaskInputElement({
       // Then we also need to get the `placeholder`
       if (typeof providedMask === strFunction) {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
+
+        // disable masking if `mask` is `false`
+        if (mask === false) { return }
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
@@ -97,10 +102,8 @@ export default function createTextMaskInputElement({
         keepCharPositions
       }
 
-      // `conformToMask` returns the information below: we need the `conformedValue` and we need to know whether
-      // some characters were rejected. We'll use `someCharsRejected` to know whether we should call the `onReject`
-      // callback
-      const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
+      // `conformToMask` returns `conformedValue` as part of an object for future API flexibility
+      const {conformedValue} = conformToMask(safeRawValue, mask, conformToMaskConfig)
 
       // The following few lines are to support the `pipe` feature.
       const piped = typeof pipe === strFunction
@@ -156,54 +159,6 @@ export default function createTextMaskInputElement({
 
       inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
-
-      // If we set a value to the input element that's different form `previousConformedValue`, it means user input
-      // was accepted, and we call the `onAccept` callback if it's a function. However, there's an exception. When
-      // the first character is rejected, the input might go from empty string to placeholder. We don't want to call
-      // `onAccept` in that case.
-      if (
-        typeof onAccept === strFunction &&
-        inputElementValue !== previousConformedValue &&
-        inputElementValue !== placeholder
-      ) {
-        state.previousOnRejectRawValue = null // See `onReject` comments for explanation for this
-
-        onAccept()
-      }
-
-      // Now we need to figure out if user input was rejected to decide whether to call `onReject` callback or not.
-      // We need to know if the operation is deletion, because if it is, then we definitely don't need to call
-      // `onReject` in that case.
-      const isDeletion = safeRawValue.length < previousConformedValue.length
-
-      // To call `onReject`
-      if (
-        // `onReject` has to be a function
-        typeof onReject === strFunction &&
-
-        // `someCharsRejected` or `pipeResults.rejected` has to be true
-        (someCharsRejected || pipeResults.rejected) &&
-
-        // the operation needs to be addition, not deletion
-        isDeletion === false &&
-
-        // the `rawValue` should not be the same as the previous rejected `rawValue`. We have this check to prevent
-        // an infinite loop where `onReject` causes `update` to be called, So we end-up with:
-        // `onReject` -> `update` -> `onReject` -> `update` -> etc...
-        state.previousOnRejectRawValue !== rawValue
-      ) {
-        // So, remember the `rawValue` which was rejected. `state.previousOnRejectRawValue` is also reset to `null`
-        // when the value is accepted, as you can see `onAccept` above.
-        state.previousOnRejectRawValue = rawValue
-
-        // `onReject` receives the `finalConformedValue` and booleans for `pipeRejection` and `maskRejection`
-        // so know whether the user input was rejected by the mask pattern or by the pipe.
-        onReject({
-          conformedValue: finalConformedValue,
-          pipeRejection: pipeResults.rejected,
-          maskRejection: someCharsRejected
-        })
-      }
     }
   }
 }

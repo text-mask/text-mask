@@ -29,8 +29,6 @@ export class MaskedInputDirective implements ControlValueAccessor{
     placeholderChar: '_',
     pipe: undefined,
     keepCharPositions: false,
-    onReject: undefined,
-    onAccept: undefined
   }
 
   _onTouched = () => {}
