@@ -7,17 +7,14 @@ export default {
     return this.textMaskInputElement.update(value)
   },
 
-  bind() {
-    let options = this.vm[this.expression] || {}
-    options.inputElement = this.el
-    this.textMaskInputElement = createTextMaskInputElement(options)
-
-    this.inputHandler = this.inputHandler.bind(this)
-    this.el.addEventListener('input', this.inputHandler)
+  bind(el, binding) {
+    let options = binding.value || {}
+    options.inputElement = el
+    binding.def.textMaskInputElement = createTextMaskInputElement(options)
+    el.addEventListener('input', binding.def.inputHandler.bind(binding.def))
   },
-
   unbind() {
-    this.el.removeEventListener('input', this.inputHandler)
+    el.removeEventListener('input', binding.def.inputHandler.bind(binding.def))
   }
 }
 

@@ -6,6 +6,6 @@ Vue.directive('text-mask', vueTextMask)
 
 /* eslint-disable no-new */
 new Vue({
-  el: 'body',
+  el: '.starter-template',
   components: {App}
 })
