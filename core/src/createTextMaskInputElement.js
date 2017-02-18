@@ -102,9 +102,8 @@ export default function createTextMaskInputElement({
         keepCharPositions
       }
 
-      // `conformToMask` returns the information below: we need the `conformedValue` and we need to know whether
-      // some characters were rejected.
-      const {conformedValue, meta: {someCharsRejected}} = conformToMask(safeRawValue, mask, conformToMaskConfig)
+      // `conformToMask` returns `conformedValue` as part of an object for future API flexibility
+      const {conformedValue} = conformToMask(safeRawValue, mask, conformToMaskConfig)
 
       // The following few lines are to support the `pipe` feature.
       const piped = typeof pipe === strFunction

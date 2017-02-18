@@ -1,4 +1,3 @@
-import React from 'react'
 import createAutoCorrectedDatePipe from '../../addons/src/createAutoCorrectedDatePipe'
 import createNumberMask from '../../addons/src/createNumberMask'
 import emailMask from '../../addons/src/emailMask'
