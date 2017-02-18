@@ -53,6 +53,8 @@ which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/
 <img src="assets/dynamicMask.gif"/>
 </p>
 
+Note: it is possible to return `false` from a mask function to disable masking completely.
+
 ## `guide`
 
 `guide` is a boolean that tells the component whether to be in *guide* or *no guide* mode.

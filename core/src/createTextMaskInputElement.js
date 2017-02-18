@@ -50,6 +50,10 @@ export default function createTextMaskInputElement({
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
     update(rawValue = inputElement.value) {
+      // In framework components that support reactivity, it's possible to turn off masking by passing
+      // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
+      if (providedMask === false) { return }
+
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
       if (rawValue === state.previousConformedValue) { return }
@@ -70,6 +74,9 @@ export default function createTextMaskInputElement({
       // Then we also need to get the `placeholder`
       if (typeof providedMask === strFunction) {
         mask = providedMask(safeRawValue, {currentCaretPosition, previousConformedValue, placeholderChar})
+
+        // disable masking if `mask` is `false`
+        if (mask === false) { return }
 
         // mask functions can setup caret traps to have some control over how the caret moves. We need to process
         // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return

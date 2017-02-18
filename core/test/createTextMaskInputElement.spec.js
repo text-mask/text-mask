@@ -171,6 +171,24 @@ describe('createTextMaskInputElement', () => {
       expect(maskSpy.callCount).to.equal(2)
     })
 
+    it('can be disabled with `false` mask', () => {
+      const mask = false
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      inputElement.value = 'a'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('a')
+    })
+
+    it('can be disabled by returning `false` from mask function', () => {
+      const mask = () => false
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      inputElement.value = 'a'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('a')
+    })
+
     describe('`onAccept` callback', () => {
       it('is called when the updated value is different than the previous value', () => {
         const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
