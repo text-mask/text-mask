@@ -84,6 +84,11 @@ describe('createNumberMask', () => {
     expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
+  it('can allow leading zeroes', function() {
+    let numberMask = createNumberMask({allowLeadingZeroes: true})
+    expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+  })
+
   describe('integer limiting', () => {
     it('can limit the length of the integer part', () => {
       let numberMask = createNumberMask({integerLimit: 3})
@@ -152,6 +157,16 @@ describe('createNumberMask', () => {
 
     it('accepts any string and strips out any non-digit characters', () => {
       expect(numberMask('h4x0r sp43k')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/])
+    })
+
+    it('does not allow leading zeroes', function() {
+      let numberMask = createNumberMask()
+      expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/])
+    })
+
+    it('allows one leading zero followed by a fraction', function() {
+      let numberMask = createNumberMask({allowDecimal: true})
+      expect(numberMask('0.12')).to.deep.equal(['$', /\d/, '[]', '.', '[]', /\d/, /\d/])
     })
   })
 })
