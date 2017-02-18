@@ -1,6 +1,6 @@
 {
   "name": "react-text-mask",
-  "version": "0.19.0",
+  "version": "1.0.0",
   "description": "React input component that accepts mask pattern",
   "main": "dist/reactTextMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",

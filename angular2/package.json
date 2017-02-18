@@ -1,6 +1,6 @@
 {
   "name": "angular2-text-mask",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Angular 2 directive for input text masking",
   "main": "dist/angular2TextMask.js",
   "typings": "./dist/angular2TextMask.d.ts",
@@ -59,6 +59,6 @@
     "zone.js": "^0.7.2"
   },
   "dependencies": {
-    "text-mask-core": "^1.0.0"
+    "text-mask-core": "^2.0.0"
   }
 }
