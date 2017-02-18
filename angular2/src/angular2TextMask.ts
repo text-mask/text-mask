@@ -1,11 +1,11 @@
-import { Directive, ElementRef, forwardRef, Input, NgModule, OnInit, AfterViewInit, Renderer } from '@angular/core'
+import { Directive, ElementRef, forwardRef, Input, NgModule, Renderer } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
 
 @Directive({
   host: {
-    '(input)': 'onInput($event)',
+    '(input)': 'onInput($event.target.value)',
     '(blur)': '_onTouched()'
   },
   selector: '[textMask]',
@@ -15,7 +15,7 @@ import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
     multi: true
   }]
 })
-export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValueAccessor{
+export class MaskedInputDirective implements ControlValueAccessor{
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -36,17 +36,6 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
-  ngAfterViewInit() {
-    if (!this.inputElement) {
-      // the element was not found when ngOnInit ran, let's try to find it again
-      this.setupMask()
-    }
-  }
-
-  ngOnInit() {
-    this.setupMask()
-  }
-
   private setupMask() {
     if (this.element.nativeElement.tagName === 'INPUT') {
       // `textMask` directive is used directly on an input element
@@ -64,6 +53,10 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
   }
 
   writeValue(value: any) {
+    if (!this.inputElement) {
+      this.setupMask()
+    }
+
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
     }
@@ -73,13 +66,16 @@ export class MaskedInputDirective implements OnInit, AfterViewInit, ControlValue
 
   registerOnTouched(fn: () => any): void { this._onTouched = fn }
 
-  onInput($event) {
-    this.textMaskInputElement.update($event.target.value)
+  onInput(value) {
+    if (!this.inputElement) {
+      this.setupMask()
+    }
 
+    this.textMaskInputElement.update(value)
     // check against the last value to prevent firing ngModelChange despite no changes
-    if (this.lastValue !== $event.target.value) {
-      this.lastValue = $event.target.value
-      this._onChange($event.target.value)
+    if (this.lastValue !== value) {
+      this.lastValue = value
+      this._onChange(value)
     }
   }
 
