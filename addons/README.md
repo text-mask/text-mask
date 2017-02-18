@@ -30,6 +30,7 @@ to Text Mask.
 1. `requireDecimal` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
 after the integer. Defaults to `false`.
 1. `allowNegative` (boolean): whether or not to allow negative numbers. Defaults to `false`
+1. `allowLeadingZeroes` (boolean): whether or not to allow leading zeroes. Defaults to `false`
 
 #### Usage
 

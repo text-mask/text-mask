@@ -39,8 +39,6 @@ const App = React.createClass({
                 mask={props.mask}
                 guide={props.guide}
                 onChange={({target: {value}}) => props.setValue(value)}
-                onReject={() => props.setOnRejectMessage(props.onRejectMessage)}
-                onAccept={() => props.setOnAcceptMessage(props.onAcceptMessage)}
                 className='form-control'
                 id='maskedInput'
               />

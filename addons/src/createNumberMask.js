@@ -19,6 +19,7 @@ export default function createNumberMask({
   decimalLimit = 2,
   requireDecimal = false,
   allowNegative = false,
+  allowLeadingZeroes = false,
   integerLimit = null
 } = {}) {
   const prefixLength = prefix && prefix.length || 0
@@ -62,6 +63,10 @@ export default function createNumberMask({
     }
 
     integer = integer.replace(nonDigitsRegExp, emptyString)
+
+    if (!allowLeadingZeroes) {
+      integer = String(Number(integer))
+    }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 
