@@ -35,11 +35,6 @@ const HelpPanel = React.createClass({
             <p>
               It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
             </p>
-
-            <p style={{marginBottom: 0}}>
-              This configuration also uses the <Links.onReject/> callback to show a hint message when user
-              enters a rejected character.
-            </p>
           </Panel>
         </Row>
       ) || props.mask.instanceOf === 'createNumberMask' && (
