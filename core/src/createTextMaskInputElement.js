@@ -9,7 +9,6 @@ const strNone = 'none'
 const strObject = 'object'
 
 export default function createTextMaskInputElement(config) {
-
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: emptyString}
 
@@ -27,7 +26,6 @@ export default function createTextMaskInputElement(config) {
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false
     } = config) {
-
       rawValue = rawValue || inputElement.value
 
       // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
@@ -38,8 +36,8 @@ export default function createTextMaskInputElement(config) {
         providedMask = providedMask.mask
       }
 
-      // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
-      // `(___)` if the `placeholderChar` is set to `_`.
+      // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
+      // be `(___)` if the `placeholderChar` is set to `_`.
       let placeholder
 
       // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
