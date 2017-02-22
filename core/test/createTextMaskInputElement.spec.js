@@ -193,7 +193,7 @@ describe('createTextMaskInputElement', () => {
       const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement()
 
-      let inputElement = { value: '2' }
+      let inputElement = {value: '2'}
 
       textMaskControl.update(inputElement.value, {inputElement, mask})
       expect(inputElement.value).to.equal('(2__) ___-____')
