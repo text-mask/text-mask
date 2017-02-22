@@ -188,5 +188,15 @@ describe('createTextMaskInputElement', () => {
       textMaskControl.update()
       expect(inputElement.value).to.equal('a')
     })
+
+    it('can pass in a config object to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = { value: '2' }
+
+      textMaskControl.update(inputElement.value, {inputElement, mask})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+    })
   })
 })
