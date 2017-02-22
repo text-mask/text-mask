@@ -28,6 +28,10 @@ export default function createTextMaskInputElement(config) {
     } = config) {
       rawValue = rawValue || inputElement.value
 
+      // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
+      // This check is here to handle controlled framework components that repeat the `update` call on every render.
+      if (rawValue === state.previousConformedValue) { return }
+
       // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
       // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
       // were passed.
@@ -53,10 +57,6 @@ export default function createTextMaskInputElement(config) {
       // In framework components that support reactivity, it's possible to turn off masking by passing
       // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
       if (providedMask === false) { return }
-
-      // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
-      // This check is here to handle controlled framework components that repeat the `update` call on every render.
-      if (rawValue === state.previousConformedValue) { return }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
