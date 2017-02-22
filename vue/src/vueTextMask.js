@@ -1,10 +1,6 @@
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export default {
-
-  // Input event callback will be stored in this variable
-  // because we'll need it for unbind method
-  callback: null,
 
   bind (el, binding, vnode) {
     // Check for empty value is good for list rendering (some inputs has no masks)

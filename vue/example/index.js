@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import App from './App'
 import vueTextMask from '../src/vueTextMask'
 
 Vue.directive('text-mask', vueTextMask)
@@ -7,11 +8,8 @@ Vue.directive('text-mask', vueTextMask)
 new Vue({
   el: '#app',
 
-  data: {
-    phone: '',
-
-    maskOptions: {
-      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    }
+  components: {
+    App
   }
+  
 })

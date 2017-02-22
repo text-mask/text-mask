@@ -4,7 +4,7 @@ var coreLoaders = require('../../core/webpack.buildCore.js').module.loaders
 
 module.exports = {
   devtool: 'eval',
-  entry: path.join(__dirname, './app.js'),
+  entry: path.join(__dirname, './index.js'),
   output: {
     path: path.resolve(__dirname, '/'),
     filename: 'bundle.js',
