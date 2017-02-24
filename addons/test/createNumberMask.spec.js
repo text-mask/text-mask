@@ -121,14 +121,15 @@ describe('createNumberMask', () => {
     it('works when thousandsSeparatorSymbol is a period', () => {
       let numberMask = createNumberMask({
         prefix: '',
-        thousandsSeparatorSymbol:'.',
-        decimalSymbol:',',
-        allowDecimal:true,
-        requireDecimal:true,
+        thousandsSeparatorSymbol: '.',
+        decimalSymbol: ',',
+        allowDecimal: true,
+        requireDecimal: true,
         integerLimit: 5,
         decimalLimit: 3,
       })
-      expect(numberMask('1234567890,12345678')).to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
+      expect(numberMask('1234567890,12345678'))
+        .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
     })
   })
 
