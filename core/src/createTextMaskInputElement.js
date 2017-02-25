@@ -7,6 +7,7 @@ const strFunction = 'function'
 const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
+const isAndroid = /Android/i.test(navigator && navigator.userAgent)
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
@@ -167,7 +168,11 @@ export default function createTextMaskInputElement(config) {
 
 function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
-    element.setSelectionRange(selectionPosition, selectionPosition, strNone)
+    if (isAndroid) {
+      setTimeout(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
+    } else {
+      element.setSelectionRange(selectionPosition, selectionPosition, strNone)
+    }
   }
 }
 
