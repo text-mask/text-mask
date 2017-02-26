@@ -23,5 +23,7 @@ test('mask is initialised on first render', function(assert) {
   this.set('value', '1234567890');
   this.render(hbs`{{masked-input mask=mask value=value}}`);
   assert.equal(this.$('input')[0].value, '(123) 456-7890');
-  assert.equal(this.get('value'), '(123) 456-7890');
+
+  // assert.equal(this.get('value'), '(123) 456-7890');
+  assert.equal(this.get('value'), '1234567890', 'initializing text mask should not change the model');
 });
