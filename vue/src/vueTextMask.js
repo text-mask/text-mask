@@ -8,16 +8,18 @@ export default {
   },
 
   bind() {
-    let options = this.vm[this.expression] || {}
-    options.inputElement = this.el
-    this.textMaskInputElement = createTextMaskInputElement(options)
+    let self = binding.def
+    
+    let options = binding.value || {}
+    options.inputElement = el
+    el.textMaskInputElement = createTextMaskInputElement(options)
 
-    this.inputHandler = this.inputHandler.bind(this)
-    this.el.addEventListener('input', this.inputHandler)
+    el.inputHandler = self.inputHandler.bind(el)
+    el.addEventListener('input', el.inputHandler)
   },
 
   unbind() {
-    this.el.removeEventListener('input', this.inputHandler)
+    el.removeEventListener('input', el.inputHandler)
   }
 }
 
