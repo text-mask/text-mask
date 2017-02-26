@@ -15,7 +15,7 @@ import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
     multi: true
   }]
 })
-export class MaskedInputDirective implements ControlValueAccessor{
+export class MaskedInputDirective implements ControlValueAccessor {
   private textMaskInputElement: any
   private inputElement:HTMLInputElement
 
@@ -71,11 +71,17 @@ export class MaskedInputDirective implements ControlValueAccessor{
       this.setupMask()
     }
 
-    this.textMaskInputElement.update(value)
-    // check against the last value to prevent firing ngModelChange despite no changes
-    if (this.lastValue !== value) {
-      this.lastValue = value
-      this._onChange(value)
+    if (this.textMaskInputElement !== undefined) {
+      this.textMaskInputElement.update(value)
+      
+      // get the updated value
+      value = this.inputElement.value
+
+      // check against the last value to prevent firing ngModelChange despite no changes
+      if (this.lastValue !== value) {
+        this.lastValue = value
+        this._onChange(value)
+      }
     }
   }
 
