@@ -10,25 +10,7 @@ npm i vue-text-mask --save
 
 Then, use it as follows:
 
-```js
-// Either define the component globally
-import Vue from 'vue'
-import MaskedInput from 'vue-text-mask'
-
-Vue.component('masked-input', MaskedInput);
-
-// Or define it within a Vue instance or component
-import MaskedInput from 'vue-text-mask'
-
-... {
-  components: {
-    MaskedInput
-  }
-}
-```
-
 ```html
-<!-- Example .vue component implementation -->
 <template>
   <label>Phone Number</label>
   <masked-input
@@ -60,6 +42,16 @@ import MaskedInput from 'vue-text-mask'
   }
 </script>
 ```
+
+You could alternatively define the component globally:
+```js
+import Vue from 'vue'
+import MaskedInput from 'vue-text-mask'
+
+Vue.component('masked-input', MaskedInput);
+```
+
+`<masked-input>` is essentially a wrapped `<input>` element - so it supports all the regular input properties (type, placeholder, class, etc). It is compatible with v-model 2-way binding, and is reactive to changes to any of the [text mask props](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Documentation
 
