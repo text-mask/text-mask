@@ -43,12 +43,12 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.bind()
   },
 
   methods: {
-    bind () {
+    bind() {
       this.textMaskInputElement = createTextMaskInputElement({
         inputElement: this.$refs.input,
         ...this.$options.propsData
@@ -57,33 +57,33 @@ export default {
       this.updateValue(this.value)
     },
 
-    updateValue (value) {
+    updateValue(value) {
       this.textMaskInputElement.update(value)
       this.$emit('input', this.$refs.input.value)
     }
   },
 
   watch: {
-    mask (newMask) {
+    mask(newMask) {
       // Check if the mask has changed (Vue cannot detect whether an array has changed)
-      if (this.mask != newMask) {
+      if (this.mask !== newMask) {
         this.bind()
       }
     },
 
-    guide () {
+    guide() {
       this.bind()
     },
 
-    placeholderChar () {
+    placeholderChar() {
       this.bind()
     },
 
-    keepCharPositions () {
+    keepCharPositions() {
       this.bind()
     },
 
-    pipe () {
+    pipe() {
       this.bind()
     }
   }
