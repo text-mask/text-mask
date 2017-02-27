@@ -10,7 +10,7 @@
             name="phone"
             class="form-control"
             v-model="phone"
-            :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]">
+            :mask="false">
           </masked-input>
         </div>
       </div>
