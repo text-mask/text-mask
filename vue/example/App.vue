@@ -5,12 +5,13 @@
         <label for="1" class="col-sm-4 control-label">Masked input</label>
 
         <div class="col-sm-8">
-          <input
+          <masked-input
             type="text"
             name="phone"
             class="form-control"
             v-model="phone"
-            v-text-mask="maskOptions">
+            :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]">
+          </masked-input>
         </div>
       </div>
 
@@ -30,16 +31,18 @@
 </template>
 
 <script>
+  import MaskedInput from '../src/vueTextMask'
+
   export default {
     name: 'app',
+
+    components: {
+      MaskedInput
+    },
 
     data () {
       return {
         phone: '',
-
-        maskOptions: {
-          mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        }
       }
     }
 

@@ -11,52 +11,59 @@ npm i vue-text-mask --save
 Then, use it as follows:
 
 ```js
-// main.js
-
+// Either define the component globally
 import Vue from 'vue'
-import App from './App'
-import textMask from 'vue-text-mask'
+import MaskedInput from 'vue-text-mask'
 
-Vue.directive('text-mask', textMask)
+Vue.component('masked-input', MaskedInput);
 
-new Vue({
-  el: '#app',
+// Or define it within a Vue instance or component
+import MaskedInput from 'vue-text-mask'
 
+... {
   components: {
-    App
-  }
-
-})
-```
-
-```html
-<!-- Template/Markup -->
-<label>Phone Number</label>
-<input
-  type="text"
-  name="phone"
-  class="form-control"
-  v-model="phone"
-  v-text-mask="maskOptions">
-```
-
-**Please note that you can only pass reference to an object, not an object literal.**
-`v-text-mask="{obj: 'literal'}"` **will not work.**
-
-```js
-// Component JS
-data () {
-  return {
-    maskOptions: {
-      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    }
+    MaskedInput
   }
 }
 ```
 
+```html
+<!-- Example .vue component implementation -->
+<template>
+  <label>Phone Number</label>
+  <masked-input
+    type="text"
+    name="phone"
+    class="form-control"
+    v-model="phone"
+    :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
+    :guide="false"
+    placeholderChar="#">
+  </masked-input>
+</template>
+
+<script>
+  import MaskedInput from 'vue-text-mask'
+
+  export default {
+    name: 'name',
+
+    components: {
+      MaskedInput
+    },
+
+    data () {
+      return {
+        phone: ''
+      }
+    }
+  }
+</script>
+```
+
 ## Documentation
 
-For more information about the `props` that you can pass to the directive, see
+For more information about the `props` that you can pass to the component, see
 the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 ## Example
