@@ -1,13 +1,11 @@
 import Ember from 'ember';
 import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
 
-const { computed, observer, on, TextField } = Ember;
+const { computed, get, getProperties, on, TextField } = Ember;
 
-function _createTextMaskInputElement(...args) {
+function _config(...args) {
   return computed(...args, function () {
-    let config = this.getProperties(...args);
-    config.inputElement = this.get('element');
-    return createTextMaskInputElement(config);
+    return getProperties(this, ...args);
   });
 }
 
@@ -37,15 +35,19 @@ export default TextField.extend({
 
   mask: [],
 
-  textMaskInputElement: _createTextMaskInputElement('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+  config: _config('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+
+  textMaskInputElement: computed('config', function () {
+    let config = get(this, 'config');
+    config.inputElement = get(this, 'element');
+    return this.createTextMaskInputElement(config);
+  }),
+
+  createTextMaskInputElement,
 
   update() {
     this.get('textMaskInputElement').update(...arguments);
   },
-
-  _textMaskInputElementChanged: observer('textMaskInputElement', function () {
-    this.update();
-  }),
 
   _didInsertElement: on('didInsertElement', function() {
     this.update();
