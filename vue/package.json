@@ -1,7 +1,7 @@
 {
   "name": "vue-text-mask",
   "version": "2.1.0",
-  "description": "Vue directive for input masking",
+  "description": "Vue component for input masking",
   "main": "dist/vueTextMask.js",
   "author": "Bill Colmbia <hello@billcolumbia.com>",
   "license": "Unlicense",
@@ -22,7 +22,7 @@
   "devDependencies": {},
   "keywords": [
     "vue",
-    "vue-directive",
+    "vue-component",
     "input mask",
     "text mask",
     "string mask",
