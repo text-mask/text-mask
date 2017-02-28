@@ -11,7 +11,10 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [new webpack.NoErrorsPlugin()],
-  resolve: {extensions: ['', '.js', '.vue']},
+  resolve: {
+    alias: {vue: 'vue/dist/vue.js'},
+    extensions: ['', '.js', '.vue']
+  },
   module: {
     loaders: [{
       test: /\.vue$/,

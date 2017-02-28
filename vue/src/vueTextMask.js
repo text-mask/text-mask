@@ -1,23 +1,91 @@
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export default {
-  textMaskInputElement: null,
+  template: `
+    <input ref="input"
+      :value="value"
+      @input="updateValue($event.target.value)"
+    />
+  `,
 
-  inputHandler({target: {value}}) {
-    return this.textMaskInputElement.update(value)
+  name: 'masked-input',
+
+  props: {
+    value: {
+      type: String,
+      required: false,
+      default: ''
+    },
+
+    mask: {
+      type: [Array, Function, Boolean],
+      required: true
+    },
+
+    guide: {
+      type: Boolean,
+      required: false
+    },
+
+    placeholderChar: {
+      type: String,
+      required: false
+    },
+
+    keepCharPositions: {
+      type: Boolean,
+      required: false
+    },
+
+    pipe: {
+      type: Function,
+      required: false
+    }
   },
 
-  bind() {
-    let options = this.vm[this.expression] || {}
-    options.inputElement = this.el
-    this.textMaskInputElement = createTextMaskInputElement(options)
-
-    this.inputHandler = this.inputHandler.bind(this)
-    this.el.addEventListener('input', this.inputHandler)
+  mounted() {
+    this.bind()
   },
 
-  unbind() {
-    this.el.removeEventListener('input', this.inputHandler)
+  methods: {
+    bind() {
+      this.textMaskInputElement = createTextMaskInputElement({
+        inputElement: this.$refs.input,
+        ...this.$options.propsData
+      })
+
+      this.updateValue(this.value)
+    },
+
+    updateValue(value) {
+      this.textMaskInputElement.update(value)
+      this.$emit('input', this.$refs.input.value)
+    }
+  },
+
+  watch: {
+    mask(newMask) {
+      // Check if the mask has changed (Vue cannot detect whether an array has changed)
+      if (this.mask !== newMask) {
+        this.bind()
+      }
+    },
+
+    guide() {
+      this.bind()
+    },
+
+    placeholderChar() {
+      this.bind()
+    },
+
+    keepCharPositions() {
+      this.bind()
+    },
+
+    pipe() {
+      this.bind()
+    }
   }
 }
 

@@ -7,7 +7,7 @@ const strFunction = 'function'
 const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
-const isAndroid = /Android/i.test(navigator && navigator.userAgent)
+const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
