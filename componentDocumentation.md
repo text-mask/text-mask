@@ -35,6 +35,8 @@ after that.
 
 Any valid regular expressions should work.
 
+Note: it is possible to set the mask to `false` to disable masking completely.
+
 ### `mask` function
 
 You can also pass a function as the `mask`. The function will receive the user input at every
@@ -249,5 +251,5 @@ user enter an email or a number in an input type `text` combined the appropriate
 ### Updating the `mask` or other values after initialization
 
 Once Text Mask has been initialized on an input field, it's not possible to change the mask or other configurations. In
-frameworks such as React or Ember, you may expect that you can hot-swap values, but that would not work with Text Mask. 
+frameworks such as React, you may expect that you can hot-swap values, but that would not work with Text Mask. 
 See [this page](https://github.com/text-mask/text-mask/issues/233) for some workarounds for this limitation.
