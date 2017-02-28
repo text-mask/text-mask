@@ -111,8 +111,6 @@ string as the new value of the `input` element.
 
 ---
 
-# &#x1F6A8; the documentation below this point is out-of-date and could be inaccurate
-
 ### `adjustCaretPosition(argumentsObject)`
 
 When you set the value of the `input` element, you lose the position of the caret. This function
@@ -122,9 +120,14 @@ helps you restore the position.
 
 * `previousConformedValue` (string): the string value of the `input` before the last time you set
 its value. If you're calling this function for the first time, you can pass an empty string.
-* `conformedToMaskResults` (object): the return value of the last call to `conformToMask`
+* `conformedValue` (string): the `conformedValue` returned from the last call to `conformToMask`
 * `currentCaretPosition` (integer): the position of the caret right before you called this
 function
+* `rawValue` (string): value of the input element
+* `placeholderChar` (string): placeholder character
+* `placeholder` (string): the generated placeholder
+* `indexesOfPipedChars` (array): an array of piped characters returned from the last call to the `pipe` function
+* `caretTrapIndexes` (array): an array of index positions for the caret traps
 
 `adjustCaretPosition` will return an integer representing the index of where the caret should be
 moved to next.
