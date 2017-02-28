@@ -18,7 +18,7 @@ export default {
     },
 
     mask: {
-      type: [Array, Function],
+      type: [Array, Function, Boolean],
       required: true
     },
 
