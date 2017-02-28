@@ -19,9 +19,11 @@ export default function createNumberMask({
   decimalLimit = 2,
   requireDecimal = false,
   allowNegative = false,
+  allowLeadingZeroes = false,
   integerLimit = null
 } = {}) {
   const prefixLength = prefix && prefix.length || 0
+  const suffixLength = suffix && suffix.length || 0
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
   function numberMask(rawValue = emptyString) {
@@ -42,6 +44,11 @@ export default function createNumberMask({
     let fraction
     let mask
 
+    // remove the suffix
+    if (rawValue.slice(suffixLength * -1) === suffix) {
+      rawValue = rawValue.slice(0, suffixLength * -1)
+    }
+
     if (hasDecimal && (allowDecimal || requireDecimal)) {
       integer = rawValue.slice(rawValue.slice(0, prefixLength) === prefix ? prefixLength : 0, indexOfLastDecimal)
 
@@ -56,12 +63,17 @@ export default function createNumberMask({
     }
 
     if (integerLimit && typeof integerLimit === number) {
-      const numberOfThousandSeparators = (integer.match(new RegExp(`${thousandsSeparatorSymbol}`, 'g')) || []).length
+      const thousandsSeparatorRegex = thousandsSeparatorSymbol === '.' ? '[.]' : `${thousandsSeparatorSymbol}`
+      const numberOfThousandSeparators = (integer.match(new RegExp(thousandsSeparatorRegex, 'g')) || []).length
 
       integer = integer.slice(0, integerLimit + (numberOfThousandSeparators * thousandsSeparatorSymbolLength))
     }
 
     integer = integer.replace(nonDigitsRegExp, emptyString)
+
+    if (!allowLeadingZeroes) {
+      integer = String(Number(integer))
+    }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 

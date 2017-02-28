@@ -15,8 +15,6 @@ export const MaskedInput = React.createClass({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     pipe: PropTypes.func,
     placeholderChar: PropTypes.string,
-    onAccept: PropTypes.func,
-    onReject: PropTypes.func,
     keepCharPositions: PropTypes.bool
   },
 
@@ -38,8 +36,6 @@ export const MaskedInput = React.createClass({
     delete props.guide
     delete props.pipe
     delete props.placeholderChar
-    delete props.onAccept
-    delete props.onReject
     delete props.keepCharPositions
     delete props.value
     delete props.onChange
