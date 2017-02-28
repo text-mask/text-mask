@@ -45,15 +45,76 @@ test('textMaskInputElement property is initialized', function(assert) {
   assert.equal(typeof textMaskInputElement.update, 'function');
 });
 
-test('changing textMaskInputElement calls textMaskInputElement.update()', function(assert) {
-  assert.expect(1);
+test('createTextMaskInputElement() is called on render with the correct config', function(assert) {
+  assert.expect(6);
 
-  let component = this.subject();
+  let mask = [/\d/];
+  let guide = true;
+  let placeholderChar = true;
+  let keepCharPositions = true;
+  let pipe = () => {};
+
+  this.subject({
+    mask,
+    guide,
+    placeholderChar,
+    keepCharPositions,
+    pipe,
+    createTextMaskInputElement: (config) => {
+      assert.deepEqual(config.mask, mask);
+      assert.equal(config.guide, guide);
+      assert.equal(config.placeholderChar, placeholderChar);
+      assert.equal(config.keepCharPositions, keepCharPositions);
+      assert.deepEqual(config.pipe, pipe);
+      assert.deepEqual(typeof config.inputElement, 'object');
+      return {
+        update(){}
+      };
+    }
+  });
+  this.render();
+});
+
+test('changing config calls createTextMaskInputElement()', function(assert) {
+  assert.expect(6);
+
+  let config = {
+    mask: [/\d/],
+    guide: undefined,
+    placeholderChar: undefined,
+    keepCharPositions: undefined,
+    pipe: undefined
+  };
+
+  let component = this.subject({
+    createTextMaskInputElement() {
+      return {
+        update(){}
+      };
+    }
+  });
   this.render();
 
-  component.set('textMaskInputElement', {
-    update: () => assert.ok(true)
-  });
+  component.createTextMaskInputElement = (_config) => {
+    assert.deepEqual(_config.mask, config.mask);
+    assert.equal(typeof config.guide, "undefined");
+    assert.equal(typeof config.placeholderChar, "undefined");
+    assert.equal(typeof config.keepCharPositions, "undefined");
+    assert.deepEqual(typeof config.pipe, "undefined");
+    assert.deepEqual(typeof config.inputElement, 'object', 'inputElement should be an object');
+    return {
+      update(){}
+    };
+  };
+
+  component.set('config', config);
+  component.update();
+});
+
+test('createTextMaskInputElement is a function', function(assert) {
+  assert.expect(1);
+  let component = this.subject();
+  assert.equal(typeof component.createTextMaskInputElement, 'function');
 });
 
 test('update() method is called when component is rendered', function(assert) {
@@ -71,7 +132,6 @@ test('update() method calls textMaskInputElement.update()', function(assert) {
   assert.expect(1);
 
   let component = this.subject({
-    _textMaskInputElementChanged(){},
     textMaskInputElement: {
       update: () => assert.ok(true)
     }
