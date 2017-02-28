@@ -76,7 +76,7 @@ This function takes three arguments:
 [mask documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 * config (object): config object. See below for details
 
-This function returns an object with a property key `conformedValue`, the conformed value as a string.
+This function returns an object with a property `conformedValue` (string).
 
 ```js
 const results = conformToMask('5554833902', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/])
@@ -127,7 +127,7 @@ function
 * `placeholderChar` (string): placeholder character
 * `placeholder` (string): the generated placeholder
 * `indexesOfPipedChars` (array): an array of piped characters returned from the last call to the `pipe` function
-* `caretTrapIndexes` (array): an array of index positions for the caret traps
+* `caretTrapIndexes` (array): an array of caret trap indexes
 
 `adjustCaretPosition` will return an integer representing the index of where the caret should be
 moved to next.
