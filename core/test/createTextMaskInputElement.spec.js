@@ -188,5 +188,130 @@ describe('createTextMaskInputElement', () => {
       textMaskControl.update()
       expect(inputElement.value).to.equal('a')
     })
+
+    it('can pass in a config object to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('can change the mask passed to the update method', () => {
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      })
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {
+        inputElement,
+        mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      })
+      expect(inputElement.value).to.equal('+1 (2__) ___-____')
+    })
+
+    it('can change the guide passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask, guide: true})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {inputElement, mask, guide: false})
+      expect(inputElement.value).to.equal('(2')
+    })
+
+    it('can change the placeholderChar passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask, placeholderChar: '_'})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {inputElement, mask, placeholderChar: '*'})
+      expect(inputElement.value).to.equal('(2**) ***-****')
+    })
+
+    it('can change the inputElement passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let firstInputElement = {value: '1'}
+      let secondInputElement = {value: '2'}
+
+      textMaskControl.update('1', {inputElement: firstInputElement, mask})
+      expect(firstInputElement.value).to.equal('(1__) ___-____')
+
+      textMaskControl.update('2', {inputElement: secondInputElement, mask})
+      expect(secondInputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('can change the config passed to createTextMaskInputElement', () => {
+      const config = {
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: true,
+        placeholderChar: '_'
+      }
+      const textMaskControl = createTextMaskInputElement(config)
+
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      // change the mask
+      config.mask = ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      inputElement.value = '23' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (23_) ___-____')
+
+      // change the placeholderChar
+      config.placeholderChar = '*'
+      inputElement.value = '4' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (4**) ***-****')
+
+      // change the guide
+      config.guide = false
+      inputElement.value = '45' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (45')
+    })
+
+    it('can override the config passed to createTextMaskInputElement', () => {
+      const textMaskControl = createTextMaskInputElement({
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: true
+      })
+
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      // pass in a config to the update method
+      textMaskControl.update('23', {
+        inputElement,
+        mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: false
+      })
+      expect(inputElement.value).to.equal('+1 (23')
+
+      // use original config again
+      inputElement.value = '234' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(234) ___-____')
+    })
   })
 })

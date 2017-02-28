@@ -9,38 +9,9 @@ const strNone = 'none'
 const strObject = 'object'
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 
-export default function createTextMaskInputElement({
-  inputElement,
-  mask: providedMask,
-  guide,
-  pipe,
-  placeholderChar = defaultPlaceholderChar,
-  keepCharPositions = false
-}) {
-  // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
-  // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
-  // were passed.
-  if (typeof providedMask === strObject && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
-    pipe = providedMask.pipe
-    providedMask = providedMask.mask
-  }
-
+export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: emptyString}
-
-  // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
-  // `(___)` if the `placeholderChar` is set to `_`.
-  let placeholder
-
-  // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
-  // have to call that function to get the mask array.
-  let mask
-
-  // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
-  // correct `placeholder`.
-  if (providedMask instanceof Array) {
-    placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
-  }
 
   return {
     state,
@@ -48,14 +19,45 @@ export default function createTextMaskInputElement({
     // `update` is called by framework components whenever they want to update the `value` of the input element.
     // The caller can send a `rawValue` to be conformed and set on the input element. However, the default use-case
     // is for this to be read from the `inputElement` directly.
-    update(rawValue = inputElement.value) {
-      // In framework components that support reactivity, it's possible to turn off masking by passing
-      // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
-      if (providedMask === false) { return }
+    update(rawValue, {
+      inputElement,
+      mask: providedMask,
+      guide,
+      pipe,
+      placeholderChar = defaultPlaceholderChar,
+      keepCharPositions = false
+    } = config) {
+      rawValue = rawValue || inputElement.value
 
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
       if (rawValue === state.previousConformedValue) { return }
+
+      // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
+      // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
+      // were passed.
+      if (typeof providedMask === strObject && providedMask.pipe !== undefined && providedMask.mask !== undefined) {
+        pipe = providedMask.pipe
+        providedMask = providedMask.mask
+      }
+
+      // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
+      // be `(___)` if the `placeholderChar` is set to `_`.
+      let placeholder
+
+      // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
+      // have to call that function to get the mask array.
+      let mask
+
+      // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
+      // correct `placeholder`.
+      if (providedMask instanceof Array) {
+        placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
+      }
+
+      // In framework components that support reactivity, it's possible to turn off masking by passing
+      // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
+      if (providedMask === false) { return }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
