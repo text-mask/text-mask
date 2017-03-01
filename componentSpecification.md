@@ -9,6 +9,16 @@ This document details the specification for the text-mask components.
 * Vanilla
 * Vue
 
+The component has four tasks:
+
+1. Render an `input` element.
+
+2. Initialize the `textMaskInputElement` object.
+
+3. Manage the text-mask config.
+
+4. Call `update` when the model, config, or value of the input element changes.
+
 ## Component Structure
 
 All components should provide the following basic structure
