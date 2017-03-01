@@ -39,8 +39,8 @@ All components should provide the following basic structure
 
 ## Input (any keypress)
 
-* The component should call `update` to conform the value in the `inputElement`.
-* The component should set the conformed value to the model.
+* Call `update` to conform the value in the `inputElement`.
+* Set the conformed value to the model.
 
 ## Destroy
 
