@@ -13,7 +13,7 @@ This document details the specification for the text-mask components.
 
 All components should provide the following basic structure
 
-```
+```js
 {
   // an object that stores all config for the text mask
   config: {Object},
