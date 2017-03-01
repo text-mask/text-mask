@@ -47,11 +47,11 @@ All components should provide the following basic structure
 * Attach any listeners that it requires.
 * Call `update` to conform the value in the `input` element.
 
-## Input (any keypress)
+### Input (any keypress)
 
 * Call `update` to conform the value in the `inputElement`.
 * Set the conformed value to the model.
 
-## Destroy
+### Destroy
 
 * Remove event listeners.
