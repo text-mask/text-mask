@@ -1,4 +1,4 @@
-# Components expectations
+# Components Specification
 
 This document details the specification for the text-mask components.
 
