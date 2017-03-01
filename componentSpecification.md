@@ -22,7 +22,7 @@ All components should provide the following basic structure
   textMaskInputElement: {Object},
 
   // alias to `textMaskInputElement.update`
-  update() {
+  update(rawValue, config) {
     this.textMaskInputElement.update(...arguments)
   }
 }
