@@ -53,7 +53,7 @@ to restore the caret to its proper position.
 
 ### `createTextMaskInputElement(config)`
 
-This function takes a `config` and returns an object with a `state` property and an `update` method..
+This function takes a `config` and returns an object with an `update` method.  The `update` method is used to conform the raw value to the mask you provided in the `config`.
 
 ```js
 // initialize text mask
