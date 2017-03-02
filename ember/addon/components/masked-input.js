@@ -71,7 +71,7 @@ export default TextField.extend({
     this.get('textMaskInputElement').update(...arguments);
   },
 
-  _didRender: on('input', 'didRender', function() {
+  _input: on('input', 'didRender', function() {
     this.update();
   })
 });
