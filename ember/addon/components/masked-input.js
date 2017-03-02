@@ -61,7 +61,7 @@ export default TextField.extend({
   */
   textMaskInputElement: computed('config', function () {
     let config = get(this, 'config');
-    config.inputElement = get(this, 'element');
+    config.inputElement = this.element;
     return this.createTextMaskInputElement(config);
   }),
 
