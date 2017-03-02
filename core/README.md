@@ -62,39 +62,25 @@ const textMaskConfig = {inputElement, mask}
 // initialize text mask
 const textMaskInputElement = createTextMaskInputElement(textMaskConfig)
 
-// call update to conform the `inputElement.value` to the provided `mask`.
+// call `update` to conform the `inputElement.value` to the provided `mask`.
 textMaskInputElement.update()
 ```
 
-When the `inputElement.value` changes the `update` method must be called to conform the value to the mask.
+The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the text-mask `textMaskConfig` accepts.
 
 The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
 
 ```js
 const textMaskConfig = {inputElement, mask}
 
+// initialize text mask without a config (or with a default config)
 const textMaskInputElement = createTextMaskInputElement()
 
+// call `update` with the raw value and config
 textMaskInputElement.update(inputElement.value, textMaskConfig)
 ```
 
-The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the text-mask `textMaskConfig` accepts.
-
----
-
-### `convertMaskToPlaceholder(mask, placeholderChar)`
-
-This function takes a `mask` (array) and returns a placeholder (string).
-
-```js
-const placeholder = convertMaskToPlaceholder([/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/])
-
-placeholder // __/__/____
-```
-
-You can use this function to initialize an `input` element to a placeholder value.
-
-Optional: You can pass a `placeholderChar` as the second argument.  The default is `_` (underscore)
+The `update` method should be called every time the `inputElement.value` changes.
 
 ---
 
