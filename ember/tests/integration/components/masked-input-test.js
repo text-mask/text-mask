@@ -59,3 +59,33 @@ test('placeholderChar property can be changed', function(assert) {
   this.set('placeholderChar', '*');
   assert.equal(this.$('input')[0].value, '(123) 45*-****');
 });
+
+test('pipe method is called', function(assert) {
+  assert.expect(2);
+  this.set('mask', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]);
+  this.set('value', '(123) 45_-____');
+  this.set('pipe', (value) => {
+    assert.equal(value, this.get('value'));
+    return 'abc';
+  });
+
+  this.render(hbs`{{masked-input mask=mask pipe=pipe value=value}}`);
+  assert.equal(this.$('input')[0].value, 'abc');
+});
+
+test('pipe property can be changed', function(assert) {
+  assert.expect(2);
+  this.set('mask', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]);
+  this.set('value', '(123) 45_-_6__');
+  this.set('pipe', () => {
+    return '1';
+  });
+
+  this.render(hbs`{{masked-input mask=mask pipe=pipe value=value}}`);
+  assert.equal(this.$('input')[0].value, '1');
+
+  this.set('pipe', () => {
+    return '2';
+  });
+  assert.equal(this.$('input')[0].value, '2');
+});
