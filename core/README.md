@@ -36,9 +36,9 @@ var textMaskCore = require('text-mask-core')
 
 `textMaskCore` exposes three functions:
 
+* createTextMaskInputElement
 * conformToMask
 * adjustCaretPosition
-* createTextMaskInputElement
 
 ### Overview
 
@@ -66,7 +66,7 @@ const textMaskInputElement = createTextMaskInputElement(textMaskConfig)
 textMaskInputElement.update()
 ```
 
-The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the text-mask `textMaskConfig` accepts.
+The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the `textMaskConfig` accepts.
 
 The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
 
