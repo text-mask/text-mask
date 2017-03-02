@@ -53,22 +53,22 @@ to restore the caret to its proper position.
 
 ### `createTextMaskInputElement(config)`
 
-This function returns an object with a `state` property and an `update` method..
+This function takes a `config` and returns an object with a `state` property and an `update` method..
 
 ```js
-{
-  state: {previousConformedValue: ''},
+// initialize text mask
+let textMaskInputElement = createTextMaskInputElement({inputElement, mask})
 
-  update(rawValue, config) {
-    // calling this method will conform the rawValue
-  }
-}
+// call update to conform the value of the `inputElement` to the `mask`.
+textMaskInputElement.update()
+
+// You can also pass the rawValue and config to the `update` method.
+textMaskInputElement.update(rawValue, {inputElement, mask})
 ```
 
-* `state` (object): This object is used internally by Text Mask to store state between update calls.
-* `update` (function): Call this method to conform the value to the mask.  The `update` method takes two (optional) parameters
-  - `rawValue` (string): the raw value to be conformed
-  - `config` (object): text-mask configuration.
+The `config` requires a reference to the `inputElement` and a `mask`.  There are a number of optional properties that can be used with text-mask.
+
+See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the text-mask `config` accepts.
 
 ---
 
