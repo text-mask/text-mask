@@ -1,7 +1,7 @@
 # Text Mask Core
 
-This module contains the core functions that power Text Mask. Currently, Text Mask
-has a wrapper for React, which can be used directly.
+This module contains the core functions that power Text Mask. Text Mask
+has wrappers for Angular1, Angular2, Ember, React and Vue which can be used directly.
 
 However, Text Mask Core functions could be useful on their own. That's why they are published
 and documented here as a separate module.
@@ -50,6 +50,27 @@ to restore the caret to its proper position.
 ---
 
 ## API documentation
+
+### `createTextMaskInputElement(config)`
+
+This function returns an object with a `state` property and an `update` method..
+
+```js
+{
+  state: {previousConformedValue: ''},
+
+  update(rawValue, config) {
+    // calling this method will conform the rawValue
+  }
+}
+```
+
+* `state` (object): This object is used internally by Text Mask to store state between update calls.
+* `update` (function): Call this method to conform the value to the mask.  The `update` method takes two (optional) parameters
+  - `rawValue` (string): the raw value to be conformed
+  - `config` (object): text-mask configuration.
+
+---
 
 ### `convertMaskToPlaceholder(mask, placeholderChar)`
 
