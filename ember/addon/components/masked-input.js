@@ -1,13 +1,11 @@
 import Ember from 'ember';
 import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
 
-const { computed, observer, on, TextField } = Ember;
+const { computed, get, getProperties, on, TextField } = Ember;
 
-function _createTextMaskInputElement(...args) {
+function _config(...args) {
   return computed(...args, function () {
-    let config = this.getProperties(...args);
-    config.inputElement = this.get('element');
-    return createTextMaskInputElement(config);
+    return getProperties(this, ...args);
   });
 }
 
@@ -37,21 +35,43 @@ export default TextField.extend({
 
   mask: [],
 
-  textMaskInputElement: _createTextMaskInputElement('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+  /*
+    ## config {Object}
+
+    This is a computed property and will re-compute when any of the dependent properties
+    update.  By default it will read the properties off the component root, you
+    can pass in attrbutes to the component through the template.
+
+    ```hbs
+    {{masked-input
+      mask=customMask
+      guide=true}}
+    ```
+  */
+  config: _config('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+
+  /*
+    ## textMaskInputElement {Object}
+
+    `textMaskInputElement` is the object that is returned from calling the
+    `createTextMaskInputElement`. method.
+
+    This is a computed property and will re-compute whenever the `config` property
+    changes.
+  */
+  textMaskInputElement: computed('config', function () {
+    let config = get(this, 'config');
+    config.inputElement = this.element;
+    return this.createTextMaskInputElement(config);
+  }),
+
+  createTextMaskInputElement,
 
   update() {
     this.get('textMaskInputElement').update(...arguments);
   },
 
-  _textMaskInputElementChanged: observer('textMaskInputElement', function () {
-    this.update();
-  }),
-
-  _didInsertElement: on('didInsertElement', function() {
-    this.update();
-  }),
-
-  _input: on('input', function() {
+  _input: on('input', 'didRender', function() {
     this.update();
   })
 });
