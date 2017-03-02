@@ -38,7 +38,7 @@ var textMaskCore = require('text-mask-core')
 
 * conformToMask
 * adjustCaretPosition
-* convertMaskToPlaceholder
+* createTextMaskInputElement
 
 ### Overview
 
