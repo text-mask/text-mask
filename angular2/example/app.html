@@ -1,4 +1,7 @@
 <form class="form-horizontal">
+  <input #guidecb type="checkbox" (change)="this.guide = guidecb.checked" />
+  <label><code>guide</code></label>
+
   <div class="form-group">
     <label for="1" class="col-sm-4 control-label">Masked Input using <code>NgModel</code></label>
     <div class="col-sm-8 input-group">
@@ -14,9 +17,6 @@
     </div>
   </div>
 
-  <input #guidecb type="checkbox" (change)="this.guide = guidecb.checked" />
-  <label for="guidecb">Guide</label>
-  
   <div class="form-group">
     <label for="2" class="col-sm-4 control-label">
       Masked Input using <code>NgModel</code> with initial value
