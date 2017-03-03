@@ -15,7 +15,8 @@
   </div>
 
   <input #guidecb type="checkbox" (change)="this.guide = guidecb.checked" />
-{{this.guide}}
+  <label for="guidecb">Guide</label>
+  
   <div class="form-group">
     <label for="2" class="col-sm-4 control-label">
       Masked Input using <code>NgModel</code> with initial value
