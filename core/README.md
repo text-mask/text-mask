@@ -1,7 +1,7 @@
 # Text Mask Core
 
-This module contains the core functions that power Text Mask. Currently, Text Mask
-has a wrapper for React, which can be used directly.
+This module contains the core functions that power Text Mask. Text Mask
+has wrappers for Angular1, Angular2, Ember, React and Vue which can be used directly.
 
 However, Text Mask Core functions could be useful on their own. That's why they are published
 and documented here as a separate module.
@@ -36,9 +36,9 @@ var textMaskCore = require('text-mask-core')
 
 `textMaskCore` exposes three functions:
 
+* createTextMaskInputElement
 * conformToMask
 * adjustCaretPosition
-* convertMaskToPlaceholder
 
 ### Overview
 
@@ -51,19 +51,36 @@ to restore the caret to its proper position.
 
 ## API documentation
 
-### `convertMaskToPlaceholder(mask, placeholderChar)`
+### `createTextMaskInputElement(config)`
 
-This function takes a `mask` (array) and returns a placeholder (string).
+This function takes a configuration and returns an object with an `update` method.  The `update` method is used to conform the raw value to the mask you provide in the config.
 
 ```js
-const placeholder = convertMaskToPlaceholder([/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/])
+// the config requires a `mask` and a reference to an `input` element.
+const textMaskConfig = {inputElement, mask}
 
-placeholder // __/__/____
+// initialize text mask
+const textMaskInputElement = createTextMaskInputElement(textMaskConfig)
+
+// call `update` to conform the `inputElement.value` to the provided `mask`.
+textMaskInputElement.update()
 ```
 
-You can use this function to initialize an `input` element to a placeholder value.
+The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the `textMaskConfig` accepts.
 
-Optional: You can pass a `placeholderChar` as the second argument.  The default is `_` (underscore)
+The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
+
+```js
+const textMaskConfig = {inputElement, mask}
+
+// initialize text mask without a config (or with a default config)
+const textMaskInputElement = createTextMaskInputElement()
+
+// call `update` with the raw value and config
+textMaskInputElement.update(inputElement.value, textMaskConfig)
+```
+
+The `update` method should be called every time the `inputElement.value` changes.
 
 ---
 
