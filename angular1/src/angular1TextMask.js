@@ -21,17 +21,19 @@ function textMask() {
         inputElement = element[0].getElementsByTagName('INPUT')[0]
       }
 
-      var textMaskInputElement = createTextMaskInputElement(
-        Object.assign({inputElement}, scope.textMask)
-      )
+      var textMaskInputElement = createTextMaskInputElement()
+
+      function update(value) {
+        textMaskInputElement.update(value || inputElement.value, Object.assign({inputElement}, scope.textMask))
+      }
 
       element.on('blur keyup change input', function() {
-        textMaskInputElement.update(inputElement.value)
+        update()
         ngModel.$setViewValue(inputElement.value)
       })
 
       function formatter(fromModelValue) {
-        textMaskInputElement.update(fromModelValue)
+        update(fromModelValue)
         return inputElement.value
       }
 
