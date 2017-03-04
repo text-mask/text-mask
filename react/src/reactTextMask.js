@@ -24,7 +24,8 @@ export const MaskedInput = React.createClass({
   },
 
   update(value) {
-    this.textMaskInputElement.update(value || this.props.value, Object.assign({inputElement: this.inputElement}, this.props))
+    const textMaskConfig = Object.assign({inputElement: this.inputElement}, this.props)
+    this.textMaskInputElement.update(value || this.props.value, textMaskConfig)
   },
 
   componentDidUpdate() {
