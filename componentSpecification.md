@@ -9,11 +9,11 @@ This document details the specification for the text-mask components.
 * Vanilla
 * Vue
 
-At a basic level, the component should initialize the `textMaskInputElement` object and then call the `update` method whenever the `inputElement.value` changes.
-
 ## Component Behaviour
 
-Components should call `update` on `keydown`, when the `value` is changed, on paste and also when any of the `textMaskConfig` properties change.
+At a basic level, the component should initialize the `textMaskInputElement` object and call the `update` method whenever the `inputElement.value` changes.
+
+If the `textMaskConfig` changes the component should update to reflect those changes immediately.  In cases where that is not practical then the component should update on the next key-press.
 
 ## Component Structure
 
