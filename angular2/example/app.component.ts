@@ -10,6 +10,7 @@ export default class AppComponent {
   public modelWithValue: string
   public formControlInput: FormControl = new FormControl()
   public mask: Array<string | RegExp>
+  public guide: Boolean
 
   constructor() {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
