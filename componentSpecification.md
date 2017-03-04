@@ -9,30 +9,26 @@ This document details the specification for the text-mask components.
 * Vanilla
 * Vue
 
-The component has four tasks:
+At a basic level, the component should initialize the `textMaskInputElement` object and then call the `update` method whenever the `inputElement.value` changes.
 
-1. Render an `input` element.
+## Component Behaviour
 
-2. Initialize the `textMaskInputElement` object.
-
-3. Manage the text-mask config.
-
-4. Call `update` when the model, config, or value of the input element changes.
+Components should call `update` on `keydown`, when the `value` is changed, on paste and also when any of the `textMaskConfig` properties change.
 
 ## Component Structure
 
-All components should provide the following basic structure
+Components should provide the following basic structure.
 
 ```js
 {
   // an object that stores all config for the text mask
-  config: {Object},
+  textMaskConfig: {Object},
 
   // the text mask object returned from `createTextMaskInputElement`
   textMaskInputElement: {Object},
 
   // alias to `textMaskInputElement.update`
-  update(rawValue, config) {
+  update(rawValue, textMaskConfig) {
     this.textMaskInputElement.update(...arguments)
   }
 }
