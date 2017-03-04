@@ -45,7 +45,7 @@ export class MaskedInputDirective implements ControlValueAccessor {
       this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
     }
 
-    this.textMaskInputElement = createTextMaskInputElement()
+    this.textMaskInputElement = createTextMaskInputElement({})
   }
 
   update(value) {
