@@ -41,7 +41,6 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
     this.setupMask()
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(this.inputElement.value)
-      this._onChange(this.inputElement.value)
     }
   }
 
