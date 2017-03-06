@@ -25,7 +25,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
 
   @Input('textMask')
   textMaskConfig = {
-    mask: '',
+    mask: [],
     guide: true,
     placeholderChar: '_',
     pipe: undefined,
