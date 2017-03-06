@@ -1,6 +1,4 @@
 <form class="form-horizontal">
-  <input #guidecb type="checkbox" (change)="this.guide = guidecb.checked" />
-  <label><code>guide</code></label>
 
   <div class="form-group">
     <label for="1" class="col-sm-4 control-label">Masked Input using <code>NgModel</code></label>
@@ -9,7 +7,7 @@
         id="1"
         name="phone"
         [(ngModel)]="myModel"
-        [textMask]="{mask: mask, guide: guide}"
+        [textMask]="{mask: mask}"
         type="text"
         class="form-control"
       />
@@ -26,7 +24,7 @@
         id="2"
         name="phoneWithValue"
         [(ngModel)]="modelWithValue"
-        [textMask]="{mask: mask, guide: guide}"
+        [textMask]="{mask: mask}"
         type="text"
         class="form-control"
       />
@@ -43,7 +41,7 @@
         id="3"
         name="phoneFormControl"
         [formControl]='formControlInput'
-        [textMask]="{mask: mask, guide: guide}"
+        [textMask]="{mask: mask}"
         type="text"
         class="form-control"
       />
