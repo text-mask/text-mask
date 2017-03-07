@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, NgModule, Renderer } from '@angular/core'
+import { Directive, ElementRef, forwardRef, Input, NgModule, Renderer, Injector } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
@@ -22,6 +22,8 @@ export class MaskedInputDirective implements ControlValueAccessor {
   // stores the last value for comparison
   private lastValue: any
 
+  private control: NgControl
+
   @Input('textMask')
   textMaskConfig = {
     mask: '',
@@ -29,12 +31,14 @@ export class MaskedInputDirective implements ControlValueAccessor {
     placeholderChar: '_',
     pipe: undefined,
     keepCharPositions: false,
+    onReject: undefined,
+    onAccept: undefined
   }
 
   _onTouched = () => {}
   _onChange = (_: any) => {}
 
-  constructor(private renderer: Renderer, private element: ElementRef) {}
+  constructor(private renderer: Renderer, private element: ElementRef, private injector: Injector) {}
 
   private setupMask() {
     if (this.element.nativeElement.tagName === 'INPUT') {
@@ -50,6 +54,8 @@ export class MaskedInputDirective implements ControlValueAccessor {
           Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
       )
     }
+
+    this.control = this.injector.get(NgControl)
   }
 
   writeValue(value: any) {
@@ -59,6 +65,11 @@ export class MaskedInputDirective implements ControlValueAccessor {
 
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
+
+      if (value !== this.inputElement.value) {
+        this.onInput(this.inputElement.value)
+        this.control.control.markAsPristine()
+      }
     }
   }
 
