@@ -1,7 +1,12 @@
-import { Directive, ElementRef, forwardRef, Input, NgModule, Renderer } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms'
+import { Directive, ElementRef, forwardRef, Input, NgModule, OnChanges, Provider, Renderer } from '@angular/core'
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
+
+export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => MaskedInputDirective),
+  multi: true
+}
 
 @Directive({
   host: {
@@ -9,22 +14,18 @@ import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
     '(blur)': '_onTouched()'
   },
   selector: '[textMask]',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => MaskedInputDirective),
-    multi: true
-  }]
+  providers: [MASKEDINPUT_VALUE_ACCESSOR]
 })
-export class MaskedInputDirective implements ControlValueAccessor {
+export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   private textMaskInputElement: any
-  private inputElement:HTMLInputElement
+  private inputElement: HTMLInputElement
 
   // stores the last value for comparison
   private lastValue: any
 
   @Input('textMask')
   textMaskConfig = {
-    mask: '',
+    mask: [],
     guide: true,
     placeholderChar: '_',
     pipe: undefined,
@@ -36,19 +37,10 @@ export class MaskedInputDirective implements ControlValueAccessor {
 
   constructor(private renderer: Renderer, private element: ElementRef) {}
 
-  private setupMask() {
-    if (this.element.nativeElement.tagName === 'INPUT') {
-      // `textMask` directive is used directly on an input element
-      this.inputElement = this.element.nativeElement
-    } else {
-      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
-      this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
-    }
-
-    if (this.inputElement) {
-      this.textMaskInputElement = createTextMaskInputElement(
-          Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
-      )
+  ngOnChanges() {
+    this.setupMask()
+    if (this.textMaskInputElement !== undefined) {
+      this.textMaskInputElement.update(this.inputElement.value)
     }
   }
 
@@ -66,6 +58,10 @@ export class MaskedInputDirective implements ControlValueAccessor {
 
   registerOnTouched(fn: () => any): void { this._onTouched = fn }
 
+  setDisabledState(isDisabled: boolean) {
+    this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled)
+  }
+  
   onInput(value) {
     if (!this.inputElement) {
       this.setupMask()
@@ -85,15 +81,27 @@ export class MaskedInputDirective implements ControlValueAccessor {
     }
   }
 
-  setDisabledState(isDisabled: boolean) {
-    this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled)
+  private setupMask() {
+    if (this.element.nativeElement.tagName === 'INPUT') {
+      // `textMask` directive is used directly on an input element
+      this.inputElement = this.element.nativeElement
+    } else {
+      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+      this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
+    }
+
+    if (this.inputElement) {
+      this.textMaskInputElement = createTextMaskInputElement(
+          Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+      )
+    }
   }
 }
 
 @NgModule({
   declarations: [MaskedInputDirective],
-  exports: [MaskedInputDirective],
-  imports: [CommonModule]
+  exports: [MaskedInputDirective]
 })
 export class TextMaskModule {}
-export {conformToMask} from 'text-mask-core/dist/textMaskCore'
+
+export { conformToMask } from 'text-mask-core/dist/textMaskCore'
