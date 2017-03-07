@@ -4,9 +4,10 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    createAutoCorrectedDatePipe: path.join(__dirname, './src/createAutoCorrectedDatePipe.js'),
-    createNumberMask: path.join(__dirname, './src/createNumberMask.js'),
-    emailMask: path.join(__dirname, './src/emailMask.js')
+    textMaskAddons: path.join(__dirname, './src/index.js'),
+    createAutoCorrectedDatePipe: [path.join(__dirname, './src/createAutoCorrectedDatePipe.js')],
+    createNumberMask: [path.join(__dirname, './src/createNumberMask.js')],
+    emailMask: [path.join(__dirname, './src/emailMask.js')]
   },
 
   output: {
