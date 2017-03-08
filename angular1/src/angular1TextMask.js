@@ -27,6 +27,12 @@ function textMask() {
         ngModel.$setViewValue(inputElement.value)
       })
 
+      // reset Text Mask when `scope.textMask` object changes
+      scope.$watch('textMask', () => {
+        initTextMask()
+        textMaskInputElement.update()
+      }, true);
+
       function initTextMask() {
         textMaskInputElement = createTextMaskInputElement(
           Object.assign({inputElement}, scope.textMask)
