@@ -34,6 +34,10 @@ function textMask() {
       }
 
       function formatter(fromModelValue) {
+
+        // set the `inputElement.value` for cases where the `mask` is disabled
+        inputElement.value = fromModelValue
+
         textMaskInputElement.update(fromModelValue)
         return inputElement.value
       }
