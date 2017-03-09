@@ -23,7 +23,6 @@
     vm.modelWithValue = '5554441234'
 
     vm.textMaskConfig = {
-      guide: false,
       mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     }
   }
