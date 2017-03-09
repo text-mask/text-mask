@@ -12,6 +12,7 @@ function textMask() {
     },
     link: function(scope, element, attrs, ngModel) {
       var inputElement
+      var textMaskInputElement
 
       if (element[0].tagName === 'INPUT') {
         // `textMask` directive is used directly on an input element
@@ -21,20 +22,32 @@ function textMask() {
         inputElement = element[0].getElementsByTagName('INPUT')[0]
       }
 
-      var textMaskInputElement = createTextMaskInputElement(
-        Object.assign({inputElement}, scope.textMask)
-      )
-
       element.on('blur keyup change input', function() {
         textMaskInputElement.update(inputElement.value)
         ngModel.$setViewValue(inputElement.value)
       })
 
+      // reset Text Mask when `scope.textMask` object changes
+      scope.$watch('textMask', () => {
+        initTextMask()
+        textMaskInputElement.update()
+      }, true)
+
+      function initTextMask() {
+        textMaskInputElement = createTextMaskInputElement(
+          Object.assign({inputElement}, scope.textMask)
+        )
+      }
+
       function formatter(fromModelValue) {
+        // set the `inputElement.value` for cases where the `mask` is disabled
+        inputElement.value = fromModelValue
+
         textMaskInputElement.update(fromModelValue)
         return inputElement.value
       }
 
+      initTextMask()
       ngModel.$formatters.unshift(formatter)
     }
   }
