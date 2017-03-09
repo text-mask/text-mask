@@ -31,7 +31,7 @@ function textMask() {
       scope.$watch('textMask', () => {
         initTextMask()
         textMaskInputElement.update()
-      }, true);
+      }, true)
 
       function initTextMask() {
         textMaskInputElement = createTextMaskInputElement(
@@ -40,7 +40,6 @@ function textMask() {
       }
 
       function formatter(fromModelValue) {
-
         // set the `inputElement.value` for cases where the `mask` is disabled
         inputElement.value = fromModelValue
 
