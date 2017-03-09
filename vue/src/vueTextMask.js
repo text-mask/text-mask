@@ -1,12 +1,17 @@
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export default {
-  template: `
-    <input ref="input"
-      :value="value"
-      @input="updateValue($event.target.value)"
-    />
-  `,
+  render(h) {
+    return h('input', {
+      ref: 'input',
+      domProps: {
+        value: this.value
+      },
+      on: {
+        input: (event) => this.updateValue(event.target.value)
+      }
+    })
+  },
 
   name: 'masked-input',
 
