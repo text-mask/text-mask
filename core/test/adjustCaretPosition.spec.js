@@ -38,6 +38,19 @@ describe('adjustCaretPosition', () => {
     })).to.equal(10)
   })
 
+  it('does not set the caret back when valid character has been entered', () => {
+    expect(adjustCaretPosition({
+      previousConformedValue: '(111)',
+      conformedValue: '(111)',
+      rawValue: '(1111)',
+      placeholder: convertMaskToPlaceholder(
+        ['(', /\d/, /\d/, /\d/, ')']
+      ),
+      placeholderChar,
+      currentCaretPosition: 2
+    })).to.equal(2)
+  });
+
   it('moves the caret to the nearest placeholder character if the previous input and new ' +
     'conformed output are the same but the reverted position is not a ' +
     'placeholder character', () => {
