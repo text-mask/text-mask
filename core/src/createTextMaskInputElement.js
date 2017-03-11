@@ -11,7 +11,7 @@ const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: emptyString}
+  const state = {previousConformedValue: undefined}
 
   return {
     state,

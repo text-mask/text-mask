@@ -9,13 +9,17 @@ const MaskedInput = (isVerify()) ?
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
     expect(() => ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask='111-111' guide={true}/>
+      <MaskedInput
+      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      guide={true}/>
     )).not.to.throw()
   })
 
   it('renders a single input element', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput mask='111-111' guide={true}/>
+      <MaskedInput
+      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      guide={true}/>
     )
 
     expect(
