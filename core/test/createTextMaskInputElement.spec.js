@@ -124,6 +124,17 @@ describe('createTextMaskInputElement', () => {
       expect(inputElement.value).to.equal('')
     })
 
+    it('works when passing empty strings to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      textMaskControl.update(123)
+      expect(inputElement.value).to.equal('(123) ___-____')
+
+      textMaskControl.update('')
+      expect(inputElement.value).to.equal('')
+    })
+
     it('throws if given a value that it cannot work with', () => {
       const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       const textMaskControl = createTextMaskInputElement({inputElement, mask})
