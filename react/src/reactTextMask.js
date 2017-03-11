@@ -27,11 +27,11 @@ export const MaskedInput = React.createClass({
   },
 
   componentDidMount() {
-    this.initTextMask();
+    this.initTextMask()
   },
 
   componentDidUpdate() {
-    this.initTextMask();
+    this.initTextMask()
   },
 
   render() {
