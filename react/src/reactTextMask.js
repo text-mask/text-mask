@@ -6,6 +6,7 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
+      PropTypes.bool,
       PropTypes.shape({
         mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
         pipe: PropTypes.func
