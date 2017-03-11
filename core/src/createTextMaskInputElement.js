@@ -27,7 +27,10 @@ export default function createTextMaskInputElement(config) {
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false
     } = config) {
-      rawValue = rawValue || inputElement.value
+      // if `rawValue` is `undefined`, read from the `inputElement`
+      if (typeof rawValue === 'undefined') {
+        rawValue = inputElement.value
+      }
 
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
       // This check is here to handle controlled framework components that repeat the `update` call on every render.
