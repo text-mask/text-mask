@@ -10,7 +10,7 @@ describe('inputMask', () => {
 
     expect(() => maskInput({
       inputElement,
-      mask: '111',
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true,
     })).not.to.throw()
   })
