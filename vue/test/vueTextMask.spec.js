@@ -11,7 +11,7 @@ const emailMask = (isVerify()) ?
 
 function mountComponent(Component, propsData) {
   const Ctor = Vue.extend(Component)
-  return new Ctor({ propsData }).$mount()
+  return new Ctor({propsData}).$mount()
 }
 
 describe('inputMask', () => {
@@ -127,7 +127,7 @@ describe('inputMask', () => {
       mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       pipe: (value) => {
         expect(value).to.equal('(123) 4__-____')
-        return 'abc';
+        return 'abc'
       }
     })
     expect(vm.$el.value).to.equal('abc')
