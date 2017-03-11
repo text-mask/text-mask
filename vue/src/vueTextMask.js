@@ -23,7 +23,7 @@ export default {
     },
 
     mask: {
-      type: [Array, Function, Boolean],
+      type: [Array, Function, Boolean, Object],
       required: true
     },
 
