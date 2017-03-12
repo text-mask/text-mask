@@ -11,9 +11,13 @@ This document details the specification for the text-mask components.
 
 ## Component Behaviour
 
-At a basic level, the component should initialize the `textMaskInputElement` object and call the `update` method whenever the `inputElement.value` changes.
+All components should initialize the `textMaskInputElement` object and call `textMaskInputElement.update` to conform the initial value according to the properties of the `textMaskConfig`.
 
-If the `textMaskConfig` changes the component should update to reflect those changes immediately.  In cases where that is not practical then the component should update on the next key-press.
+The `textMaskInputElement.update` method should be called again whenever the `inputElement.value` changes.
+
+If the `textMaskConfig` changes the component should update the `inputElement.value` to reflect those changes.
+
+Where components have a `model`, the component should only update the `model` when the user interacts with the input element.  The `model` should not be modified when the component is first rendered and changing properties of the `textMaskConfig` should not update the `model` until the next keypress.
 
 ## Component Structure
 
