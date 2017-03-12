@@ -47,6 +47,8 @@
     "angular1:publish": "sh angular1/publish.sh",
     "angular2:ci": "cd angular2 && npm i && npm run ci",
     "angular2:publish": "sh angular2/publish.sh",
+    "ember:dev": "cd ember && ember server",
+    "ember:test": "cd ember && npm install && ember test",
     "ember:publish": "sh ember/publish.sh",
     "vue:build": "./node_modules/.bin/webpack -p --config vue/webpack.buildVueDirective.js",
     "vue:publish": "sh vue/publish.sh",
