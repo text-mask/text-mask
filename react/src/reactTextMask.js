@@ -6,6 +6,7 @@ export const MaskedInput = React.createClass({
     mask: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
+      PropTypes.bool,
       PropTypes.shape({
         mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
         pipe: PropTypes.func
@@ -18,15 +19,19 @@ export const MaskedInput = React.createClass({
     keepCharPositions: PropTypes.bool
   },
 
-  componentDidMount() {
+  initTextMask() {
     const {props, props: {value}} = this
 
     this.textMaskInputElement = createTextMaskInputElement({inputElement: this.inputElement, ...props})
     this.textMaskInputElement.update(value)
   },
 
+  componentDidMount() {
+    this.initTextMask()
+  },
+
   componentDidUpdate() {
-    this.textMaskInputElement.update(this.props.value)
+    this.initTextMask()
   },
 
   render() {
