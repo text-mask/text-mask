@@ -51,3 +51,16 @@ Components should provide the following basic structure.
 ### Destroy
 
 * Remove event listeners.
+
+## Tests
+
+The following tests should be implemented for each component.
+
+* initializes `textMaskInputElement` property
+* initializes mask on first render
+* does not allow masked characters
+* mask can be disabled by setting the `mask` to `false`
+* accepts Array as mask property
+* accepts Function as mask property
+* accepts Boolean as mask property
+* accepts Object as mask property
