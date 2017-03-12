@@ -39,7 +39,7 @@ test('textMaskInputElement property is initialized', function(assert) {
   this.render();
 
   const textMaskInputElement = component.get('textMaskInputElement');
-  assert.equal(typeof textMaskInputElement, 'string');
+  assert.equal(typeof textMaskInputElement, 'object');
   assert.equal(typeof textMaskInputElement.state, 'object');
   assert.equal(typeof textMaskInputElement.state.previousConformedValue, 'string');
   assert.equal(typeof textMaskInputElement.update, 'function');
