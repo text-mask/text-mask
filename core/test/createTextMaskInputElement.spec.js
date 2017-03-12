@@ -74,6 +74,32 @@ describe('createTextMaskInputElement', () => {
       expect(inputElement.value).to.equal('(123) ___-____')
     })
 
+    it('accepts an empty string and overrides whatever value is in the input element', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      textMaskControl.update(123)
+      expect(inputElement.value).to.equal('(123) ___-____')
+
+      textMaskControl.update('')
+      expect(inputElement.value).to.equal('')
+    })
+
+    it('accepts an empty string after reinitializing text mask', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      let textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      textMaskControl.update(123)
+      expect(inputElement.value).to.equal('(123) ___-____')
+
+      //reset text mask
+      textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      // now clear the value
+      textMaskControl.update('')
+      expect(inputElement.value).to.equal('')
+    })
+
     if (!isVerify()) {
       it('does not conform given parameter if it is the same as the previousConformedValue', () => {
         const conformToMaskSpy = sinon.spy(conformToMask)
