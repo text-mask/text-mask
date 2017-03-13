@@ -38,4 +38,9 @@ describe('createAutoCorrectedDatePipe', () => {
   it('returns unmodified partial entry if it could develop to correct date', () => {
     expect(autoCorrectedDatePipe('0 /  /    ')).to.deep.equal({value: '0 /  /    ', indexesOfPipedChars: []})
   })
+
+  it('allows yy format', () => {
+    let pipe = createAutoCorrectedDatePipe('mm/yy')
+    expect(pipe('12/99')).to.deep.equal({value: '12/99', indexesOfPipedChars: []})
+  })
 })
