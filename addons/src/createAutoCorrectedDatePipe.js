@@ -1,4 +1,4 @@
-export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yy yyyy') {
+export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy') {
   return function(conformedValue) {
     const indexesOfPipedChars = []
     const dateFormatArray = dateFormat.split(/[^dmy]+/)
