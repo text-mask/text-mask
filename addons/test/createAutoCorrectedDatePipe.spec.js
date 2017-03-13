@@ -43,4 +43,9 @@ describe('createAutoCorrectedDatePipe', () => {
     let pipe = createAutoCorrectedDatePipe('mm/yy')
     expect(pipe('12/99')).to.deep.equal({value: '12/99', indexesOfPipedChars: []})
   })
+
+  it('allows 00 for yy', () => {
+    let pipe = createAutoCorrectedDatePipe('mm dd yy')
+    expect(pipe('12 31 00')).to.deep.equal({value: '12 31 00', indexesOfPipedChars: []})
+  })
 })
