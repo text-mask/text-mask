@@ -19,10 +19,12 @@ export const MaskedInput = React.createClass({
     keepCharPositions: PropTypes.bool
   },
 
+  createTextMaskInputElement,
+
   initTextMask() {
     const {props, props: {value}} = this
 
-    this.textMaskInputElement = createTextMaskInputElement({inputElement: this.inputElement, ...props})
+    this.textMaskInputElement = this.createTextMaskInputElement({inputElement: this.inputElement, ...props})
     this.textMaskInputElement.update(value)
   },
 
