@@ -2,9 +2,12 @@ import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 import packageJson from '../package.json'
 
-const MaskedInput = (isVerify()) ?
-  require(`../${packageJson.main}`).default :
-  require('../src/reactTextMask.js').default
+const ReactTextMask = (isVerify()) ?
+  require(`../${packageJson.main}`) :
+  require('../src/reactTextMask.js')
+
+const MaskedInput = ReactTextMask.default
+const conformToMask = ReactTextMask.conformToMask
 
 const emailMask = (isVerify()) ?
   require('../../addons/dist/emailMask.js').default :
@@ -235,5 +238,55 @@ describe('MaskedInput', () => {
     )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     expect(renderedDOMComponent.value).to.equal('abc')
+  })
+
+  it('calls textMaskInputElement.update and props.onChange when an input event is received', () => {
+    const onChangeSpy = sinon.spy((event) => {
+      expect(event.key).to.equal('a')
+    })
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        value='123'
+        onChange={onChangeSpy}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
+    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: "a", keyCode: 65, which: 65});
+    expect(onChangeSpy.callCount).to.equal(1)
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
+
+  it('calls textMaskInputElement.update when an input event is received when props.onChange is not set', () => {
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        value='123'
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
+
+    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: "a", keyCode: 65, which: 65});
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
+
+  it('calls textMaskInputElement.update via onChange method', () => {
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        value='123'
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
+    maskedInput.onChange()
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
+})
+
+describe('conformToMask', () => {
+  it('is a function', () => {
+    expect(typeof conformToMask).to.equal('function')
   })
 })
