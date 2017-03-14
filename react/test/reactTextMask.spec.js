@@ -253,7 +253,7 @@ describe('MaskedInput', () => {
     )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     maskedInput.textMaskInputElement.update = sinon.spy(() => {})
-    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: "a", keyCode: 65, which: 65});
+    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: 'a', keyCode: 65, which: 65})
     expect(onChangeSpy.callCount).to.equal(1)
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
@@ -268,7 +268,7 @@ describe('MaskedInput', () => {
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     maskedInput.textMaskInputElement.update = sinon.spy(() => {})
 
-    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: "a", keyCode: 65, which: 65});
+    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: 'a', keyCode: 65, which: 65})
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
 
