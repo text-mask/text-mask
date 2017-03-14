@@ -93,11 +93,10 @@ describe('MaskedInput', () => {
   it('sets textMaskInputElement and calls textMaskInputElement.update with the correct value', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-      value="123"
+      value='123'
       mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       />
     )
-    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
 
     // stub the createTextMaskInputElement method
     maskedInput.createTextMaskInputElement = () => {
