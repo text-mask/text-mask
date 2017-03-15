@@ -1,9 +1,12 @@
 import packageJson from '../package.json'
 import Vue from 'vue'
 
-const maskedInput = (isVerify()) ?
-  require(`../${packageJson.main}`).default :
-  require('../src/vueTextMask.js').default
+const VueTextMask = (isVerify()) ?
+  require(`../${packageJson.main}`) :
+  require('../src/vueTextMask.js')
+
+const maskedInput = VueTextMask.default
+const conformToMask = VueTextMask.conformToMask
 
 const emailMask = (isVerify()) ?
   require('../../addons/dist/emailMask.js').default :
@@ -39,6 +42,24 @@ describe('inputMask', () => {
     expect(typeof vm.textMaskInputElement.state).to.equal('object')
     expect(typeof vm.textMaskInputElement.state.previousConformedValue).to.equal('string')
     expect(typeof vm.textMaskInputElement.update).to.equal('function')
+  })
+
+  it('input event triggers textMaskInputElement.update method', () => {
+    let value
+    const event = document.createEvent('Event')
+    event.initEvent('input', true, true)
+
+    const vm = mountComponent(maskedInput, {
+      value: '1234',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+
+    vm.textMaskInputElement.update = sinon.spy((_value) => { value = _value })
+
+    vm.$el.dispatchEvent(event)
+
+    expect(vm.textMaskInputElement.update.callCount).to.equal(1)
+    expect(value).to.equal('(123) 4__-____')
   })
 
   it('does not render masked characters', () => {
@@ -131,5 +152,11 @@ describe('inputMask', () => {
       }
     })
     expect(vm.$el.value).to.equal('abc')
+  })
+})
+
+describe('conformToMask', () => {
+  it('is a function', () => {
+    expect(typeof conformToMask).to.equal('function')
   })
 })
