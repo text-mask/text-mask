@@ -22,7 +22,7 @@ describe('inputMask', () => {
     const inputElement = document.createElement('input')
     inputElement.value = '123'
 
-    const maskedInput =  maskInput({
+    maskInput({
       inputElement,
       mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true
@@ -34,7 +34,7 @@ describe('inputMask', () => {
     const inputElement = document.createElement('input')
     inputElement.value = '123'
 
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true
@@ -48,7 +48,7 @@ describe('inputMask', () => {
   it('does not allow masked characters', () => {
     const inputElement = document.createElement('input')
 
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true
@@ -62,7 +62,7 @@ describe('inputMask', () => {
   it('can be disabled by setting the mask to false', () => {
     const inputElement = document.createElement('input')
     inputElement.value = '123abc'
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: false
     })
@@ -74,7 +74,7 @@ describe('inputMask', () => {
 
   it('can call textMaskInputElement.update to update the inputElement.value', () => {
     const inputElement = document.createElement('input')
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true
@@ -88,7 +88,7 @@ describe('inputMask', () => {
 
   it('can pass value to textMaskInputElement.update method', () => {
     const inputElement = document.createElement('input')
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
       guide: true
@@ -104,7 +104,7 @@ describe('inputMask', () => {
     const inputElement = document.createElement('input')
     inputElement.value = '123'
 
-    const maskedInput =  maskInput({
+    const maskedInput = maskInput({
       inputElement,
       mask: false,
       guide: true
