@@ -45,6 +45,43 @@ describe('inputMask', () => {
     expect(typeof maskedInput.textMaskInputElement.update).to.equal('function')
   })
 
+  it('adds event listener for the input element', () => {
+    const inputElement = document.createElement('input')
+
+    // stub the `addEventListener` method
+    inputElement.addEventListener = sinon.spy((eventName, handler) => {
+      expect(eventName).to.equal('input')
+      expect(typeof handler).to.equal('function')
+    })
+
+    const maskedInput = maskInput({
+      inputElement,
+      mask: false,
+      guide: true
+    })
+
+    expect(inputElement.addEventListener.callCount).to.equal(1)
+  })
+
+  it('input event triggers textMaskInputElement.update method', () => {
+    const inputElement = document.createElement('input')
+    inputElement.value = '123'
+
+    const maskedInput = maskInput({
+      inputElement,
+      mask: false,
+      guide: true
+    })
+
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
+
+    const event = document.createEvent('Event');
+    event.initEvent('input', true, true);
+    inputElement.dispatchEvent(event);
+
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
+
   it('does not allow masked characters', () => {
     const inputElement = document.createElement('input')
 
@@ -116,6 +153,26 @@ describe('inputMask', () => {
       mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     })
     expect(inputElement.value).to.equal('(123) 4__-____')
+  })
+
+  it('destroy method removes event listener', () => {
+    const inputElement = document.createElement('input')
+
+    // stub the `removeEventListener` method
+    inputElement.removeEventListener = sinon.spy((eventName, handler) => {
+      expect(eventName).to.equal('input')
+      expect(typeof handler).to.equal('function')
+    })
+
+    const maskedInput = maskInput({
+      inputElement,
+      mask: false,
+      guide: true
+    })
+
+    maskedInput.destroy()
+
+    expect(inputElement.removeEventListener.callCount).to.equal(1)
   })
 })
 
