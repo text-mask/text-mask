@@ -54,7 +54,7 @@ describe('inputMask', () => {
       expect(typeof handler).to.equal('function')
     })
 
-    const maskedInput = maskInput({
+    maskInput({
       inputElement,
       mask: false,
       guide: true
@@ -75,9 +75,9 @@ describe('inputMask', () => {
 
     maskedInput.textMaskInputElement.update = sinon.spy(() => {})
 
-    const event = document.createEvent('Event');
-    event.initEvent('input', true, true);
-    inputElement.dispatchEvent(event);
+    const event = document.createEvent('Event')
+    event.initEvent('input', true, true)
+    inputElement.dispatchEvent(event)
 
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
