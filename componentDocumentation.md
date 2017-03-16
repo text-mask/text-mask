@@ -42,6 +42,13 @@ Note: it is possible to set the mask to `false` to disable masking completely.
 You can also pass a function as the `mask`. The function will receive the user input at every
 change. The function is expected to return a `mask` array as described above.
 
+```js
+var mask = function(rawValue) {
+  // add logic to generate your mask array
+  return [ /*your mask array*/ ]
+}
+```
+
 This feature is useful when we want to format a user input of unknown length, such as
 formatting a number to currency or formatting a string to email address mask.
 
