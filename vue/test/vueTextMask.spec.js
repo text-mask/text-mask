@@ -33,6 +33,16 @@ describe('inputMask', () => {
     expect(vm.$el.value).to.equal('(123) ___-____')
   })
 
+  it('createTextMaskInputElement is a function', () => {
+    const Ctor = Vue.extend(maskedInput)
+    const vm = new Ctor({
+      propsData: {
+        mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      }
+    })
+    expect(typeof vm.createTextMaskInputElement).to.equal('function')
+  })
+
   it('calls createTextMaskInputElement() on render with the correct config', () => {
     const mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     const placeholderChar = '*'
