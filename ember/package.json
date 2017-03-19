@@ -55,9 +55,9 @@
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.6.0",
     "ember-resolver": "^2.0.3",
+    "ember-source": "~2.12.0",
     "loader.js": "^4.0.10",
     "phantomjs-prebuilt": "^2.1.14"
-    "ember-source": "~2.12.0",
   },
   "engines": {
     "node": ">= 4"
