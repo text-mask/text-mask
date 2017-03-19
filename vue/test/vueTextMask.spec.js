@@ -46,8 +46,7 @@ describe('inputMask', () => {
   it('calls createTextMaskInputElement() on render with the correct config', () => {
     const mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     const placeholderChar = '*'
-    const pipe = () => {return 1}
-
+    const pipe = () => { return 1 }
 
     const Ctor = Vue.extend(maskedInput)
     const _vm = new Ctor({
