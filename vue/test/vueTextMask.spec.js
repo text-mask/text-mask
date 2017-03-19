@@ -33,6 +33,52 @@ describe('inputMask', () => {
     expect(vm.$el.value).to.equal('(123) ___-____')
   })
 
+  it('createTextMaskInputElement is a function', () => {
+    const Ctor = Vue.extend(maskedInput)
+    const vm = new Ctor({
+      propsData: {
+        mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      }
+    })
+    expect(typeof vm.createTextMaskInputElement).to.equal('function')
+  })
+
+  it('calls createTextMaskInputElement() on render with the correct config', () => {
+    const mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    const placeholderChar = '*'
+    const pipe = () => { return 1 }
+
+    const Ctor = Vue.extend(maskedInput)
+    const _vm = new Ctor({
+      propsData: {
+        value: '123',
+        mask,
+        guide: true,
+        placeholderChar,
+        keepCharPositions: true,
+        pipe
+      }
+    })
+
+    // stub the createTextMaskInputElement method
+    let textMaskConfig
+    _vm.createTextMaskInputElement = sinon.spy((_textMaskConfig) => {
+      textMaskConfig = _textMaskConfig
+      return {
+        update() {}
+      }
+    })
+
+    const vm = _vm.$mount()
+    expect(_vm.createTextMaskInputElement.callCount).to.equal(1)
+    expect(textMaskConfig.inputElement).to.deep.equal(vm.$refs.input)
+    expect(textMaskConfig.mask).to.deep.equal(mask)
+    expect(textMaskConfig.guide).to.equal(true)
+    expect(textMaskConfig.placeholderChar).to.equal(placeholderChar)
+    expect(textMaskConfig.keepCharPositions).to.equal(true)
+    expect(textMaskConfig.pipe).to.deep.equal(pipe)
+  })
+
   it('initializes textMaskInputElement property', () => {
     const vm = mountComponent(maskedInput, {
       value: '1234',
