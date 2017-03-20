@@ -8,6 +8,7 @@ const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
@@ -172,7 +173,7 @@ export default function createTextMaskInputElement(config) {
 function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
     if (isAndroid) {
-      setTimeout(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
+      defer(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
     } else {
       element.setSelectionRange(selectionPosition, selectionPosition, strNone)
     }
