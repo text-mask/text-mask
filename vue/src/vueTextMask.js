@@ -53,8 +53,10 @@ export default {
   },
 
   methods: {
+    createTextMaskInputElement,
+
     bind() {
-      this.textMaskInputElement = createTextMaskInputElement({
+      this.textMaskInputElement = this.createTextMaskInputElement({
         inputElement: this.$refs.input,
         ...this.$options.propsData
       })

@@ -23,7 +23,8 @@
     "dynamicTests": true,
     "isVerify": true,
     "sinon": true,
-    "getLineNumber": true
+    "getLineNumber": true,
+    "requestAnimationFrame": true
   },
   "plugins": [
     "react",
