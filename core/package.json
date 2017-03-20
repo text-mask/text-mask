@@ -1,6 +1,6 @@
 {
   "name": "text-mask-core",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Core of https://github.com/text-mask/text-mask",
   "main": "dist/textMaskCore.js",
   "author": "M.K. Safi <msafi@msafi.com>",
