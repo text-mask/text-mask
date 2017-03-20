@@ -9,6 +9,8 @@ fi
 
 npm run vue:build
 
+npm run vue:verify
+
 cd ./vue
 
 generatedNpmVersion="$(npm version $version)"
