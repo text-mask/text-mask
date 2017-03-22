@@ -70,8 +70,8 @@ export default function createTextMaskInputElement(config) {
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      // We need to know what the `previousConformedValue` is from the previous `update` call
-      const {previousConformedValue} = state
+      // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
+      const {previousConformedValue, previousPlaceholder} = state
 
       let caretTrapIndexes
 
@@ -142,6 +142,7 @@ export default function createTextMaskInputElement(config) {
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
+        previousPlaceholder: previousPlaceholder,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
@@ -156,6 +157,7 @@ export default function createTextMaskInputElement(config) {
       const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
 
       state.previousConformedValue = inputElementValue // store value for access for next time
+      state.previousPlaceholder = placeholder
 
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.

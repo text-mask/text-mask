@@ -22,6 +22,19 @@ export default _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
+  previousConformedValue: '$12,345',
+  previousPlaceholder: '$__,___',
+  rawValue: '$12,45',
+  mask: ['$', /\d/, ',', /\d/, /\d/, /\d/],
+  currentCaretPosition: 4,
+
+  conformedValue: '$1,245',
+  adjustedCaretPosition: 4,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
   previousConformedValue: '___',
   rawValue: '1___',
   mask: [/\d/, /\d/, /\d/],

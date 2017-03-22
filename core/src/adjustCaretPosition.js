@@ -3,6 +3,7 @@ const emptyString = ''
 
 export default function adjustCaretPosition({
   previousConformedValue = emptyString,
+  previousPlaceholder = '',
   currentCaretPosition = 0,
   conformedValue,
   rawValue,
@@ -53,6 +54,7 @@ export default function adjustCaretPosition({
   )
 
   let startingSearchIndex = 0
+  let targetIsMaskMovingLeft
 
   if (possiblyHasRejectedChar) {
     startingSearchIndex = currentCaretPosition - editLength
@@ -78,6 +80,15 @@ export default function adjustCaretPosition({
     // The last character in the intersection is the character we want to look for in the conformed
     // value and the one we want to adjust the caret close to
     const targetChar = intersection[intersection.length - 1]
+
+    // Detect if `targetChar` is a mask character and has moved to the left
+    targetIsMaskMovingLeft = (
+      previousPlaceholder[intersection.length - 1] !== undefined &&
+      placeholder[intersection.length - 2] !== undefined &&
+      previousPlaceholder[intersection.length - 1] !== placeholderChar &&
+      previousPlaceholder[intersection.length - 1] !== placeholder[intersection.length - 1] &&
+      previousPlaceholder[intersection.length - 1] === placeholder[intersection.length - 2]
+    )
 
     // It is possible that `targetChar` will appear multiple times in the conformed value.
     // We need to know not to select a character that looks like our target character from the placeholder or
@@ -169,11 +180,12 @@ export default function adjustCaretPosition({
     }
   } else {
     // In case of deletion, we rewind.
-    for (let i = startingSearchIndex; i >= 0; i--) {
+    for (let i = startingSearchIndex + (targetIsMaskMovingLeft ? 1 : 0); i >= 0; i--) {
       // If we're deleting, we stop the caret right before the placeholder character.
       // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
       // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
       // right after the first `6`
+
       if (
         // If we're deleting, we can position the caret right before the placeholder character
         placeholder[i - 1] === placeholderChar ||
