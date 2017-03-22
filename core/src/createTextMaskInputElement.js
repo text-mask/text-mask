@@ -27,7 +27,11 @@ export default function createTextMaskInputElement({
   }
 
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: emptyString, previousOnRejectRawValue: emptyString}
+  const state = {
+    previousConformedValue: emptyString,
+    previousOnRejectRawValue: emptyString,
+    previousPlaceholder: emptyString
+  }
 
   // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would be
   // `(___)` if the `placeholderChar` is set to `_`.
@@ -61,8 +65,8 @@ export default function createTextMaskInputElement({
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      // We need to know what the `previousConformedValue` is from the previous `update` call
-      const {previousConformedValue} = state
+      // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
+      const {previousConformedValue, previousPlaceholder} = state
 
       let caretTrapIndexes
 
@@ -132,6 +136,7 @@ export default function createTextMaskInputElement({
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
+        previousPlaceholder: previousPlaceholder,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
@@ -146,6 +151,7 @@ export default function createTextMaskInputElement({
       const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
 
       state.previousConformedValue = inputElementValue // store value for access for next time
+      state.previousPlaceholder = placeholder
 
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.
