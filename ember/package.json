@@ -1,6 +1,6 @@
 {
   "name": "ember-text-mask",
-  "version": "4.2.1",
+  "version": "5.0.0",
   "description": "Ember input component that accepts mask pattern",
   "keywords": [
     "ember-addon",
@@ -35,7 +35,7 @@
   "dependencies": {
     "broccoli-merge-trees": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
-    "text-mask-core": "^3.2.0"
+    "text-mask-core": "^4.0.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
