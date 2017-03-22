@@ -6,8 +6,6 @@
   * [`placeholderChar`](#placeholderchar) (string)
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
-  * [`onReject`](#onreject) (function)
-  * [`onAccept`](#onaccept) (function)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
@@ -37,10 +35,19 @@ after that.
 
 Any valid regular expressions should work.
 
+Note: it is possible to set the mask to `false` to disable masking completely.
+
 ### `mask` function
 
 You can also pass a function as the `mask`. The function will receive the user input at every
 change. The function is expected to return a `mask` array as described above.
+
+```js
+var mask = function(rawValue) {
+  // add logic to generate your mask array
+  return [ /*your mask array*/ ]
+}
+```
 
 This feature is useful when we want to format a user input of unknown length, such as
 formatting a number to currency or formatting a string to email address mask.
@@ -52,6 +59,8 @@ which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/
 <p align="center">
 <img src="assets/dynamicMask.gif"/>
 </p>
+
+Note: it is possible to return `false` from a mask function to disable masking completely.
 
 ## `guide`
 
@@ -182,22 +191,6 @@ For an example of a pipe, see the code for
 [`createAutoCorrectedDatePipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/createAutoCorrectedDatePipe.js)
 which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
-## `onReject`
-
-You can provide an `onReject` callback function which will be called when the user tries to enter
-a character that ends up being rejected either by the mask or by the `pipe` and not displayed on the input element.
-
-The `onReject` callback will receive an object with the following keys:
-
-1. `conformedValue` (string): containing the conformed value
-1. `maskRejection` (boolean): `true` if the rejection was due to mask incompatibility
-1. `pipeRejection` (boolean): `true` if the rejection was decided by the pipe
-
-## `onAccept`
-
-You can provide an `onAccept` callback function which will be called when the user enters
-a character that is accepted and displayed on the input element.
-
 ---
 
 ## Included `conformToMask`
@@ -213,9 +206,6 @@ package as follows
 ```js
 import textMask, {conformToMask} from 'where-you-import-text-mask-from' 
 ```
-
-*Note to Ember users*: `conformToMask` is not included in the Ember package. If you need it, please 
-[open an issue](https://github.com/text-mask/text-mask/issues/new).
 
 #### Using it
 
@@ -264,9 +254,3 @@ console.log(conformedPhoneNumber.conformedValue) // prints (555) 123-4444
 Please note that Text Mask supports input type of `text`, `tel`, `url`, `password`, and `search`. Due to a limitation
 in browser API, other input types, such as `email` or `number`, cannot be supported. However, it is normal to let the 
 user enter an email or a number in an input type `text` combined the appropriate input mask.
-
-### Updating the `mask` or other values after initialization
-
-Once Text Mask has been initialized on an input field, it's not possible to change the mask or other configurations. In
-frameworks such as React or Ember, you may expect that you can hot-swap values, but that would not work with Text Mask. 
-See [this page](https://github.com/text-mask/text-mask/issues/233) for some workarounds for this limitation.

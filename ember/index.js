@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 
 var path = require('path');
@@ -8,7 +8,7 @@ module.exports = {
   name: 'ember-text-mask',
 
   treeForAddon: function(tree) {
-    var textMaskPath = path.dirname(require.resolve('text-mask-core/dist/textMaskCore.js'));
+    var textMaskPath = path.dirname(require.resolve('text-mask-core/src/index.js'));
     var textMaskTree = this.treeGenerator(textMaskPath);
 
     var trees = mergeTrees([textMaskTree, tree], {

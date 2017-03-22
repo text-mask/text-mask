@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react'
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export const MaskedInput = React.createClass({
   propTypes: {
     mask: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
+      PropTypes.bool,
       PropTypes.shape({
         mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
         pipe: PropTypes.func
@@ -15,20 +16,24 @@ export const MaskedInput = React.createClass({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     pipe: PropTypes.func,
     placeholderChar: PropTypes.string,
-    onAccept: PropTypes.func,
-    onReject: PropTypes.func,
     keepCharPositions: PropTypes.bool
   },
 
-  componentDidMount() {
+  createTextMaskInputElement,
+
+  initTextMask() {
     const {props, props: {value}} = this
 
-    this.textMaskInputElement = createTextMaskInputElement({inputElement: this.inputElement, ...props})
+    this.textMaskInputElement = this.createTextMaskInputElement({inputElement: this.inputElement, ...props})
     this.textMaskInputElement.update(value)
   },
 
+  componentDidMount() {
+    this.initTextMask()
+  },
+
   componentDidUpdate() {
-    this.textMaskInputElement.update(this.props.value)
+    this.initTextMask()
   },
 
   render() {
@@ -38,8 +43,6 @@ export const MaskedInput = React.createClass({
     delete props.guide
     delete props.pipe
     delete props.placeholderChar
-    delete props.onAccept
-    delete props.onReject
     delete props.keepCharPositions
     delete props.value
     delete props.onChange

@@ -1,23 +1,98 @@
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement.js'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
 export default {
-  textMaskInputElement: null,
-
-  inputHandler({target: {value}}) {
-    return this.textMaskInputElement.update(value)
+  render(h) {
+    return h('input', {
+      ref: 'input',
+      domProps: {
+        value: this.value
+      },
+      on: {
+        input: (event) => this.updateValue(event.target.value)
+      }
+    })
   },
 
-  bind() {
-    let options = this.vm[this.expression] || {}
-    options.inputElement = this.el
-    this.textMaskInputElement = createTextMaskInputElement(options)
+  name: 'masked-input',
 
-    this.inputHandler = this.inputHandler.bind(this)
-    this.el.addEventListener('input', this.inputHandler)
+  props: {
+    value: {
+      type: String,
+      required: false,
+      default: ''
+    },
+
+    mask: {
+      type: [Array, Function, Boolean, Object],
+      required: true
+    },
+
+    guide: {
+      type: Boolean,
+      required: false
+    },
+
+    placeholderChar: {
+      type: String,
+      required: false
+    },
+
+    keepCharPositions: {
+      type: Boolean,
+      required: false
+    },
+
+    pipe: {
+      type: Function,
+      required: false
+    }
   },
 
-  unbind() {
-    this.el.removeEventListener('input', this.inputHandler)
+  mounted() {
+    this.bind()
+  },
+
+  methods: {
+    createTextMaskInputElement,
+
+    bind() {
+      this.textMaskInputElement = this.createTextMaskInputElement({
+        inputElement: this.$refs.input,
+        ...this.$options.propsData
+      })
+
+      this.updateValue(this.value)
+    },
+
+    updateValue(value) {
+      this.textMaskInputElement.update(value)
+      this.$emit('input', this.$refs.input.value)
+    }
+  },
+
+  watch: {
+    mask(newMask) {
+      // Check if the mask has changed (Vue cannot detect whether an array has changed)
+      if (this.mask !== newMask) {
+        this.bind()
+      }
+    },
+
+    guide() {
+      this.bind()
+    },
+
+    placeholderChar() {
+      this.bind()
+    },
+
+    keepCharPositions() {
+      this.bind()
+    },
+
+    pipe() {
+      this.bind()
+    }
   }
 }
 

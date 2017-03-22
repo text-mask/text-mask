@@ -1,4 +1,4 @@
-import './testSetup.js'
+import './testSetup'
 import jsdom from 'jsdom'
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>')

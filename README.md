@@ -5,8 +5,7 @@
 Text Mask is an input mask library. It can create input masks for phone, date, currency, zip code, percentage, email, 
 and literally anything!
 
-There are convenient wrappers for React, Angular 2, Ember, and Vue. If you would like Text Mask to be available in another
-framework or ecosystem, [email me](mailto:msafi@msafi.com)!
+There are convenient wrappers for React, Angular 2, Ember, and Vue.
 
 ## Live demo
 
@@ -28,6 +27,11 @@ IE9+, Android, Samsung Internet, Windows Phone, iOS, Opera, Firefox, Safari, and
 
 Text Mask is very configurable and allows you to create any type of input mask with minimal APIs.
 [See the documentation for details](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
+
+## Extendable
+
+You can easily expand the base functionality of Text Mask with addons for more mask types. 
+[Checkout existing addons](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
 
 ## Robust
 

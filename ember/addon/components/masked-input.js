@@ -1,5 +1,13 @@
 import Ember from 'ember';
-import { createTextMaskInputElement } from 'ember-text-mask';
+import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
+
+const { computed, get, getProperties, on, TextField } = Ember;
+
+function _config(...args) {
+  return computed(...args, function () {
+    return getProperties(this, ...args);
+  });
+}
 
 /*
 
@@ -23,28 +31,47 @@ import { createTextMaskInputElement } from 'ember-text-mask';
   });
   ```
 */
-export default Ember.TextField.extend({
+export default TextField.extend({
 
   mask: [],
 
-  inputElement: Ember.computed.readOnly('element'),
+  /*
+    ## config {Object}
+
+    This is a computed property and will re-compute when any of the dependent properties
+    update.  By default it will read the properties off the component root, you
+    can pass in attrbutes to the component through the template.
+
+    ```hbs
+    {{masked-input
+      mask=customMask
+      guide=true}}
+    ```
+  */
+  config: _config('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+
+  /*
+    ## textMaskInputElement {Object}
+
+    `textMaskInputElement` is the object that is returned from calling the
+    `createTextMaskInputElement`. method.
+
+    This is a computed property and will re-compute whenever the `config` property
+    changes.
+  */
+  textMaskInputElement: computed('config', function () {
+    let config = get(this, 'config');
+    config.inputElement = this.element;
+    return this.createTextMaskInputElement(config);
+  }),
 
   createTextMaskInputElement,
-
-  initTextMaskInputElement() {
-    this.set('textMaskInputElement', this.createTextMaskInputElement(this.getProperties('inputElement', 'mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe', 'onReject', 'onAccept')));
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-    this.initTextMaskInputElement();
-  },
 
   update() {
     this.get('textMaskInputElement').update(...arguments);
   },
 
-  _input: Ember.on('input', function() {
+  _input: on('input', 'didRender', function() {
     this.update();
   })
 });

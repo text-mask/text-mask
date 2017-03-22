@@ -2,7 +2,7 @@
 
 import chai from 'chai'
 import sinon from 'sinon'
-import isVerify from './isVerify.js'
+import isVerify from './isVerify'
 import dynamicTests from 'mocha-dynamic-tests'
 import _ from 'lodash'
 

@@ -1,7 +1,7 @@
 import './styles.scss'
 import React from 'react'
 import {connect} from 'react-redux'
-import {Links, Panel, Row} from './partials.jsx'
+import {Links, Panel, Row} from './partials'
 
 const MaskFunctionDefinition = ({maskLink}) => (
   <div>
@@ -35,11 +35,6 @@ const HelpPanel = React.createClass({
             <p>
               It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
             </p>
-
-            <p style={{marginBottom: 0}}>
-              This configuration also uses the <Links.onReject/> callback to show a hint message when user
-              enters a rejected character.
-            </p>
           </Panel>
         </Row>
       ) || props.mask.instanceOf === 'createNumberMask' && (
@@ -64,7 +59,7 @@ const HelpPanel = React.createClass({
             The pipe in this case is a function such as:
           </p>
 
-          <pre>{`function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}`}</pre>
+          <pre>{'function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}'}</pre>
         </Panel>
       </Row>
     ) || props.choiceName === 'Email' && (

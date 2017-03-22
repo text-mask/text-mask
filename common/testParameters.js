@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import _ from 'lodash/fp'
-import {convertMaskToPlaceholder} from '../core/src/utilities.js'
+import {convertMaskToPlaceholder} from '../core/src/utilities'
 
 const alphabetic = /^[A-Z]+$/i
 
@@ -31,7 +31,7 @@ export default _.filter((t) => t, [{
   conformedValue: '$1,245',
   adjustedCaretPosition: 4,
 
-  only: true
+  // only: true
 }, {
   line: getLineNumber(),
 

@@ -7,15 +7,18 @@
     "presets": [
       "es2015",
       "stage-0"
+    ],
+    "plugins": [
+      "transform-object-assign"
     ]
   },
   "scripts": {
     "textMask:publish": "sh publish.sh",
     "website": "node website/server.js",
     "website:build": "./node_modules/.bin/webpack -p --config website/webpack.buildWebsite.js",
-    "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run addons:test",
-    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run website:build && npm run addons:build",
-    "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run addons:verify",
+    "test": "npm run loud-lint && npm run core:test && npm run react:test && npm run vanilla:test && npm run vue:test && npm run addons:test",
+    "build": "npm run core:build && npm run react:build && npm run vanilla:build && npm run vue:build && npm run website:build && npm run addons:build",
+    "verify": "npm run core:verify && npm run react:verify && npm run vanilla:verify && npm run vue:verify && npm run addons:verify",
     "core:build": "./node_modules/.bin/webpack -p --config core/webpack.buildCore.js",
     "core:test": "./node_modules/.bin/mocha --compilers js:babel-core/register core/test --require ./common/domSetup.js --recursive",
     "core:tdd": "npm run core:test -- --watch",
@@ -44,10 +47,15 @@
     "angular1:publish": "sh angular1/publish.sh",
     "angular2:ci": "cd angular2 && npm i && npm run ci",
     "angular2:publish": "sh angular2/publish.sh",
+    "ember:dev": "cd ember && ember server",
+    "ember:test": "cd ember && npm install && ember test",
     "ember:publish": "sh ember/publish.sh",
     "vue:build": "./node_modules/.bin/webpack -p --config vue/webpack.buildVueDirective.js",
     "vue:publish": "sh vue/publish.sh",
     "vue:dev": "node_modules/.bin/webpack-dev-server --content-base vue/example --port 3000 --config vue/example/webpack.runVueExample.js",
+    "vue:test": "./node_modules/.bin/mocha --compilers js:babel-core/register vue/test --require ./common/domSetup.js --recursive",
+    "vue:tdd": "npm run vue:test -- --watch",
+    "vue:verify": "npm run vue:test -- --verify",
     "git:done": "git checkout gh-pages && git rebase master && git checkout master && git push origin master --tags && git push origin gh-pages",
     "ci": "npm i && npm run test && npm run build && npm run verify",
     "loud-lint": "./node_modules/.bin/eslint . --ext .js --ext .jsx",
@@ -75,6 +83,7 @@
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-plugin-rewire": "^1.0.0-rc-3",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
@@ -109,9 +118,9 @@
     "stats-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
-    "vue": "^1.0.0",
+    "vue": "^2.0.8",
     "vue-html-loader": "^1.2.3",
-    "vue-loader": "^8.2.1",
+    "vue-loader": "^9.9.5",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
   },

@@ -26,14 +26,16 @@ to Text Mask.
 1. `allowDecimal` (boolean): whether or not to allow the user to enter a fraction with the amount. Default to `false`.
 1. `decimalSymbol` (string): character that will act as a decimal point. Defaults to `'.'`
 1. `decimalLimit` (number): how many digits to allow after the decimal. Defaults to `2`
+1. `integerLimit` (number): limit the length of the integer number. Defaults to `null` for unlimited
 1. `requireDecimal` (boolean): whether or not to always include a decimal point and placeholder for decimal digits
 after the integer. Defaults to `false`.
 1. `allowNegative` (boolean): whether or not to allow negative numbers. Defaults to `false`
+1. `allowLeadingZeroes` (boolean): whether or not to allow leading zeroes. Defaults to `false`
 
 #### Usage
 
 ```js
-import createNumberMask from 'text-mask-addons/dist/createNumberMask.js'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
 // First, you need to create the `numberMask` with your desired configurations
 const numberMask = createNumberMask({
@@ -51,7 +53,7 @@ const numberMask = createNumberMask({
 #### Usage
 
 ```js
-import emailMask from 'text-mask-addons/dist/emailMask.js'
+import emailMask from 'text-mask-addons/dist/emailMask'
 
 // ...then pass `emailMask` to the Text Mask component as the mask
 ```
@@ -83,7 +85,7 @@ set to `true`.
 #### Usage
 
 ```js
-import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
 const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy')
 // As you can see in the line above, you can pass a string argument to `createAutoCorrectedDatePipe` 

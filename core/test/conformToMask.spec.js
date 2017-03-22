@@ -4,11 +4,11 @@ import testParameters, {
   acceptedCharInMask,
   escapedMaskChar
 } from './../../common/testParameters.js'
-import keepCharPositionsTests from '../../common/keepCharPositionsTests.js'
-import maskFunctionTests from '../../common/maskFunctionTests.js'
+import keepCharPositionsTests from '../../common/keepCharPositionsTests'
+import maskFunctionTests from '../../common/maskFunctionTests'
 import packageJson from '../package.json'
-import {convertMaskToPlaceholder} from '../src/utilities.js'
-import {placeholderChar} from '../src/constants.js'
+import {convertMaskToPlaceholder} from '../src/utilities'
+import {placeholderChar} from '../src/constants'
 
 const conformToMask = (isVerify()) ?
   require(`../${packageJson.main}`).conformToMask :

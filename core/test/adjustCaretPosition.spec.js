@@ -3,9 +3,9 @@ import testParameters, {
   caretTrapTests,
   acceptedCharInMask
 } from './../../common/testParameters.js'
-import maskFunctionTests from './../../common/maskFunctionTests.js'
-import {convertMaskToPlaceholder} from '../src/utilities.js'
-import {placeholderChar} from '../src/constants.js'
+import maskFunctionTests from './../../common/maskFunctionTests'
+import {convertMaskToPlaceholder} from '../src/utilities'
+import {placeholderChar} from '../src/constants'
 import packageJson from '../package.json'
 
 const adjustCaretPosition = (isVerify()) ?

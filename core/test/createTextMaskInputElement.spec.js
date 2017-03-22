@@ -1,8 +1,8 @@
 require('babel-core/register')({plugins: ['babel-plugin-rewire']})
 
 import packageJson from '../package.json'
-import conformToMask from '../src/conformToMask.js'
-import {placeholderChar} from '../src/constants.js'
+import conformToMask from '../src/conformToMask'
+import {placeholderChar} from '../src/constants'
 
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :
@@ -72,6 +72,32 @@ describe('createTextMaskInputElement', () => {
       inputElement.value = '2'
       textMaskControl.update('123')
       expect(inputElement.value).to.equal('(123) ___-____')
+    })
+
+    it('accepts an empty string and overrides whatever value is in the input element', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      textMaskControl.update(123)
+      expect(inputElement.value).to.equal('(123) ___-____')
+
+      textMaskControl.update('')
+      expect(inputElement.value).to.equal('')
+    })
+
+    it('accepts an empty string after reinitializing text mask', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      let textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      textMaskControl.update(123)
+      expect(inputElement.value).to.equal('(123) ___-____')
+
+      //reset text mask
+      textMaskControl = createTextMaskInputElement({inputElement, mask})
+
+      // now clear the value
+      textMaskControl.update('')
+      expect(inputElement.value).to.equal('')
     })
 
     if (!isVerify()) {
@@ -171,145 +197,147 @@ describe('createTextMaskInputElement', () => {
       expect(maskSpy.callCount).to.equal(2)
     })
 
-    describe('`onAccept` callback', () => {
-      it('is called when the updated value is different than the previous value', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onAccept = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
+    it('can be disabled with `false` mask', () => {
+      const mask = false
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
-        inputElement.value = '2'
-
-        textMaskControl.update()
-
-        expect(onAccept.callCount).to.equal(1)
-      })
-
-      it('is not called when the updated value is the same as the previous value', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onAccept = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
-
-        inputElement.value = '2'
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        inputElement.value = '(2B_) ___-____' // the 'B' will be rejected
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        expect(onAccept.callCount).to.equal(1)
-      })
-
-      it('is not called when the change is from empty string to placeholder (i.e. rejected initial value)', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onAccept = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onAccept})
-
-        inputElement.value = 'r'
-        inputElement.selectionStart = 1
-        textMaskControl.update() // after this, value is (___) ___-____
-
-        expect(onAccept.callCount).to.equal(0)
-      })
+      inputElement.value = 'a'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('a')
     })
 
-    describe('`onReject` callback', () => {
-      it('is called when the updated value is the same as the old value', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onReject = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+    it('can be disabled by returning `false` from mask function', () => {
+      const mask = () => false
+      const textMaskControl = createTextMaskInputElement({inputElement, mask})
 
-        inputElement.value = '2'
-        textMaskControl.update() // after this, value is (2__) ___-____
+      inputElement.value = 'a'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('a')
+    })
 
-        inputElement.value = '(2B_) ___-____' // the 'B' will be rejected
-        textMaskControl.update() // after this, value is (2__) ___-____
+    it('can pass in a config object to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
 
-        expect(onReject.callCount).to.equal(1)
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('can change the mask passed to the update method', () => {
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      })
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {
+        inputElement,
+        mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      })
+      expect(inputElement.value).to.equal('+1 (2__) ___-____')
+    })
+
+    it('can change the guide passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask, guide: true})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {inputElement, mask, guide: false})
+      expect(inputElement.value).to.equal('(2')
+    })
+
+    it('can change the placeholderChar passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let inputElement = {value: '2'}
+
+      textMaskControl.update(inputElement.value, {inputElement, mask, placeholderChar: '_'})
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      textMaskControl.update('2', {inputElement, mask, placeholderChar: '*'})
+      expect(inputElement.value).to.equal('(2**) ***-****')
+    })
+
+    it('can change the inputElement passed to the update method', () => {
+      const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      const textMaskControl = createTextMaskInputElement()
+
+      let firstInputElement = {value: '1'}
+      let secondInputElement = {value: '2'}
+
+      textMaskControl.update('1', {inputElement: firstInputElement, mask})
+      expect(firstInputElement.value).to.equal('(1__) ___-____')
+
+      textMaskControl.update('2', {inputElement: secondInputElement, mask})
+      expect(secondInputElement.value).to.equal('(2__) ___-____')
+    })
+
+    it('can change the config passed to createTextMaskInputElement', () => {
+      const config = {
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: true,
+        placeholderChar: '_'
+      }
+      const textMaskControl = createTextMaskInputElement(config)
+
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(2__) ___-____')
+
+      // change the mask
+      config.mask = ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      inputElement.value = '23' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (23_) ___-____')
+
+      // change the placeholderChar
+      config.placeholderChar = '*'
+      inputElement.value = '4' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (4**) ***-****')
+
+      // change the guide
+      config.guide = false
+      inputElement.value = '45' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('+1 (45')
+    })
+
+    it('can override the config passed to createTextMaskInputElement', () => {
+      const textMaskControl = createTextMaskInputElement({
+        inputElement,
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: true
       })
 
-      it('is not called when the updated value is different than the previous value', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onReject = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
+      inputElement.value = '2'
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(2__) ___-____')
 
-        inputElement.value = '2'
-        textMaskControl.update()
-
-        expect(onReject.callCount).to.equal(0)
+      // pass in a config to the update method
+      textMaskControl.update('23', {
+        inputElement,
+        mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: false
       })
+      expect(inputElement.value).to.equal('+1 (23')
 
-      it('is not called when the operation is deletion, even if the current and previous ' +
-        'values are not different', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onReject = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
-
-        inputElement.value = '2'
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        inputElement.value = '(2_) ___-____'
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        expect(onReject.callCount).to.equal(0)
-      })
-
-      it('is not called when a character is rejected because it exceeds the mask length', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onReject = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({inputElement, mask, onReject})
-
-        inputElement.value = '2'
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        inputElement.value = '(233) 543-6543'
-        textMaskControl.update() // after this, value is (233) 543-6543
-
-        inputElement.value = '(233) 543-65435'
-        inputElement.selectionStart = '(233) 543-65435'.length
-        textMaskControl.update() // after this, value is (233) 543-6543
-
-        expect(onReject.callCount).to.equal(0)
-      })
-
-      it('is not called when a character is rejected because it is blocked in `keepCharPositions` mode', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const onReject = sinon.spy()
-        const textMaskControl = createTextMaskInputElement({
-          inputElement,
-          mask,
-          onReject,
-          keepCharPositions: true
-        })
-
-        inputElement.value = '2'
-        textMaskControl.update() // after this, value is (2__) ___-____
-
-        inputElement.value = '(42__) ___-____'
-        inputElement.selectionStart = 2
-        textMaskControl.update() // after this, value is still (2__) ___-____
-
-        expect(onReject.callCount).to.equal(0)
-      })
-
-      it('does not cause an infinite loop when the component `update`s with the same value as part of ' +
-        '`onReject`', () => {
-        const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-        const fixedInitialValue = 'rejected!'
-        const onRejectSpy = sinon.spy(onReject)
-        const textMaskControl = createTextMaskInputElement({
-          inputElement,
-          mask,
-          onReject: onRejectSpy
-        })
-
-        function onReject() {
-          textMaskControl.update(fixedInitialValue)
-        }
-
-        inputElement.value = fixedInitialValue
-        textMaskControl.update()
-
-        expect(onRejectSpy.callCount).to.equal(1)
-      })
+      // use original config again
+      inputElement.value = '234' // <- you have to change the value
+      textMaskControl.update()
+      expect(inputElement.value).to.equal('(234) ___-____')
     })
   })
 })

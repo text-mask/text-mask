@@ -21,6 +21,24 @@ describe('createNumberMask', () => {
     expect(numberMask('12')).to.deep.equal([/\d/, /\d/, ' ', '$'])
   })
 
+  it('works when the prefix contains numbers', () => {
+    let numberMask = createNumberMask({prefix: 'm2 '})
+
+    expect(numberMask('m2 1')).to.deep.equal(['m', '2', ' ', /\d/])
+  })
+
+  it('works when the suffix contains numbers', () => {
+    let numberMask = createNumberMask({prefix: '', suffix: ' m2'})
+
+    expect(numberMask('1 m2')).to.deep.equal([/\d/, ' ', 'm', '2'])
+  })
+
+  it('works when there is a decimal and the suffix contains numbers', () => {
+    let numberMask = createNumberMask({prefix: '', suffix: ' m2', allowDecimal: true})
+
+    expect(numberMask('1.2 m2')).to.deep.equal([/\d/, '[]', '.', '[]', /\d/, ' ', 'm', '2'])
+  })
+
   it('can be configured to add a thousands separator or not', () => {
     let numberMaskWithoutThousandsSeparator = createNumberMask({includeThousandsSeparator: false})
     expect(numberMaskWithoutThousandsSeparator('1000')).to.deep.equal(['$', /\d/, /\d/, /\d/, /\d/])
@@ -84,6 +102,55 @@ describe('createNumberMask', () => {
     expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
+  it('can allow leading zeroes', function() {
+    let numberMask = createNumberMask({allowLeadingZeroes: true})
+    expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+  })
+
+  describe('integer limiting', () => {
+    it('can limit the length of the integer part', () => {
+      let numberMask = createNumberMask({integerLimit: 3})
+      expect(numberMask('1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+    })
+
+    it('works when there is a prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, prefix: '$'})
+      expect(numberMask('$1999')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+    })
+
+    it('works when there is a thousands separator', () => {
+      expect(createNumberMask({integerLimit: 4, prefix: ''})('1,9995'))
+        .to.deep.equal([/\d/, ',', /\d/, /\d/, /\d/])
+
+      expect(createNumberMask({integerLimit: 7, prefix: ''})('1,000,0001'))
+        .to.deep.equal([/\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/])
+    })
+
+    it('works when there is a decimal and a prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, allowDecimal: true})
+      expect(numberMask('$199.34')).to.deep.equal(['$', /\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
+
+    it('works when there is a decimal and no prefix', () => {
+      let numberMask = createNumberMask({integerLimit: 3, allowDecimal: true, prefix: ''})
+      expect(numberMask('199.34')).to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
+
+    it('works when thousandsSeparatorSymbol is a period', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        thousandsSeparatorSymbol: '.',
+        decimalSymbol: ',',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 3,
+      })
+      expect(numberMask('1234567890,12345678'))
+        .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
+    })
+  })
+
   describe('numberMask default behavior', () => {
     let numberMask = null
 
@@ -122,6 +189,16 @@ describe('createNumberMask', () => {
 
     it('accepts any string and strips out any non-digit characters', () => {
       expect(numberMask('h4x0r sp43k')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/])
+    })
+
+    it('does not allow leading zeroes', function() {
+      let numberMask = createNumberMask()
+      expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/])
+    })
+
+    it('allows one leading zero followed by a fraction', function() {
+      let numberMask = createNumberMask({allowDecimal: true})
+      expect(numberMask('0.12')).to.deep.equal(['$', /\d/, '[]', '.', '[]', /\d/, /\d/])
     })
   })
 })
