@@ -3,7 +3,7 @@ const emptyString = ''
 
 export default function adjustCaretPosition({
   previousConformedValue = emptyString,
-  previousPlaceholder = '',
+  previousPlaceholder = emptyString,
   currentCaretPosition = 0,
   conformedValue,
   rawValue,
