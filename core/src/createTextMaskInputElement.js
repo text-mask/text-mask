@@ -12,7 +12,7 @@ const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFra
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: undefined}
+  const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
 
   return {
     state,
@@ -142,7 +142,7 @@ export default function createTextMaskInputElement(config) {
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
-        previousPlaceholder: previousPlaceholder,
+        previousPlaceholder,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
