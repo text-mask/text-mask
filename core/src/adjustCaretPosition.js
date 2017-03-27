@@ -170,6 +170,7 @@ export default function adjustCaretPosition({
     // Now we start looking for the location of the `targetChar`.
     // We keep looping forward and store the index in every iteration. Once we have encountered
     // enough occurrences of the target character, we break out of the loop
+    // If are searching for the second `1` in `1214`, `startingSearchIndex` will point at `4`.
     let numberOfEncounteredMatches = 0
     for (let i = 0; i < conformedValueLength; i++) {
       const conformedValueChar = normalizedConformedValue[i]
@@ -220,8 +221,8 @@ export default function adjustCaretPosition({
     // In case of deletion, we rewind.
     if (trackRightCharacter) {
       // Searching for the character that was to the right of the caret
-
-      for (let i = startingSearchIndex; i >= 0; i--) {
+      // We start at `startingSearchIndex` - 1 because it includes one character extra to the right
+      for (let i = startingSearchIndex - 1; i >= 0; i--) {
         // If tracking the character to the right of the cursor, we move to the left until
         // we found the character and then place the caret right before it
 
