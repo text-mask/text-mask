@@ -54,7 +54,8 @@ export default function adjustCaretPosition({
   )
 
   let startingSearchIndex = 0
-  let targetIsMaskMovingLeft
+  let trackRightCharacter
+  let targetChar
 
   if (possiblyHasRejectedChar) {
     startingSearchIndex = currentCaretPosition - editLength
@@ -79,16 +80,50 @@ export default function adjustCaretPosition({
 
     // The last character in the intersection is the character we want to look for in the conformed
     // value and the one we want to adjust the caret close to
-    const targetChar = intersection[intersection.length - 1]
+    targetChar = intersection[intersection.length - 1]
+
+    // Calculate the number of mask characters in the previous placeholder
+    // from the start of the string up to the place where the caret is
+    const previousLeftMaskChars = previousPlaceholder
+      .substr(0, intersection.length)
+      .split(emptyString)
+      .filter(char => char !== placeholderChar)
+      .length
+
+    // Calculate the number of mask characters in the current placeholder
+    // from the start of the string up to the place where the caret is
+    const leftMaskChars = placeholder
+      .substr(0, intersection.length)
+      .split(emptyString)
+      .filter(char => char !== placeholderChar)
+      .length
+
+    // Has the number of mask characters up to the caret changed?
+    const masklengthChanged = leftMaskChars !== previousLeftMaskChars
 
     // Detect if `targetChar` is a mask character and has moved to the left
-    targetIsMaskMovingLeft = (
+    const targetIsMaskMovingLeft = (
       previousPlaceholder[intersection.length - 1] !== undefined &&
       placeholder[intersection.length - 2] !== undefined &&
       previousPlaceholder[intersection.length - 1] !== placeholderChar &&
       previousPlaceholder[intersection.length - 1] !== placeholder[intersection.length - 1] &&
       previousPlaceholder[intersection.length - 1] === placeholder[intersection.length - 2]
     )
+
+    // If deleting and the `targetChar` `is a mask character and `masklengthChanged` is true
+    // or the mask is moving to the left, we can't use the selected `targetChar` any longer
+    // if we are not at the end of the string.
+    // In this case, change tracking strategy and track the character to the right of the caret.
+    if (
+      !isAddition &&
+      (masklengthChanged || targetIsMaskMovingLeft) &&
+      previousLeftMaskChars > 0 &&
+      placeholder.indexOf(targetChar) > -1 &&
+      rawValue[currentCaretPosition] !== undefined
+    ) {
+      trackRightCharacter = true
+      targetChar = rawValue[currentCaretPosition]
+    }
 
     // It is possible that `targetChar` will appear multiple times in the conformed value.
     // We need to know not to select a character that looks like our target character from the placeholder or
@@ -126,12 +161,16 @@ export default function adjustCaretPosition({
     const requiredNumberOfMatches = (
       countTargetCharInPlaceholder +
       countTargetCharInIntersection +
-      countTargetCharInPipedChars
+      countTargetCharInPipedChars +
+      // The character to the right of the caret isn't included in `intersection`
+      // so add one if we are tracking the character to the right
+      (trackRightCharacter ? 1 : 0)
     )
 
     // Now we start looking for the location of the `targetChar`.
     // We keep looping forward and store the index in every iteration. Once we have encountered
     // enough occurrences of the target character, we break out of the loop
+    // If are searching for the second `1` in `1214`, `startingSearchIndex` will point at `4`.
     let numberOfEncounteredMatches = 0
     for (let i = 0; i < conformedValueLength; i++) {
       const conformedValueChar = normalizedConformedValue[i]
@@ -180,24 +219,50 @@ export default function adjustCaretPosition({
     }
   } else {
     // In case of deletion, we rewind.
-    for (let i = startingSearchIndex + (targetIsMaskMovingLeft ? 1 : 0); i >= 0; i--) {
-      // If we're deleting, we stop the caret right before the placeholder character.
-      // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
-      // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
-      // right after the first `6`
+    if (trackRightCharacter) {
+      // Searching for the character that was to the right of the caret
+      // We start at `startingSearchIndex` - 1 because it includes one character extra to the right
+      for (let i = startingSearchIndex - 1; i >= 0; i--) {
+        // If tracking the character to the right of the cursor, we move to the left until
+        // we found the character and then place the caret right before it
 
-      if (
-        // If we're deleting, we can position the caret right before the placeholder character
-        placeholder[i - 1] === placeholderChar ||
+        if (
+          // `targetChar` should be in `conformedValue`, since it was in `rawValue`, just
+          // to the right of the caret
+          conformedValue[i] === targetChar ||
 
-        // If a caret trap was set by a mask function, we need to stop at the trap.
-        caretTrapIndexes.indexOf(i) !== -1 ||
+          // If a caret trap was set by a mask function, we need to stop at the trap.
+          caretTrapIndexes.indexOf(i) !== -1 ||
 
-        // This is the beginning of the placeholder. We cannot move any further.
-        // Let's put the caret there.
-        i === 0
-      ) {
-        return i
+          // This is the beginning of the placeholder. We cannot move any further.
+          // Let's put the caret there.
+          i === 0
+        ) {
+          return i
+        }
+      }
+    } else {
+      // Searching for the first placeholder or caret trap to the left
+
+      for (let i = startingSearchIndex; i >= 0; i--) {
+        // If we're deleting, we stop the caret right before the placeholder character.
+        // For example, for mask `(111) 11`, current conformed input `(456) 86`. If user
+        // modifies input to `(456 86`. That is, they deleted the `)`, we place the caret
+        // right after the first `6`
+
+        if (
+          // If we're deleting, we can position the caret right before the placeholder character
+          placeholder[i - 1] === placeholderChar ||
+
+          // If a caret trap was set by a mask function, we need to stop at the trap.
+          caretTrapIndexes.indexOf(i) !== -1 ||
+
+          // This is the beginning of the placeholder. We cannot move any further.
+          // Let's put the caret there.
+          i === 0
+        ) {
+          return i
+        }
       }
     }
   }

@@ -22,6 +22,19 @@ export default _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
+  previousConformedValue: '$111,222',
+  previousPlaceholder: '$___,___',
+  rawValue: '$111,22',
+  mask: ['$', /\d/, /\d/, ',', /\d/, /\d/, /\d/],
+  currentCaretPosition: 5,
+
+  conformedValue: '$11,122',
+  adjustedCaretPosition: 5,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
   previousConformedValue: '$12,345',
   previousPlaceholder: '$__,___',
   rawValue: '$12,45',
@@ -30,6 +43,45 @@ export default _.filter((t) => t, [{
 
   conformedValue: '$1,245',
   adjustedCaretPosition: 4,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  previousConformedValue: '$1,234,567',
+  previousPlaceholder: '$_,___,___',
+  rawValue: '$1,234,57',
+  mask: ['$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/],
+  currentCaretPosition: 8,
+
+  conformedValue: '$123,457',
+  adjustedCaretPosition: 7,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  previousConformedValue: '$1,234,567',
+  previousPlaceholder: '$_,___,___',
+  rawValue: '$1,234,56',
+  mask: ['$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/],
+  currentCaretPosition: 9,
+
+  conformedValue: '$123,456',
+  adjustedCaretPosition: 8,
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  previousConformedValue: '$1,234,567',
+  previousPlaceholder: '$_,___,___',
+  rawValue: '$1,34,567',
+  mask: ['$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/],
+  currentCaretPosition: 3,
+
+  conformedValue: '$134,567',
+  adjustedCaretPosition: 2,
 
   // only: true
 }, {
@@ -904,7 +956,7 @@ export default _.filter((t) => t, [{
   currentCaretPosition: 6,
 
   conformedValue: '(395) 34_-____',
-  adjustedCaretPosition: 4
+  adjustedCaretPosition: 4,
 
   // only: true
 }, {
