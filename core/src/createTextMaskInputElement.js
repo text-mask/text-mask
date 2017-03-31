@@ -156,7 +156,7 @@ export default function createTextMaskInputElement(config) {
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
       const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
-      const emptyValue = showMask ? placeholder : emptyString;
+      const emptyValue = showMask ? placeholder : emptyString
       const inputElementValue = (inputValueShouldBeEmpty) ? emptyValue : finalConformedValue
 
       state.previousConformedValue = inputElementValue // store value for access for next time
