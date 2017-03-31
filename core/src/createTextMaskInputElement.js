@@ -107,8 +107,7 @@ export default function createTextMaskInputElement(config) {
         pipe,
         placeholder,
         currentCaretPosition,
-        keepCharPositions,
-        showMask
+        keepCharPositions
       }
 
       // `conformToMask` returns `conformedValue` as part of an object for future API flexibility
