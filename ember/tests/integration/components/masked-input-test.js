@@ -28,6 +28,18 @@ test('mask is initialised on first render', function(assert) {
   assert.equal(this.get('value'), '1234567890', 'initializing text mask should not change the model');
 });
 
+test('renders mask instead of empty string when showMask is true', function(assert) {
+  this.set('mask', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]);
+  this.render(hbs`{{masked-input mask=mask value=value showMask=true}}`);
+  assert.equal(this.$('input')[0].value, '(___) ___-____');
+});
+
+test('does not render mask instead of empty string when showMask is false', function(assert) {
+  this.set('mask', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]);
+  this.render(hbs`{{masked-input mask=mask value=value showMask=false}}`);
+  assert.equal(this.$('input')[0].value, '');
+});
+
 test('mask property can be changed', function(assert) {
   this.set('mask', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]);
   this.set('value', '1234567890');
