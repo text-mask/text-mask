@@ -16,7 +16,8 @@ export const MaskedInput = React.createClass({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     pipe: PropTypes.func,
     placeholderChar: PropTypes.string,
-    keepCharPositions: PropTypes.bool
+    keepCharPositions: PropTypes.bool,
+    showMask: PropTypes.bool
   },
 
   createTextMaskInputElement,
@@ -46,6 +47,7 @@ export const MaskedInput = React.createClass({
     delete props.keepCharPositions
     delete props.value
     delete props.onChange
+    delete props.showMask
 
     return (
       <input
