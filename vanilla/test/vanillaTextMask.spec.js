@@ -30,6 +30,30 @@ describe('inputMask', () => {
     expect(inputElement.value).to.equal('(123) ___-____')
   })
 
+  it('renders mask instead of empty string when showMask is true', () => {
+    const inputElement = document.createElement('input')
+
+    maskInput({
+      showMask: true,
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      guide: true
+    })
+    expect(inputElement.value).to.equal('(___) ___-____')
+  })
+
+  it('does not render mask instead of empty string when showMask is false', () => {
+    const inputElement = document.createElement('input')
+
+    maskInput({
+      showMask: false,
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      guide: true
+    })
+    expect(inputElement.value).to.equal('')
+  })
+
   it('initializes textMaskInputElement property', () => {
     const inputElement = document.createElement('input')
     inputElement.value = '123'

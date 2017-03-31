@@ -55,6 +55,28 @@ describe('MaskedInput', () => {
     expect(renderedDOMComponent.value).to.equal('(123) ___-____')
   })
 
+  it('renders mask instead of empty string when showMask is true', () => {
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        showMask={true}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    expect(renderedDOMComponent.value).to.equal('(___) ___-____')
+  })
+
+  it('does not render mask instead of empty string when showMask is false', () => {
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        showMask={false}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    expect(renderedDOMComponent.value).to.equal('')
+  })
+
   it('createTextMaskInputElement is a function', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
