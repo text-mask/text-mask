@@ -45,6 +45,11 @@ export default {
     pipe: {
       type: Function,
       required: false
+    },
+
+    showMask: {
+      type: Boolean,
+      required: false
     }
   },
 
@@ -91,6 +96,10 @@ export default {
     },
 
     pipe() {
+      this.bind()
+    },
+
+    showMask() {
       this.bind()
     }
   }

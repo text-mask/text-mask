@@ -33,6 +33,24 @@ describe('inputMask', () => {
     expect(vm.$el.value).to.equal('(123) ___-____')
   })
 
+  it('renders mask instead of empty string when showMask is true', () => {
+    const vm = mountComponent(maskedInput, {
+      showMask: true,
+      value: '',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+    expect(vm.$el.value).to.equal('(___) ___-____')
+  })
+
+  it('does not render mask instead of empty string when showMask is false', () => {
+    const vm = mountComponent(maskedInput, {
+      showMask: false,
+      value: '',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+    expect(vm.$el.value).to.equal('')
+  })
+
   it('createTextMaskInputElement is a function', () => {
     const Ctor = Vue.extend(maskedInput)
     const vm = new Ctor({

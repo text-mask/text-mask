@@ -48,7 +48,7 @@ export default TextField.extend({
       guide=true}}
     ```
   */
-  config: _config('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe'),
+  config: _config('mask', 'guide', 'placeholderChar', 'keepCharPositions', 'pipe', 'showMask'),
 
   /*
     ## textMaskInputElement {Object}
