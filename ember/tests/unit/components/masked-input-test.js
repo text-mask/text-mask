@@ -46,12 +46,13 @@ test('textMaskInputElement property is initialized', function(assert) {
 });
 
 test('createTextMaskInputElement() is called on render with the correct config', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   let mask = [/\d/];
   let guide = true;
   let placeholderChar = true;
   let keepCharPositions = true;
+  let showMask = true;
   let pipe = () => {};
 
   this.subject({
@@ -60,6 +61,7 @@ test('createTextMaskInputElement() is called on render with the correct config',
     placeholderChar,
     keepCharPositions,
     pipe,
+    showMask,
     createTextMaskInputElement: (config) => {
       assert.deepEqual(config.mask, mask);
       assert.equal(config.guide, guide);
@@ -67,6 +69,7 @@ test('createTextMaskInputElement() is called on render with the correct config',
       assert.equal(config.keepCharPositions, keepCharPositions);
       assert.deepEqual(config.pipe, pipe);
       assert.deepEqual(typeof config.inputElement, 'object');
+      assert.equal(config.showMask, showMask);
       return {
         update(){}
       };
