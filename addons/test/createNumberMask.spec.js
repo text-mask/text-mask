@@ -2,6 +2,7 @@ const createNumberMask = (isVerify()) ?
   require('../dist/createNumberMask.js').default :
   require('../src/createNumberMask.js').default
 
+import packageJson from '../../core/package.json'
 const createTextMaskInputElement = (isVerify()) ?
   require(`../../core/${packageJson.main}`).createTextMaskInputElement :
   require('../../core/src/createTextMaskInputElement.js').default
