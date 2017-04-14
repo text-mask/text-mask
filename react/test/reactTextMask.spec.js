@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
-import packageJson from '../package.json';
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
+import packageJson from '../package.json'
 
-const ReactTextMask = isVerify()
-  ? require(`../${packageJson.main}`)
-  : require('../src/reactTextMask.js');
+const ReactTextMask = isVerify() ?
+  require(`../${packageJson.main}`) :
+  require('../src/reactTextMask.js')
 
-const MaskedInput = ReactTextMask.default;
-const conformToMask = ReactTextMask.conformToMask;
+const MaskedInput = ReactTextMask.default
+const conformToMask = ReactTextMask.conformToMask
 
-const emailMask = isVerify()
-  ? require('../../addons/dist/emailMask.js').default
-  : require('../../addons/src/emailMask.js').default;
+const emailMask = isVerify() ?
+  require('../../addons/dist/emailMask.js').default :
+  require('../../addons/src/emailMask.js').default
 
 describe('MaskedInput', () => {
   it('does not throw when instantiated', () => {
@@ -36,8 +36,8 @@ describe('MaskedInput', () => {
           ]}
           guide={true}
         />
-      )).not.to.throw();
-  });
+      )).not.to.throw()
+  })
 
   it('renders a single input element', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -60,14 +60,14 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
 
     expect(() =>
       ReactTestUtils.findRenderedDOMComponentWithTag(
         maskedInput,
         'input'
-      )).not.to.throw();
-  });
+      )).not.to.throw()
+  })
 
   it('renders correctly with an undefined value', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -90,18 +90,18 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('')
+  })
 
   it('renders correctly with an initial value', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         mask={[
           '(',
           /\d/,
@@ -120,13 +120,13 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('(123) ___-____');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('(123) ___-____')
+  })
 
   it('renders mask instead of empty string when showMask is true', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -150,13 +150,13 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('(___) ___-____');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('(___) ___-____')
+  })
 
   it('does not render mask instead of empty string when showMask is false', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -180,13 +180,13 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('')
+  })
 
   it('calls createTextMaskInputElement with the correct config', () => {
     const mask = [
@@ -204,10 +204,10 @@ describe('MaskedInput', () => {
       /\d/,
       /\d/,
       /\d/,
-    ];
-    const guide = true;
-    const placeholderChar = '*';
-    const keepCharPositions = true;
+    ]
+    const guide = true
+    const placeholderChar = '*'
+    const keepCharPositions = true
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
         mask={mask}
@@ -215,31 +215,31 @@ describe('MaskedInput', () => {
         placeholderChar={placeholderChar}
         keepCharPositions={keepCharPositions}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
+    )
 
     // stub the createTextMaskInputElement method
     maskedInput.createTextMaskInputElement = config => {
-      expect(typeof config).to.equal('object');
-      expect(config.inputElement).to.equal(renderedDOMComponent);
-      expect(config.mask).to.equal(mask);
-      expect(config.guide).to.equal(guide);
-      expect(config.placeholderChar).to.equal(placeholderChar);
-      expect(config.keepCharPositions).to.equal(keepCharPositions);
+      expect(typeof config).to.equal('object')
+      expect(config.inputElement).to.equal(renderedDOMComponent)
+      expect(config.mask).to.equal(mask)
+      expect(config.guide).to.equal(guide)
+      expect(config.placeholderChar).to.equal(placeholderChar)
+      expect(config.keepCharPositions).to.equal(keepCharPositions)
       return {
         update() {},
-      };
-    };
-    maskedInput.initTextMask();
-  });
+      }
+    }
+    maskedInput.initTextMask()
+  })
 
   it('sets textMaskInputElement and calls textMaskInputElement.update with the correct value', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         mask={[
           '(',
           /\d/,
@@ -257,19 +257,19 @@ describe('MaskedInput', () => {
           /\d/,
         ]}
       />
-    );
+    )
 
     // stub the createTextMaskInputElement method
     maskedInput.createTextMaskInputElement = () => {
       return {
         update(value) {
-          expect(value).to.equal('123');
+          expect(value).to.equal('123')
         },
-      };
-    };
-    maskedInput.initTextMask();
-    expect(typeof maskedInput.textMaskInputElement).to.equal('object');
-  });
+      }
+    }
+    maskedInput.initTextMask()
+    expect(typeof maskedInput.textMaskInputElement).to.equal('object')
+  })
 
   it('initializes textMaskInputElement property', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -292,19 +292,19 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
-    expect(typeof maskedInput.textMaskInputElement).to.equal('object');
-    expect(typeof maskedInput.textMaskInputElement.state).to.equal('object');
+    )
+    expect(typeof maskedInput.textMaskInputElement).to.equal('object')
+    expect(typeof maskedInput.textMaskInputElement.state).to.equal('object')
     expect(
       typeof maskedInput.textMaskInputElement.state.previousConformedValue
-    ).to.equal('string');
-    expect(typeof maskedInput.textMaskInputElement.update).to.equal('function');
-  });
+    ).to.equal('string')
+    expect(typeof maskedInput.textMaskInputElement.update).to.equal('function')
+  })
 
   it('does not render masked characters', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="abc"
+        value='abc'
         mask={[
           '(',
           /\d/,
@@ -323,13 +323,13 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('')
+  })
 
   it('does not allow masked characters', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -352,27 +352,27 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
+    )
 
-    expect(renderedDOMComponent.value).to.equal('');
-    maskedInput.textMaskInputElement.update('abc');
-    expect(renderedDOMComponent.value).to.equal('');
-  });
+    expect(renderedDOMComponent.value).to.equal('')
+    maskedInput.textMaskInputElement.update('abc')
+    expect(renderedDOMComponent.value).to.equal('')
+  })
 
   it('can be disabled by setting the mask to false', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput value="123abc" mask={false} />
-    );
+      <MaskedInput value='123abc' mask={false} />
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('123abc');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('123abc')
+  })
 
   it('can call textMaskInputElement.update to update the inputElement.value', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
@@ -394,23 +394,23 @@ describe('MaskedInput', () => {
           /\d/,
         ]}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
+    )
 
-    expect(renderedDOMComponent.value).to.equal('');
+    expect(renderedDOMComponent.value).to.equal('')
 
-    renderedDOMComponent.value = '12345';
-    maskedInput.textMaskInputElement.update();
-    expect(renderedDOMComponent.value).to.equal('(123) 45_-____');
-  });
+    renderedDOMComponent.value = '12345'
+    maskedInput.textMaskInputElement.update()
+    expect(renderedDOMComponent.value).to.equal('(123) 45_-____')
+  })
 
   it('can pass value to textMaskInputElement.update method', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         mask={[
           '(',
           /\d/,
@@ -428,27 +428,27 @@ describe('MaskedInput', () => {
           /\d/,
         ]}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
+    )
 
-    expect(renderedDOMComponent.value).to.equal('(123) ___-____');
-    maskedInput.textMaskInputElement.update('1234');
-    expect(renderedDOMComponent.value).to.equal('(123) 4__-____');
-  });
+    expect(renderedDOMComponent.value).to.equal('(123) ___-____')
+    maskedInput.textMaskInputElement.update('1234')
+    expect(renderedDOMComponent.value).to.equal('(123) 4__-____')
+  })
 
   it('can pass textMaskConfig to textMaskInputElement.update method', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput value="123" mask={false} />
-    );
+      <MaskedInput value='123' mask={false} />
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
+    )
 
-    expect(renderedDOMComponent.value).to.equal('123');
+    expect(renderedDOMComponent.value).to.equal('123')
 
     maskedInput.textMaskInputElement.update('1234', {
       inputElement: renderedDOMComponent,
@@ -468,16 +468,16 @@ describe('MaskedInput', () => {
         /\d/,
         /\d/,
       ],
-    });
-    expect(renderedDOMComponent.value).to.equal('(123) 4__-____');
-  });
+    })
+    expect(renderedDOMComponent.value).to.equal('(123) 4__-____')
+  })
 
   it('accepts function as mask property', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="1234"
+        value='1234'
         mask={value => {
-          expect(value).to.equal('1234');
+          expect(value).to.equal('1234')
           return [
             '(',
             /[1-9]/,
@@ -493,32 +493,32 @@ describe('MaskedInput', () => {
             /\d/,
             /\d/,
             /\d/,
-          ];
+          ]
         }}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('(123) 4__-____');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('(123) 4__-____')
+  })
 
   it('accepts object as mask property', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput value="abc" mask={emailMask} />
-    );
+      <MaskedInput value='abc' mask={emailMask} />
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('abc@ .');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('abc@ .')
+  })
 
   it('accepts pipe function', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="1234"
+        value='1234'
         mask={[
           '(',
           /[1-9]/,
@@ -536,25 +536,25 @@ describe('MaskedInput', () => {
           /\d/,
         ]}
         pipe={value => {
-          expect(value).to.equal('(123) 4__-____');
-          return 'abc';
+          expect(value).to.equal('(123) 4__-____')
+          return 'abc'
         }}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    expect(renderedDOMComponent.value).to.equal('abc');
-  });
+    )
+    expect(renderedDOMComponent.value).to.equal('abc')
+  })
 
   it('calls textMaskInputElement.update and props.onChange when an input event is received', () => {
     const onChangeSpy = sinon.spy(event => {
-      expect(event.key).to.equal('a');
-    });
+      expect(event.key).to.equal('a')
+    })
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         onChange={onChangeSpy}
         mask={[
           '(',
@@ -574,25 +574,25 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    maskedInput.textMaskInputElement.update = sinon.spy(() => {});
+    )
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
     ReactTestUtils.Simulate.input(renderedDOMComponent, {
       key: 'a',
       keyCode: 65,
       which: 65,
-    });
-    expect(onChangeSpy.callCount).to.equal(1);
-    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1);
-  });
+    })
+    expect(onChangeSpy.callCount).to.equal(1)
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
 
   it('calls textMaskInputElement.update when an input event is received when props.onChange is not set', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         mask={[
           '(',
           /\d/,
@@ -611,25 +611,25 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
+    )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(
       maskedInput,
       'input'
-    );
-    maskedInput.textMaskInputElement.update = sinon.spy(() => {});
+    )
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
 
     ReactTestUtils.Simulate.input(renderedDOMComponent, {
       key: 'a',
       keyCode: 65,
       which: 65,
-    });
-    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1);
-  });
+    })
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
 
   it('calls textMaskInputElement.update via onChange method', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
-        value="123"
+        value='123'
         mask={[
           '(',
           /\d/,
@@ -648,15 +648,15 @@ describe('MaskedInput', () => {
         ]}
         guide={true}
       />
-    );
-    maskedInput.textMaskInputElement.update = sinon.spy(() => {});
-    maskedInput.onChange();
-    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1);
-  });
-});
+    )
+    maskedInput.textMaskInputElement.update = sinon.spy(() => {})
+    maskedInput.onChange()
+    expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
+  })
+})
 
 describe('conformToMask', () => {
   it('is a function', () => {
-    expect(typeof conformToMask).to.equal('function');
-  });
-});
+    expect(typeof conformToMask).to.equal('function')
+  })
+})
