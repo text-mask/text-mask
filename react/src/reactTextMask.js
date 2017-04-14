@@ -55,7 +55,7 @@ export default class MaskedInput extends React.Component {
     return (
       <input
         {...props}
-        onInput={() => this.onChange(arguments)}
+        onInput={event => this.onChange(event)}
         defaultValue={this.props.value}
         ref={inputElement => this.inputElement = inputElement}
       />
@@ -63,7 +63,6 @@ export default class MaskedInput extends React.Component {
   }
 
   onChange(event) {
-    console.log(this);
     this.textMaskInputElement.update();
 
     if (typeof this.props.onChange === 'function') {
