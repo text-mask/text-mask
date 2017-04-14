@@ -2,6 +2,10 @@ const createNumberMask = (isVerify()) ?
   require('../dist/createNumberMask.js').default :
   require('../src/createNumberMask.js').default
 
+const createTextMaskInputElement = (isVerify()) ?
+  require(`../../core/${packageJson.main}`).createTextMaskInputElement :
+  require('../../core/src/createTextMaskInputElement.js').default
+
 describe('createNumberMask', () => {
   it('can returns a configured currency mask', () => {
     let numberMask = createNumberMask()
@@ -199,6 +203,18 @@ describe('createNumberMask', () => {
     it('allows one leading zero followed by a fraction', function() {
       let numberMask = createNumberMask({allowDecimal: true})
       expect(numberMask('0.12')).to.deep.equal(['$', /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
+
+    it('does not change the value when a leading zero is added', () => {
+      let inputElement = document.createElement('input')
+      let numberMask = createNumberMask()
+      const textMaskControl = createTextMaskInputElement({
+        showMask: true,
+        inputElement,
+        mask: numberMask
+      })
+      textMaskControl.update('012234')
+      expect(inputElement.value).to.equal('$12,234')
     })
   })
 })
