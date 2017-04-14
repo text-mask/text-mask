@@ -34,7 +34,6 @@
     "string formatting"
   ],
   "dependencies": {
-    "create-react-class": "^15.5.1",
     "prop-types": "^15.5.6"
   }
 }

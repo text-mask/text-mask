@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement';
 
-export const MaskedInput = createReactClass({
-  propTypes: {
+export default class MaskedInput extends React.Component {
+  static propTypes = {
     mask: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
@@ -21,27 +20,25 @@ export const MaskedInput = createReactClass({
     placeholderChar: PropTypes.string,
     keepCharPositions: PropTypes.bool,
     showMask: PropTypes.bool,
-  },
-
-  createTextMaskInputElement,
+  };
 
   initTextMask() {
     const { props, props: { value } } = this;
 
-    this.textMaskInputElement = this.createTextMaskInputElement({
+    this.textMaskInputElement = createTextMaskInputElement({
       inputElement: this.inputElement,
       ...props,
     });
     this.textMaskInputElement.update(value);
-  },
+  }
 
   componentDidMount() {
     this.initTextMask();
-  },
+  }
 
   componentDidUpdate() {
     this.initTextMask();
-  },
+  }
 
   render() {
     const props = { ...this.props };
@@ -58,21 +55,21 @@ export const MaskedInput = createReactClass({
     return (
       <input
         {...props}
-        onInput={this.onChange}
+        onInput={() => this.onChange(arguments)}
         defaultValue={this.props.value}
         ref={inputElement => this.inputElement = inputElement}
       />
     );
-  },
+  }
 
   onChange(event) {
+    console.log(this);
     this.textMaskInputElement.update();
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event);
     }
-  },
-});
+  }
+}
 
-export default MaskedInput;
 export { default as conformToMask } from '../../core/src/conformToMask.js';
