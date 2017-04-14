@@ -111,6 +111,17 @@ describe('createNumberMask', () => {
     expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/, /\d/])
   })
 
+  it('does not change the value when a leading zero is added', () => {
+    let inputElement = document.createElement('input')
+    let numberMask = createNumberMask()
+    const textMaskControl = createTextMaskInputElement({
+      inputElement,
+      mask: numberMask
+    })
+    textMaskControl.update('012234')
+    expect(inputElement.value).to.equal('$12,234')
+  })
+
   describe('integer limiting', () => {
     it('can limit the length of the integer part', () => {
       let numberMask = createNumberMask({integerLimit: 3})
@@ -203,17 +214,6 @@ describe('createNumberMask', () => {
     it('allows one leading zero followed by a fraction', function() {
       let numberMask = createNumberMask({allowDecimal: true})
       expect(numberMask('0.12')).to.deep.equal(['$', /\d/, '[]', '.', '[]', /\d/, /\d/])
-    })
-
-    it('does not change the value when a leading zero is added', () => {
-      let inputElement = document.createElement('input')
-      let numberMask = createNumberMask()
-      const textMaskControl = createTextMaskInputElement({
-        inputElement,
-        mask: numberMask
-      })
-      textMaskControl.update('012234')
-      expect(inputElement.value).to.equal('$12,234')
     })
   })
 })
