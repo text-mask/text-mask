@@ -39,7 +39,7 @@ export default class MaskedInput extends React.Component {
         {...props}
         onInput={event => this.onChange(event)}
         defaultValue={this.props.value}
-        ref={inputElement => this.inputElement = inputElement} //eslint-disable-line
+        ref={(inputElement) => (this.inputElement = inputElement)}
       />
     )
   }
