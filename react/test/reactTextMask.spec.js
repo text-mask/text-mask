@@ -7,6 +7,7 @@ const ReactTextMask = (isVerify()) ?
   require('../src/reactTextMask.js')
 
 const MaskedInput = ReactTextMask.default
+const createMaskedInput = ReactTextMask.createMaskedInput
 const conformToMask = ReactTextMask.conformToMask
 
 const emailMask = (isVerify()) ?
@@ -77,62 +78,59 @@ describe('MaskedInput', () => {
     expect(renderedDOMComponent.value).to.equal('')
   })
 
-  it('createTextMaskInputElement is a function', () => {
-    const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput
-      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      guide={true}/>
-    )
-    expect(typeof maskedInput.createTextMaskInputElement).to.equal('function')
-  })
-
   it('calls createTextMaskInputElement with the correct config', () => {
     const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     const guide = true
     const placeholderChar = '*'
     const keepCharPositions = true
+    let maskConfig = {}
+
+    const createTextMaskInputElement = (config) => {
+      maskConfig = config
+      return {
+        update() {}
+      }
+    }
+
+    const CustomMaskedInput = createMaskedInput(createTextMaskInputElement)
+
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput
+      <CustomMaskedInput
       mask={mask}
       guide={guide}
       placeholderChar={placeholderChar}
       keepCharPositions={keepCharPositions}/>
     )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
-
-    // stub the createTextMaskInputElement method
-    maskedInput.createTextMaskInputElement = (config) => {
-      expect(typeof config).to.equal('object')
-      expect(config.inputElement).to.equal(renderedDOMComponent)
-      expect(config.mask).to.equal(mask)
-      expect(config.guide).to.equal(guide)
-      expect(config.placeholderChar).to.equal(placeholderChar)
-      expect(config.keepCharPositions).to.equal(keepCharPositions)
-      return {
-        update() {}
-      }
-    }
     maskedInput.initTextMask()
+
+    expect(typeof maskConfig).to.equal('object')
+    expect(maskConfig.inputElement).to.equal(renderedDOMComponent)
+    expect(maskConfig.mask).to.equal(mask)
+    expect(maskConfig.guide).to.equal(guide)
+    expect(maskConfig.placeholderChar).to.equal(placeholderChar)
+    expect(maskConfig.keepCharPositions).to.equal(keepCharPositions)
   })
 
   it('sets textMaskInputElement and calls textMaskInputElement.update with the correct value', () => {
+    let updatedValue = false
+    const CustomMaskedInput = createMaskedInput(() => {
+      return {
+        update(value) {
+          updatedValue = value
+        }
+      }
+    })
+
     const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput
+      <CustomMaskedInput
       value='123'
       mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       />
     )
-
-    // stub the createTextMaskInputElement method
-    maskedInput.createTextMaskInputElement = () => {
-      return {
-        update(value) {
-          expect(value).to.equal('123')
-        }
-      }
-    }
     maskedInput.initTextMask()
     expect(typeof maskedInput.textMaskInputElement).to.equal('object')
+    expect(updatedValue).to.equal('123')
   })
 
   it('initializes textMaskInputElement property', () => {
