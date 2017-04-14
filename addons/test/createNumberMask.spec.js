@@ -209,7 +209,6 @@ describe('createNumberMask', () => {
       let inputElement = document.createElement('input')
       let numberMask = createNumberMask()
       const textMaskControl = createTextMaskInputElement({
-        showMask: true,
         inputElement,
         mask: numberMask
       })
