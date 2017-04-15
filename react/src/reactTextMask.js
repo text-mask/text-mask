@@ -1,41 +1,26 @@
-import React, {PropTypes} from 'react'
-import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
+import React from 'react'
+import PropTypes from 'prop-types'
+import createTextMaskInputElement
+  from '../../core/src/createTextMaskInputElement'
 
-export const MaskedInput = React.createClass({
-  propTypes: {
-    mask: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.func,
-      PropTypes.bool,
-      PropTypes.shape({
-        mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-        pipe: PropTypes.func
-      })
-    ]).isRequired,
-    guide: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    pipe: PropTypes.func,
-    placeholderChar: PropTypes.string,
-    keepCharPositions: PropTypes.bool,
-    showMask: PropTypes.bool
-  },
-
-  createTextMaskInputElement,
-
+export default class MaskedInput extends React.Component {
   initTextMask() {
     const {props, props: {value}} = this
 
-    this.textMaskInputElement = this.createTextMaskInputElement({inputElement: this.inputElement, ...props})
+    this.textMaskInputElement = createTextMaskInputElement({
+      inputElement: this.inputElement,
+      ...props,
+    })
     this.textMaskInputElement.update(value)
-  },
+  }
 
   componentDidMount() {
     this.initTextMask()
-  },
+  }
 
   componentDidUpdate() {
     this.initTextMask()
-  },
+  }
 
   render() {
     const props = {...this.props}
@@ -52,12 +37,12 @@ export const MaskedInput = React.createClass({
     return (
       <input
         {...props}
-        onInput={this.onChange}
+        onInput={event => this.onChange(event)}
         defaultValue={this.props.value}
         ref={(inputElement) => (this.inputElement = inputElement)}
       />
     )
-  },
+  }
 
   onChange(event) {
     this.textMaskInputElement.update()
@@ -66,7 +51,24 @@ export const MaskedInput = React.createClass({
       this.props.onChange(event)
     }
   }
-})
+}
 
-export default MaskedInput
+MaskedInput.propTypes = {
+  mask: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.func,
+    PropTypes.bool,
+    PropTypes.shape({
+      mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+      pipe: PropTypes.func,
+    }),
+  ]).isRequired,
+  guide: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  pipe: PropTypes.func,
+  placeholderChar: PropTypes.string,
+  keepCharPositions: PropTypes.bool,
+  showMask: PropTypes.bool,
+}
+
 export {default as conformToMask} from '../../core/src/conformToMask.js'
