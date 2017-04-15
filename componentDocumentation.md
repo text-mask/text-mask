@@ -6,7 +6,7 @@
   * [`placeholderChar`](#placeholderchar) (string)
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
-  * [`showMask`](#showMask) (boolean)
+  * [`showMask`](#showmask) (boolean)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
