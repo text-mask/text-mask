@@ -194,7 +194,7 @@ which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/
 
 ## `showMask`
 
-`showMask` is a boolean that tells the TextMask component to display the mask as a
+`showMask` is a boolean that tells the Text Mask component to display the mask as a
 placeholder in place of the regular placeholder when the input element value is empty.
 
 ---
