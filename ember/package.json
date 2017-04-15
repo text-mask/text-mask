@@ -1,6 +1,6 @@
 {
   "name": "ember-text-mask",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Ember input component that accepts mask pattern",
   "keywords": [
     "ember-addon",

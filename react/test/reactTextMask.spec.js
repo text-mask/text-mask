@@ -77,15 +77,6 @@ describe('MaskedInput', () => {
     expect(renderedDOMComponent.value).to.equal('')
   })
 
-  it('createTextMaskInputElement is a function', () => {
-    const maskedInput = ReactTestUtils.renderIntoDocument(
-      <MaskedInput
-      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      guide={true}/>
-    )
-    expect(typeof maskedInput.createTextMaskInputElement).to.equal('function')
-  })
-
   it('calls createTextMaskInputElement with the correct config', () => {
     const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
     const guide = true
