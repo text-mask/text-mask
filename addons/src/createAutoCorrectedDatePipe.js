@@ -2,8 +2,8 @@ export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy') {
   return function(conformedValue) {
     const indexesOfPipedChars = []
     const dateFormatArray = dateFormat.split(/[^dmy]+/)
-    const maxValue = {'dd': 31, 'mm': 12, 'yyyy': 9999}
-    const minValue = {'dd': 1, 'mm': 1, 'yyyy': 1}
+    const maxValue = {'dd': 31, 'mm': 12, 'yy': 99, 'yyyy': 9999}
+    const minValue = {'dd': 1, 'mm': 1, 'yy': 0, 'yyyy': 1}
     const conformedValueArr = conformedValue.split('')
 
     // Check first digit

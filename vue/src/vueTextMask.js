@@ -45,6 +45,11 @@ export default {
     pipe: {
       type: Function,
       required: false
+    },
+
+    showMask: {
+      type: Boolean,
+      required: false
     }
   },
 
@@ -53,8 +58,10 @@ export default {
   },
 
   methods: {
+    createTextMaskInputElement,
+
     bind() {
-      this.textMaskInputElement = createTextMaskInputElement({
+      this.textMaskInputElement = this.createTextMaskInputElement({
         inputElement: this.$refs.input,
         ...this.$options.propsData
       })
@@ -89,6 +96,10 @@ export default {
     },
 
     pipe() {
+      this.bind()
+    },
+
+    showMask() {
       this.bind()
     }
   }

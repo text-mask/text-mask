@@ -9,6 +9,10 @@ fi
 
 cd ./ember
 
+npm install
+
+ember test
+
 generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public

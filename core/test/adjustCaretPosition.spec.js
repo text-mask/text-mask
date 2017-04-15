@@ -141,6 +141,7 @@ describe('adjustCaretPosition', () => {
         body: () => {
           expect(adjustCaretPosition({
             previousConformedValue: test.previousConformedValue,
+            previousPlaceholder: test.previousPlaceholder,
             conformedValue: test.conformedValue,
             rawValue: test.rawValue,
             placeholder: convertMaskToPlaceholder(test.mask),

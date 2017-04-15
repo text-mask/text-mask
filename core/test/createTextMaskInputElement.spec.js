@@ -31,6 +31,26 @@ describe('createTextMaskInputElement', () => {
     expect(() => createTextMaskInputElement({inputElement, mask})).to.not.throw()
   })
 
+  it('displays mask when showMask is true', () => {
+    const textMaskControl = createTextMaskInputElement({
+      showMask: true,
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+    textMaskControl.update()
+    expect(inputElement.value).to.equal('(___) ___-____')
+  })
+
+  it('does not display mask when showMask is false', () => {
+    const textMaskControl = createTextMaskInputElement({
+      showMask: false,
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+    textMaskControl.update()
+    expect(inputElement.value).to.equal('')
+  })
+
   describe('`update` method', () => {
     it('conforms whatever value is in the input element to a mask', () => {
       const mask = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]

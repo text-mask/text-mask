@@ -8,10 +8,11 @@ const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: undefined}
+  const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
 
   return {
     state,
@@ -25,7 +26,8 @@ export default function createTextMaskInputElement(config) {
       guide,
       pipe,
       placeholderChar = defaultPlaceholderChar,
-      keepCharPositions = false
+      keepCharPositions = false,
+      showMask = false
     } = config) {
       // if `rawValue` is `undefined`, read from the `inputElement`
       if (typeof rawValue === 'undefined') {
@@ -69,8 +71,8 @@ export default function createTextMaskInputElement(config) {
       // `selectionStart` indicates to us where the caret position is after the user has typed into the input
       const {selectionStart: currentCaretPosition} = inputElement
 
-      // We need to know what the `previousConformedValue` is from the previous `update` call
-      const {previousConformedValue} = state
+      // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
+      const {previousConformedValue, previousPlaceholder} = state
 
       let caretTrapIndexes
 
@@ -141,6 +143,7 @@ export default function createTextMaskInputElement(config) {
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
+        previousPlaceholder,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
@@ -152,9 +155,11 @@ export default function createTextMaskInputElement(config) {
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
       const inputValueShouldBeEmpty = finalConformedValue === placeholder && adjustedCaretPosition === 0
-      const inputElementValue = (inputValueShouldBeEmpty) ? emptyString : finalConformedValue
+      const emptyValue = showMask ? placeholder : emptyString
+      const inputElementValue = (inputValueShouldBeEmpty) ? emptyValue : finalConformedValue
 
       state.previousConformedValue = inputElementValue // store value for access for next time
+      state.previousPlaceholder = placeholder
 
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.
@@ -172,7 +177,7 @@ export default function createTextMaskInputElement(config) {
 function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
     if (isAndroid) {
-      setTimeout(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
+      defer(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
     } else {
       element.setSelectionRange(selectionPosition, selectionPosition, strNone)
     }
