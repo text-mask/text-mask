@@ -68,8 +68,8 @@ export default function createTextMaskInputElement(config) {
       // If it's something we can't work with `getSafeRawValue` will throw.
       const safeRawValue = getSafeRawValue(rawValue)
 
-      // `selectionStart` indicates to us where the caret position is after the user has typed into the input
-      const {selectionStart: currentCaretPosition} = inputElement
+      // `selectionEnd` indicates to us where the caret position is after the user has typed into the input
+      const {selectionEnd: currentCaretPosition} = inputElement
 
       // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
       const {previousConformedValue, previousPlaceholder} = state
