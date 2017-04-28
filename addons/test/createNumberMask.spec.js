@@ -107,6 +107,14 @@ describe('createNumberMask', () => {
     expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/, /\d/])
   })
 
+  it('works with large numbers when leading zeroes is false', function() {
+    let numberMask = createNumberMask({allowLeadingZeroes: false})
+    expect(numberMask('111111111111111111111111')).to.deep.equal([
+      '$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',',
+      /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/
+    ])
+  })
+
   describe('integer limiting', () => {
     it('can limit the length of the integer part', () => {
       let numberMask = createNumberMask({integerLimit: 3})
