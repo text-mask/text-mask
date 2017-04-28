@@ -6,10 +6,10 @@
   * [`placeholderChar`](#placeholderchar) (string)
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
+  * [`showMask`](#showmask) (boolean)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
-  * [Updating the `mask` or other values after initialization](#updating-the-mask-or-other-values-after-initialization)
 
 ## `mask`
 
@@ -190,6 +190,12 @@ If the `pipe` adds new characters to the string, it must return an object with t
 For an example of a pipe, see the code for
 [`createAutoCorrectedDatePipe`](https://github.com/text-mask/text-mask/blob/master/addons/src/createAutoCorrectedDatePipe.js)
 which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
+
+
+## `showMask`
+
+`showMask` is a boolean that tells the Text Mask component to display the mask as a
+placeholder in place of the regular placeholder when the input element value is empty.
 
 ---
 

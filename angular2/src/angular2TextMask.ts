@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, NgModule, OnChanges, Provider, Renderer, SimpleChanges } from '@angular/core'
+import { Directive, ElementRef, forwardRef, Input, Inject, NgModule, OnChanges, Provider, Renderer, SimpleChanges } from '@angular/core'
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
 
@@ -35,7 +35,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   _onTouched = () => {}
   _onChange = (_: any) => {}
 
-  constructor(private renderer: Renderer, private element: ElementRef) {}
+  constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.setupMask()
