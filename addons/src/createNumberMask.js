@@ -72,7 +72,7 @@ export default function createNumberMask({
     integer = integer.replace(nonDigitsRegExp, emptyString)
 
     if (!allowLeadingZeroes) {
-      integer = String(Number(integer))
+      integer = integer.replace(/^0+(0$|[^0])/, '$1')
     }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
