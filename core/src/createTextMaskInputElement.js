@@ -14,6 +14,12 @@ export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
 
+  // Turn autocomplete off on Android devices as it causes wrong selectionStart value.
+  // See #220.
+  if (navigator.userAgent.match(/Android/)) {
+    inputElement.setAttribute('autocomplete', 'off')
+  }
+
   return {
     state,
 
