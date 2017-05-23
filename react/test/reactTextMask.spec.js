@@ -296,6 +296,37 @@ describe('MaskedInput', () => {
     maskedInput.onChange()
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
+
+  it('deletes special characters when an onChange event is used to update state', () => {
+    class ComponentWithOnChange extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {value: '1234'}
+        this.onChange = this.onChange.bind(this)
+      }
+
+      onChange(e) { this.setState({value: e.target.value}) }
+
+      render() {
+        return(
+          <MaskedInput
+            value={this.state.value}
+            guide={false}
+            mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+            onChange={this.onChange}
+          />
+        )
+      }
+    }
+
+    const maskedInputWrapper = ReactTestUtils.renderIntoDocument(<ComponentWithOnChange />)
+
+    const maskedInput = ReactTestUtils.findRenderedComponentWithType(maskedInputWrapper, MaskedInput)
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    ReactTestUtils.Simulate.input(renderedDOMComponent, {target: {value: '123'}})
+
+    expect(renderedDOMComponent.value).to.equal('(123')
+  })
 })
 
 describe('conformToMask', () => {
