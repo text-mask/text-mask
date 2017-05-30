@@ -35,7 +35,7 @@ export default function createNumberMask({
     ) {
       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
     } else if(
-      rawValue === decimalSymbol && 
+      rawValue === decimalSymbol &&
       allowDecimal
     ) {
       return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))

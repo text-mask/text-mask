@@ -114,6 +114,9 @@ describe('createNumberMask', () => {
 
     numberMask = createNumberMask({allowDecimal: false})
     expect(numberMask('.')).to.deep.equal(['$'])
+
+    numberMask = createNumberMask({prefix: '', suffix: '$', allowDecimal: true})
+    expect(numberMask('.')).to.deep.equal(['0', '.', /\d/, '$'])
   })
 
   it('can allow leading zeroes', function() {
