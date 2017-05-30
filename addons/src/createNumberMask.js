@@ -27,14 +27,6 @@ export default function createNumberMask({
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
   function numberMask(rawValue = emptyString) {
-    if(rawValue === '.' && allowDecimal) {
-      let mask = ['0', '.', /\d/]
-      if(prefix) {
-        mask.unshift(prefix)
-      }
-      return mask
-    }
-
     const rawValueLength = rawValue.length
 
     if (
@@ -42,6 +34,11 @@ export default function createNumberMask({
       (rawValue[0] === prefix[0] && rawValueLength === 1)
     ) {
       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
+    } else if(
+      rawValue === decimalSymbol && 
+      allowDecimal
+    ) {
+      return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
     }
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
