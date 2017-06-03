@@ -1,6 +1,8 @@
 language: node_js
 
-node_js: "node"
+node_js: 
+  - "node"
+  - "7"
 
 install: true
 
