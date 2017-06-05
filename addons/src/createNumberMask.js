@@ -27,6 +27,14 @@ export default function createNumberMask({
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
   function numberMask(rawValue = emptyString) {
+    if(rawValue === '.' && allowDecimal) {
+      let mask = ['0', '.', /\d/]
+      if(prefix) {
+        mask.unshift(prefix)
+      }
+      return mask
+    }
+
     const rawValueLength = rawValue.length
 
     if (
