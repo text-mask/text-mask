@@ -10,7 +10,7 @@ const strObject = 'object'
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout
 
-export default function createTextMaskInputElement(config) {
+export default function createTextMaskInputElement(config = {}) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
 
