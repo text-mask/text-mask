@@ -87,8 +87,15 @@ export default function createNumberMask({
       mask.push(decimalSymbol, caretTrap)
 
       if (fraction) {
-       if (typeof decimalLimit === number) {
-          fraction = fraction.slice(0, decimalLimit)
+        if (typeof decimalLimit === number) {
+
+          // fraction = fraction.slice(0, decimalLimit)
+
+          //create a variable called float where I transform fraction into a truth floating-point number 
+          // so I can round correctly the decimal part
+          let float = parseFloat("0." + fraction).toFixed(decimalLimit);
+          fraction = float.split('.')[1];
+
         }
 
         mask = mask.concat(fraction)
