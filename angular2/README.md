@@ -1,7 +1,5 @@
 # Angular 2 Input Mask
 
-This Angular 2 Directive.
-
 ## Getting started
 
 First, install it.
