@@ -87,7 +87,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
         // `textMask` directive is used directly on an input element
         this.inputElement = this.element.nativeElement
       } else {
-        // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+        // `textMask` directive is used on an abstracted input element, `md-input-container`, etc
         this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
       }
 

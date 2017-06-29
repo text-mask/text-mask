@@ -1,6 +1,6 @@
 # Angular 2 Input Mask
 
-This Angular 2 Directive is also compatible with Ionic 2 `ion-input`.
+This Angular 2 Directive.
 
 ## Getting started
 
@@ -72,3 +72,6 @@ To see an example of the code running, follow these steps:
 1. Open [http://localhost:3000](http://localhost:3000)
 
 The code of the example is in [`angular2/example`](https://github.com/text-mask/text-mask/tree/master/angular2/example).
+
+## Ionic 2
+Unfortunately, we are unable to support Ionic 2 `ion-input` at this point as it overrides the `ControlValueAccessor` that Text Mask requires to perform its job.
