@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     textMaskAddons: path.join(__dirname, './src/index.js'),
     createAutoCorrectedDatePipe: [path.join(__dirname, './src/createAutoCorrectedDatePipe.js')],
+    createAutoCorrectedTimePipe: [path.join(__dirname, './src/createAutoCorrectedTimePipe.js')],
     createNumberMask: [path.join(__dirname, './src/createNumberMask.js')],
     emailMask: [path.join(__dirname, './src/emailMask.js')]
   },
@@ -19,7 +20,7 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/}
+      { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
     ]
   },
 

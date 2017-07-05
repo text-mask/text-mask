@@ -1,5 +1,7 @@
 import React from 'react'
 import MaskedInput from '../src/reactTextMask'
+import createAutoCorrectedTimePipe from '../../addons/src/createAutoCorrectedTimePipe';
+const autoCorrectedTimePipe = createAutoCorrectedTimePipe('hh:mm:ss')
 
 export default () => (
   <form className='form-horizontal'>
@@ -8,10 +10,12 @@ export default () => (
 
       <div className='col-sm-10'>
         <MaskedInput
-          mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+          mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
           className='form-control'
           id='1'
           type='text'
+          keepCharPositions={true}
+          pipe={autoCorrectedTimePipe}
         />
       </div>
     </div>
