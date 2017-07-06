@@ -1,9 +1,9 @@
 export default function createAutoCorrectedTimePipe(dateFormat = 'hh mm ss') {
-  return function (conformedValue) {
+  return function(conformedValue) {
     const indexesOfPipedChars = []
     const dateFormatArray = dateFormat.split(/[^hms]+/)
-    const maxValue = { 'hh': 24, 'mm': 60, 'ss': 60 }
-    const minValue = { 'hh': 0, 'mm': 0, 'ss': 0 }
+    const maxValue = {'hh': 24, 'mm': 60, 'ss': 60}
+    const minValue = {'hh': 0, 'mm': 0, 'ss': 0}
     const conformedValueArr = conformedValue.split('')
 
     // Check first digit
