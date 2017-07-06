@@ -1,5 +1,5 @@
 const createAutoCorrectedDateTimePipe = (isVerify()) ?
-  require('../dist/.js').default :
+  require('../dist/createAutoCorrectedDateTimePipe.js').default :
   require('../src/createAutoCorrectedDateTimePipe.js').default
 
 describe('createAutoCorrectedDateTimePipe', () => {
