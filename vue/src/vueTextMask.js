@@ -8,7 +8,9 @@ export default {
         value: this.value
       },
       on: {
-        input: (event) => this.updateValue(event.target.value)
+        input: (event) => this.updateValue(event.target.value),
+        focus: (event) => this.emitEvent(event),
+        blur: (event) => this.emitEvent(event)
       }
     })
   },
@@ -72,6 +74,10 @@ export default {
     updateValue(value) {
       this.textMaskInputElement.update(value)
       this.$emit('input', this.$refs.input.value)
+    },
+
+    emitEvent(event) {
+      this.$emit(event.type, event)
     }
   },
 
