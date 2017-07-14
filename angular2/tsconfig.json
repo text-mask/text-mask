@@ -9,7 +9,11 @@
     "removeComments": false,
     "noImplicitAny": false,
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "lib": [
+      "es2016",
+      "dom"
+    ]
   },
   "files": [
     "src/angular2TextMask.ts"
