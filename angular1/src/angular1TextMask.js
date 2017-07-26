@@ -1,6 +1,23 @@
 /*global angular*/
 import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 
+function removeExcessNumbers(decimal, limit) {
+  return typeof decimal === 'string' ? decimal.slice(0, limit) : ''
+}
+
+function prepareForMask(value, conf) {
+  let result = ''
+  if (value || value === 0) {
+    const separatedValue = value.toString().split('.')
+    if (conf.allowDecimal && separatedValue[1]) {
+      result = separatedValue[0] + conf.decimalSymbol + removeExcessNumbers(separatedValue[1], conf.decimalLimit)
+    } else {
+      result = separatedValue[0]
+    }
+  }
+  return result
+}
+
 function textMask() {
   'ngInject'
 
@@ -8,7 +25,8 @@ function textMask() {
     restrict: 'A',
     require: 'ngModel',
     scope: {
-      textMask: '='
+      textMask: '=',
+      intValue: '='
     },
     link: function(scope, element, attrs, ngModel) {
       var inputElement
@@ -28,9 +46,13 @@ function textMask() {
       })
 
       // reset Text Mask when `scope.textMask` object changes
-      scope.$watch('textMask', () => {
+      scope.$watch('textMask', (newMask, oldMaks) => {
         initTextMask()
-        textMaskInputElement.update()
+        let value
+        if (newMask.maskedConfig) {
+          value = prepareForMask(scope.intValue, newMask.maskedConfig);
+        }
+        textMaskInputElement.update(value)
       }, true)
 
       function initTextMask() {
