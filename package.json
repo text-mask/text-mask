@@ -43,7 +43,7 @@
     "vanilla:build": "./node_modules/.bin/webpack -p --config vanilla/webpack.buildVanillaIntegration.js",
     "vanilla:publish": "sh vanilla/publish.sh",
     "angular1:dev": "./node_modules/.bin/webpack-dev-server --content-base angular1/example --port 3000 --config angular1/example/webpack.runAngular1Example.js",
-    "angular1:build": "./node_modules/.bin/webpack -p --config angular1/webpack.buildAngular1Integration.js",
+    "angular1:build": "./node_modules/.bin/webpack --config angular1/webpack.buildAngular1Integration.js",
     "angular1:publish": "sh angular1/publish.sh",
     "angular2:ci": "cd angular2 && npm i && npm run ci",
     "angular2:publish": "sh angular2/publish.sh",
