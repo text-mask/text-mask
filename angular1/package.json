@@ -1,15 +1,15 @@
 {
-  "name": "angular1-text-mask",
-  "version": "6.0.0",
+  "name": "bmsdave-ng1-text-mask",
+  "version": "6.0.1",
   "description": "Angular 1 directive for input text masking",
   "main": "dist/angular1TextMask.js",
-  "author": "Thomas (@PerfectPixel)",
+  "author": "Vadim (@bmsdave)",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/text-mask/text-mask/issues"
+    "url": "https://github.com/bmsdave/text-mask/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/text-mask/text-mask.git"
+    "url": "https://github.com/bmsdave/text-mask.git"
   }
 }

@@ -93,7 +93,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      result = separatedValue[0];
 	    }
 	  }
-	  console.log("prepareForMask: ", result);
 	  return result;
 	}
 
