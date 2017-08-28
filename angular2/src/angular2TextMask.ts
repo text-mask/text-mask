@@ -14,6 +14,7 @@ export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
     '(blur)': '_onTouched()'
   },
   selector: '[textMask]',
+  exportAs: 'textMask',
   providers: [MASKEDINPUT_VALUE_ACCESSOR]
 })
 export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
