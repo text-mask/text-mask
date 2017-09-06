@@ -10,9 +10,7 @@
             name="phone"
             class="form-control"
             v-model="phone"
-            :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-            @focus="handleFocus"
-            @blur="handleBlur">
+            :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]">
           </masked-input>
         </div>
       </div>
@@ -26,22 +24,6 @@
             type="text"
             v-model="phone"
             class="form-control">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="3" class="col-sm-4 control-label">Focus count</label>
-
-        <div class="col-sm-8 text-left">
-          <p class="form-control-static">{{ focusCount }}</p>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="4" class="col-sm-4 control-label">Blur count</label>
-
-        <div class="col-sm-8 text-left">
-          <p class="form-control-static">{{ blurCount }}</p>
         </div>
       </div>
     </form>
@@ -58,20 +40,9 @@
       MaskedInput
     },
 
-    methods: {
-      handleFocus () {
-        this.focusCount++
-      },
-      handleBlur () {
-        this.blurCount++
-      }
-    },
-
     data () {
       return {
         phone: '',
-        focusCount: 0,
-        blurCount: 0
       }
     }
 
