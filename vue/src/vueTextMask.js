@@ -10,7 +10,8 @@ export default {
       on: {
         input: (event) => this.updateValue(event.target.value),
         focus: (event) => this.emitEvent(event),
-        blur: (event) => this.emitEvent(event)
+        blur: (event) => this.emitEvent(event),
+        keypress: (event) => this.emitEvent(event)
       }
     })
   },

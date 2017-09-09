@@ -232,6 +232,25 @@ describe('inputMask', () => {
     expect(vm.emitEvent.getCall(0).args[0].type).to.equal('focus')
     expect(vm.emitEvent.getCall(1).args[0].type).to.equal('blur')
   })
+
+  it('emits keypress event for parent components', () => {
+    const vm = mountComponent(maskedInput, {
+      value: '123',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+
+    vm.emitEvent = sinon.spy()
+
+    const e = new window.KeyboardEvent('keypress', {
+      key: 'e',
+      bubbles: true,
+      cancelable: true
+    })
+    vm.$el.dispatchEvent(e)
+
+    expect(vm.emitEvent.callCount).to.equal(1)
+    expect(vm.emitEvent.getCall(0).args[0].type).to.equal('keypress')
+  })
 })
 
 describe('conformToMask', () => {
