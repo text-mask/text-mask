@@ -1,6 +1,6 @@
 {
-  "name": "text-mask-addons",
-  "version": "3.5.0",
+  "name": "bmsdave-text-mask-addons",
+  "version": "3.5.2",
   "description": "Addons for Text Mask https://github.com/text-mask/text-mask",
   "main": "dist/textMaskAddons.js",
   "author": "M.K. Safi <msafi@msafi.com>",

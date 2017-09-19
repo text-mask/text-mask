@@ -24,7 +24,7 @@
     "core:tdd": "npm run core:test -- --watch",
     "core:verify": "npm run core:test -- --verify",
     "core:publish": "sh core/publish.sh",
-    "addons:build": "./node_modules/.bin/webpack -p --config addons/webpack.buildAddons.js",
+    "addons:build": "./node_modules/.bin/webpack --config addons/webpack.buildAddons.js",
     "addons:test": "./node_modules/.bin/mocha --compilers js:babel-core/register addons/test --require ./common/domSetup.js --recursive",
     "addons:tdd": "npm run addons:test -- --watch",
     "addons:verify": "npm run addons:test -- --verify",

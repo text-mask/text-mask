@@ -1,1 +1,496 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.textMaskAddons=t():e.textMaskAddons=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=n(1);Object.defineProperty(t,"createAutoCorrectedDatePipe",{enumerable:!0,get:function(){return r(o).default}});var i=n(2);Object.defineProperty(t,"createNumberMask",{enumerable:!0,get:function(){return r(i).default}});var u=n(3);Object.defineProperty(t,"emailMask",{enumerable:!0,get:function(){return r(u).default}})},function(e,t){"use strict";function n(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"mm dd yyyy";return function(t){var n=[],r=e.split(/[^dmy]+/),o={dd:31,mm:12,yy:99,yyyy:9999},i={dd:1,mm:1,yy:0,yyyy:1},u=t.split("");r.forEach(function(t){var r=e.indexOf(t),i=parseInt(o[t].toString().substr(0,1),10);parseInt(u[r],10)>i&&(u[r+1]=u[r],u[r]=0,n.push(r))});var c=r.some(function(n){var r=e.indexOf(n),u=n.length,c=t.substr(r,u).replace(/\D/g,""),l=parseInt(c,10);return l>o[n]||c.length===u&&l<i[n]});return!c&&{value:u.join(""),indexesOfPipedChars:n}}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=n},function(e,t){"use strict";function n(){function e(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:c,t=e.length;if(e===c||e[0]===g[0]&&1===t)return g.split(c).concat([v]).concat(m.split(c));var n=e.lastIndexOf(S),u=n!==-1,l=e[0]===s&&I,a=void 0,h=void 0,b=void 0;if(e.slice(q*-1)===m&&(e=e.slice(0,q*-1)),u&&(M||D)?(a=e.slice(e.slice(0,V)===g?V:0,n),h=e.slice(n+1,t),h=r(h.replace(f,c))):a=e.slice(0,V)===g?e.slice(V):e,L&&("undefined"==typeof L?"undefined":i(L))===p){var O="."===_?"[.]":""+_,j=(a.match(new RegExp(O,"g"))||[]).length;a=a.slice(0,L+j*B)}return a=a.replace(f,c),R||(a=String(Number(a))),a=x?o(a,_):a,b=r(a),(u&&M||D===!0)&&(e[n-1]!==S&&b.push(y),b.push(S,y),h&&(("undefined"==typeof C?"undefined":i(C))===p&&(h=h.slice(0,C)),b=b.concat(h)),D===!0&&e[n-1]===S&&b.push(v)),V>0&&(b=g.split(c).concat(b)),l&&(b.length===V&&b.push(v),b=[d].concat(b)),m.length>0&&(b=b.concat(m.split(c))),b}var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=t.prefix,g=void 0===n?u:n,h=t.suffix,m=void 0===h?c:h,b=t.includeThousandsSeparator,x=void 0===b||b,O=t.thousandsSeparatorSymbol,_=void 0===O?l:O,j=t.allowDecimal,M=void 0!==j&&j,P=t.decimalSymbol,S=void 0===P?a:P,w=t.decimalLimit,C=void 0===w?2:w,k=t.requireDecimal,D=void 0!==k&&k,E=t.allowNegative,I=void 0!==E&&E,N=t.allowLeadingZeroes,R=void 0!==N&&N,A=t.integerLimit,L=void 0===A?null:A,V=g&&g.length||0,q=m&&m.length||0,B=_&&_.length||0;return e.instanceOf="createNumberMask",e}function r(e){return e.split(c).map(function(e){return v.test(e)?v:e})}function o(e,t){return e.replace(/\B(?=(\d{3})+(?!\d))/g,t)}Object.defineProperty(t,"__esModule",{value:!0});var i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};t.default=n;var u="$",c="",l=",",a=".",s="-",d=/-/,f=/\D+/g,p="number",v=/\d/,y="[]"},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){e=e.replace(O,v);var n=t.placeholderChar,r=t.currentCaretPosition,o=e.indexOf(y),s=e.lastIndexOf(p),d=s<o?-1:s,f=i(e,o+1,y),g=i(e,d-1,p),h=u(e,o,n),m=c(e,o,d,n),b=l(e,d,n,r);h=a(h),m=a(m),b=a(b,!0);var x=h.concat(f).concat(m).concat(g).concat(b);return x}function i(e,t,n){var r=[];return e[t]===n?r.push(n):r.push(g,n),r.push(g),r}function u(e,t){return t===-1?e:e.slice(0,t)}function c(e,t,n,r){var o=v;return t!==-1&&(o=n===-1?e.slice(t+1,e.length):e.slice(t+1,n)),o=o.replace(new RegExp("[\\s"+r+"]",m),v),o===y?f:o.length<1?h:o[o.length-1]===p?o.slice(0,o.length-1):o}function l(e,t,n,r){var o=v;return t!==-1&&(o=e.slice(t+1,e.length)),o=o.replace(new RegExp("[\\s"+n+".]",m),v),0===o.length?e[t-1]===p&&r!==e.length?f:v:o}function a(e,t){return e.split(v).map(function(e){return e===h?e:t?x:b})}Object.defineProperty(t,"__esModule",{value:!0});var s=n(4),d=r(s),f="*",p=".",v="",y="@",g="[]",h=" ",m="g",b=/[^\s]/,x=/[^.\s]/,O=/\s/g;t.default={mask:o,pipe:d.default}},function(e,t){"use strict";function n(e,t){var n=t.currentCaretPosition,i=t.rawValue,f=t.previousConformedValue,p=t.placeholderChar,v=e;v=r(v);var y=v.indexOf(c),g=null===i.match(new RegExp("[^@\\s."+p+"]"));if(g)return u;if(v.indexOf(a)!==-1||y!==-1&&n!==y+1||i.indexOf(o)===-1&&f!==u&&i.indexOf(l)!==-1)return!1;var h=v.indexOf(o),m=v.slice(h+1,v.length);return(m.match(d)||s).length>1&&v.substr(-1)===l&&n!==i.length&&(v=v.slice(0,v.length-1)),v}function r(e){var t=0;return e.replace(i,function(){return t++,1===t?o:u})}Object.defineProperty(t,"__esModule",{value:!0}),t.default=n;var o="@",i=/@/g,u="",c="@.",l=".",a="..",s=[],d=/\./g}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["textMaskAddons"] = factory();
+	else
+		root["textMaskAddons"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createAutoCorrectedDatePipe = __webpack_require__(1);
+
+	Object.defineProperty(exports, 'createAutoCorrectedDatePipe', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_createAutoCorrectedDatePipe).default;
+	  }
+	});
+
+	var _createNumberMask = __webpack_require__(2);
+
+	Object.defineProperty(exports, 'createNumberMask', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_createNumberMask).default;
+	  }
+	});
+
+	var _emailMask = __webpack_require__(3);
+
+	Object.defineProperty(exports, 'emailMask', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_emailMask).default;
+	  }
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createAutoCorrectedDatePipe;
+	function createAutoCorrectedDatePipe() {
+	  var dateFormat = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mm dd yyyy';
+
+	  return function (conformedValue) {
+	    var indexesOfPipedChars = [];
+	    var dateFormatArray = dateFormat.split(/[^dmy]+/);
+	    var maxValue = { 'dd': 31, 'mm': 12, 'yy': 99, 'yyyy': 9999 };
+	    var minValue = { 'dd': 1, 'mm': 1, 'yy': 0, 'yyyy': 1 };
+	    var conformedValueArr = conformedValue.split('');
+
+	    // Check first digit
+	    dateFormatArray.forEach(function (format) {
+	      var position = dateFormat.indexOf(format);
+	      var maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
+
+	      if (parseInt(conformedValueArr[position], 10) > maxFirstDigit) {
+	        conformedValueArr[position + 1] = conformedValueArr[position];
+	        conformedValueArr[position] = 0;
+	        indexesOfPipedChars.push(position);
+	      }
+	    });
+
+	    // Check for invalid date
+	    var isInvalid = dateFormatArray.some(function (format) {
+	      var position = dateFormat.indexOf(format);
+	      var length = format.length;
+	      var textValue = conformedValue.substr(position, length).replace(/\D/g, '');
+	      var value = parseInt(textValue, 10);
+
+	      return value > maxValue[format] || textValue.length === length && value < minValue[format];
+	    });
+
+	    if (isInvalid) {
+	      return false;
+	    }
+
+	    return {
+	      value: conformedValueArr.join(''),
+	      indexesOfPipedChars: indexesOfPipedChars
+	    };
+	  };
+	}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports.default = createNumberMask;
+	var dollarSign = '$';
+	var emptyString = '';
+	var comma = ',';
+	var period = '.';
+	var minus = '-';
+	var minusRegExp = /-/;
+	var nonDigitsRegExp = /\D+/g;
+	var number = 'number';
+	var digitRegExp = /\d/;
+	var caretTrap = '[]';
+
+	function createNumberMask() {
+	  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+	      _ref$prefix = _ref.prefix,
+	      prefix = _ref$prefix === undefined ? dollarSign : _ref$prefix,
+	      _ref$suffix = _ref.suffix,
+	      suffix = _ref$suffix === undefined ? emptyString : _ref$suffix,
+	      _ref$includeThousands = _ref.includeThousandsSeparator,
+	      includeThousandsSeparator = _ref$includeThousands === undefined ? true : _ref$includeThousands,
+	      _ref$thousandsSeparat = _ref.thousandsSeparatorSymbol,
+	      thousandsSeparatorSymbol = _ref$thousandsSeparat === undefined ? comma : _ref$thousandsSeparat,
+	      _ref$allowDecimal = _ref.allowDecimal,
+	      allowDecimal = _ref$allowDecimal === undefined ? false : _ref$allowDecimal,
+	      _ref$decimalSymbol = _ref.decimalSymbol,
+	      decimalSymbol = _ref$decimalSymbol === undefined ? period : _ref$decimalSymbol,
+	      _ref$decimalLimit = _ref.decimalLimit,
+	      decimalLimit = _ref$decimalLimit === undefined ? 2 : _ref$decimalLimit,
+	      _ref$requireDecimal = _ref.requireDecimal,
+	      requireDecimal = _ref$requireDecimal === undefined ? false : _ref$requireDecimal,
+	      _ref$allowNegative = _ref.allowNegative,
+	      allowNegative = _ref$allowNegative === undefined ? false : _ref$allowNegative,
+	      _ref$allowLeadingZero = _ref.allowLeadingZeroes,
+	      allowLeadingZeroes = _ref$allowLeadingZero === undefined ? false : _ref$allowLeadingZero,
+	      _ref$integerLimit = _ref.integerLimit,
+	      integerLimit = _ref$integerLimit === undefined ? null : _ref$integerLimit;
+
+	  var prefixLength = prefix && prefix.length || 0;
+	  var suffixLength = suffix && suffix.length || 0;
+	  var thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0;
+
+	  function numberMask() {
+	    var rawValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyString;
+
+	    var rawValueLength = rawValue.length;
+
+	    if (rawValue === emptyString || rawValue[0] === prefix[0] && rawValueLength === 1) {
+	      return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString));
+	    }
+
+	    var indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol);
+	    var hasDecimal = indexOfLastDecimal !== -1;
+	    var isNegative = rawValue[0] === minus && allowNegative;
+
+	    var integer = void 0;
+	    var fraction = void 0;
+	    var mask = void 0;
+
+	    // remove the suffix
+	    if (rawValue.slice(suffixLength * -1) === suffix) {
+	      rawValue = rawValue.slice(0, suffixLength * -1);
+	    }
+
+	    if (hasDecimal && (allowDecimal || requireDecimal)) {
+	      integer = rawValue.slice(rawValue.slice(0, prefixLength) === prefix ? prefixLength : 0, indexOfLastDecimal);
+
+	      fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength);
+	      fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString));
+	    } else {
+	      if (rawValue.slice(0, prefixLength) === prefix) {
+	        integer = rawValue.slice(prefixLength);
+	      } else {
+	        integer = rawValue;
+	      }
+	    }
+
+	    if (integerLimit && (typeof integerLimit === 'undefined' ? 'undefined' : _typeof(integerLimit)) === number) {
+	      var thousandsSeparatorRegex = thousandsSeparatorSymbol === '.' ? '[.]' : '' + thousandsSeparatorSymbol;
+	      var reg = new RegExp('[^0-9' + thousandsSeparatorSymbol + ']', 'g');
+	      integer = integer.replace(reg, '');
+	      var numberOfThousandSeparators = (integer.match(new RegExp(thousandsSeparatorRegex, 'g')) || []).length;
+
+	      integer = integer.slice(0, integerLimit + numberOfThousandSeparators * thousandsSeparatorSymbolLength);
+	    }
+
+	    integer = integer.replace(nonDigitsRegExp, emptyString);
+
+	    if (!allowLeadingZeroes) {
+	      integer = String(Number(integer));
+	    }
+
+	    integer = includeThousandsSeparator ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer;
+
+	    mask = convertToMask(integer);
+
+	    if (hasDecimal && allowDecimal || requireDecimal === true) {
+	      if (rawValue[indexOfLastDecimal - 1] !== decimalSymbol) {
+	        mask.push(caretTrap);
+	      }
+
+	      mask.push(decimalSymbol, caretTrap);
+
+	      if (fraction) {
+	        if ((typeof decimalLimit === 'undefined' ? 'undefined' : _typeof(decimalLimit)) === number) {
+	          fraction = fraction.slice(0, decimalLimit);
+	        }
+
+	        mask = mask.concat(fraction);
+	      }
+
+	      if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
+	        mask.push(digitRegExp);
+	      }
+	    }
+
+	    if (prefixLength > 0) {
+	      mask = prefix.split(emptyString).concat(mask);
+	    }
+
+	    if (isNegative) {
+	      // If user is entering a negative number, add a mask placeholder spot to attract the caret to it.
+	      if (mask.length === prefixLength) {
+	        mask.push(digitRegExp);
+	      }
+
+	      mask = [minusRegExp].concat(mask);
+	    }
+
+	    if (suffix.length > 0) {
+	      mask = mask.concat(suffix.split(emptyString));
+	    }
+
+	    return mask;
+	  }
+
+	  numberMask.instanceOf = 'createNumberMask';
+
+	  return numberMask;
+	}
+
+	function convertToMask(strNumber) {
+	  return strNumber.split(emptyString).map(function (char) {
+	    return digitRegExp.test(char) ? digitRegExp : char;
+	  });
+	}
+
+	// http://stackoverflow.com/a/10899795/604296
+	function addThousandsSeparator(n, thousandsSeparatorSymbol) {
+	  return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparatorSymbol);
+	}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _emailPipe = __webpack_require__(4);
+
+	var _emailPipe2 = _interopRequireDefault(_emailPipe);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var asterisk = '*';
+	var dot = '.';
+	var emptyString = '';
+	var atSymbol = '@';
+	var caretTrap = '[]';
+	var space = ' ';
+	var g = 'g';
+	var anyNonWhitespaceRegExp = /[^\s]/;
+	var anyNonDotOrWhitespaceRegExp = /[^.\s]/;
+	var allWhitespaceRegExp = /\s/g;
+
+	function emailMask(rawValue, config) {
+	  rawValue = rawValue.replace(allWhitespaceRegExp, emptyString);
+
+	  var placeholderChar = config.placeholderChar,
+	      currentCaretPosition = config.currentCaretPosition;
+
+	  var indexOfFirstAtSymbol = rawValue.indexOf(atSymbol);
+	  var indexOfLastDot = rawValue.lastIndexOf(dot);
+	  var indexOfTopLevelDomainDot = indexOfLastDot < indexOfFirstAtSymbol ? -1 : indexOfLastDot;
+
+	  var localPartToDomainConnector = getConnector(rawValue, indexOfFirstAtSymbol + 1, atSymbol);
+	  var domainNameToTopLevelDomainConnector = getConnector(rawValue, indexOfTopLevelDomainDot - 1, dot);
+
+	  var localPart = getLocalPart(rawValue, indexOfFirstAtSymbol, placeholderChar);
+	  var domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar);
+	  var topLevelDomain = getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition);
+
+	  localPart = convertToMask(localPart);
+	  domainName = convertToMask(domainName);
+	  topLevelDomain = convertToMask(topLevelDomain, true);
+
+	  var mask = localPart.concat(localPartToDomainConnector).concat(domainName).concat(domainNameToTopLevelDomainConnector).concat(topLevelDomain);
+
+	  return mask;
+	}
+
+	function getConnector(rawValue, indexOfConnection, connectionSymbol) {
+	  var connector = [];
+
+	  if (rawValue[indexOfConnection] === connectionSymbol) {
+	    connector.push(connectionSymbol);
+	  } else {
+	    connector.push(caretTrap, connectionSymbol);
+	  }
+
+	  connector.push(caretTrap);
+
+	  return connector;
+	}
+
+	function getLocalPart(rawValue, indexOfFirstAtSymbol) {
+	  if (indexOfFirstAtSymbol === -1) {
+	    return rawValue;
+	  } else {
+	    return rawValue.slice(0, indexOfFirstAtSymbol);
+	  }
+	}
+
+	function getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar) {
+	  var domainName = emptyString;
+
+	  if (indexOfFirstAtSymbol !== -1) {
+	    if (indexOfTopLevelDomainDot === -1) {
+	      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, rawValue.length);
+	    } else {
+	      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, indexOfTopLevelDomainDot);
+	    }
+	  }
+
+	  domainName = domainName.replace(new RegExp('[\\s' + placeholderChar + ']', g), emptyString);
+
+	  if (domainName === atSymbol) {
+	    return asterisk;
+	  } else if (domainName.length < 1) {
+	    return space;
+	  } else if (domainName[domainName.length - 1] === dot) {
+	    return domainName.slice(0, domainName.length - 1);
+	  } else {
+	    return domainName;
+	  }
+	}
+
+	function getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition) {
+	  var topLevelDomain = emptyString;
+
+	  if (indexOfTopLevelDomainDot !== -1) {
+	    topLevelDomain = rawValue.slice(indexOfTopLevelDomainDot + 1, rawValue.length);
+	  }
+
+	  topLevelDomain = topLevelDomain.replace(new RegExp('[\\s' + placeholderChar + '.]', g), emptyString);
+
+	  if (topLevelDomain.length === 0) {
+	    return rawValue[indexOfTopLevelDomainDot - 1] === dot && currentCaretPosition !== rawValue.length ? asterisk : emptyString;
+	  } else {
+	    return topLevelDomain;
+	  }
+	}
+
+	function convertToMask(str, noDots) {
+	  return str.split(emptyString).map(function (char) {
+	    return char === space ? char : noDots ? anyNonDotOrWhitespaceRegExp : anyNonWhitespaceRegExp;
+	  });
+	}
+
+	exports.default = { mask: emailMask, pipe: _emailPipe2.default };
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = emailPipe;
+	var atSymbol = '@';
+	var allAtSymbolsRegExp = /@/g;
+	var emptyString = '';
+	var atDot = '@.';
+	var dot = '.';
+	var dotDot = '..';
+	var emptyArray = [];
+	var allDotsRegExp = /\./g;
+
+	function emailPipe(conformedValue, config) {
+	  var currentCaretPosition = config.currentCaretPosition,
+	      rawValue = config.rawValue,
+	      previousConformedValue = config.previousConformedValue,
+	      placeholderChar = config.placeholderChar;
+
+
+	  var value = conformedValue;
+
+	  value = removeAllAtSymbolsButFirst(value);
+
+	  var indexOfAtDot = value.indexOf(atDot);
+
+	  var emptyEmail = rawValue.match(new RegExp('[^@\\s.' + placeholderChar + ']')) === null;
+
+	  if (emptyEmail) {
+	    return emptyString;
+	  }
+
+	  if (value.indexOf(dotDot) !== -1 || indexOfAtDot !== -1 && currentCaretPosition !== indexOfAtDot + 1 || rawValue.indexOf(atSymbol) === -1 && previousConformedValue !== emptyString && rawValue.indexOf(dot) !== -1) {
+	    return false;
+	  }
+
+	  var indexOfAtSymbol = value.indexOf(atSymbol);
+	  var domainPart = value.slice(indexOfAtSymbol + 1, value.length);
+
+	  if ((domainPart.match(allDotsRegExp) || emptyArray).length > 1 && value.substr(-1) === dot && currentCaretPosition !== rawValue.length) {
+	    value = value.slice(0, value.length - 1);
+	  }
+
+	  return value;
+	}
+
+	function removeAllAtSymbolsButFirst(str) {
+	  var atSymbolCount = 0;
+
+	  return str.replace(allAtSymbolsRegExp, function () {
+	    atSymbolCount++;
+
+	    return atSymbolCount === 1 ? atSymbol : emptyString;
+	  });
+	}
+
+/***/ })
+/******/ ])
+});
+;

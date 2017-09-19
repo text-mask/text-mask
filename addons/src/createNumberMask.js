@@ -64,6 +64,8 @@ export default function createNumberMask({
 
     if (integerLimit && typeof integerLimit === number) {
       const thousandsSeparatorRegex = thousandsSeparatorSymbol === '.' ? '[.]' : `${thousandsSeparatorSymbol}`
+      const reg = new RegExp(`[^0-9${thousandsSeparatorSymbol}]`, 'g')
+      integer = integer.replace(reg, '')
       const numberOfThousandSeparators = (integer.match(new RegExp(thousandsSeparatorRegex, 'g')) || []).length
 
       integer = integer.slice(0, integerLimit + (numberOfThousandSeparators * thousandsSeparatorSymbolLength))

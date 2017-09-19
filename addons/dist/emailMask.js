@@ -1,1 +1,250 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.emailMask=t():e.emailMask=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var u=n[r]={exports:{},id:r,loaded:!1};return e[r].call(u.exports,u,u.exports,t),u.loaded=!0,u.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){e.exports=n(3)},,,function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function u(e,t){e=e.replace(y,h);var n=t.placeholderChar,r=t.currentCaretPosition,u=e.indexOf(x),s=e.lastIndexOf(d),f=s<u?-1:s,p=o(e,u+1,x),g=o(e,f-1,d),v=c(e,u,n),m=i(e,u,f,n),O=a(e,f,n,r);v=l(v),m=l(m),O=l(O,!0);var b=v.concat(p).concat(m).concat(g).concat(O);return b}function o(e,t,n){var r=[];return e[t]===n?r.push(n):r.push(g,n),r.push(g),r}function c(e,t){return t===-1?e:e.slice(0,t)}function i(e,t,n,r){var u=h;return t!==-1&&(u=n===-1?e.slice(t+1,e.length):e.slice(t+1,n)),u=u.replace(new RegExp("[\\s"+r+"]",m),h),u===x?p:u.length<1?v:u[u.length-1]===d?u.slice(0,u.length-1):u}function a(e,t,n,r){var u=h;return t!==-1&&(u=e.slice(t+1,e.length)),u=u.replace(new RegExp("[\\s"+n+".]",m),h),0===u.length?e[t-1]===d&&r!==e.length?p:h:u}function l(e,t){return e.split(h).map(function(e){return e===v?e:t?b:O})}Object.defineProperty(t,"__esModule",{value:!0});var s=n(4),f=r(s),p="*",d=".",h="",x="@",g="[]",v=" ",m="g",O=/[^\s]/,b=/[^.\s]/,y=/\s/g;t.default={mask:u,pipe:f.default}},function(e,t){"use strict";function n(e,t){var n=t.currentCaretPosition,o=t.rawValue,p=t.previousConformedValue,d=t.placeholderChar,h=e;h=r(h);var x=h.indexOf(i),g=null===o.match(new RegExp("[^@\\s."+d+"]"));if(g)return c;if(h.indexOf(l)!==-1||x!==-1&&n!==x+1||o.indexOf(u)===-1&&p!==c&&o.indexOf(a)!==-1)return!1;var v=h.indexOf(u),m=h.slice(v+1,h.length);return(m.match(f)||s).length>1&&h.substr(-1)===a&&n!==o.length&&(h=h.slice(0,h.length-1)),h}function r(e){var t=0;return e.replace(o,function(){return t++,1===t?u:c})}Object.defineProperty(t,"__esModule",{value:!0}),t.default=n;var u="@",o=/@/g,c="",i="@.",a=".",l="..",s=[],f=/\./g}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["emailMask"] = factory();
+	else
+		root["emailMask"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(3);
+
+
+/***/ }),
+/* 1 */,
+/* 2 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _emailPipe = __webpack_require__(4);
+
+	var _emailPipe2 = _interopRequireDefault(_emailPipe);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var asterisk = '*';
+	var dot = '.';
+	var emptyString = '';
+	var atSymbol = '@';
+	var caretTrap = '[]';
+	var space = ' ';
+	var g = 'g';
+	var anyNonWhitespaceRegExp = /[^\s]/;
+	var anyNonDotOrWhitespaceRegExp = /[^.\s]/;
+	var allWhitespaceRegExp = /\s/g;
+
+	function emailMask(rawValue, config) {
+	  rawValue = rawValue.replace(allWhitespaceRegExp, emptyString);
+
+	  var placeholderChar = config.placeholderChar,
+	      currentCaretPosition = config.currentCaretPosition;
+
+	  var indexOfFirstAtSymbol = rawValue.indexOf(atSymbol);
+	  var indexOfLastDot = rawValue.lastIndexOf(dot);
+	  var indexOfTopLevelDomainDot = indexOfLastDot < indexOfFirstAtSymbol ? -1 : indexOfLastDot;
+
+	  var localPartToDomainConnector = getConnector(rawValue, indexOfFirstAtSymbol + 1, atSymbol);
+	  var domainNameToTopLevelDomainConnector = getConnector(rawValue, indexOfTopLevelDomainDot - 1, dot);
+
+	  var localPart = getLocalPart(rawValue, indexOfFirstAtSymbol, placeholderChar);
+	  var domainName = getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar);
+	  var topLevelDomain = getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition);
+
+	  localPart = convertToMask(localPart);
+	  domainName = convertToMask(domainName);
+	  topLevelDomain = convertToMask(topLevelDomain, true);
+
+	  var mask = localPart.concat(localPartToDomainConnector).concat(domainName).concat(domainNameToTopLevelDomainConnector).concat(topLevelDomain);
+
+	  return mask;
+	}
+
+	function getConnector(rawValue, indexOfConnection, connectionSymbol) {
+	  var connector = [];
+
+	  if (rawValue[indexOfConnection] === connectionSymbol) {
+	    connector.push(connectionSymbol);
+	  } else {
+	    connector.push(caretTrap, connectionSymbol);
+	  }
+
+	  connector.push(caretTrap);
+
+	  return connector;
+	}
+
+	function getLocalPart(rawValue, indexOfFirstAtSymbol) {
+	  if (indexOfFirstAtSymbol === -1) {
+	    return rawValue;
+	  } else {
+	    return rawValue.slice(0, indexOfFirstAtSymbol);
+	  }
+	}
+
+	function getDomainName(rawValue, indexOfFirstAtSymbol, indexOfTopLevelDomainDot, placeholderChar) {
+	  var domainName = emptyString;
+
+	  if (indexOfFirstAtSymbol !== -1) {
+	    if (indexOfTopLevelDomainDot === -1) {
+	      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, rawValue.length);
+	    } else {
+	      domainName = rawValue.slice(indexOfFirstAtSymbol + 1, indexOfTopLevelDomainDot);
+	    }
+	  }
+
+	  domainName = domainName.replace(new RegExp('[\\s' + placeholderChar + ']', g), emptyString);
+
+	  if (domainName === atSymbol) {
+	    return asterisk;
+	  } else if (domainName.length < 1) {
+	    return space;
+	  } else if (domainName[domainName.length - 1] === dot) {
+	    return domainName.slice(0, domainName.length - 1);
+	  } else {
+	    return domainName;
+	  }
+	}
+
+	function getTopLevelDomain(rawValue, indexOfTopLevelDomainDot, placeholderChar, currentCaretPosition) {
+	  var topLevelDomain = emptyString;
+
+	  if (indexOfTopLevelDomainDot !== -1) {
+	    topLevelDomain = rawValue.slice(indexOfTopLevelDomainDot + 1, rawValue.length);
+	  }
+
+	  topLevelDomain = topLevelDomain.replace(new RegExp('[\\s' + placeholderChar + '.]', g), emptyString);
+
+	  if (topLevelDomain.length === 0) {
+	    return rawValue[indexOfTopLevelDomainDot - 1] === dot && currentCaretPosition !== rawValue.length ? asterisk : emptyString;
+	  } else {
+	    return topLevelDomain;
+	  }
+	}
+
+	function convertToMask(str, noDots) {
+	  return str.split(emptyString).map(function (char) {
+	    return char === space ? char : noDots ? anyNonDotOrWhitespaceRegExp : anyNonWhitespaceRegExp;
+	  });
+	}
+
+	exports.default = { mask: emailMask, pipe: _emailPipe2.default };
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = emailPipe;
+	var atSymbol = '@';
+	var allAtSymbolsRegExp = /@/g;
+	var emptyString = '';
+	var atDot = '@.';
+	var dot = '.';
+	var dotDot = '..';
+	var emptyArray = [];
+	var allDotsRegExp = /\./g;
+
+	function emailPipe(conformedValue, config) {
+	  var currentCaretPosition = config.currentCaretPosition,
+	      rawValue = config.rawValue,
+	      previousConformedValue = config.previousConformedValue,
+	      placeholderChar = config.placeholderChar;
+
+
+	  var value = conformedValue;
+
+	  value = removeAllAtSymbolsButFirst(value);
+
+	  var indexOfAtDot = value.indexOf(atDot);
+
+	  var emptyEmail = rawValue.match(new RegExp('[^@\\s.' + placeholderChar + ']')) === null;
+
+	  if (emptyEmail) {
+	    return emptyString;
+	  }
+
+	  if (value.indexOf(dotDot) !== -1 || indexOfAtDot !== -1 && currentCaretPosition !== indexOfAtDot + 1 || rawValue.indexOf(atSymbol) === -1 && previousConformedValue !== emptyString && rawValue.indexOf(dot) !== -1) {
+	    return false;
+	  }
+
+	  var indexOfAtSymbol = value.indexOf(atSymbol);
+	  var domainPart = value.slice(indexOfAtSymbol + 1, value.length);
+
+	  if ((domainPart.match(allDotsRegExp) || emptyArray).length > 1 && value.substr(-1) === dot && currentCaretPosition !== rawValue.length) {
+	    value = value.slice(0, value.length - 1);
+	  }
+
+	  return value;
+	}
+
+	function removeAllAtSymbolsButFirst(str) {
+	  var atSymbolCount = 0;
+
+	  return str.replace(allAtSymbolsRegExp, function () {
+	    atSymbolCount++;
+
+	    return atSymbolCount === 1 ? atSymbol : emptyString;
+	  });
+	}
+
+/***/ })
+/******/ ])
+});
+;
