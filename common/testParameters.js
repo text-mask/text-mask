@@ -1202,6 +1202,196 @@ export const noGuideMode = _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
+// export const noGuideKeepCharPositionsMode = _.filter((t) => false, [{
+export const noGuideKeepCharPositionsMode = _.filter((t) => t, [{
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '',
+  rawValue: '(',
+  currentCaretPosition: 1,
+
+  conformedValue: '(',
+  adjustedCaretPosition: 1
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '',
+  rawValue: '2',
+  currentCaretPosition: 1,
+
+  conformedValue: '(2',
+  adjustedCaretPosition: 2
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '(2',
+  rawValue: '(23',
+  currentCaretPosition: 3,
+
+  conformedValue: '(23',
+  adjustedCaretPosition: 3
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '(2',
+  rawValue: '(32',
+  currentCaretPosition: 2,
+
+  conformedValue: '(32',
+  adjustedCaretPosition: 2
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/],
+  previousConformedValue: '(234)',
+  rawValue: '(234)5',
+  currentCaretPosition: 6,
+
+  conformedValue: '(234) 5',
+  adjustedCaretPosition: 7
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '(',
+  rawValue: '(1',
+  currentCaretPosition: 2,
+
+  conformedValue: '(1',
+  adjustedCaretPosition: 2
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')'],
+  previousConformedValue: '(23',
+  rawValue: '(423',
+  currentCaretPosition: 2,
+
+  conformedValue: '(423)',
+  adjustedCaretPosition: 2
+
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
+  previousConformedValue: '(12',
+  rawValue: '(123',
+  currentCaretPosition: 4,
+
+  conformedValue: '(123) ',
+  adjustedCaretPosition: 6
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
+  previousConformedValue: '(123) ',
+  rawValue: '(123)',
+  currentCaretPosition: 5,
+
+  conformedValue: '(123',
+  adjustedCaretPosition: 4
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/],
+  previousConformedValue: '(987) 6_',
+  rawValue: '(9875) 6_',
+  currentCaretPosition: 5,
+
+  conformedValue: '(987) 6',
+  adjustedCaretPosition: 7
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '(987) 656-4938',
+  rawValue: '(987) 6565-4938',
+  currentCaretPosition: 10,
+
+  conformedValue: '(987) 656-4938',
+  adjustedCaretPosition: 11
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '(',
+  rawValue: '',
+  currentCaretPosition: 0,
+
+  conformedValue: '',
+  adjustedCaretPosition: 0
+}, {
+  line: getLineNumber(),
+
+  mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  previousConformedValue: '(1',
+  rawValue: '(',
+  currentCaretPosition: 1,
+
+  conformedValue: '',
+  adjustedCaretPosition: 0
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: [/\d/, /\d/, '/', /\d/, /\d/],
+  previousConformedValue: '',
+  rawValue: '_',
+  currentCaretPosition: 1,
+
+  conformedValue: '',
+  adjustedCaretPosition: 0
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: [/\d/, /\d/, '/', /\d/, /\d/],
+  previousConformedValue: '12/34',
+  rawValue: '1_/34',
+  currentCaretPosition: 1,
+
+  conformedValue: '1_/34',
+  adjustedCaretPosition: 2
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  mask: [/\d/, /\d/, '/', /\d/, /\d/],
+  previousConformedValue: '1_/34',
+  rawValue: '12_/34',
+  currentCaretPosition: 2,
+
+  conformedValue: '12/34',
+  adjustedCaretPosition: 3
+
+  // only: true
+}])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
 // export const acceptedCharInMask = _.filter((t) => false, [{
 export const acceptedCharInMask = _.filter((t) => t, [{
 // export const acceptedCharInMask = _.filter((t) => t.only, [{

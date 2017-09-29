@@ -17,6 +17,9 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
   const suppressGuide = guide === false && previousConformedValue !== undefined
 
+  // Check whether the user wants to keep char positions
+  const enableKeepCharPositions = keepCharPositions === true
+
   // Calculate lengths once for performance
   const rawValueLength = rawValue.length
   const previousConformedValueLength = previousConformedValue.length
@@ -105,12 +108,20 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
         while (rawValueArr.length > 0) {
           // Let's retrieve the first user character in the queue of characters we have left
           const {char: rawValueChar, isNew} = rawValueArr.shift()
+          const isLastRawValueChar = rawValueArr.length === 0
 
           // If the character we got from the user input is a placeholder character (which happens
           // regularly because user input could be something like (540) 90_-____, which includes
           // a bunch of `_` which are placeholder characters) and we are not in *no guide* mode,
-          // then we map this placeholder character to the current spot in the placeholder
-          if (rawValueChar === placeholderChar && suppressGuide !== true) {
+          // then we map this placeholder character to the current spot in the placeholder.
+          //
+          // An exception to this is the combination of *no guide* mode with keepCharPositions.
+          // In this case, editing something _within_ the value (so not at the end) still acts
+          // as if the guide is enabled, meaning that this mapping must still be applied.
+          if (
+            rawValueChar === placeholderChar &&
+            (!suppressGuide || (enableKeepCharPositions && !isLastRawValueChar))
+          ) {
             conformedValue += placeholderChar
 
             // And we go to find the next placeholder character that needs filling
@@ -123,10 +134,10 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
             // If any of the conditions below are met, we simply map the raw value character to the
             // placeholder position.
             if (
-              keepCharPositions !== true ||
+              !enableKeepCharPositions ||
               isNew === false ||
               previousConformedValue === emptyString ||
-              guide === false ||
+              (guide === false && !enableKeepCharPositions) ||
               !isAddition
             ) {
               conformedValue += rawValueChar
@@ -165,7 +176,16 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
                 conformedValue += rawValueChar
                 rawValueArr.splice(indexOfNextAvailablePlaceholderChar, 1)
 
-              // If `indexOfNextAvailablePlaceholderChar` is `null`, that means the character is blocked. We have to
+              // If `indexOfNextAvailablePlaceholderChar` is `null` and we are in *no guide* mode, check if
+              // there is still place to add the character (measured against the mask's length). If yes,
+              // just insert the character.
+              } else if (
+                guide === false &&
+                (!isAddition || (isAddition && previousConformedValue.length + editDistance <= placeholderLength))
+              ) {
+                conformedValue += rawValueChar
+
+              // Otherwise, there is no space to fit the character, which means that it is blocked. We have to
               // discard it.
               } else {
                 i--

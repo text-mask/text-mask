@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import testParameters, {
   noGuideMode,
+  noGuideKeepCharPositionsMode,
   acceptedCharInMask,
   escapedMaskChar
 } from './../../common/testParameters.js'
@@ -74,6 +75,31 @@ describe('conformToMask', () => {
             test.mask,
             {
               guide: false,
+              previousConformedValue: test.previousConformedValue,
+              placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+              currentCaretPosition: test.currentCaretPosition
+            }
+          ).conformedValue).to.equal(test.conformedValue)
+        }
+      })
+    )
+  })
+
+  describe('No guide mode + keep char positions', () => {
+    dynamicTests(
+      noGuideKeepCharPositionsMode,
+
+      (test) => ({
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it outputs '${test.conformedValue}'`,
+
+        body: () => {
+          expect(conformToMask(
+            test.rawValue,
+            test.mask,
+            {
+              guide: false,
+              keepCharPositions: true,
               previousConformedValue: test.previousConformedValue,
               placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
               currentCaretPosition: test.currentCaretPosition
