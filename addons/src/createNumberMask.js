@@ -26,7 +26,7 @@ export default function createNumberMask({
   const suffixLength = suffix && suffix.length || 0
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
-  function numberMask(rawValue = emptyString) {
+  function numberMask(rawValue = emptyString, config = {}) {
     const rawValueLength = rawValue.length
 
     if (
@@ -38,7 +38,9 @@ export default function createNumberMask({
       rawValue === decimalSymbol &&
       allowDecimal
     ) {
-      return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
+      const previousValue = config instanceof Object ? config.previousConformedValue : undefined
+      const lastMask = previousValue && previousValue !== emptyString ? caretTrap : digitRegExp
+      return prefix.split(emptyString).concat(['0', decimalSymbol, lastMask]).concat(suffix.split(emptyString))
     }
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
