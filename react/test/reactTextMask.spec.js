@@ -253,9 +253,9 @@ describe('MaskedInput', () => {
     expect(renderedDOMComponent.value).to.equal('abc')
   })
 
-  it('calls textMaskInputElement.update and props.onChange when an input event is received', () => {
+  it('calls textMaskInputElement.update and props.onChange when a change event is received', () => {
     const onChangeSpy = sinon.spy((event) => {
-      expect(event.key).to.equal('a')
+      expect(event.target.value).to.equal('123')
     })
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput
@@ -266,7 +266,7 @@ describe('MaskedInput', () => {
     )
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     maskedInput.textMaskInputElement.update = sinon.spy(() => {})
-    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: 'a', keyCode: 65, which: 65})
+    ReactTestUtils.Simulate.change(renderedDOMComponent, {target: {value: '123'}})
     expect(onChangeSpy.callCount).to.equal(1)
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
@@ -281,7 +281,7 @@ describe('MaskedInput', () => {
     const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
     maskedInput.textMaskInputElement.update = sinon.spy(() => {})
 
-    ReactTestUtils.Simulate.input(renderedDOMComponent, {key: 'a', keyCode: 65, which: 65})
+    ReactTestUtils.Simulate.change(renderedDOMComponent, {target: {value: '456'}})
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
 
