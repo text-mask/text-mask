@@ -87,9 +87,9 @@ set to `true`.
 ```js
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
-const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy')
+const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
 // As you can see in the line above, you can pass a string argument to `createAutoCorrectedDatePipe` 
-// to give it the order of day, month, and year in your `mask`.
+// to give it the order of day, month, year, hour and minute in your `mask`.
 
 // ...now you can pass `autoCorrectedDatePipe` to the Text Mask component as the `pipe`
 ```
