@@ -50,7 +50,7 @@ export default function adjustCaretPosition({
   // positioning.
   const possiblyHasRejectedChar = isAddition && (
     previousConformedValue === conformedValue ||
-    conformedValue === placeholder
+    (conformedValue === placeholder && !placeholder.includes('0'))
   )
 
   let startingSearchIndex = 0
