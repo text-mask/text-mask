@@ -38,7 +38,7 @@ export default function createNumberMask({
       rawValue === decimalSymbol &&
       allowDecimal
     ) {
-      return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
+      return prefix.split(emptyString).concat(['0', decimalSymbol, caretTrap]).concat(suffix.split(emptyString))
     }
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
