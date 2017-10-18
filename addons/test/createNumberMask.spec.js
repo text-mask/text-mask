@@ -104,19 +104,19 @@ describe('createNumberMask', () => {
 
   it('starts with dot should be considered as decimal input', () => {
     let numberMask = createNumberMask({prefix: '$', allowDecimal: true})
-    expect(numberMask('.')).to.deep.equal(['$', '0', '.', /\d/])
+    expect(numberMask('.')).to.deep.equal(['$', '0', '.', '[]'])
 
     numberMask = createNumberMask({prefix: '#', allowDecimal: true})
-    expect(numberMask('.')).to.deep.equal(['#', '0', '.', /\d/])
+    expect(numberMask('.')).to.deep.equal(['#', '0', '.', '[]'])
 
     numberMask = createNumberMask({prefix: '', allowDecimal: true})
-    expect(numberMask('.')).to.deep.equal(['0', '.', /\d/])
+    expect(numberMask('.')).to.deep.equal(['0', '.', '[]'])
 
     numberMask = createNumberMask({allowDecimal: false})
     expect(numberMask('.')).to.deep.equal(['$'])
 
     numberMask = createNumberMask({prefix: '', suffix: '$', allowDecimal: true})
-    expect(numberMask('.')).to.deep.equal(['0', '.', /\d/, '$'])
+    expect(numberMask('.')).to.deep.equal(['0', '.', '[]', '$'])
   })
 
   it('can allow leading zeroes', function() {
