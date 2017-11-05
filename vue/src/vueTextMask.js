@@ -57,18 +57,26 @@ export default {
   },
 
   mounted() {
-    this.bind()
+    this.initMask()
   },
 
   methods: {
     createTextMaskInputElement,
 
-    bind() {
+    setTextMaskInputElement() {
       this.textMaskInputElement = this.createTextMaskInputElement({
         inputElement: this.$refs.input,
         ...this.$options.propsData
       })
+    },
 
+    initMask() {
+      this.setTextMaskInputElement()
+      this.textMaskInputElement.update(this.value)
+    },
+
+    bind() {
+      this.setTextMaskInputElement()
       this.updateValue(this.value)
     },
 
