@@ -41,14 +41,9 @@ export default function createNumberMask({
       return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
     }
 
-    const isNegative = (rawValue[0] === minus) && allowNegative
-    //If negative remove "-" sign
-    if(isNegative) {
-      rawValue = rawValue.toString().substr(1)
-    }
-
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
     const hasDecimal = indexOfLastDecimal !== -1
+    const isNegative = (rawValue[0] === minus) && allowNegative
 
     let integer
     let fraction
