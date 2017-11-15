@@ -8,6 +8,15 @@ export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
   multi: true
 }
 
+export class TextMaskConfig {
+  mask: (string | RegExp)[] | Function
+  guide?: boolean
+  placeholderChar?: string
+  pipe?: Function
+  keepCharPositions?: boolean
+  showMask?: boolean
+}
+
 @Directive({
   host: {
     '(input)': 'onInput($event.target.value)',
@@ -25,18 +34,19 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   private lastValue: any
 
   @Input('textMask')
-  textMaskConfig = {
+  textMaskConfig: TextMaskConfig = {
     mask: [],
     guide: true,
     placeholderChar: '_',
     pipe: undefined,
     keepCharPositions: false,
+    showMask: false,
   }
 
-  _onTouched = () => {}
-  _onChange = (_: any) => {}
+  _onTouched = () => { }
+  _onChange = (_: any) => { }
 
-  constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) {}
+  constructor( @Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.setupMask(true)
