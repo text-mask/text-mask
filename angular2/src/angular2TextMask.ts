@@ -15,6 +15,7 @@ export class TextMaskConfig {
   pipe?: Function
   keepCharPositions?: boolean
   showMask?: boolean
+  indexOfChildElementToMask?: number
 }
 
 @Directive({
@@ -41,6 +42,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
     pipe: undefined,
     keepCharPositions: false,
     showMask: false,
+    indexOfChildElementToMask: 0,
   }
 
   _onTouched = () => { }
@@ -74,13 +76,13 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   setDisabledState(isDisabled: boolean) {
     this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled)
   }
-  
+
   onInput(value) {
     this.setupMask()
 
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
-      
+
       // get the updated value
       value = this.inputElement.value
 
@@ -99,16 +101,18 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
         this.inputElement = this.element.nativeElement
       } else {
         // `textMask` directive is used on an abstracted input element, `md-input-container`, etc
-        this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
+        // The default is to mask the first input element found, but it can be configured using the indexOfChildElementToMask config value
+        const childElementToMask = this.textMaskConfig.indexOfChildElementToMask ? this.textMaskConfig.indexOfChildElementToMask : 0
+        this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[childElementToMask]
       }
     }
-    
+
     if (this.inputElement && create) {
       this.textMaskInputElement = createTextMaskInputElement(
-        Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+        Object.assign({ inputElement: this.inputElement }, this.textMaskConfig)
       )
     }
-    
+
   }
 }
 
@@ -116,6 +120,6 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   declarations: [MaskedInputDirective],
   exports: [MaskedInputDirective]
 })
-export class TextMaskModule {}
+export class TextMaskModule { }
 
 export { conformToMask } from 'text-mask-core/dist/textMaskCore'
