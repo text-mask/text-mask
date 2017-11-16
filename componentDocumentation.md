@@ -7,7 +7,8 @@
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
   * [`showMask`](#showmask) (boolean)
-  * [`indexOfChildElementToMask`](#indexofchildelementtomask) (number)
+  * Additional value available in the angular2 version
+    * [`indexOfChildElementToMask`](#indexofchildelementtomask) (number)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
@@ -198,8 +199,9 @@ which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/
 `showMask` is a boolean that tells the Text Mask component to display the mask as a
 placeholder in place of the regular placeholder when the input element value is empty.
 
+## Extra configuration option available in the angular2 version
 
-## `indexOfChildElementToMask`
+### `indexOfChildElementToMask`
 
 `indexOfChildElementToMask` is a number that tells the Text mask directive which child
 input to apply the mask to. This can be used if you apply the directive to an element that
