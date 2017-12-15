@@ -20,13 +20,15 @@ export default function createNumberMask({
   requireDecimal = false,
   allowNegative = false,
   allowLeadingZeroes = false,
-  integerLimit = null
+  integerLimit = null,
+  maxValue = Number.POSITIVE_INFINITY,
+  minValue = Number.NEGATIVE_INFINITY
 } = {}) {
   const prefixLength = prefix && prefix.length || 0
   const suffixLength = suffix && suffix.length || 0
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
 
-  function numberMask(rawValue = emptyString) {
+  function numberMask(rawValue = emptyString, metaData) {
     const rawValueLength = rawValue.length
 
     if (
@@ -51,6 +53,7 @@ export default function createNumberMask({
     const hasDecimal = indexOfLastDecimal !== -1
 
     let integer
+    let rawFraction
     let fraction
     let mask
 
@@ -62,8 +65,8 @@ export default function createNumberMask({
     if (hasDecimal && (allowDecimal || requireDecimal)) {
       integer = rawValue.slice(rawValue.slice(0, prefixLength) === prefix ? prefixLength : 0, indexOfLastDecimal)
 
-      fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
-      fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
+      rawFraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
+      fraction = convertToMask(rawFraction.replace(nonDigitsRegExp, emptyString))
     } else {
       if (rawValue.slice(0, prefixLength) === prefix) {
         integer = rawValue.slice(prefixLength)
@@ -83,6 +86,13 @@ export default function createNumberMask({
 
     if (!allowLeadingZeroes) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1')
+    }
+    
+    var value = parseFloat(integer + '.' + rawFraction);
+    if (value > maxValue) {
+      return numberMask(metaData.previousConformedValue);
+    } else if (value < minValue) {
+      return numberMask(metaData.previousConformedValue);
     }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
