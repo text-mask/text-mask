@@ -87,12 +87,12 @@ export default function createNumberMask({
     if (!allowLeadingZeroes) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1')
     }
-    
-    var value = parseFloat(integer + '.' + rawFraction);
+
+    var value = parseFloat(integer + '.' + rawFraction)
     if (value > maxValue) {
-      return numberMask(metaData.previousConformedValue);
+      return numberMask(metaData.previousConformedValue)
     } else if (value < minValue) {
-      return numberMask(metaData.previousConformedValue);
+      return numberMask(metaData.previousConformedValue)
     }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
