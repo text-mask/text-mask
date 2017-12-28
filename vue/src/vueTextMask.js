@@ -92,9 +92,9 @@ export default {
   },
 
   watch: {
-    mask(newMask) {
+    mask(newMask, oldMask) {
       // Check if the mask has changed (Vue cannot detect whether an array has changed)
-      if (this.mask !== newMask) {
+      if (this.mask !== oldMask) {
         this.bind()
       }
     },
