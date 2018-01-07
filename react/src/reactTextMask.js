@@ -4,6 +4,12 @@ import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement'
 
 export default class MaskedInput extends React.Component {
+  constructor(...args) {
+    super(...args)
+
+    this.onChange = this.onChange.bind(this)
+  }
+
   initTextMask() {
     const {props, props: {value}} = this
 
@@ -37,7 +43,7 @@ export default class MaskedInput extends React.Component {
     return (
       <input
         {...props}
-        onChange={event => this.onChange(event)}
+        onChange={this.onChange}
         defaultValue={this.props.value}
         ref={(inputElement) => (this.inputElement = inputElement)}
       />
