@@ -233,6 +233,20 @@ describe('inputMask', () => {
     expect(vm.emitEvent.getCall(1).args[0].type).to.equal('blur')
   })
 
+  it('does not emit "input" event after component mount', () => {
+    let isEmitted = false
+    const Ctor = Vue.extend(maskedInput)
+    const vm = new Ctor({
+      propsData: {
+        mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+      }
+    })
+    vm.$on('input', data => { isEmitted = true })
+    vm.$mount()
+
+    expect(isEmitted).to.equal(false)
+  })
+
   it('emits keypress event for parent components', () => {
     const vm = mountComponent(maskedInput, {
       value: '123',
