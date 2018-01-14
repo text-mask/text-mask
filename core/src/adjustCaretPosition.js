@@ -4,10 +4,12 @@ const emptyString = ''
 export default function adjustCaretPosition({
   previousConformedValue = emptyString,
   previousPlaceholder = emptyString,
+  previousPlaceholderCharPositions,
   currentCaretPosition = 0,
   conformedValue,
   rawValue,
   placeholderChar,
+  placeholderCharPositions,
   placeholder,
   indexesOfPipedChars = defaultArray,
   caretTrapIndexes = defaultArray
@@ -87,7 +89,7 @@ export default function adjustCaretPosition({
     const previousLeftMaskChars = previousPlaceholder
       .substr(0, intersection.length)
       .split(emptyString)
-      .filter(char => char !== placeholderChar)
+      .filter((_, i) => !previousPlaceholderCharPositions[i])
       .length
 
     // Calculate the number of mask characters in the current placeholder
@@ -95,7 +97,7 @@ export default function adjustCaretPosition({
     const leftMaskChars = placeholder
       .substr(0, intersection.length)
       .split(emptyString)
-      .filter(char => char !== placeholderChar)
+      .filter((_, i) => !placeholderCharPositions[i])
       .length
 
     // Has the number of mask characters up to the caret changed?
@@ -105,7 +107,7 @@ export default function adjustCaretPosition({
     const targetIsMaskMovingLeft = (
       previousPlaceholder[intersection.length - 1] !== undefined &&
       placeholder[intersection.length - 2] !== undefined &&
-      previousPlaceholder[intersection.length - 1] !== placeholderChar &&
+      !previousPlaceholderCharPositions[intersection.length - 1] &&
       previousPlaceholder[intersection.length - 1] !== placeholder[intersection.length - 1] &&
       previousPlaceholder[intersection.length - 1] === placeholder[intersection.length - 2]
     )
@@ -143,7 +145,7 @@ export default function adjustCaretPosition({
     // We need to know if the placeholder contains characters that look like
     // our `targetChar`, so we don't select one of those by mistake.
     const countTargetCharInPlaceholder = placeholder
-      .substr(0, placeholder.indexOf(placeholderChar))
+      .substr(0, placeholderCharPositions.indexOf(true))
       .split(emptyString)
       .filter((char, index) => (
         // Check if `char` is the same as our `targetChar`, so we account for it
@@ -200,13 +202,13 @@ export default function adjustCaretPosition({
     let lastPlaceholderChar = startingSearchIndex
 
     for (let i = startingSearchIndex; i <= placeholderLength; i++) {
-      if (placeholder[i] === placeholderChar) {
+      if (placeholderCharPositions[i]) {
         lastPlaceholderChar = i
       }
 
       if (
         // If we're adding, we can position the caret at the next placeholder character.
-        placeholder[i] === placeholderChar ||
+        placeholderCharPositions[i] ||
 
         // If a caret trap was set by a mask function, we need to stop at the trap.
         caretTrapIndexes.indexOf(i) !== -1 ||
@@ -252,7 +254,7 @@ export default function adjustCaretPosition({
 
         if (
           // If we're deleting, we can position the caret right before the placeholder character
-          placeholder[i - 1] === placeholderChar ||
+          placeholderCharPositions[i - 1] ||
 
           // If a caret trap was set by a mask function, we need to stop at the trap.
           caretTrapIndexes.indexOf(i) !== -1 ||

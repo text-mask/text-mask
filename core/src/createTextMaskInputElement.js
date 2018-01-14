@@ -18,7 +18,11 @@ const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFra
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
+  const state = {
+    previousConformedValue: undefined,
+    previousPlaceholder: undefined,
+    previousPlaceholderCharPositions: undefined
+  }
 
   return {
     state,
@@ -78,7 +82,7 @@ export default function createTextMaskInputElement(config) {
       const {selectionEnd: currentCaretPosition} = inputElement
 
       // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
-      const {previousConformedValue, previousPlaceholder} = state
+      const {previousConformedValue, previousPlaceholder, previousPlaceholderCharPositions} = state
 
       let caretTrapIndexes
 
@@ -154,11 +158,13 @@ export default function createTextMaskInputElement(config) {
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
         previousPlaceholder,
+        previousPlaceholderCharPositions,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
+        placeholderCharPositions,
         indexesOfPipedChars: pipeResults.indexesOfPipedChars,
         caretTrapIndexes
       })
@@ -170,6 +176,7 @@ export default function createTextMaskInputElement(config) {
 
       state.previousConformedValue = inputElementValue // store value for access for next time
       state.previousPlaceholder = placeholder
+      state.previousPlaceholderCharPositions = placeholderCharPositions
 
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.
