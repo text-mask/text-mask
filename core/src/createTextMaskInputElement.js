@@ -35,6 +35,7 @@ export default function createTextMaskInputElement(config) {
       mask: providedMask,
       guide,
       pipe,
+      placeholder: providedPlaceholder,
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false,
       showMask = false
@@ -58,15 +59,15 @@ export default function createTextMaskInputElement(config) {
 
       // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
       // be `(___)` if the `placeholderChar` is set to `_`.
-      let placeholder
+      let placeholder = providedPlaceholder
 
       // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
       // have to call that function to get the mask array.
       let mask
 
-      // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
-      // correct `placeholder`.
-      if (providedMask instanceof Array) {
+      // If we don't have a provided placeholder, and the provided mask is an array,
+      // we can call `convertMaskToPlaceholder` here once and we'll always have the correct `placeholder`.
+      if (!providedPlaceholder && providedMask instanceof Array) {
         placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
       }
 
@@ -102,7 +103,9 @@ export default function createTextMaskInputElement(config) {
         mask = maskWithoutCaretTraps // The processed mask is what we're interested in
         caretTrapIndexes = indexes // And we need to store these indexes because they're needed by `adjustCaretPosition`
 
-        placeholder = convertMaskToPlaceholder(mask, placeholderChar)
+        if (!providedPlaceholder) {
+          placeholder = convertMaskToPlaceholder(mask, placeholderChar)
+        }
 
       // If the `providedMask` is not a function, we just use it as-is.
       } else {
