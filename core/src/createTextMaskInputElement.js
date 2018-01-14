@@ -57,6 +57,20 @@ export default function createTextMaskInputElement(config) {
         providedMask = providedMask.mask
       }
 
+      if (providedPlaceholder &&
+        typeof providedMask !== strFunction &&
+        providedPlaceholder.length !== providedMask.length
+      ) {
+        throw new Error(
+          'The mask array does not have the same length as the placeholder.\n' +
+          'When providing a placeholder, must it always be the same length as the mask.\n\n' +
+          'The placeholder that was received is:' +
+          `${JSON.stringify(providedPlaceholder)} (length: ${providedPlaceholder.length})\n\n` +
+          'The mask array that was received is:' +
+          `${JSON.stringify(providedMask)} (length: ${providedMask.length})`
+        )
+      }
+
       // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
       // be `(___)` if the `placeholderChar` is set to `_`.
       let placeholder = providedPlaceholder
@@ -102,6 +116,17 @@ export default function createTextMaskInputElement(config) {
 
         mask = maskWithoutCaretTraps // The processed mask is what we're interested in
         caretTrapIndexes = indexes // And we need to store these indexes because they're needed by `adjustCaretPosition`
+
+        if (providedPlaceholder && providedPlaceholder.length !== mask.length) {
+          throw new Error(
+            'The mask array returned from the mask function does not have the same length as the placeholder.\n' +
+            'When providing a placeholder, must it always be the same length as the mask.\n\n' +
+            'The placeholder that was received is:' +
+            `${JSON.stringify(providedPlaceholder)} (length: ${providedPlaceholder.length})\n\n` +
+            'The mask array returned from the mask function that was received is:' +
+            `${JSON.stringify(mask)} (length: ${mask.length})`
+          )
+        }
 
         if (!providedPlaceholder) {
           placeholder = convertMaskToPlaceholder(mask, placeholderChar)
