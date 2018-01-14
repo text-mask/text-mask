@@ -1,6 +1,12 @@
 import adjustCaretPosition from './adjustCaretPosition'
 import conformToMask from './conformToMask'
-import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities'
+import {
+  convertMaskToPlaceholder,
+  isString,
+  isNumber,
+  processCaretTraps,
+  findPlaceholderCharPositions
+} from './utilities'
 import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 const strFunction = 'function'
@@ -99,11 +105,15 @@ export default function createTextMaskInputElement(config) {
         mask = providedMask
       }
 
+      // Now that we have the final mask and placeholder, can we find the positions of the placeholder chars
+      const placeholderCharPositions = findPlaceholderCharPositions(placeholder, mask)
+
       // The following object will be passed to `conformToMask` to determine how the `rawValue` will be conformed
       const conformToMaskConfig = {
         previousConformedValue,
         guide,
         placeholderChar,
+        placeholderCharPositions,
         pipe,
         placeholder,
         currentCaretPosition,
