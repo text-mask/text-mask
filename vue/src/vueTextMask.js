@@ -21,7 +21,7 @@ export default {
 
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       required: false,
       default: ''
     },
@@ -73,7 +73,7 @@ export default {
 
     initMask() {
       this.setTextMaskInputElement()
-      this.textMaskInputElement.update(this.value)
+      this.textMaskInputElement.update(this.valueString())
     },
 
     bind() {
@@ -82,12 +82,16 @@ export default {
     },
 
     updateValue(value) {
-      this.textMaskInputElement.update(value)
+      this.textMaskInputElement.update(this.valueString())
       this.$emit('input', this.$refs.input.value)
     },
 
     emitEvent(event) {
       this.$emit(event.type, event)
+    },
+    
+    valueString(){
+      return (typeof this.value === 'number') ? this.value.toString : this.value;
     }
   },
 
