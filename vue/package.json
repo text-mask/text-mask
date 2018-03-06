@@ -1,6 +1,6 @@
 {
   "name": "vue-text-mask",
-  "version": "5.2.0",
+  "version": "6.0.0",
   "description": "Vue component for input masking",
   "main": "dist/vueTextMask.js",
   "author": "Bill Colmbia <hello@billcolumbia.com>",
