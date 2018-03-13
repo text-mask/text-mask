@@ -8,7 +8,7 @@ const nonDigitsRegExp = /\D+/g
 const number = 'number'
 const digitRegExp = /\d/
 const caretTrap = '[]'
-const zeroChar = '0';
+const zeroChar = '0'
 
 export default function createNumberMask({
   prefix = dollarSign,
@@ -108,12 +108,15 @@ export default function createNumberMask({
       }
 
       if(allowZeroFractionPadding && zeroFractionPaddingLimit > 0) {
-        const paddingLimit = zeroFractionPaddingLimit > decimalLimit ? decimalLimit : zeroFractionPaddingLimit;
+        const paddingLimit = zeroFractionPaddingLimit > decimalLimit 
+          ? decimalLimit 
+          : zeroFractionPaddingLimit
+
         for(var i = fraction && fraction.length || 0; i < paddingLimit; i++) {
-          if(!fraction || (typeof(fraction[i] !== number))) {
-            mask.push(zeroChar);
+          if(!fraction || (typeof fraction[i] !== number)) {
+            mask.push(zeroChar)
           } else {
-            mask.push(digitRegExp);
+            mask.push(digitRegExp)
           }
         }
       }

@@ -196,9 +196,10 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('1234567890,12345678'))
         .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
-    });
+    })
 
-    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true and zeroFractionPaddingLimit is a non-zero value greater than places provided', () => {
+    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true and \
+zeroFractionPaddingLimit is a non-zero value greater than places provided', () => {
       let numberMask = createNumberMask({
         prefix: '',
         thousandsSeparatorSymbol: '.',
@@ -208,11 +209,11 @@ describe('createNumberMask', () => {
         integerLimit: 5,
         decimalLimit: 3,
         allowZeroFractionPadding: true,
-        zeroFractionPaddingLimit: 2,        
+        zeroFractionPaddingLimit: 2,
       })
       expect(numberMask('1234567890,1'))
         .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, '0'])
-    });
+    })
 
     it('works when fraction length is less than zeroFractionPaddingLimit value', () => {
       let numberMask = createNumberMask({
@@ -220,13 +221,13 @@ describe('createNumberMask', () => {
         allowDecimal: true,
         requireDecimal: true,
         integerLimit: 5,
-        decimalLimit: 2,        
+        decimalLimit: 2,
         allowZeroFractionPadding: true,
         zeroFractionPaddingLimit: 2,
       })
       expect(numberMask('123.1'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, '0'])
-    });
+    })
 
     it('works when fraction length is greater than zeroFractionPaddingLimit value', () => {
       let numberMask = createNumberMask({
@@ -240,7 +241,7 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('123.13433'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
-    });
+    })
 
     it('works when decimalLimit is greater than zeroFractionPaddingLimit value', () => {
       let numberMask = createNumberMask({
@@ -248,13 +249,13 @@ describe('createNumberMask', () => {
         allowDecimal: true,
         requireDecimal: true,
         integerLimit: 5,
-        decimalLimit: 3,        
+        decimalLimit: 3,
         allowZeroFractionPadding: true,
         zeroFractionPaddingLimit: 2,
       })
       expect(numberMask('123.13433'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/, /\d/])
-    });
+    })
 
     it('works when decimalLimit is less than zeroFractionPaddingLimit value', () => {
       let numberMask = createNumberMask({
@@ -268,7 +269,7 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('123.13433'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/])
-    });
+    })
 
     it('works when requireDecimal is false and allowZeroFractionPadding is true', () => {
       let numberMask = createNumberMask({
@@ -282,9 +283,10 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('123.1'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, '0'])
-    });
+    })
 
-    it('works when requireDecimal is false and allowZeroFractionPadding is true and decimalLimit is less than zeroFractionPaddingLimit', () => {
+    it('works when requireDecimal is false and allowZeroFractionPadding is true and decimalLimit is less than \
+zeroFractionPaddingLimit', () => {
       let numberMask = createNumberMask({
         prefix: '',
         allowDecimal: true,
@@ -296,7 +298,7 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('123.1'))
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/])
-    });
+    })
 
     it('works when requireDecimal is false and allowZeroFractionPadding is true but no fraction is provided', () => {
       let numberMask = createNumberMask({
@@ -310,8 +312,8 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('123'))
         .to.deep.equal([/\d/, /\d/, /\d/])
-    });
-  });
+    })
+  })
 
   describe('numberMask default behavior', () => {
     let numberMask = null
