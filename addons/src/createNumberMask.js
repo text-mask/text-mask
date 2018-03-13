@@ -108,9 +108,9 @@ export default function createNumberMask({
       }
 
       if(allowZeroFractionPadding && zeroFractionPaddingLimit > 0) {
-        const paddingLimit = zeroFractionPaddingLimit > decimalLimit 
-          ? decimalLimit 
-          : zeroFractionPaddingLimit
+        const paddingLimit = zeroFractionPaddingLimit > decimalLimit ?
+          decimalLimit :
+          zeroFractionPaddingLimit
 
         for(var i = fraction && fraction.length || 0; i < paddingLimit; i++) {
           if(!fraction || (typeof fraction[i] !== number)) {

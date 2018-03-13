@@ -198,8 +198,8 @@ describe('createNumberMask', () => {
         .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
     })
 
-    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true and \
-zeroFractionPaddingLimit is a non-zero value greater than places provided', () => {
+    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true and ' +
+          'zeroFractionPaddingLimit is a non-zero value greater than places provided', () => {
       let numberMask = createNumberMask({
         prefix: '',
         thousandsSeparatorSymbol: '.',
@@ -285,8 +285,8 @@ zeroFractionPaddingLimit is a non-zero value greater than places provided', () =
         .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, '0'])
     })
 
-    it('works when requireDecimal is false and allowZeroFractionPadding is true and decimalLimit is less than \
-zeroFractionPaddingLimit', () => {
+    it('works when requireDecimal is false and allowZeroFractionPadding is true and decimalLimit is less than' +
+          'zeroFractionPaddingLimit', () => {
       let numberMask = createNumberMask({
         prefix: '',
         allowDecimal: true,
