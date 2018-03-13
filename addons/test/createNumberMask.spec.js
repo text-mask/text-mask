@@ -179,7 +179,7 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('1234567890,12345678'))
         .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
-    })    
+    })
   })
 
   describe('zero padding', () => {
