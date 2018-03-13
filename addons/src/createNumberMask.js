@@ -119,6 +119,8 @@ export default function createNumberMask({
             mask.push(digitRegExp)
           }
         }
+      } else if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
+        mask.push(digitRegExp);
       }
     }
 
