@@ -142,7 +142,7 @@ export default function createTextMaskInputElement(config) {
       // After determining the conformed value, we will need to know where to set
       // the caret position. `adjustCaretPosition` will tell us.
       const adjustedCaretPosition = adjustCaretPosition({
-        previousConformedValue,
+        previousConformedValue: safeRawValue === '.' ? '' : previousConformedValue,
         previousPlaceholder,
         conformedValue: finalConformedValue,
         placeholder,
