@@ -57,6 +57,12 @@ export default class MaskedInput extends React.Component {
       this.props.onChange(event)
     }
   }
+
+  onBlur(event) {
+    if (typeof this.props.onBlur === 'function') {
+      this.props.onBlur(event)
+    }
+  }
 }
 
 MaskedInput.propTypes = {
