@@ -1,9 +1,9 @@
 /* BEGIN-SNIPPET controller-mask-example */
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+const mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-
+export default Controller.extend({
+  mask: mask
 });
 /* END-SNIPPET */
