@@ -39,6 +39,7 @@
     "text-mask-core": "^5.0.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
