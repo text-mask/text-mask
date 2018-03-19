@@ -12,7 +12,7 @@ export default function adjustCaretPosition({
   indexesOfPipedChars = defaultArray,
   caretTrapIndexes = defaultArray
 }) {
-  if (currentCaretPosition === 0) { return 0 }
+  if (currentCaretPosition === 0 || !rawValue.length) { return 0 }
 
   // Store lengths for faster performance?
   const rawValueLength = rawValue.length
