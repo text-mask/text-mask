@@ -120,7 +120,7 @@ export default function createNumberMask({
           }
         }
       } else if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
-        mask.push(digitRegExp);
+        mask.push(digitRegExp)
       }
     }
 
