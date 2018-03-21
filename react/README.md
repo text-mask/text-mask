@@ -11,22 +11,20 @@ npm i react-text-mask --save
 Then, require it and use it.
 
 ```js
-var React = require('react')
-var MaskedInput = require('react-text-mask')
+import React from 'react'
+import MaskedInput from 'react-text-mask'
 
-var MyComponent = React.createClass({
-  render() {
-    return (
-      <div>
-        <MaskedInput mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} />
-      </div>
-    )
-  }
-})
+export default () => (
+  <div>
+    <MaskedInput
+      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+    />
+  </div>
+)
 ```
 
 `<MaskedInput/>` is fully compatible with `<input/>` element. So, you can
-pass to it CSS classes, a placeholder attribute, or whatever.
+pass it CSS classes, a placeholder attribute, or even an `onBlur` handler.
 
 For example, the following works:
 
@@ -37,6 +35,8 @@ For example, the following works:
   placeholder="Enter a phone number"
   guide={false}
   id="my-input-id"
+  onBlur={() => {}}
+  onChange={() => {}}
 />
 ```
 
