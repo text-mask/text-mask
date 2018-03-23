@@ -70,7 +70,7 @@ For example, to use with styled-components,
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   placeholder="Enter a phone number"
   id="my-input-id"
-  render={({ref, ...props}) => (
+  render={(ref, props) => (
     <MyStyledInput innerRef={ref} {...props} />
   )}
 />

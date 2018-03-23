@@ -42,11 +42,12 @@ export default class MaskedInput extends React.Component {
     delete props.onChange
     delete props.showMask
 
-    return render({
+    const ref = (inputElement) => (this.inputElement = inputElement)
+
+    return render(ref, {
       onBlur: this.onBlur,
       onChange: this.onChange,
       defaultValue: this.props.value,
-      ref: (inputElement) => (this.inputElement = inputElement),
       ...props
     })
   }
@@ -85,7 +86,7 @@ MaskedInput.propTypes = {
 }
 
 MaskedInput.defaultProps = {
-  render: ({ref, ...props}) => <input ref={ref} {...props} />
+  render: (ref, props) => <input ref={ref} {...props} />
 }
 
 export {default as conformToMask} from '../../core/src/conformToMask.js'
