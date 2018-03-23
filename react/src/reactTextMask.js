@@ -48,7 +48,7 @@ export default class MaskedInput extends React.Component {
       onBlur: this.onBlur,
       onChange: this.onChange,
       defaultValue: this.props.value,
-      ...props
+      ...props,
     })
   }
 

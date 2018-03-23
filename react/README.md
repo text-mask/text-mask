@@ -59,8 +59,8 @@ The code of the example is in [`react/example`](https://github.com/text-mask/tex
 
 ## Customize Rendered `<input>` Component
 
-For advanced uses, you can customize the rendering of the resultant `<input>` via render prop. This
-is entirely optional, if no `render` prop is passed, a normal `<input>` is rendered.
+For advanced uses, you can customize the rendering of the resultant `<input>` via a render prop.
+This is entirely optional, if no `render` prop is passed, a normal `<input>` is rendered.
 
 For example, to use with styled-components,
 [which requires an innerRef](https://www.styled-components.com/docs/advanced#refs):
