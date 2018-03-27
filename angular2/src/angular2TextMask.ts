@@ -83,12 +83,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
     }
   }
   
- protected setup() {
-    if (this.textMaskConfig.mask.length > 0)
-      this.setupMask();
-  } 
-  
-  private setupMask(create = false) {
+  protected setupMask(create = false) {
     if (!this.inputElement) {
       if (this.element.nativeElement.tagName === 'INPUT') {
         // `textMask` directive is used directly on an input element
