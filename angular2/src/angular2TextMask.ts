@@ -21,9 +21,6 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   private textMaskInputElement: any
   private inputElement: HTMLInputElement
 
-  // stores the last value for comparison
-  private lastValue: any
-
   @Input('textMask')
   textMaskConfig = {
     mask: [],
@@ -73,12 +70,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
       
       // get the updated value
       value = this.inputElement.value
-
-      // check against the last value to prevent firing ngModelChange despite no changes
-      if (this.lastValue !== value) {
-        this.lastValue = value
-        this._onChange(value)
-      }
+      this._onChange(value)
     }
   }
 
