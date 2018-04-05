@@ -30,7 +30,7 @@ export default class MaskedInput extends React.Component {
   }
 
   render() {
-    const props = {...this.props}
+    const {render, ...props} = this.props
 
     delete props.mask
     delete props.guide
@@ -42,15 +42,14 @@ export default class MaskedInput extends React.Component {
     delete props.onChange
     delete props.showMask
 
-    return (
-      <input
-        {...props}
-        onBlur={this.onBlur}
-        onChange={this.onChange}
-        defaultValue={this.props.value}
-        ref={(inputElement) => (this.inputElement = inputElement)}
-      />
-    )
+    const ref = (inputElement) => (this.inputElement = inputElement)
+
+    return render(ref, {
+      onBlur: this.onBlur,
+      onChange: this.onChange,
+      defaultValue: this.props.value,
+      ...props,
+    })
   }
 
   onChange(event) {
@@ -84,6 +83,10 @@ MaskedInput.propTypes = {
   placeholderChar: PropTypes.string,
   keepCharPositions: PropTypes.bool,
   showMask: PropTypes.bool,
+}
+
+MaskedInput.defaultProps = {
+  render: (ref, props) => <input ref={ref} {...props} />
 }
 
 export {default as conformToMask} from '../../core/src/conformToMask.js'
