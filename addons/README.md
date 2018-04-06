@@ -31,6 +31,7 @@ to Text Mask.
 after the integer. Defaults to `false`.
 1. `allowNegative` (boolean): whether or not to allow negative numbers. Defaults to `false`
 1. `allowLeadingZeroes` (boolean): whether or not to allow leading zeroes. Defaults to `false`
+1. `fixedDecimalScale` (boolean): whether or not to fixed decimal scale. Defaults to `false`
 
 #### Usage
 
