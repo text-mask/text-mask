@@ -65,38 +65,38 @@ describe('createAutoCorrectedDatePipe', () => {
       )
     })
 
-    it('returns false if hours 1st digit is 2 and 2nd digit is bigger than 4', () => {
-      expect(autoCorrectedDateTimePipe('12/31/9999 25')).to.equal(false)
+    it('returns false if hours 1st digit is 2 and 2nd digit is bigger than 3', () => {
+      expect(autoCorrectedDateTimePipe('12/31/9999 24')).to.equal(false)
     })
 
     it('completes the minutes if the 1st digit is bigger than 5 and returns `indexesOfPipedChars`', () => {
       expect(
-        autoCorrectedDateTimePipe('12/31/9999 24:5'))
-          .to.deep.equal({value: '12/31/9999 24:5', indexesOfPipedChars: []}
+        autoCorrectedDateTimePipe('12/31/9999 23:5'))
+          .to.deep.equal({value: '12/31/9999 23:5', indexesOfPipedChars: []}
       )
       expect(
-        autoCorrectedDateTimePipe('12/31/9999 24:6'))
-          .to.deep.equal({value: '12/31/9999 24:06', indexesOfPipedChars: [14]}
+        autoCorrectedDateTimePipe('12/31/9999 23:6'))
+          .to.deep.equal({value: '12/31/9999 23:06', indexesOfPipedChars: [14]}
       )
     })
 
     it('returns false if minutes 1st digit is 6 and 2nd digit is 0', () => {
-      expect(autoCorrectedDateTimePipe('12/31/9999 24:60')).to.equal(false)
+      expect(autoCorrectedDateTimePipe('12/31/9999 23:60')).to.equal(false)
     })
 
     it('completes the seconds if the 1st digit is bigger than 5 and returns `indexesOfPipedChars`', () => {
       expect(
-        autoCorrectedDateTimePipe('12/31/9999 24:59:5'))
-          .to.deep.equal({value: '12/31/9999 24:59:5', indexesOfPipedChars: []}
+        autoCorrectedDateTimePipe('12/31/9999 23:59:5'))
+          .to.deep.equal({value: '12/31/9999 23:59:5', indexesOfPipedChars: []}
       )
       expect(
-        autoCorrectedDateTimePipe('12/31/9999 24:59:6'))
-          .to.deep.equal({value: '12/31/9999 24:59:06', indexesOfPipedChars: [17]}
+        autoCorrectedDateTimePipe('12/31/9999 23:59:6'))
+          .to.deep.equal({value: '12/31/9999 23:59:06', indexesOfPipedChars: [17]}
       )
     })
 
     it('returns false if seconds 1st digit is 6 and 2nd digit is 0', () => {
-      expect(autoCorrectedDateTimePipe('12/31/9999 24:59:60')).to.equal(false)
+      expect(autoCorrectedDateTimePipe('12/31/9999 23:59:60')).to.equal(false)
     })
 
     it('returns unmodified partial entry if it could develop to correct date', () => {
