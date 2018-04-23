@@ -1,20 +1,18 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | input mask');
+module('Acceptance | input mask', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('masked-input works', function(assert) {
-  visit('/');
-  fillIn('.masked-input > input', '123');
-  andThen(function() {
+  test('masked-input works', async function(assert) {
+    await visit('/');
+    await fillIn('.masked-input > input', '123');
     assert.equal(find('span.output:first').text(), '(123) ___-____');
   });
-});
 
-test('does not allow masked characters', function(assert) {
-  visit('/');
-  fillIn('.masked-input > input', 'abc');
-  andThen(function() {
+  test('does not allow masked characters', async function(assert) {
+    await visit('/');
+    await fillIn('.masked-input > input', 'abc');
     assert.equal(find('span.output:first').text(), '(___) ___-____');
   });
 });

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { getProperties, get, computed } from '@ember/object';
+import { on } from '@ember/object/evented';
+import TextField from '@ember/component/text-field';
 import createTextMaskInputElement from 'ember-text-mask/createTextMaskInputElement';
-
-const { computed, get, getProperties, on, TextField } = Ember;
 
 function _config(...args) {
   return computed(...args, function () {
