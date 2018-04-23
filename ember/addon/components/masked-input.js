@@ -9,6 +9,8 @@ function _config(...args) {
   });
 }
 
+const mask = [];
+
 /*
 
   ## MaskedInputComponent
@@ -33,7 +35,7 @@ function _config(...args) {
 */
 export default TextField.extend({
 
-  mask: [],
+  mask,
 
   /*
     ## config {Object}
