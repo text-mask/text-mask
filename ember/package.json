@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/text-mask/text-mask/tree/master/ember/#readme",
   "dependencies": {
-    "broccoli-merge-trees": "^2.0.0",
+    "broccoli-merge-trees": "^3.0.0",
     "ember-cli-babel": "^6.6.0",
     "text-mask-core": "^5.0.0"
   },
