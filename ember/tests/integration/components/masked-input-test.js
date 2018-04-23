@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | masked input', function(hooks) {
@@ -8,15 +8,15 @@ module('Integration | Component | masked input', function(hooks) {
 
   test('it renders an input element', async function(assert) {
     await render(hbs`{{masked-input}}`);
-    assert.equal(this.$('input').length, 1);
+    assert.equal(findAll('input').length, 1);
   });
 
   test('placeholder attribute can be passed in', async function(assert) {
     await render(hbs`{{masked-input placeholder=placeholder}}`);
-    assert.ok( ! this.$('input').attr('placeholder') );
+    assert.ok(!find('input').getAttribute('placeholder') );
 
     this.set('placeholder', "Some Placeholder Text");
-    assert.equal(this.$('input').attr('placeholder'), 'Some Placeholder Text');
+    assert.equal(find('input').getAttribute('placeholder'), 'Some Placeholder Text');
   });
 
   test('mask is initialised on first render', async function(assert) {
