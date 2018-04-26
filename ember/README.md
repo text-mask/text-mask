@@ -19,9 +19,9 @@ Add the following markup to your template to render a masked input component.
 In the template's controller, specify a `mask`.
 
 ```js
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
