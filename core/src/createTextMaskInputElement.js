@@ -1,6 +1,12 @@
 import adjustCaretPosition from './adjustCaretPosition'
 import conformToMask from './conformToMask'
-import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities'
+import {
+  convertMaskToPlaceholder,
+  isString,
+  isNumber,
+  processCaretTraps,
+  findPlaceholderCharPositions
+} from './utilities'
 import {placeholderChar as defaultPlaceholderChar} from './constants'
 
 const strFunction = 'function'
@@ -12,7 +18,11 @@ const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFra
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
-  const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
+  const state = {
+    previousConformedValue: undefined,
+    previousPlaceholder: undefined,
+    previousPlaceholderCharPositions: undefined
+  }
 
   return {
     state,
@@ -25,6 +35,7 @@ export default function createTextMaskInputElement(config) {
       mask: providedMask,
       guide,
       pipe,
+      placeholder: providedPlaceholder,
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false,
       showMask = false
@@ -46,17 +57,31 @@ export default function createTextMaskInputElement(config) {
         providedMask = providedMask.mask
       }
 
+      if (providedPlaceholder &&
+        typeof providedMask !== strFunction &&
+        providedPlaceholder.length !== providedMask.length
+      ) {
+        throw new Error(
+          'The mask array does not have the same length as the placeholder.\n' +
+          'When providing a placeholder, must it always be the same length as the mask.\n\n' +
+          'The placeholder that was received is:' +
+          `${JSON.stringify(providedPlaceholder)} (length: ${providedPlaceholder.length})\n\n` +
+          'The mask array that was received is:' +
+          `${JSON.stringify(providedMask)} (length: ${providedMask.length})`
+        )
+      }
+
       // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
       // be `(___)` if the `placeholderChar` is set to `_`.
-      let placeholder
+      let placeholder = providedPlaceholder
 
       // We don't know what the mask would be yet. If it is an array, we take it as is, but if it's a function, we will
       // have to call that function to get the mask array.
       let mask
 
-      // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
-      // correct `placeholder`.
-      if (providedMask instanceof Array) {
+      // If we don't have a provided placeholder, and the provided mask is an array,
+      // we can call `convertMaskToPlaceholder` here once and we'll always have the correct `placeholder`.
+      if (!providedPlaceholder && providedMask instanceof Array) {
         placeholder = convertMaskToPlaceholder(providedMask, placeholderChar)
       }
 
@@ -72,7 +97,7 @@ export default function createTextMaskInputElement(config) {
       const {selectionEnd: currentCaretPosition} = inputElement
 
       // We need to know what the `previousConformedValue` and `previousPlaceholder` is from the previous `update` call
-      const {previousConformedValue, previousPlaceholder} = state
+      const {previousConformedValue, previousPlaceholder, previousPlaceholderCharPositions} = state
 
       let caretTrapIndexes
 
@@ -92,18 +117,35 @@ export default function createTextMaskInputElement(config) {
         mask = maskWithoutCaretTraps // The processed mask is what we're interested in
         caretTrapIndexes = indexes // And we need to store these indexes because they're needed by `adjustCaretPosition`
 
-        placeholder = convertMaskToPlaceholder(mask, placeholderChar)
+        if (providedPlaceholder && providedPlaceholder.length !== mask.length) {
+          throw new Error(
+            'The mask array returned from the mask function does not have the same length as the placeholder.\n' +
+            'When providing a placeholder, must it always be the same length as the mask.\n\n' +
+            'The placeholder that was received is:' +
+            `${JSON.stringify(providedPlaceholder)} (length: ${providedPlaceholder.length})\n\n` +
+            'The mask array returned from the mask function that was received is:' +
+            `${JSON.stringify(mask)} (length: ${mask.length})`
+          )
+        }
+
+        if (!providedPlaceholder) {
+          placeholder = convertMaskToPlaceholder(mask, placeholderChar)
+        }
 
       // If the `providedMask` is not a function, we just use it as-is.
       } else {
         mask = providedMask
       }
 
+      // Now that we have the final mask and placeholder, can we find the positions of the placeholder chars
+      const placeholderCharPositions = findPlaceholderCharPositions(placeholder, mask)
+
       // The following object will be passed to `conformToMask` to determine how the `rawValue` will be conformed
       const conformToMaskConfig = {
         previousConformedValue,
         guide,
         placeholderChar,
+        placeholderCharPositions,
         pipe,
         placeholder,
         currentCaretPosition,
@@ -144,11 +186,13 @@ export default function createTextMaskInputElement(config) {
       const adjustedCaretPosition = adjustCaretPosition({
         previousConformedValue,
         previousPlaceholder,
+        previousPlaceholderCharPositions,
         conformedValue: finalConformedValue,
         placeholder,
         rawValue: safeRawValue,
         currentCaretPosition,
         placeholderChar,
+        placeholderCharPositions,
         indexesOfPipedChars: pipeResults.indexesOfPipedChars,
         caretTrapIndexes
       })
@@ -160,6 +204,7 @@ export default function createTextMaskInputElement(config) {
 
       state.previousConformedValue = inputElementValue // store value for access for next time
       state.previousPlaceholder = placeholder
+      state.previousPlaceholderCharPositions = placeholderCharPositions
 
       // In some cases, this `update` method will be repeatedly called with a raw value that has already been conformed
       // and set to `inputElement.value`. The below check guards against needlessly readjusting the input state.

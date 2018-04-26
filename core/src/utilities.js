@@ -17,6 +17,10 @@ export function convertMaskToPlaceholder(mask = emptyArray, placeholderChar = de
   }).join('')
 }
 
+export function findPlaceholderCharPositions(placeholder, mask = emptyArray) {
+  return placeholder.split('').map((char, index) => placeholder[index] !== mask[index])
+}
+
 export function isString(value) {
   return typeof value === 'string' || value instanceof String
 }
