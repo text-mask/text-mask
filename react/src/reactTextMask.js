@@ -4,6 +4,13 @@ import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement'
 
 export default class MaskedInput extends React.Component {
+  constructor(...args) {
+    super(...args)
+
+    this.onBlur = this.onBlur.bind(this)
+    this.onChange = this.onChange.bind(this)
+  }
+
   initTextMask() {
     const {props, props: {value}} = this
 
@@ -23,7 +30,7 @@ export default class MaskedInput extends React.Component {
   }
 
   render() {
-    const props = {...this.props}
+    const {render, ...props} = this.props
 
     delete props.mask
     delete props.guide
@@ -31,17 +38,18 @@ export default class MaskedInput extends React.Component {
     delete props.placeholderChar
     delete props.keepCharPositions
     delete props.value
+    delete props.onBlur
     delete props.onChange
     delete props.showMask
 
-    return (
-      <input
-        {...props}
-        onInput={event => this.onChange(event)}
-        defaultValue={this.props.value}
-        ref={(inputElement) => (this.inputElement = inputElement)}
-      />
-    )
+    const ref = (inputElement) => (this.inputElement = inputElement)
+
+    return render(ref, {
+      onBlur: this.onBlur,
+      onChange: this.onChange,
+      defaultValue: this.props.value,
+      ...props,
+    })
   }
 
   onChange(event) {
@@ -49,6 +57,12 @@ export default class MaskedInput extends React.Component {
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(event)
+    }
+  }
+
+  onBlur(event) {
+    if (typeof this.props.onBlur === 'function') {
+      this.props.onBlur(event)
     }
   }
 }
@@ -69,6 +83,10 @@ MaskedInput.propTypes = {
   placeholderChar: PropTypes.string,
   keepCharPositions: PropTypes.bool,
   showMask: PropTypes.bool,
+}
+
+MaskedInput.defaultProps = {
+  render: (ref, props) => <input ref={ref} {...props} />
 }
 
 export {default as conformToMask} from '../../core/src/conformToMask.js'
