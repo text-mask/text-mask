@@ -12,16 +12,18 @@ Then, use it as follows:
 
 ```html
 <template>
-  <label>Phone Number</label>
-  <masked-input
-    type="text"
-    name="phone"
-    class="form-control"
-    v-model="phone"
-    :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-    :guide="false"
-    placeholderChar="#">
-  </masked-input>
+  <div>
+    <label>Phone Number</label>
+    <masked-input
+      type="text"
+      name="phone"
+      class="form-control"
+      v-model="phone"
+      :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
+      :guide="false"
+      placeholderChar="#">
+    </masked-input>
+  </div>
 </template>
 
 <script>

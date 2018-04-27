@@ -13,6 +13,17 @@ const adjustCaretPosition = (isVerify()) ?
   require('../src/adjustCaretPosition.js').default
 
 describe('adjustCaretPosition', () => {
+  it('places the caret at the beginning when the value has been reset programmatically', () => {
+    expect(adjustCaretPosition({
+      previousConformedValue: '',
+      placeholderChar,
+      conformedValue: '________-___',
+      placeholder: convertMaskToPlaceholder([/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]),
+      rawValue: '',
+      currentCaretPosition: 3,
+    })).to.equal(0)
+  })
+
   it('places the caret after the last change when operation is addition', () => {
     expect(adjustCaretPosition({
       previousConformedValue: '3333',

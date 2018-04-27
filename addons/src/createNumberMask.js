@@ -34,11 +34,21 @@ export default function createNumberMask({
       (rawValue[0] === prefix[0] && rawValueLength === 1)
     ) {
       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
+    } else if(
+      rawValue === decimalSymbol &&
+      allowDecimal
+    ) {
+      return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
+    }
+
+    const isNegative = (rawValue[0] === minus) && allowNegative
+    //If negative remove "-" sign
+    if(isNegative) {
+      rawValue = rawValue.toString().substr(1)
     }
 
     const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
     const hasDecimal = indexOfLastDecimal !== -1
-    const isNegative = (rawValue[0] === minus) && allowNegative
 
     let integer
     let fraction
@@ -72,7 +82,7 @@ export default function createNumberMask({
     integer = integer.replace(nonDigitsRegExp, emptyString)
 
     if (!allowLeadingZeroes) {
-      integer = String(Number(integer))
+      integer = integer.replace(/^0+(0$|[^0])/, '$1')
     }
 
     integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer

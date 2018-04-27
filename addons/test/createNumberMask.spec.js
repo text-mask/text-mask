@@ -102,9 +102,34 @@ describe('createNumberMask', () => {
     expect(numberMask('-')).to.deep.equal([/-/, '$', /\d/])
   })
 
+  it('starts with dot should be considered as decimal input', () => {
+    let numberMask = createNumberMask({prefix: '$', allowDecimal: true})
+    expect(numberMask('.')).to.deep.equal(['$', '0', '.', /\d/])
+
+    numberMask = createNumberMask({prefix: '#', allowDecimal: true})
+    expect(numberMask('.')).to.deep.equal(['#', '0', '.', /\d/])
+
+    numberMask = createNumberMask({prefix: '', allowDecimal: true})
+    expect(numberMask('.')).to.deep.equal(['0', '.', /\d/])
+
+    numberMask = createNumberMask({allowDecimal: false})
+    expect(numberMask('.')).to.deep.equal(['$'])
+
+    numberMask = createNumberMask({prefix: '', suffix: '$', allowDecimal: true})
+    expect(numberMask('.')).to.deep.equal(['0', '.', /\d/, '$'])
+  })
+
   it('can allow leading zeroes', function() {
     let numberMask = createNumberMask({allowLeadingZeroes: true})
     expect(numberMask('012')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+  })
+
+  it('works with large numbers when leading zeroes is false', function() {
+    let numberMask = createNumberMask({allowLeadingZeroes: false})
+    expect(numberMask('111111111111111111111111')).to.deep.equal([
+      '$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',',
+      /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/
+    ])
   })
 
   describe('integer limiting', () => {
