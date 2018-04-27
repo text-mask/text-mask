@@ -8,7 +8,11 @@ export default {
         value: this.value
       },
       on: {
-        input: (event) => this.updateValue(event.target.value)
+        input: (event) => this.updateValue(event.target.value),
+        focus: (event) => this.emitEvent(event),
+        blur: (event) => this.emitEvent(event),
+        keypress: (event) => this.emitEvent(event),
+        click: (event) => this.emitEvent(event)
       }
     })
   },
@@ -54,31 +58,43 @@ export default {
   },
 
   mounted() {
-    this.bind()
+    this.initMask()
   },
 
   methods: {
     createTextMaskInputElement,
 
-    bind() {
+    setTextMaskInputElement() {
       this.textMaskInputElement = this.createTextMaskInputElement({
         inputElement: this.$refs.input,
         ...this.$options.propsData
       })
+    },
 
+    initMask() {
+      this.setTextMaskInputElement()
+      this.textMaskInputElement.update(this.value)
+    },
+
+    bind() {
+      this.setTextMaskInputElement()
       this.updateValue(this.value)
     },
 
     updateValue(value) {
       this.textMaskInputElement.update(value)
       this.$emit('input', this.$refs.input.value)
+    },
+
+    emitEvent(event) {
+      this.$emit(event.type, event)
     }
   },
 
   watch: {
-    mask(newMask) {
+    mask(newMask, oldMask) {
       // Check if the mask has changed (Vue cannot detect whether an array has changed)
-      if (this.mask !== newMask) {
+      if (this.mask !== oldMask) {
         this.bind()
       }
     },

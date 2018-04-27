@@ -7,6 +7,12 @@ var mergeTrees = require('broccoli-merge-trees');
 module.exports = {
   name: 'ember-text-mask',
 
+  options: {
+    babel: {
+      plugins: ['transform-object-rest-spread']
+    }
+  },
+
   treeForAddon: function(tree) {
     var textMaskPath = path.dirname(require.resolve('text-mask-core/src/index.js'));
     var textMaskTree = this.treeGenerator(textMaskPath);

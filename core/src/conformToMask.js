@@ -1,9 +1,16 @@
-import {convertMaskToPlaceholder} from './utilities'
+import {convertMaskToPlaceholder, isArray} from './utilities'
 import {placeholderChar as defaultPlaceholderChar} from './constants'
 
+const emptyArray = []
 const emptyString = ''
 
-export default function conformToMask(rawValue = emptyString, mask = emptyString, config = {}) {
+export default function conformToMask(rawValue = emptyString, mask = emptyArray, config = {}) {
+  if (!isArray(mask)) {
+    throw new Error(
+      'Text-mask:conformToMask; The mask property must be an array.'
+    )
+  }
+
   // These configurations tell us how to conform the mask
   const {
     guide = true,
