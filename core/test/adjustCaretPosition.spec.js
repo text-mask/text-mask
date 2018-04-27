@@ -60,7 +60,7 @@ describe('adjustCaretPosition', () => {
       placeholderChar,
       currentCaretPosition: 2
     })).to.equal(2)
-  });
+  })
 
   it('moves the caret to the nearest placeholder character if the previous input and new ' +
     'conformed output are the same but the reverted position is not a ' +
