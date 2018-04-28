@@ -1494,6 +1494,18 @@ export const someCharsRejected = _.filter((t) => t, [{
   someCharsRejected: false
 
   // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder
+  mask: ['$'],
+  previousConformedValue: '',
+  rawValue: '$',
+  currentCaretPosition: 0,
+
+  someCharsRejected: false
+
+  // only: true
 }])
 
 //####################################################################################
