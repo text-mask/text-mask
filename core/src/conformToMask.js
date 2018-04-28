@@ -210,7 +210,7 @@ export default function conformToMask(rawValue = emptyString, mask = emptyArray,
   // If there are no `placeholderChars` in the `placeholder` and `rawValueLength` is not 0,
   // then some characters have been rejected
   if (!someCharsRejected && rawValueLength) {
-    const placeholderCharsInPlaceholder = placeholder.match(new RegExp( `\\${placeholderChar}`, 'g'))
+    const placeholderCharsInPlaceholder = placeholder.match(new RegExp(`\\${placeholderChar}`, 'g'))
     if (!placeholderCharsInPlaceholder || !placeholderCharsInPlaceholder.length) {
       someCharsRejected = true
     }
