@@ -39,7 +39,6 @@ describe('conformToMask', () => {
   })
 
   describe('someCharsRejected', () => {
-
     dynamicTests(
       _.filter(someCharsRejected, test => !test.skip),
 
