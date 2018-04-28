@@ -206,6 +206,16 @@ export default function conformToMask(rawValue = emptyString, mask = emptyArray,
     }
   }
 
+  // This is a fix for issue #706 [conformsToMask.someCharsRejected gives incorrect result when mask is trivial]
+  // If there are no `placeholderChars` in the `placeholder` and `rawValueLength` is not 0,
+  // then some characters have been rejected
+  if (!someCharsRejected && rawValueLength) {
+    const placeholderCharsInPlaceholder = placeholder.match(new RegExp( `\\${placeholderChar}`, 'g'))
+    if (!placeholderCharsInPlaceholder || !placeholderCharsInPlaceholder.length) {
+      someCharsRejected = true
+    }
+  }
+
   // The following logic is needed to deal with the case of deletion in *no guide* mode.
   //
   // Consider the silly mask `(111) /// 1`. What if user tries to delete the last placeholder
