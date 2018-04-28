@@ -1413,6 +1413,7 @@ export const someCharsRejected = _.filter((t) => t, [{
 // export const someCharsRejected = _.filter((t) => t.only, [{
   line: getLineNumber(),
 
+  // placeholder _
   mask: [/\d/],
   previousConformedValue: '',
   rawValue: '1',
@@ -1424,7 +1425,7 @@ export const someCharsRejected = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
-  // placeholder 0 _ 0 __
+  // placeholder _
   mask: [/\d/],
   previousConformedValue: '',
   rawValue: 'a',
@@ -1436,7 +1437,7 @@ export const someCharsRejected = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
-  // placeholder 0 _ 0 __
+  // placeholder $
   mask: ['$'],
   previousConformedValue: '',
   rawValue: 'aaa',
@@ -1448,7 +1449,7 @@ export const someCharsRejected = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
-  // placeholder 0 _ 0 __
+  // placeholder $
   mask: ['$'],
   previousConformedValue: '',
   rawValue: 'a',
@@ -1460,13 +1461,37 @@ export const someCharsRejected = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
-  // placeholder 0 _ 0 __
+  // placeholder $_
   mask: ['$', /\d/],
   previousConformedValue: '',
   rawValue: 'a',
   currentCaretPosition: 1,
 
   someCharsRejected: true
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder $
+  mask: ['$'],
+  previousConformedValue: '',
+  rawValue: '',
+  currentCaretPosition: 1,
+
+  someCharsRejected: false
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder
+  mask: [],
+  previousConformedValue: '',
+  rawValue: '',
+  currentCaretPosition: 0,
+
+  someCharsRejected: false
 
   // only: true
 }])
