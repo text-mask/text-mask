@@ -1497,7 +1497,7 @@ export const someCharsRejected = _.filter((t) => t, [{
 }, {
   line: getLineNumber(),
 
-  // placeholder
+  // placeholder $
   mask: ['$'],
   previousConformedValue: '',
   rawValue: '$',
