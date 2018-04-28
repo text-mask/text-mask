@@ -2,6 +2,7 @@ import _ from 'lodash'
 import testParameters, {
   noGuideMode,
   acceptedCharInMask,
+  someCharsRejected,
   escapedMaskChar
 } from './../../common/testParameters.js'
 import keepCharPositionsTests from '../../common/keepCharPositionsTests'
@@ -32,6 +33,27 @@ describe('conformToMask', () => {
             placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
             currentCaretPosition: test.currentCaretPosition
           }).conformedValue).to.equal(test.conformedValue)
+        }
+      })
+    )
+  })
+
+  describe('someCharsRejected', () => {
+
+    dynamicTests(
+      _.filter(someCharsRejected, test => !test.skip),
+
+      (test) => ({
+        description: `for input ${JSON.stringify(_.pick(test, testInputs))}, ` +
+        `it sets test.someCharsRejected to '${test.someCharsRejected}' Line: ${test.line}`,
+
+        body: () => {
+          expect(conformToMask(test.rawValue, test.mask, {
+            guide: true,
+            previousConformedValue: test.previousConformedValue,
+            placeholder: convertMaskToPlaceholder(test.mask, placeholderChar),
+            currentCaretPosition: test.currentCaretPosition
+          }).meta.someCharsRejected).to.equal(test.someCharsRejected)
         }
       })
     )

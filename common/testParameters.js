@@ -1408,6 +1408,74 @@ export const acceptedCharInMask = _.filter((t) => t, [{
 //####################################################################################
 //####################################################################################
 
+// export const someCharsRejected = _.filter((t) => false, [{
+export const someCharsRejected = _.filter((t) => t, [{
+// export const someCharsRejected = _.filter((t) => t.only, [{
+  line: getLineNumber(),
+
+  mask: [/\d/],
+  previousConformedValue: '',
+  rawValue: '1',
+  currentCaretPosition: 1,
+
+  someCharsRejected: false
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder 0 _ 0 __
+  mask: [/\d/],
+  previousConformedValue: '',
+  rawValue: 'a',
+  currentCaretPosition: 1,
+
+  someCharsRejected: true
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder 0 _ 0 __
+  mask: ['$'],
+  previousConformedValue: '',
+  rawValue: 'aaa',
+  currentCaretPosition: 3,
+
+  someCharsRejected: true
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder 0 _ 0 __
+  mask: ['$'],
+  previousConformedValue: '',
+  rawValue: 'a',
+  currentCaretPosition: 1,
+
+  someCharsRejected: true
+
+  // only: true
+}, {
+  line: getLineNumber(),
+
+  // placeholder 0 _ 0 __
+  mask: ['$', /\d/],
+  previousConformedValue: '',
+  rawValue: 'a',
+  currentCaretPosition: 1,
+
+  someCharsRejected: true
+
+  // only: true
+}])
+
+//####################################################################################
+//####################################################################################
+//####################################################################################
+//####################################################################################
+
 // export const escapedMaskChar = _.filter((t) => false, [{
 export const escapedMaskChar = _.filter((t) => t, [{
   mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
