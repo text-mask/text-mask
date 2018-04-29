@@ -158,13 +158,6 @@ describe('conformToMask', () => {
       expect(maskSpy.callCount).to.equal(1)
     })
 
-    it('processes the result of the mask function and removes caretTraps', () => {
-      const mask = () => [/\d/, /\d/, '[]', '.', '[]', /\d/, /\d/]
-      const result = conformToMask('2', mask)
-
-      expect(result.conformedValue).to.equal('2_.__')
-    })
-
     it('passes the rawValue to the mask function', () => {
       const mask = (value) => {
         expect(typeof value).to.equal('string')
@@ -193,6 +186,13 @@ describe('conformToMask', () => {
       })
 
       expect(result.conformedValue).to.equal('12__')
+    })
+
+    it('processes the result of the mask function and removes caretTraps', () => {
+      const mask = () => [/\d/, /\d/, '[]', '.', '[]', /\d/, /\d/]
+      const result = conformToMask('2', mask)
+
+      expect(result.conformedValue).to.equal('2_.__')
     })
 
     dynamicTests(
