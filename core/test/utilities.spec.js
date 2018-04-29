@@ -1,5 +1,17 @@
-import {processCaretTraps} from '../src/utilities'
+import {convertMaskToPlaceholder, processCaretTraps} from '../src/utilities'
 
+describe('convertMaskToPlaceholder', () => {
+  it('throws if mask is not an array', () => {
+    const err = 'Text-mask:convertMaskToPlaceholder; The mask property must be an array.'
+    expect(() => convertMaskToPlaceholder(false)).to.throw(err)
+    expect(() => convertMaskToPlaceholder(true)).to.throw(err)
+    expect(() => convertMaskToPlaceholder('abc')).to.throw(err)
+    expect(() => convertMaskToPlaceholder(123)).to.throw(err)
+    expect(() => convertMaskToPlaceholder(null)).to.throw(err)
+    expect(() => convertMaskToPlaceholder({})).to.throw(err)
+    expect(() => convertMaskToPlaceholder(() => {})).to.throw(err)
+  })
+})
 describe('processCaretTraps', () => {
   it('returns the mask without caret traps and the caret trap indexes', () => {
     const mask = ['$', /\d/, /\d/, /\d/, /\d/, '.', '[]', /\d/, /\d/]

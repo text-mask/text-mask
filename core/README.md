@@ -89,7 +89,7 @@ The `update` method should be called every time the `inputElement.value` changes
 This function takes three arguments:
 
 * rawValue (string): the string value that you want to conform to the mask
-* mask (array): the mask to which you want the string to conform. You can find
+* mask (array or function): the mask to which you want the string to conform. You can find
 [mask documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 * config (object): config object. See below for details
 
