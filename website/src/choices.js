@@ -61,5 +61,14 @@ export default map(
     pipe: (conformedValue) => ({value: conformedValue.toUpperCase()}),
     placeholder: 'K1A 0B2',
     placeholderChar: placeholderChars.underscore
+  }, {
+    name: 'Credit Card',
+    mask: [
+      /\d/, /\d/, /\d/, /\d/, ' ',
+      /\d/, /\d/, /\d/, /\d/, ' ',
+      /\d/, /\d/, /\d/, /\d/, ' ',
+      /\d/, /\d/, /\d/, /\d/
+    ],
+    placeholder: '4242 4242 4242 4242'
   }]
 )

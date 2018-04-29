@@ -1,9 +1,29 @@
-import {convertMaskToPlaceholder} from './utilities'
-import {placeholderChar as defaultPlaceholderChar} from './constants'
+import {convertMaskToPlaceholder, isArray, processCaretTraps} from './utilities'
+import {placeholderChar as defaultPlaceholderChar, strFunction} from './constants'
 
+const emptyArray = []
 const emptyString = ''
 
-export default function conformToMask(rawValue = emptyString, mask = emptyString, config = {}) {
+export default function conformToMask(rawValue = emptyString, mask = emptyArray, config = {}) {
+  if (!isArray(mask)) {
+    // If someone passes a function as the mask property, we should call the
+    // function to get the mask array - Normally this is handled by the
+    // `createTextMaskInputElement:update` function - this allows mask functions
+    // to be used directly with `conformToMask`
+    if (typeof mask === strFunction) {
+      // call the mask function to get the mask array
+      mask = mask(rawValue, config)
+
+      // mask functions can setup caret traps to have some control over how the caret moves. We need to process
+      // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask
+      mask = processCaretTraps(mask).maskWithoutCaretTraps
+    } else {
+      throw new Error(
+        'Text-mask:conformToMask; The mask property must be an array.'
+      )
+    }
+  }
+
   // These configurations tell us how to conform the mask
   const {
     guide = true,
