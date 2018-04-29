@@ -2,13 +2,14 @@ import {convertMaskToPlaceholder, processCaretTraps} from '../src/utilities'
 
 describe('convertMaskToPlaceholder', () => {
   it('throws if mask is not an array', () => {
-    expect(() => convertMaskToPlaceholder(false)).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder(true)).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder('abc')).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder(123)).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder(null)).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder({})).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
-    expect(() => convertMaskToPlaceholder(() => {})).to.throw('Text-mask:convertMaskToPlaceholder; The mask property must be an array.')
+    const err = 'Text-mask:convertMaskToPlaceholder; The mask property must be an array.'
+    expect(() => convertMaskToPlaceholder(false)).to.throw(err)
+    expect(() => convertMaskToPlaceholder(true)).to.throw(err)
+    expect(() => convertMaskToPlaceholder('abc')).to.throw(err)
+    expect(() => convertMaskToPlaceholder(123)).to.throw(err)
+    expect(() => convertMaskToPlaceholder(null)).to.throw(err)
+    expect(() => convertMaskToPlaceholder({})).to.throw(err)
+    expect(() => convertMaskToPlaceholder(() => {})).to.throw(err)
   })
 })
 describe('processCaretTraps', () => {

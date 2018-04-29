@@ -18,12 +18,13 @@ const testInputs = ['rawValue', 'mask', 'previousConformedValue', 'currentCaretP
 
 describe('conformToMask', () => {
   it('throws if mask is not an array or function', () => {
-    expect(() => conformToMask('', false)).to.throw('Text-mask:conformToMask; The mask property must be an array.')
-    expect(() => conformToMask('', true)).to.throw('Text-mask:conformToMask; The mask property must be an array.')
-    expect(() => conformToMask('', 'abc')).to.throw('Text-mask:conformToMask; The mask property must be an array.')
-    expect(() => conformToMask('', 123)).to.throw('Text-mask:conformToMask; The mask property must be an array.')
-    expect(() => conformToMask('', null)).to.throw('Text-mask:conformToMask; The mask property must be an array.')
-    expect(() => conformToMask('', {})).to.throw('Text-mask:conformToMask; The mask property must be an array.')
+    const err = 'Text-mask:conformToMask; The mask property must be an array.'
+    expect(() => conformToMask('', false)).to.throw(err)
+    expect(() => conformToMask('', true)).to.throw(err)
+    expect(() => conformToMask('', 'abc')).to.throw(err)
+    expect(() => conformToMask('', 123)).to.throw(err)
+    expect(() => conformToMask('', null)).to.throw(err)
+    expect(() => conformToMask('', {})).to.throw(err)
   })
 
   describe('Accepted character in mask', () => {
