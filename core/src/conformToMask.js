@@ -17,7 +17,6 @@ export default function conformToMask(rawValue = emptyString, mask = emptyArray,
       // mask functions can setup caret traps to have some control over how the caret moves. We need to process
       // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask
       mask = processCaretTraps(mask).maskWithoutCaretTraps
-
     } else {
       throw new Error(
         'Text-mask:conformToMask; The mask property must be an array.'
