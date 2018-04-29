@@ -271,6 +271,22 @@ describe('MaskedInput', () => {
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
 
+  it('calls props.onBlur when a change event is received', () => {
+    const onBlurSpy = sinon.spy((event) => {
+      expect(event.target.value).to.equal('(123) ___-____')
+    })
+    const maskedInput = ReactTestUtils.renderIntoDocument(
+      <MaskedInput
+        value='123'
+        onBlur={onBlurSpy}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={true}/>
+    )
+    const renderedDOMComponent = ReactTestUtils.findRenderedDOMComponentWithTag(maskedInput, 'input')
+    ReactTestUtils.Simulate.blur(renderedDOMComponent)
+    expect(onBlurSpy.callCount).to.equal(1)
+  })
+
   it('calls textMaskInputElement.update when an input event is received when props.onChange is not set', () => {
     const maskedInput = ReactTestUtils.renderIntoDocument(
       <MaskedInput

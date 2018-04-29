@@ -17,6 +17,16 @@ const conformToMask = (isVerify()) ?
 const testInputs = ['rawValue', 'mask', 'previousConformedValue', 'currentCaretPosition']
 
 describe('conformToMask', () => {
+  it('throws if mask is not an array or function', () => {
+    const err = 'Text-mask:conformToMask; The mask property must be an array.'
+    expect(() => conformToMask('', false)).to.throw(err)
+    expect(() => conformToMask('', true)).to.throw(err)
+    expect(() => conformToMask('', 'abc')).to.throw(err)
+    expect(() => conformToMask('', 123)).to.throw(err)
+    expect(() => conformToMask('', null)).to.throw(err)
+    expect(() => conformToMask('', {})).to.throw(err)
+  })
+
   describe('Accepted character in mask', () => {
     dynamicTests(
       _.filter(acceptedCharInMask, test => !test.skip),
@@ -134,6 +144,57 @@ describe('conformToMask', () => {
   })
 
   describe('Mask function', () => {
+    it('works with mask functions', () => {
+      const mask = () => [/\d/, /\d/, /\d/, /\d/]
+
+      expect(() => conformToMask('', mask)).to.not.throw()
+    })
+
+    it('calls the mask function', () => {
+      const maskSpy = sinon.spy(() => [/\d/, /\d/, /\d/, /\d/])
+      const result = conformToMask('2', maskSpy)
+
+      expect(result.conformedValue).to.equal('2___')
+      expect(maskSpy.callCount).to.equal(1)
+    })
+
+    it('passes the rawValue to the mask function', () => {
+      const mask = (value) => {
+        expect(typeof value).to.equal('string')
+        expect(value).to.equal('2')
+        return [/\d/, /\d/, /\d/, /\d/]
+      }
+      const result = conformToMask('2', mask)
+
+      expect(result.conformedValue).to.equal('2___')
+    })
+
+    it('passes the config to the mask function', () => {
+      const mask = (value, config) => {
+        expect(typeof config).to.equal('object')
+        expect(config).to.deep.equal({
+          currentCaretPosition: 2,
+          previousConformedValue: '1',
+          placeholderChar: '_'
+        })
+        return [/\d/, /\d/, /\d/, /\d/]
+      }
+      const result = conformToMask('12', mask, {
+        currentCaretPosition: 2,
+        previousConformedValue: '1',
+        placeholderChar: '_'
+      })
+
+      expect(result.conformedValue).to.equal('12__')
+    })
+
+    it('processes the result of the mask function and removes caretTraps', () => {
+      const mask = () => [/\d/, /\d/, '[]', '.', '[]', /\d/, /\d/]
+      const result = conformToMask('2', mask)
+
+      expect(result.conformedValue).to.equal('2_.__')
+    })
+
     dynamicTests(
       maskFunctionTests,
 
