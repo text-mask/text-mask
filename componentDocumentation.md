@@ -7,6 +7,8 @@
   * [`keepCharPositions`](#keepcharpositions) (boolean)
   * [`pipe`](#pipe) (function)
   * [`showMask`](#showmask) (boolean)
+  * Additional value available in the angular2 version
+    * [`indexOfChildElementToMask`](#indexofchildelementtomask) (number)
 * [Included `conformToMask`](#included-conformtomask)
 * Known issues
   * [Supported `<input>` types](#supported-input-types)
@@ -196,6 +198,32 @@ which is a [Text Mask addon](https://github.com/text-mask/text-mask/tree/master/
 
 `showMask` is a boolean that tells the Text Mask component to display the mask as a
 placeholder in place of the regular placeholder when the input element value is empty.
+
+## Extra configuration option available in the angular2 version
+
+### `indexOfChildElementToMask`
+
+`indexOfChildElementToMask` is a number that tells the Text mask directive which child
+input to apply the mask to. This can be used if you apply the directive to an element that
+has several child input elements.
+
+Note that the Text Mask directive only counts number of
+input elements. Check the index of your input element by opening a console window in your
+browser when you are displaying the component you wish to mask: `document.getElementsByTagName('INPUT')`
+
+In the example below, the mask directive would be applied to the second input element.
+This is especially useful if you are using a third party component that consists of
+several input boxes, and you want to mask a specific one of them.
+
+```html
+<div class="inputContainer" [textMask]="{mask: myTextmask, indexOfChildElementToMask: 1 }">
+  <h1>Some header</h1>
+  <input type="text">
+
+  <h2>Some other header</h2>
+  <input type="text">
+</div>
+```
 
 ---
 

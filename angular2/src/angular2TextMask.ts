@@ -8,6 +8,16 @@ export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
   multi: true
 }
 
+export class TextMaskConfig {
+  mask: (string | RegExp)[] | Function
+  guide?: boolean
+  placeholderChar?: string
+  pipe?: Function
+  keepCharPositions?: boolean
+  showMask?: boolean
+  indexOfChildElementToMask?: number
+}
+
 @Directive({
   host: {
     '(input)': 'onInput($event.target.value)',
@@ -22,18 +32,20 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   private inputElement: HTMLInputElement
 
   @Input('textMask')
-  textMaskConfig = {
+  textMaskConfig: TextMaskConfig = {
     mask: [],
     guide: true,
     placeholderChar: '_',
     pipe: undefined,
     keepCharPositions: false,
+    showMask: false,
+    indexOfChildElementToMask: 0,
   }
 
-  _onTouched = () => {}
-  _onChange = (_: any) => {}
+  _onTouched = () => { }
+  _onChange = (_: any) => { }
 
-  constructor(@Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) {}
+  constructor( @Inject(Renderer) private renderer: Renderer, @Inject(ElementRef) private element: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.setupMask(true)
@@ -61,13 +73,13 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   setDisabledState(isDisabled: boolean) {
     this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled)
   }
-  
+
   onInput(value) {
     this.setupMask()
 
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
-      
+
       // get the updated value
       value = this.inputElement.value
       this._onChange(value)
@@ -81,16 +93,18 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
         this.inputElement = this.element.nativeElement
       } else {
         // `textMask` directive is used on an abstracted input element, `md-input-container`, etc
-        this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[0]
+        // The default is to mask the first input element found, but it can be configured using the indexOfChildElementToMask config value
+        const childElementToMask = this.textMaskConfig.indexOfChildElementToMask ? this.textMaskConfig.indexOfChildElementToMask : 0
+        this.inputElement = this.element.nativeElement.getElementsByTagName('INPUT')[childElementToMask]
       }
     }
-    
+
     if (this.inputElement && create) {
       this.textMaskInputElement = createTextMaskInputElement(
-        Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
+        Object.assign({ inputElement: this.inputElement }, this.textMaskConfig)
       )
     }
-    
+
   }
 }
 
@@ -98,6 +112,6 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   declarations: [MaskedInputDirective],
   exports: [MaskedInputDirective]
 })
-export class TextMaskModule {}
+export class TextMaskModule { }
 
 export { conformToMask } from 'text-mask-core/dist/textMaskCore'
