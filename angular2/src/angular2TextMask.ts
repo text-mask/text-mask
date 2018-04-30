@@ -23,11 +23,12 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
 
   @Input('textMask')
   textMaskConfig = {
-    mask: [],
-    guide: true,
-    placeholderChar: '_',
-    pipe: undefined,
-    keepCharPositions: false,
+    mask: <Array<string | RegExp> | ((raw: string) => Array<string | RegExp>) | boolean> [],
+    guide: <boolean> true,
+    placeholderChar: <string> '_',
+    pipe: <Function> undefined,
+    keepCharPositions: <boolean> false,
+    showMask: <boolean> false
   }
 
   _onTouched = () => {}
