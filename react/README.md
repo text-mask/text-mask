@@ -29,7 +29,7 @@ pass it CSS classes, a placeholder attribute, or even an `onBlur` handler.
 For example, the following works:
 
 ```js
-<MaskedTextInput
+<MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   className="form-control"
   placeholder="Enter a phone number"
@@ -66,7 +66,7 @@ For example, to use with styled-components,
 [which requires an innerRef](https://www.styled-components.com/docs/advanced#refs):
 
 ```js
-<MaskedTextInput
+<MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   placeholder="Enter a phone number"
   id="my-input-id"
