@@ -312,6 +312,47 @@ describe('MaskedInput', () => {
     maskedInput.onChange()
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
+
+  // test fix for issues #230, #483, #778 etc.
+  it('work correct in stateful Component', () => {
+    class StatefulComponent extends React.Component {
+      constructor(...args) {
+        super(...args)
+
+        this.state = {value: '1234'}
+        this.onChange = this.onChange.bind(this)
+      }
+
+      onChange(e) {
+        this.setState({value: e.target.value})
+      }
+
+      render() {
+        return <MaskedInput
+        onChange={this.onChange}
+        value={this.state.value}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={false}/>
+      }
+    }
+
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+    const renderedDOMInput = ReactTestUtils.findRenderedDOMComponentWithTag(statefulComponent, 'input')
+
+    // Initial value "1234" from StatefulComponent is masked correct
+    expect(renderedDOMInput.value).to.equal('(123) 4')
+
+    // Simulate deleting last char "4" from input
+    renderedDOMInput.value = '(123) '
+
+    // Simulate onChange event with current value "(123) "
+    ReactTestUtils.Simulate.change(renderedDOMInput, {target: {value: '(123) '}})
+
+    // Now we expect to see value "(123" instead of "(123) "
+    expect(renderedDOMInput.value).to.equal('(123')
+  })
 })
 
 describe('conformToMask', () => {
