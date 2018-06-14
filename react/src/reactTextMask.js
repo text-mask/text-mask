@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement'
 
-export default class MaskedInput extends React.Component {
+export default class MaskedInput extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
@@ -22,10 +22,6 @@ export default class MaskedInput extends React.Component {
   }
 
   componentDidMount() {
-    this.initTextMask()
-  }
-
-  componentDidUpdate() {
     this.initTextMask()
   }
 
