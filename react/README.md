@@ -82,20 +82,7 @@ const MyStyledInput = styled.input`
 
 ## Known issue
 
-In some cases you can see different values in `event.target.value` and in `input`.
-
-Example for mask `['(',/\d/,/\d/,/\d/,') ',/\d/,/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]`:
-
-- Initial value `"(123) 4"`
-- Push `Backspace`
-- `onChange` would fire `event` where `event.target.value === "(123) 4"`
-- after applying mask function `input` element would have value `"(123"`
-
-So user would see on display value `"(123"`, but your component would take value `"(123) "`.
-
-Different values will only be when `"static"` chars in the mask are reached by your raw value. For example, if user push `Backspace` one more time, values in `input` element and in `event.target.value` would be the same `"(12"`.
-
-This is not critical for working `MaskedInput` component, but you must keep it in mind.
+[#804](https://github.com/text-mask/text-mask/issues/804) In some cases different values in `event.target.value` and in `input` element
 
 ## Contributing
 
