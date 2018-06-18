@@ -80,6 +80,10 @@ const MyStyledInput = styled.input`
 `;
 ```
 
+## Known issue
+
+[#804](https://github.com/text-mask/text-mask/issues/804) In some cases different values in `event.target.value` and in `input` element
+
 ## Contributing
 
 We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
