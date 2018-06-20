@@ -314,7 +314,7 @@ describe('MaskedInput', () => {
   })
 
   // test fix for issues #230, #483, #778 etc.
-  it('work correct in stateful Component', () => {
+  it('works correct in stateful Component', () => {
     class StatefulComponent extends React.Component {
       constructor(...args) {
         super(...args)
@@ -345,13 +345,61 @@ describe('MaskedInput', () => {
     expect(renderedDOMInput.value).to.equal('(123) 4')
 
     // Simulate deleting last char "4" from input
-    renderedDOMInput.value = '(123) '
+    renderedDOMInput.value = '(123'
 
     // Simulate onChange event with current value "(123) "
-    ReactTestUtils.Simulate.change(renderedDOMInput, {target: {value: '(123) '}})
+    ReactTestUtils.Simulate.change(renderedDOMInput, {target: {value: '(123'}})
 
     // Now we expect to see value "(123" instead of "(123) "
     expect(renderedDOMInput.value).to.equal('(123')
+  })
+
+  // test fix for issue #806.
+  it('works correct as controlled component', () => {
+    class StatefulComponent extends React.Component {
+      constructor(...args) {
+        super(...args)
+
+        this.state = {value: ''}
+        this.onChange = this.onChange.bind(this)
+      }
+
+      onChange(e) {
+        this.setState({value: e.target.value})
+      }
+
+      render() {
+        return (
+          <div>
+              <input onChange={this.onChange} value={this.state.value} className={'user-input'}/>
+              <MaskedInput
+                value={this.state.value}
+                mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                guide={false}
+                className={'masked-input'}
+              />
+          </div>
+        )
+      }
+    }
+
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
+
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ')
+
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '12345678901234567890'}})
+
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: ''}})
+
+    expect(renderedDOMMaskedInput.value).to.equal('')
   })
 })
 

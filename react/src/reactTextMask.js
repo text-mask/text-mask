@@ -25,6 +25,13 @@ export default class MaskedInput extends React.PureComponent {
     this.initTextMask()
   }
 
+  componentDidUpdate() {
+    // Check previous masked value with current `input` value to prevent dublicating update() call
+    if (this.props.value !== this.inputElement.value) {
+      this.initTextMask()
+    }
+  }
+
   render() {
     const {render, ...props} = this.props
 
