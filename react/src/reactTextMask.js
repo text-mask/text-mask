@@ -11,7 +11,7 @@ export default class MaskedInput extends React.PureComponent {
     this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
   }
-  
+
   setRef(inputElement) {
     this.inputElement = inputElement
   }
@@ -29,7 +29,7 @@ export default class MaskedInput extends React.PureComponent {
   componentDidMount() {
     this.initTextMask()
   }
-  
+
   render() {
     const {render, ...props} = this.props
 
