@@ -360,12 +360,60 @@ describe('MaskedInput', () => {
       constructor(...args) {
         super(...args)
 
-        this.state = {value: ''}
+        this.state = {
+          value: '',
+          mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+          guide: false,
+          placeholderChar: '_',
+          showMask: false
+        }
+
         this.onChange = this.onChange.bind(this)
+        this.onMaskArray = this.onMaskArray.bind(this)
+        this.onMaskFunction = this.onMaskFunction.bind(this)
+        this.onGuideOn = this.onGuideOn.bind(this)
+        this.onGuideOff = this.onGuideOff.bind(this)
+        this.onPlaceholderChar = this.onPlaceholderChar.bind(this)
+        this.onShowMaskOn = this.onShowMaskOn.bind(this)
+        this.onShowMaskOff = this.onShowMaskOff.bind(this)
       }
 
       onChange(e) {
         this.setState({value: e.target.value})
+      }
+
+      onMaskArray() {
+        this.setState({mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]})
+      }
+
+      onMaskFunction() {
+        this.setState({mask: () => ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]})
+      }
+
+      onGuideOn() {
+        this.setState({guide: true})
+      }
+
+      onGuideOff() {
+        this.setState({guide: false})
+      }
+
+      onPlaceholderChar() {
+        this.setState({placeholderChar: '*'})
+      }
+
+      onShowMaskOn() {
+        this.setState({
+          guide: undefined,
+          showMask: true
+        })
+      }
+
+      onShowMaskOff() {
+        this.setState({
+          guide: undefined,
+          showMask: false
+        })
       }
 
       render() {
@@ -374,10 +422,21 @@ describe('MaskedInput', () => {
               <input onChange={this.onChange} value={this.state.value} className={'user-input'}/>
               <MaskedInput
                 value={this.state.value}
-                mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                guide={false}
+                mask={this.state.mask}
+                guide={this.state.guide}
+                placeholderChar={this.state.placeholderChar}
+                showMask={this.state.showMask}
                 className={'masked-input'}
               />
+              <button className='mask-array-button' onClick={this.onMaskArray}>Change mask array</button>
+              <button className='mask-function-button' onClick={this.onMaskFunction}>Change mask function</button>
+              <button className='guide-on-button' onClick={this.onGuideOn}>Guide On</button>
+              <button className='guide-off-button' onClick={this.onGuideOff}>Guide Off</button>
+              <button className='placeholderChar-button' onClick={this.onPlaceholderChar}>
+                Change placeholderChar
+              </button>
+              <button className='showMask-on-button' onClick={this.onShowMaskOn}>ShowMask On</button>
+              <button className='showMask-off-button' onClick={this.onShowMaskOff}>ShowMask Off</button>
           </div>
         )
       }
@@ -386,20 +445,68 @@ describe('MaskedInput', () => {
     const statefulComponent = ReactTestUtils.renderIntoDocument(
       <StatefulComponent/>
     )
+    // Find inputs
     const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
     const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+    // Find buttons
+    const renderedDOMButtonMaskArray =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'mask-array-button')
+    const renderedDOMButtonMaskFunction =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'mask-function-button')
+    const renderedDOMButtonGuideOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'guide-on-button')
+    const renderedDOMButtonGuideOff =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'guide-off-button')
+    const renderedDOMButtonShowMaskOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'showMask-on-button')
+    const renderedDOMButtonShowMaskOff =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'showMask-off-button')
+    const renderedDOMButtonPlaceholderChar =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'placeholderChar-button')
 
+    // Check value changing
     ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ')
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '12345678901234567890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: ''}})
+    expect(renderedDOMMaskedInput.value).to.equal('')
 
+    // Check showMask changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonShowMaskOn)
+    expect(renderedDOMMaskedInput.value).to.equal('(___) ___-____')
+    ReactTestUtils.Simulate.click(renderedDOMButtonShowMaskOff)
+    expect(renderedDOMMaskedInput.value).to.equal('')
+
+    // // Check guide changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOff)
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ')
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOn)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ___-____')
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOff)
     expect(renderedDOMMaskedInput.value).to.equal('(123) ')
 
-    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '12345678901234567890'}})
+    // Check placeholderChar changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOn)
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ___-____')
+    ReactTestUtils.Simulate.click(renderedDOMButtonPlaceholderChar)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ***-****')
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOff)
 
+    // Check mask as array changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '1234567890'}})
     expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.click(renderedDOMButtonMaskArray)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-78-90')
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOff)
 
-    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: ''}})
-
-    expect(renderedDOMMaskedInput.value).to.equal('')
+    // Check mask as function changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '1234567890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-78-90')
+    ReactTestUtils.Simulate.click(renderedDOMButtonMaskFunction)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
   })
 })
 

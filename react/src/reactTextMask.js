@@ -25,9 +25,25 @@ export default class MaskedInput extends React.PureComponent {
     this.initTextMask()
   }
 
-  componentDidUpdate() {
-    // Check previous masked value with current `input` value to prevent dublicating update() call
-    if (this.props.value !== this.inputElement.value) {
+  componentDidUpdate(prevProps) {
+    // Getting props affecting value
+    const {value, mask, guide, placeholderChar, showMask} = this.props
+
+    // Сalculate that settings was changed:
+    // - `pipe` exludes, because it could pass every time in `render` as new function
+    // - `keepCharPositions` exludes, because it affect only cursor position
+    // - `mask` converting to string, to compare values
+    const settings = {guide, placeholderChar, showMask}
+    const maskAsArray = typeof mask === 'function' ? mask(value) : mask
+    const prevMaskAsArray = typeof prevProps.mask === 'function' ? prevProps.mask(prevProps.value) : prevProps.mask
+    const isMaskChanged = maskAsArray.toString() !== prevMaskAsArray.toString()
+    const isSettingChanged = Object.keys(settings).some(prop => settings[prop] !== prevProps[prop]) || isMaskChanged
+
+    // Сalculate that value was changed
+    const isValueChanged = value !== this.inputElement.value
+
+    // Check value and settings to prevent dublicating update() call
+    if (isValueChanged || isSettingChanged) {
       this.initTextMask()
     }
   }
