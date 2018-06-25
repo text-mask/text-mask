@@ -365,7 +365,8 @@ describe('MaskedInput', () => {
           mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
           guide: false,
           placeholderChar: '_',
-          showMask: false
+          showMask: false,
+          pipe: undefined
         }
 
         this.onChange = this.onChange.bind(this)
@@ -376,6 +377,7 @@ describe('MaskedInput', () => {
         this.onPlaceholderChar = this.onPlaceholderChar.bind(this)
         this.onShowMaskOn = this.onShowMaskOn.bind(this)
         this.onShowMaskOff = this.onShowMaskOff.bind(this)
+        this.onPipe = this.onPipe.bind(this)
       }
 
       onChange(e) {
@@ -416,6 +418,12 @@ describe('MaskedInput', () => {
         })
       }
 
+      onPipe() {
+        this.setState({
+          pipe: (conformedValue) => ({value: `+1 ${conformedValue}`, indexesOfPipedChars: [0, 1, 2]})
+        })
+      }
+
       render() {
         return (
           <div>
@@ -426,6 +434,7 @@ describe('MaskedInput', () => {
                 guide={this.state.guide}
                 placeholderChar={this.state.placeholderChar}
                 showMask={this.state.showMask}
+                pipe={this.state.pipe}
                 className={'masked-input'}
               />
               <button className='mask-array-button' onClick={this.onMaskArray}>Change mask array</button>
@@ -437,6 +446,7 @@ describe('MaskedInput', () => {
               </button>
               <button className='showMask-on-button' onClick={this.onShowMaskOn}>ShowMask On</button>
               <button className='showMask-off-button' onClick={this.onShowMaskOff}>ShowMask Off</button>
+              <button className='pipe-button' onClick={this.onPipe}>Change pipe</button>
           </div>
         )
       }
@@ -463,6 +473,8 @@ describe('MaskedInput', () => {
       ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'showMask-off-button')
     const renderedDOMButtonPlaceholderChar =
       ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'placeholderChar-button')
+    const renderedDOMButtonPipe =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'pipe-button')
 
     // Check value changing
     ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
@@ -507,6 +519,10 @@ describe('MaskedInput', () => {
     expect(renderedDOMMaskedInput.value).to.equal('(123) 456-78-90')
     ReactTestUtils.Simulate.click(renderedDOMButtonMaskFunction)
     expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+
+    // Check pipe changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonPipe)
+    expect(renderedDOMMaskedInput.value).to.equal('+1 (123) 456-7890')
   })
 })
 
