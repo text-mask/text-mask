@@ -8,7 +8,7 @@ export default {
         value: this.value
       },
       attrs: this.$attrs,
-      on: Object.assign({ ...this.$listeners }, {
+      on: Object.assign({...this.$listeners}, {
         input: (event) => this.updateValue(event.target.value),
       })
     })
