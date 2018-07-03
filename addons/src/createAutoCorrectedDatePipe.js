@@ -1,7 +1,11 @@
+const maxValueMonth = [31, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+const formatOrder = ['yyyy', 'yy', 'mm', 'dd', 'HH', 'MM', 'SS']
 export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy') {
+  const dateFormatArray = dateFormat
+    .split(/[^dmyHMS]+/)
+    .sort((a, b) => formatOrder.indexOf(a) - formatOrder.indexOf(b))
   return function(conformedValue) {
     const indexesOfPipedChars = []
-    const dateFormatArray = dateFormat.split(/[^dmyHMS]+/)
     const maxValue = {'dd': 31, 'mm': 12, 'yy': 99, 'yyyy': 9999, 'HH': 23, 'MM': 59, 'SS': 59}
     const minValue = {'dd': 1, 'mm': 1, 'yy': 0, 'yyyy': 1, 'HH': 0, 'MM': 0, 'SS': 0}
     const conformedValueArr = conformedValue.split('')
@@ -19,13 +23,18 @@ export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy') {
     })
 
     // Check for invalid date
+    let month = 0
     const isInvalid = dateFormatArray.some((format) => {
       const position = dateFormat.indexOf(format)
       const length = format.length
       const textValue = conformedValue.substr(position, length).replace(/\D/g, '')
       const value = parseInt(textValue, 10)
+      if (format === 'mm') {
+        month = value || 0
+      }
+      const maxValueForFormat = format === 'dd' ? maxValueMonth[month] : maxValue[format]
 
-      return value > maxValue[format] || (textValue.length === length && value < minValue[format])
+      return value > maxValueForFormat || (textValue.length === length && value < minValue[format])
     })
 
     if (isInvalid) {
