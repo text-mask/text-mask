@@ -18,8 +18,18 @@ function mountComponent(Component, propsData) {
 }
 
 const eventTest = Vue.extend({
-  template: `<div><masked-input ref="maskedInput" type="text" name="test" :mask="[/\d/,/\d/,/\d/]" @focus="callback('focus')" @blur="callback('blur')" @keypress="callback('keypress')"></masked-input></div>`,
-  components: { maskedInput },
+  template: `<div>
+    <masked-input
+      ref="maskedInput"
+      type="text"
+      name="test"
+      :mask="[/\d/,/\d/,/\d/]"
+      @focus="callback('focus')"
+      @blur="callback('blur')"
+      @keypress="callback('keypress')">
+    </masked-input>
+  </div>`,
+  components: {maskedInput},
   methods: {
     callback(e) { },
   },
