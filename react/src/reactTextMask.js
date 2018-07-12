@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement'
+import {isNil} from '../../core/src/utilities'
 
 export default class MaskedInput extends React.PureComponent {
   constructor(...args) {
@@ -36,7 +37,7 @@ export default class MaskedInput extends React.PureComponent {
     const settings = {guide, placeholderChar, showMask}
     const isPipeChanged = typeof pipe === 'function' && typeof prevProps.pipe === 'function' ?
       pipe.toString() !== prevProps.pipe.toString() :
-      false
+      isNil(pipe) && !isNil(prevProps.pipe) || !isNil(pipe) && isNil(prevProps.pipe)
     const isMaskChanged = mask.toString() !== prevProps.mask.toString()
     const isSettingChanged =
       Object.keys(settings).some(prop => settings[prop] !== prevProps[prop]) ||
@@ -46,7 +47,7 @@ export default class MaskedInput extends React.PureComponent {
     // Сalculate that value was changed
     const isValueChanged = value !== this.inputElement.value
 
-    // Check value and settings to prevent dublicating update() call
+    // Check value and settings to prevent duplicating update() call
     if (isValueChanged || isSettingChanged) {
       this.initTextMask()
     }
