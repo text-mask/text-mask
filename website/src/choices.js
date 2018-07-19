@@ -33,7 +33,15 @@ export default map(
     pipe: createAutoCorrectedDatePipe(),
     placeholder: 'Please enter a date',
     keepCharPositions: true,
-  }, {
+  },
+  {
+    name: 'Date (with min and max years between 1975 and 2020)',
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+    pipe: createAutoCorrectedDatePipe('dd mm yyyy', 1975, 2020),
+    placeholder: 'Please enter a date',
+    keepCharPositions: true,
+  },
+  {
     name: 'US dollar amount',
     mask: createNumberMask(),
     placeholder: 'Enter an amount',
