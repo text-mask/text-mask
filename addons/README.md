@@ -77,6 +77,9 @@ day slots.
 
 It also blocks the user from entering invalid days or months such as `33/44`.
 
+You may also specify a `minYear` and a `maxYear` to prevent users from typing dates outside of that specified range.
+If the user enters a number outside of the range you specified, it will block the input.
+
 For `createAutoCorrectedDatePipe` to work properly, the Text Mask component needs to be
 configured with
 [`keepCharPositions`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
