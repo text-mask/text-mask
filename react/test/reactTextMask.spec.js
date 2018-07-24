@@ -312,6 +312,298 @@ describe('MaskedInput', () => {
     maskedInput.onChange()
     expect(maskedInput.textMaskInputElement.update.callCount).to.equal(1)
   })
+
+  // test fix for issues #230, #483, #778 etc.
+  it('works correct in stateful Component', () => {
+    class StatefulComponent extends React.Component {
+      constructor(...args) {
+        super(...args)
+
+        this.state = {value: '1234'}
+        this.onChange = this.onChange.bind(this)
+      }
+
+      onChange(e) {
+        this.setState({value: e.target.value})
+      }
+
+      render() {
+        return <MaskedInput
+        onChange={this.onChange}
+        value={this.state.value}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        guide={false}/>
+      }
+    }
+
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+    const renderedDOMInput = ReactTestUtils.findRenderedDOMComponentWithTag(statefulComponent, 'input')
+
+    // Initial value "1234" from StatefulComponent is masked correct
+    expect(renderedDOMInput.value).to.equal('(123) 4')
+
+    // Simulate deleting last char "4" from input
+    renderedDOMInput.value = '(123'
+
+    // Simulate onChange event with current value "(123"
+    ReactTestUtils.Simulate.change(renderedDOMInput, {target: {value: '(123'}})
+
+    // Now we expect to see value "(123" instead of "(123) "
+    expect(renderedDOMInput.value).to.equal('(123')
+  })
+})
+
+// Test for issue #806
+describe('MaskedInput as controlled component', () => {
+  class StatefulComponent extends React.Component {
+    constructor(...args) {
+      super(...args)
+
+      this.state = {
+        value: '',
+        mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        guide: false,
+        placeholderChar: '_',
+        showMask: false,
+        pipe: undefined
+      }
+
+      this.onChange = this.onChange.bind(this)
+      this.onMaskArray = this.onMaskArray.bind(this)
+      this.onMaskFunction = this.onMaskFunction.bind(this)
+      this.onGuideOn = this.onGuideOn.bind(this)
+      this.onPlaceholderChar = this.onPlaceholderChar.bind(this)
+      this.onShowMaskOn = this.onShowMaskOn.bind(this)
+      this.onPipeOn = this.onPipeOn.bind(this)
+      this.onPipeOff = this.onPipeOff.bind(this)
+      this.onPipeAnother = this.onPipeAnother.bind(this)
+    }
+
+    onChange(e) {
+      this.setState({value: e.target.value})
+    }
+
+    onMaskArray() {
+      this.setState({mask: ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]})
+    }
+
+    onMaskFunction() {
+      this.setState({mask: () => [/\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]})
+    }
+
+    onGuideOn() {
+      this.setState({guide: true})
+    }
+
+    onPlaceholderChar() {
+      this.setState({placeholderChar: '*'})
+    }
+
+    onShowMaskOn() {
+      this.setState({
+        guide: undefined,
+        showMask: true
+      })
+    }
+
+    onPipeOn() {
+      this.setState({
+        pipe: (conformedValue) => ({value: `Tel. ${conformedValue}`, indexesOfPipedChars: [0, 1, 2, 3, 4]})
+      })
+    }
+
+    onPipeOff() {
+      this.setState({
+        pipe: undefined
+      })
+    }
+
+    onPipeAnother() {
+      this.setState({
+        pipe: (conformedValue) => ({value: `Tel: ${conformedValue}`, indexesOfPipedChars: [0, 1, 2, 3, 4]})
+      })
+    }
+
+    render() {
+      return (
+        <div>
+            <input onChange={this.onChange} value={this.state.value} className={'user-input'}/>
+            <MaskedInput
+              value={this.state.value}
+              mask={this.state.mask}
+              guide={this.state.guide}
+              placeholderChar={this.state.placeholderChar}
+              showMask={this.state.showMask}
+              pipe={this.state.pipe}
+              className={'masked-input'}
+            />
+            <button className='mask-array-button' onClick={this.onMaskArray}>Change mask array</button>
+            <button className='mask-function-button' onClick={this.onMaskFunction}>Change mask function</button>
+            <button className='guide-on-button' onClick={this.onGuideOn}>Guide On</button>
+            <button className='placeholderChar-button' onClick={this.onPlaceholderChar}>
+              Change placeholderChar
+            </button>
+            <button className='showMask-on-button' onClick={this.onShowMaskOn}>ShowMask On</button>
+            <button className='pipe-on-button' onClick={this.onPipeOn}>Pipe On</button>
+            <button className='pipe-off-button' onClick={this.onPipeOff}>Pipe Off</button>
+            <button className='pipe-another-button' onClick={this.onPipeAnother}>Pipe Another</button>
+        </div>
+      )
+    }
+  }
+
+  it('works if value prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Check value changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '123'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ')
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '12345678901234567890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: ''}})
+    expect(renderedDOMMaskedInput.value).to.equal('')
+  })
+
+  it('works if showMask prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonShowMaskOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'showMask-on-button')
+
+    // Check showMask changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonShowMaskOn)
+    expect(renderedDOMMaskedInput.value).to.equal('(___) ___-____')
+  })
+
+  it('works if guide prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonGuideOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'guide-on-button')
+
+    // Check guide on changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '(123) '}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ')
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOn)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ___-____')
+  })
+
+  it('works if placeholderChar prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonGuideOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'guide-on-button')
+    const renderedDOMButtonPlaceholderChar =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'placeholderChar-button')
+
+    // Check placeholderChar changing
+    ReactTestUtils.Simulate.click(renderedDOMButtonGuideOn)
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '(123) ___-____'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ___-____')
+    ReactTestUtils.Simulate.click(renderedDOMButtonPlaceholderChar)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) ***-****')
+  })
+
+  it('works if mask as array prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonMaskArray =
+    ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'mask-array-button')
+
+    // Check mask as array changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '(123) 456-7890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.click(renderedDOMButtonMaskArray)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-78-90')
+  })
+
+  it('works if mask as function prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonMaskFunction =
+    ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'mask-function-button')
+
+    // Check mask as function changing
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '(123) 456-7890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.click(renderedDOMButtonMaskFunction)
+    expect(renderedDOMMaskedInput.value).to.equal('123 456-7890')
+  })
+
+  it('works if pipe prop was changed', () => {
+    const statefulComponent = ReactTestUtils.renderIntoDocument(
+      <StatefulComponent/>
+    )
+
+    // Find inputs
+    const renderedDOMUserInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'user-input')
+    const renderedDOMMaskedInput = ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'masked-input')
+
+    // Find buttons
+    const renderedDOMButtonPipeOn =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'pipe-on-button')
+    const renderedDOMButtonPipeOff =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'pipe-off-button')
+    const renderedDOMButtonPipeAnother =
+      ReactTestUtils.findRenderedDOMComponentWithClass(statefulComponent, 'pipe-another-button')
+
+    // Check pipe changing
+    // `pipe` undefined to function
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: '(123) 456-7890'}})
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+    ReactTestUtils.Simulate.click(renderedDOMButtonPipeOn)
+    expect(renderedDOMMaskedInput.value).to.equal('Tel. (123) 456-7890')
+    // `pipe` function to another function
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: 'Tel. (123) 456-7890'}})
+    ReactTestUtils.Simulate.click(renderedDOMButtonPipeAnother)
+    expect(renderedDOMMaskedInput.value).to.equal('Tel: (123) 456-7890')
+    // `pipe` function to undefined
+    ReactTestUtils.Simulate.change(renderedDOMUserInput, {target: {value: 'Tel: (123) 456-7890'}})
+    ReactTestUtils.Simulate.click(renderedDOMButtonPipeOff)
+    expect(renderedDOMMaskedInput.value).to.equal('(123) 456-7890')
+  })
 })
 
 describe('conformToMask', () => {
