@@ -7,17 +7,16 @@ export default {
       domProps: {
         value: this.value
       },
-      on: {
+      attrs: this.$attrs,
+      on: Object.assign({...this.$listeners}, {
         input: (event) => this.updateValue(event.target.value),
-        focus: (event) => this.emitEvent(event),
-        blur: (event) => this.emitEvent(event),
-        keypress: (event) => this.emitEvent(event),
-        click: (event) => this.emitEvent(event)
-      }
+      })
     })
   },
 
   name: 'masked-input',
+
+  inheritAttrs: false,
 
   props: {
     value: {
@@ -85,10 +84,6 @@ export default {
       this.textMaskInputElement.update(value)
       this.$emit('input', this.$refs.input.value)
     },
-
-    emitEvent(event) {
-      this.$emit(event.type, event)
-    }
   },
 
   watch: {
