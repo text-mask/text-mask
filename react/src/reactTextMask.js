@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import createTextMaskInputElement
   from '../../core/src/createTextMaskInputElement'
+import {isNil} from '../../core/src/utilities'
 
 export default class MaskedInput extends React.PureComponent {
   constructor(...args) {
@@ -23,6 +24,33 @@ export default class MaskedInput extends React.PureComponent {
 
   componentDidMount() {
     this.initTextMask()
+  }
+
+  componentDidUpdate(prevProps) {
+    // Getting props affecting value
+    const {value, pipe, mask, guide, placeholderChar, showMask} = this.props
+
+    // Сalculate that settings was changed:
+    // - `pipe` converting to string, to compare function content
+    // - `mask` converting to string, to compare values or function content
+    // - `keepCharPositions` exludes, because it affect only cursor position
+    const settings = {guide, placeholderChar, showMask}
+    const isPipeChanged = typeof pipe === 'function' && typeof prevProps.pipe === 'function' ?
+      pipe.toString() !== prevProps.pipe.toString() :
+      isNil(pipe) && !isNil(prevProps.pipe) || !isNil(pipe) && isNil(prevProps.pipe)
+    const isMaskChanged = mask.toString() !== prevProps.mask.toString()
+    const isSettingChanged =
+      Object.keys(settings).some(prop => settings[prop] !== prevProps[prop]) ||
+        isMaskChanged ||
+        isPipeChanged
+
+    // Сalculate that value was changed
+    const isValueChanged = value !== this.inputElement.value
+
+    // Check value and settings to prevent duplicating update() call
+    if (isValueChanged || isSettingChanged) {
+      this.initTextMask()
+    }
   }
 
   render() {
