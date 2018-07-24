@@ -8,8 +8,13 @@ export default class MaskedInput extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
+    this.setRef = this.setRef.bind(this)
     this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
+  }
+
+  setRef(inputElement) {
+    this.inputElement = inputElement
   }
 
   initTextMask() {
@@ -66,9 +71,7 @@ export default class MaskedInput extends React.PureComponent {
     delete props.onChange
     delete props.showMask
 
-    const ref = (inputElement) => (this.inputElement = inputElement)
-
-    return render(ref, {
+    return render(this.setRef, {
       onBlur: this.onBlur,
       onChange: this.onChange,
       defaultValue: this.props.value,
