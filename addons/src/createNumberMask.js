@@ -20,6 +20,7 @@ export default function createNumberMask({
   requireDecimal = false,
   allowNegative = false,
   allowLeadingZeroes = false,
+  fixedDecimalScale = false,
   integerLimit = null
 } = {}) {
   const prefixLength = prefix && prefix.length || 0
@@ -34,7 +35,7 @@ export default function createNumberMask({
       (rawValue[0] === prefix[0] && rawValueLength === 1)
     ) {
       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
-    } else if(
+    } else if (
       rawValue === decimalSymbol &&
       allowDecimal
     ) {
@@ -43,7 +44,7 @@ export default function createNumberMask({
 
     const isNegative = (rawValue[0] === minus) && allowNegative
     //If negative remove "-" sign
-    if(isNegative) {
+    if (isNegative) {
       rawValue = rawValue.toString().substr(1)
     }
 
@@ -100,12 +101,18 @@ export default function createNumberMask({
         if (typeof decimalLimit === number) {
           fraction = fraction.slice(0, decimalLimit)
         }
-
         mask = mask.concat(fraction)
       }
 
-      if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
-        mask.push(digitRegExp)
+      if (requireDecimal === true) {
+        if (fixedDecimalScale === true) {
+          const decimalLimitRemaining = fraction ? decimalLimit - fraction.length : decimalLimit
+          for (var i = 0; i < decimalLimitRemaining; i++) {
+            mask.push(digitRegExp)
+          }
+        } else if (rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
+          mask.push(digitRegExp)
+        }
       }
     }
 
