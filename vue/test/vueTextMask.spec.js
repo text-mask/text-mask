@@ -1,5 +1,5 @@
 import packageJson from '../package.json'
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.js'
 
 const VueTextMask = (isVerify()) ?
   require(`../${packageJson.main}`) :
@@ -16,6 +16,24 @@ function mountComponent(Component, propsData) {
   const Ctor = Vue.extend(Component)
   return new Ctor({propsData}).$mount()
 }
+
+const eventTest = Vue.extend({
+  template: `<div>
+    <masked-input
+      ref="maskedInput"
+      type="text"
+      name="test"
+      :mask="[/\d/,/\d/,/\d/]"
+      @focus="callback('focus')"
+      @blur="callback('blur')"
+      @keypress="callback('keypress')">
+    </masked-input>
+  </div>`,
+  components: {maskedInput},
+  methods: {
+    callback(e) { },
+  },
+})
 
 describe('inputMask', () => {
   it('renders', () => {
@@ -219,18 +237,15 @@ describe('inputMask', () => {
   })
 
   it('emits focus and blur events for parent components', () => {
-    const vm = mountComponent(maskedInput, {
-      value: '123',
-      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    })
+    const vm = mountComponent(eventTest)
 
-    vm.emitEvent = sinon.spy()
+    vm.callback = sinon.spy()
 
-    vm.$el.focus()
-    vm.$el.blur()
-    expect(vm.emitEvent.callCount).to.equal(2)
-    expect(vm.emitEvent.getCall(0).args[0].type).to.equal('focus')
-    expect(vm.emitEvent.getCall(1).args[0].type).to.equal('blur')
+    vm.$refs.maskedInput.$el.focus()
+    vm.$refs.maskedInput.$el.blur()
+    expect(vm.callback.callCount).to.equal(2)
+    expect(vm.callback.getCall(0).args[0]).to.equal('focus')
+    expect(vm.callback.getCall(1).args[0]).to.equal('blur')
   })
 
   it('does not emit "input" event after component mount', () => {
@@ -248,22 +263,19 @@ describe('inputMask', () => {
   })
 
   it('emits keypress event for parent components', () => {
-    const vm = mountComponent(maskedInput, {
-      value: '123',
-      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-    })
+    const vm = mountComponent(eventTest)
 
-    vm.emitEvent = sinon.spy()
+    vm.callback = sinon.spy()
 
     const e = new window.KeyboardEvent('keypress', {
       key: 'e',
       bubbles: true,
       cancelable: true
     })
-    vm.$el.dispatchEvent(e)
+    vm.$refs.maskedInput.$el.dispatchEvent(e)
 
-    expect(vm.emitEvent.callCount).to.equal(1)
-    expect(vm.emitEvent.getCall(0).args[0].type).to.equal('keypress')
+    expect(vm.callback.callCount).to.equal(1)
+    expect(vm.callback.getCall(0).args[0]).to.equal('keypress')
   })
 })
 
