@@ -37,7 +37,7 @@ const HelpPanel = React.createClass({
             </p>
           </Panel>
         </Row>
-			) || props.mask.instanceOf === 'createNumberMask' && (
+      ) || props.mask.instanceOf === 'createNumberMask' && (
         <Row>
           <Panel title='Mask function'>
             <MaskFunctionDefinition maskLink={<Links.createNumberMask/>} />
