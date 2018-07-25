@@ -70,15 +70,18 @@ to Text Mask.
 ### `createAutoCorrectedDatePipe`
 
 The `createAutoCorrectedDatePipe` returns a `autoCorrectedDatePipe`, which can help the user in entering a date.
+The `createAutoCorrectedDatePipe` accepts an object with the following keys:
+
+1. `dateFormat` (string): give the order of day, month, year, hour and minute in your `mask`.
+1. `minYear` (number): the minimum year allowed in the date field `mask`.
+1. `maxYear` (number): the maximum year allowed in the date field `mask`.
+
 
 For example, if the user enters a value
 larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
 day slots.
 
 It also blocks the user from entering invalid days or months such as `33/44`.
-
-You may also specify a `minYear` and a `maxYear` to prevent users from typing dates outside of that specified range.
-If the user enters a number outside of the range you specified, it will block the input.
 
 For `createAutoCorrectedDatePipe` to work properly, the Text Mask component needs to be
 configured with
@@ -90,7 +93,7 @@ set to `true`.
 ```js
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
-const autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm/dd/yyyy HH:MM')
+const autoCorrectedDatePipe = createAutoCorrectedDatePipe({dateFormat: 'mm/dd/yyyy HH:MM'})
 // As you can see in the line above, you can pass a string argument to `createAutoCorrectedDatePipe` 
 // to give it the order of day, month, year, hour and minute in your `mask`.
 

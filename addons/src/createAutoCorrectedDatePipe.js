@@ -1,4 +1,8 @@
-export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy', minYear = 0, maxYear = 9999) {
+export default function createAutoCorrectedDatePipe({
+  dateFormat = 'mm dd yyyy',
+  minYear = 1,
+  maxYear = 9999
+} = {}) {
   return function(conformedValue) {
     const indexesOfPipedChars = []
     const dateFormatArray = dateFormat.split(/[^dmyHMS]+/)

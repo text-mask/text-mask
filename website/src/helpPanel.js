@@ -37,24 +37,6 @@ const HelpPanel = React.createClass({
             </p>
           </Panel>
         </Row>
-			) ||
-			props.choiceName === 'Date (with min and max years between 1975 and 2020)' && (
-				<Row>
-					<Panel title='Piped'>
-						<p>
-							User input in this configuration is passed through a <Links.pipe /> that
-							allows a min and max year.
-							For this example, the range is set from 1975 to 2020.
-              If you enter <code>0</code> in the 1st digit of the year, it will block the entry.
-              If you enter <code>1</code> in the 1st digit of the year, it will allow the entry.
-							If you enter <code>8</code> in the 1st digit of the year, it will block the entry.
-            </p>
-
-						<p>
-							It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon />.
-            </p>
-					</Panel>
-				</Row>
 			) || props.mask.instanceOf === 'createNumberMask' && (
         <Row>
           <Panel title='Mask function'>
