@@ -6,7 +6,7 @@ describe('createAutoCorrectedDatePipe', () => {
   let autoCorrectedDatePipe
 
   it('accepts the date format as the first parameter and returns a date pipe function', () => {
-    autoCorrectedDatePipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy'})
+    autoCorrectedDatePipe = createAutoCorrectedDatePipe('mm dd yyyy')
   })
 
   it('completes the month if the 1st digit is bigger than 1 and returns `indexesOfPipedChars`', () => {
@@ -40,12 +40,12 @@ describe('createAutoCorrectedDatePipe', () => {
   })
 
   it('allows yy format', () => {
-    let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm/yy'})
+    let pipe = createAutoCorrectedDatePipe('mm/yy')
     expect(pipe('12/99')).to.deep.equal({value: '12/99', indexesOfPipedChars: []})
   })
 
   it('allows 00 for yy', () => {
-    let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yy'})
+    let pipe = createAutoCorrectedDatePipe('mm dd yy')
     expect(pipe('12 31 00')).to.deep.equal({value: '12 31 00', indexesOfPipedChars: []})
   })
 
@@ -53,7 +53,7 @@ describe('createAutoCorrectedDatePipe', () => {
     let autoCorrectedDateTimePipe
 
     it('accepts the date time format as the first parameter and returns a date time pipe function', () => {
-      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy HH MM SS'})
+      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe('mm dd yyyy HH MM SS')
     })
 
     it('completes the hours if the 1st digit is bigger than 2 and returns `indexesOfPipedChars`', () => {
@@ -110,7 +110,7 @@ describe('createAutoCorrectedDatePipe', () => {
     let autoCorrectedDateTimePipe
 
     it('accepts minimum year as the second parameter and returns a date time pipe function', () => {
-      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1999})
+      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999})
     })
 
     it('returns false if year 1st digit is less than 1', () => {
@@ -130,7 +130,7 @@ describe('createAutoCorrectedDatePipe', () => {
     })
 
     it('allows for min year', () => {
-      let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1999})
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999})
       expect(pipe('12 31 1999')).to.deep.equal({value: '12 31 1999', indexesOfPipedChars: []})
     })
   })
@@ -139,7 +139,7 @@ describe('createAutoCorrectedDatePipe', () => {
     let autoCorrectedDateTimePipe
 
     it('accepts min and max year as the second/third parameter and returns a date time pipe function', () => {
-      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1999, maxYear: 2020})
+      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999, maxYear: 2020})
     })
 
     it('returns false if year 1st digit is more than 2', () => {
@@ -159,17 +159,17 @@ describe('createAutoCorrectedDatePipe', () => {
     })
 
     it('allows for a year at the top side of the range', () => {
-      let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1990, maxYear: 2020})
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
       expect(pipe('12 31 2020')).to.deep.equal({value: '12 31 2020', indexesOfPipedChars: []})
     })
 
     it('allows for a year within the range', () => {
-      let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1990, maxYear: 2020})
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
       expect(pipe('12 31 2000')).to.deep.equal({value: '12 31 2000', indexesOfPipedChars: []})
     })
 
     it('allows for a year at the bottom side of the range', () => {
-      let pipe = createAutoCorrectedDatePipe({dateFormat: 'mm dd yyyy', minYear: 1990, maxYear: 2020})
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
       expect(pipe('12 31 1990')).to.deep.equal({value: '12 31 1990', indexesOfPipedChars: []})
     })
   })

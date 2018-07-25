@@ -1,5 +1,4 @@
-export default function createAutoCorrectedDatePipe({
-  dateFormat = 'mm dd yyyy',
+export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy', {
   minYear = 1,
   maxYear = 9999
 } = {}) {
