@@ -27,7 +27,7 @@ export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy', {
       const length = format.length
       const textValue = conformedValue.substr(position, length).replace(/\D/g, '')
       const value = parseInt(textValue, 10)
-      if (format === 'yyyy') {
+      if (format === 'yyyy' && minYear !== 1 || maxYear !== 9999) {
         const scopedMaxValue = parseInt(maxValue[format].toString().substring(0, textValue.length), 10)
         const scopedMinValue = parseInt(minValue[format].toString().substring(0, textValue.length), 10)
         return value < scopedMinValue || value > scopedMaxValue
