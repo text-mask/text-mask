@@ -35,6 +35,10 @@ export function isNumber(value) {
   return typeof value === 'number' && value.length === undefined && !isNaN(value)
 }
 
+export function isNil(value) {
+  return typeof value === 'undefined' || value === null
+}
+
 const strCaretTrap = '[]'
 export function processCaretTraps(mask) {
   const indexes = []
