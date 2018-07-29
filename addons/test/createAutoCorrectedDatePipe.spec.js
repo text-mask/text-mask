@@ -49,6 +49,22 @@ describe('createAutoCorrectedDatePipe', () => {
     expect(pipe('12 31 00')).to.deep.equal({value: '12 31 00', indexesOfPipedChars: []})
   })
 
+  it('returns false for out of range day before known month', () => {
+    const pipe = createAutoCorrectedDatePipe('dd/mm')
+    expect(pipe('30/02')).to.equal(false, "pipe('30/02')")
+    expect(pipe('32/01')).to.equal(false, "pipe('32/01')")
+  })
+  it('returns false if month is not known and day is greater than 31', () => {
+    const pipe = createAutoCorrectedDatePipe('dd/mm')
+    expect(pipe('32/')).to.equal(false, "pipe('32/')")
+  })
+  it('returns false if month is known and day is greater than allowed value in month', () => {
+    let pipe = createAutoCorrectedDatePipe('mm/dd')
+    expect(pipe('02/30')).to.equal(false, "pipe('02/30')")
+    expect(pipe('02/31')).to.equal(false, "pipe('02/31')")
+    expect(pipe('11/31')).to.equal(false, "pipe('11/31')")
+    expect(pipe('01/32')).to.equal(false, "pipe('01/32')")
+  })
   describe('datetime', () => {
     let autoCorrectedDateTimePipe
 
