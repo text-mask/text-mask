@@ -70,6 +70,11 @@ to Text Mask.
 ### `createAutoCorrectedDatePipe`
 
 The `createAutoCorrectedDatePipe` returns a `autoCorrectedDatePipe`, which can help the user in entering a date.
+The `createAutoCorrectedDatePipe` accepts a string specifying date format and an object with the following keys:
+
+1. `minYear` (number): the minimum year allowed in the date field `mask`.
+1. `maxYear` (number): the maximum year allowed in the date field `mask`.
+
 
 For example, if the user enters a value
 larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the

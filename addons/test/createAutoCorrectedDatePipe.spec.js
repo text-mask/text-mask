@@ -122,4 +122,71 @@ describe('createAutoCorrectedDatePipe', () => {
       )
     })
   })
+  describe('createAutoCorrectDatePipe with min year', () => {
+    let autoCorrectedDateTimePipe
+
+    it('accepts minimum year as the second parameter and returns a date time pipe function', () => {
+      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999})
+    })
+
+    it('returns false if year 1st digit is less than 1', () => {
+      expect(autoCorrectedDateTimePipe('12/31/0')).to.equal(false)
+    })
+
+    it('returns false if year 2st digit is less than 9', () => {
+      expect(autoCorrectedDateTimePipe('12/31/18')).to.equal(false)
+    })
+
+    it('returns false if year 3rd digit is less than 9', () => {
+      expect(autoCorrectedDateTimePipe('12/31/198')).to.equal(false)
+    })
+
+    it('returns false if year 4th digit is less than 9', () => {
+      expect(autoCorrectedDateTimePipe('12/31/1998')).to.equal(false)
+    })
+
+    it('allows for min year', () => {
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999})
+      expect(pipe('12 31 1999')).to.deep.equal({value: '12 31 1999', indexesOfPipedChars: []})
+    })
+  })
+
+  describe('createAutoCorrectDatePipe with min and max year', () => {
+    let autoCorrectedDateTimePipe
+
+    it('accepts min and max year as the second/third parameter and returns a date time pipe function', () => {
+      autoCorrectedDateTimePipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1999, maxYear: 2020})
+    })
+
+    it('returns false if year 1st digit is more than 2', () => {
+      expect(autoCorrectedDateTimePipe('12/31/3')).to.equal(false)
+    })
+
+    it('returns false if year 2st digit is more than 0', () => {
+      expect(autoCorrectedDateTimePipe('12/31/21')).to.equal(false)
+    })
+
+    it('returns false if year 3rd digit is more than 2', () => {
+      expect(autoCorrectedDateTimePipe('12/31/203')).to.equal(false)
+    })
+
+    it('returns false if year 4th digit is more than 0', () => {
+      expect(autoCorrectedDateTimePipe('12/31/2021')).to.equal(false)
+    })
+
+    it('allows for a year at the top side of the range', () => {
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
+      expect(pipe('12 31 2020')).to.deep.equal({value: '12 31 2020', indexesOfPipedChars: []})
+    })
+
+    it('allows for a year within the range', () => {
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
+      expect(pipe('12 31 2000')).to.deep.equal({value: '12 31 2000', indexesOfPipedChars: []})
+    })
+
+    it('allows for a year at the bottom side of the range', () => {
+      let pipe = createAutoCorrectedDatePipe('mm dd yyyy', {minYear: 1990, maxYear: 2020})
+      expect(pipe('12 31 1990')).to.deep.equal({value: '12 31 1990', indexesOfPipedChars: []})
+    })
+  })
 })
