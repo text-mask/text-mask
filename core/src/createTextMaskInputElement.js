@@ -61,7 +61,11 @@ export default function createTextMaskInputElement(config) {
 
       // In framework components that support reactivity, it's possible to turn off masking by passing
       // `false` for `mask` after initialization. See https://github.com/text-mask/text-mask/pull/359
-      if (providedMask === false) { return }
+      if (providedMask === false) {
+        // Even without a mask, the value should be updated externally
+        inputElement.value = getSafeRawValue(rawValue)
+        return
+      }
 
       // We check the provided `rawValue` before moving further.
       // If it's something we can't work with `getSafeRawValue` will throw.
