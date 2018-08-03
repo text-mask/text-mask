@@ -23,6 +23,7 @@ export default class MaskedInput extends React.PureComponent {
     this.textMaskInputElement = createTextMaskInputElement({
       inputElement: this.inputElement,
       ...props,
+      mask: props.mask === false ? (value) => Array(value.length).fill(/./) : props.mask,
     })
     this.textMaskInputElement.update(value)
   }
