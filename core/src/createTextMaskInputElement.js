@@ -39,7 +39,7 @@ export default function createTextMaskInputElement(defaultConfig) {
 
     // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
     // This check is here to handle controlled framework components that repeat the `update` call on every render.
-    if (rawValue === state.previousConformedValue && !isRecalculating) { return }
+    if (rawValue === state.previousConformedValue) { return }
 
     // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
     // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
@@ -185,10 +185,10 @@ export default function createTextMaskInputElement(defaultConfig) {
 
 function safeSetSelection(element, selectionPosition, recalculate) {
   if (document.activeElement === element) {
-    if (isAndroid && recalculate && false) {
+    element.setSelectionRange(selectionPosition, selectionPosition, strNone)
+
+    if (isAndroid && recalculate) {
       defer(recalculate, 0)
-    } else {
-      element.setSelectionRange(selectionPosition, selectionPosition, strNone)
     }
   }
 }
