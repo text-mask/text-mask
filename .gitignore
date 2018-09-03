@@ -3,3 +3,5 @@ stats.json
 .idea
 aot
 angular2/coverage
+angular2/package-lock.json
+package-lock.json

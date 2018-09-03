@@ -10,6 +10,7 @@ export class TextMaskConfig {
   pipe?: (conformedValue: string, config: TextMaskConfig) => false | string | object
   keepCharPositions?: boolean
   showMask?: boolean
+  insertChar?: boolean
 }
 
 export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
@@ -45,6 +46,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
     placeholderChar: '_',
     pipe: undefined,
     keepCharPositions: false,
+    insertChar: false
   }
 
   onChange = (_: any) => {}
