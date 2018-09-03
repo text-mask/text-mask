@@ -11,7 +11,8 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
     placeholderChar = defaultPlaceholderChar,
     placeholder = convertMaskToPlaceholder(mask, placeholderChar),
     currentCaretPosition,
-    keepCharPositions
+    keepCharPositions,
+    insertChar
   } = config
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
@@ -87,10 +88,17 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
     }
   }
 
+  if (insertChar) {
+    const index = rawValueArr.findIndex(rowValue => rowValue.isNew)
+    if (index + editDistance < rawValueArr.length) {
+      rawValueArr.splice(index + editDistance, editDistance)
+    }
+  }
+
   // This is the variable that we will be filling with characters as we figure them out
   // in the algorithm below
   let conformedValue = emptyString
-  let someCharsRejected = false
+  let countRejectedChars = 0
 
   // Ok, so first we loop through the placeholder looking for placeholder characters to fill up.
   placeholderLoop: for (let i = 0; i < placeholderLength; i++) {
@@ -175,7 +183,7 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
             // Since we've mapped this placeholder position. We move on to the next one.
             continue placeholderLoop
           } else {
-            someCharsRejected = true
+            countRejectedChars++
           }
         }
       }
@@ -225,5 +233,5 @@ export default function conformToMask(rawValue = emptyString, mask = emptyString
     }
   }
 
-  return {conformedValue, meta: {someCharsRejected}}
+  return {conformedValue, meta: {countRejectedChars}}
 }

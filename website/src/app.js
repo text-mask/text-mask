@@ -44,6 +44,23 @@ const App = React.createClass({
               />
             </Row>
 
+              <Row name='Masked input' value='insertInput' noHelpLink>
+                  <MaskedInput
+                      style={props.textMaskComponentStyle}
+                      key={props.textMaskComponentUniqueKey}
+                      placeholder={props.placeholder}
+                      placeholderChar={props.placeholderChar}
+                      pipe={props.pipe}
+                      keepCharPositions={props.keepCharPositions}
+                      ref='insertInput'
+                      mask={props.mask}
+                      guide={props.guide}
+                      insertChar={true}
+                      className='form-control'
+                      id='insertInput'
+                  />
+              </Row>
+
             {props.rejectionMessage && (
               <Row><p className='alert alert-warning' style={{margin: 0}}>{props.rejectionMessage}</p></Row>
             )}

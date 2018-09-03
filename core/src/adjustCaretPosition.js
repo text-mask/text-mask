@@ -10,7 +10,8 @@ export default function adjustCaretPosition({
   placeholderChar,
   placeholder,
   indexesOfPipedChars = defaultArray,
-  caretTrapIndexes = defaultArray
+  caretTrapIndexes = defaultArray,
+  meta
 }) {
   if (currentCaretPosition === 0) { return 0 }
 
@@ -58,7 +59,7 @@ export default function adjustCaretPosition({
   let targetChar
 
   if (possiblyHasRejectedChar) {
-    startingSearchIndex = currentCaretPosition - editLength
+    startingSearchIndex = currentCaretPosition - meta.countRejectedChars
   } else {
     // At this point in the algorithm, we want to know where the caret is right before the raw input
     // has been conformed, and then see if we can find that same spot in the conformed input.

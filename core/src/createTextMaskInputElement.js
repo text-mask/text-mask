@@ -27,6 +27,7 @@ export default function createTextMaskInputElement(config) {
       pipe,
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false,
+      insertChar = false,
       showMask = false
     } = config) {
       // if `rawValue` is `undefined`, read from the `inputElement`
@@ -107,11 +108,12 @@ export default function createTextMaskInputElement(config) {
         pipe,
         placeholder,
         currentCaretPosition,
-        keepCharPositions
+        keepCharPositions,
+        insertChar
       }
 
       // `conformToMask` returns `conformedValue` as part of an object for future API flexibility
-      const {conformedValue} = conformToMask(safeRawValue, mask, conformToMaskConfig)
+      const {conformedValue, meta} = conformToMask(safeRawValue, mask, conformToMaskConfig)
 
       // The following few lines are to support the `pipe` feature.
       const piped = typeof pipe === strFunction
@@ -150,7 +152,8 @@ export default function createTextMaskInputElement(config) {
         currentCaretPosition,
         placeholderChar,
         indexesOfPipedChars: pipeResults.indexesOfPipedChars,
-        caretTrapIndexes
+        caretTrapIndexes,
+        meta
       })
 
       // Text Mask sets the input value to an empty string when the condition below is set. It provides a better UX.
