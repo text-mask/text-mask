@@ -5,7 +5,7 @@
   "main": "index.js",
   "babel": {
     "presets": [
-      "es2015",
+      "env",
       "stage-0"
     ],
     "plugins": [
@@ -48,7 +48,7 @@
     "angular2:ci": "cd angular2 && npm i && npm run ci",
     "angular2:publish": "sh angular2/publish.sh",
     "ember:dev": "cd ember && ember server",
-    "ember:test": "cd ember && npm install && ember test",
+    "ember:test": "npm install && cd ember && npm install && ember test",
     "ember:publish": "sh ember/publish.sh",
     "vue:build": "./node_modules/.bin/webpack -p --config vue/webpack.buildVueDirective.js",
     "vue:publish": "sh vue/publish.sh",
@@ -85,7 +85,7 @@
     "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.5.0",
     "bootstrap": "^3.3.6",
