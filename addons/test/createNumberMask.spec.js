@@ -132,6 +132,18 @@ describe('createNumberMask', () => {
     ])
   })
 
+  it('can be configured to have max value', () => {
+    let numberMask = createNumberMask({maxValue: 100})
+    expect(numberMask('101')).to.be.equal(false)
+    expect(numberMask('100')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+  })
+
+  it('can be configured to have min value', () => {
+    let numberMask = createNumberMask({minValue: 100})
+    expect(numberMask('99')).to.be.equal(false)
+    expect(numberMask('100')).to.deep.equal(['$', /\d/, /\d/, /\d/])
+  })
+
   describe('integer limiting', () => {
     it('can limit the length of the integer part', () => {
       let numberMask = createNumberMask({integerLimit: 3})

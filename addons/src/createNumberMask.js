@@ -20,7 +20,9 @@ export default function createNumberMask({
   requireDecimal = false,
   allowNegative = false,
   allowLeadingZeroes = false,
-  integerLimit = null
+  integerLimit = null,
+  maxValue = Number.POSITIVE_INFINITY,
+  minValue = Number.NEGATIVE_INFINITY
 } = {}) {
   const prefixLength = prefix && prefix.length || 0
   const suffixLength = suffix && suffix.length || 0
@@ -53,6 +55,7 @@ export default function createNumberMask({
     let integer
     let fraction
     let mask
+    let value
 
     // remove the suffix
     if (rawValue.slice(suffixLength * -1) === suffix) {
@@ -63,6 +66,7 @@ export default function createNumberMask({
       integer = rawValue.slice(rawValue.slice(0, prefixLength) === prefix ? prefixLength : 0, indexOfLastDecimal)
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength)
+      value = parseFloat(`${integer}.${fraction}`)
       fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString))
     } else {
       if (rawValue.slice(0, prefixLength) === prefix) {
@@ -70,6 +74,11 @@ export default function createNumberMask({
       } else {
         integer = rawValue
       }
+      value = parseInt(integer)
+    }
+
+    if (value > maxValue || value < minValue) {
+      return false
     }
 
     if (integerLimit && typeof integerLimit === number) {
