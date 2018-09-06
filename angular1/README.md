@@ -11,10 +11,8 @@ npm i angular1-text-mask --save
 Then, use it as follows:
 
 ```html
-<script
-  type="text/javascript"
-  src="./node_modules/angular1-text-mask/dist/angular1TextMask.js"></script>
-<script type="text/javascript">
+<script src="./node_modules/angular1-text-mask/dist/angular1TextMask.js"></script>
+<script>
   // First add Text Mask as a module
   angular
     .module('app', ['text-mask'])
