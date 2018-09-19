@@ -1,6 +1,7 @@
-import {placeholderChar as defaultPlaceholderChar} from './constants'
-
-const emptyArray = []
+import {
+  emptyArray,
+  placeholderChar as defaultPlaceholderChar
+} from './constants'
 
 export function convertMaskToPlaceholder(mask = emptyArray, placeholderChar = defaultPlaceholderChar) {
   if (!isArray(mask)) {

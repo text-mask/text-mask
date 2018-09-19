@@ -1,5 +1,4 @@
-const defaultArray = []
-const emptyString = ''
+import {defaultArray, emptyString} from './constants'
 
 export default function adjustCaretPosition({
   previousConformedValue = emptyString,

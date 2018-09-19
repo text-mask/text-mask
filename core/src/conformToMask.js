@@ -1,8 +1,10 @@
 import {convertMaskToPlaceholder, isArray, processCaretTraps} from './utilities'
-import {placeholderChar as defaultPlaceholderChar, strFunction} from './constants'
-
-const emptyArray = []
-const emptyString = ''
+import {
+  emptyArray,
+  emptyString,
+  placeholderChar as defaultPlaceholderChar,
+  strFunction
+} from './constants'
 
 export default function conformToMask(rawValue = emptyString, mask = emptyArray, config = {}) {
   if (!isArray(mask)) {

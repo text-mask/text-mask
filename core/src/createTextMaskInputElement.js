@@ -1,9 +1,12 @@
 import adjustCaretPosition from './adjustCaretPosition'
 import conformToMask from './conformToMask'
 import {convertMaskToPlaceholder, isString, isNumber, processCaretTraps} from './utilities'
-import {placeholderChar as defaultPlaceholderChar, strFunction} from './constants'
+import {
+  emptyString,
+  placeholderChar as defaultPlaceholderChar,
+  strFunction
+} from './constants'
 
-const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
