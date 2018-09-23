@@ -1,16 +1,16 @@
-module.exports = function (config) {
+module.exports = function(config) {
   var _config = {
 
     frameworks: [ 'jasmine', 'karma-typescript' ],
 
     files: [
-      { pattern: 'test/index.spec.ts' },
-      { pattern: 'src/**/*.+(ts|html)' },
-      { pattern: 'test/**/*.+(ts|html)' }
+      {pattern: 'test/index.spec.ts'},
+      {pattern: 'src/**/*.+(ts|html)'},
+      {pattern: 'test/**/*.+(ts|html)'}
     ],
 
     preprocessors: {
-      "**/*.ts": [ 'karma-typescript' ]
+      '**/*.ts': [ 'karma-typescript' ]
     },
 
     karmaTypescriptConfig: {
@@ -24,7 +24,7 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: [ 'PhantomJS' ],
     singleRun: true
-  };
+  }
 
-  config.set(_config);
-};
+  config.set(_config)
+}
