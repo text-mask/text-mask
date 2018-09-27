@@ -52,6 +52,7 @@
     "zone.js": "^0.8.4"
   },
   "dependencies": {
-    "angular2-text-mask": "^9.0.0"
+    "angular2-text-mask": "^9.0.0",
+    "ionic-angular": "^3.9.2"
   }
 }
