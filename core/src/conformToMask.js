@@ -110,7 +110,7 @@ export default function conformToMask(rawValue = emptyString, mask = emptyArray,
 
   if (insertChar) {
     const index = rawValueArr.findIndex(rowValue => rowValue.isNew)
-    if (index + editDistance < rawValueArr.length) {
+    if (index + editDistance < rawValueArr.length && index >= 0 && Number.isInteger(+rawValueArr[index].char)) {
       rawValueArr.splice(index + editDistance, editDistance)
     }
   }
