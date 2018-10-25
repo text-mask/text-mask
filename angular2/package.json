@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot",
+    "build": "ng-packagr",
     "test": "karma start",
     "loud-lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts",
     "lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts || true",
@@ -56,6 +56,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-typescript": "^3.0.4",
     "lite-server": "^2.2.2",
+    "ng-packagr": "^1.7.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.1",
     "systemjs": "0.19.39",
@@ -66,5 +67,10 @@
   },
   "dependencies": {
     "text-mask-core": "^5.0.0"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/angular2TextMask.ts"
+    }
   }
 }
