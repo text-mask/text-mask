@@ -73,7 +73,7 @@ export default {
     },
   },
 
-  watch: { 
+  watch: {
     // other 'watch'ers defined in mounted hook
 
     mask(newMask, oldMask) {
