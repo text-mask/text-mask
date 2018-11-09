@@ -15,6 +15,9 @@ export default class MaskedInput extends React.PureComponent {
 
   setRef(inputElement) {
     this.inputElement = inputElement
+    if (typeof this.props.innerRef === 'function') {
+      this.props.innerRef(inputElement)
+    }
   }
 
   initTextMask() {
@@ -70,6 +73,7 @@ export default class MaskedInput extends React.PureComponent {
     delete props.onBlur
     delete props.onChange
     delete props.showMask
+    delete props.innerRef
 
     return render(this.setRef, {
       onBlur: this.onBlur,
@@ -110,6 +114,7 @@ MaskedInput.propTypes = {
   placeholderChar: PropTypes.string,
   keepCharPositions: PropTypes.bool,
   showMask: PropTypes.bool,
+  innerRef: PropTypes.func,
 }
 
 MaskedInput.defaultProps = {
