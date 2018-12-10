@@ -6,6 +6,7 @@ export default function createAutoCorrectedDatePipe(dateFormat = 'mm dd yyyy', {
 } = {}) {
   const dateFormatArray = dateFormat
     .split(/[^dmyHMS]+/)
+    .filter(Boolean)
     .sort((a, b) => formatOrder.indexOf(a) - formatOrder.indexOf(b))
   return function(conformedValue) {
     const indexesOfPipedChars = []
