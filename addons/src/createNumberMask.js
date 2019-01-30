@@ -71,6 +71,8 @@ export default function createNumberMask({
         integer = rawValue
       }
     }
+    
+    integer = integer.replace(/\D/g,'');
 
     if (integerLimit && typeof integerLimit === number) {
       const thousandsSeparatorRegex = thousandsSeparatorSymbol === '.' ? '[.]' : `${thousandsSeparatorSymbol}`
