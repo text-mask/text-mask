@@ -138,12 +138,12 @@ describe('createNumberMask', () => {
     expect(numberMask('100')).to.deep.equal(['$', /\d/, /\d/, /\d/])
   })
 
-   it('can be configured to have min value', () => {
+  it('can be configured to have min value', () => {
     let numberMask = createNumberMask({minValue: 100})
     expect(numberMask('99')).to.be.equal(false)
     expect(numberMask('100')).to.deep.equal(['$', /\d/, /\d/, /\d/])
   })
-  
+
   describe('integer limiting', () => {
     it('can limit the length of the integer part', () => {
       let numberMask = createNumberMask({integerLimit: 3})

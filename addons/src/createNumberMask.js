@@ -77,7 +77,7 @@ export default function createNumberMask({
       value = parseInt(integer)
     }
 
-     if (value > maxValue || value < minValue) {
+    if (value > maxValue || value < minValue) {
       return false
     }
 
