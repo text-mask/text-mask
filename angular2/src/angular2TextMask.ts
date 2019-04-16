@@ -78,7 +78,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
 
     // set the initial value for cases where the mask is disabled
     const normalizedValue = value == null ? '' : value
-    this._renderer.setProperty(this.inputElement, 'value', normalizedValue)
+    this._renderer.setAttribute(this.inputElement, 'value', normalizedValue)
 
     if (this.textMaskInputElement !== undefined) {
       this.textMaskInputElement.update(value)
