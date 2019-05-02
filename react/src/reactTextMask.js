@@ -70,6 +70,7 @@ export default class MaskedInput extends React.PureComponent {
     delete props.onBlur
     delete props.onChange
     delete props.showMask
+    delete props.onSetInputValue
 
     return render(this.setRef, {
       onBlur: this.onBlur,
@@ -110,6 +111,7 @@ MaskedInput.propTypes = {
   placeholderChar: PropTypes.string,
   keepCharPositions: PropTypes.bool,
   showMask: PropTypes.bool,
+  onSetInputValue: PropTypes.func,
 }
 
 MaskedInput.defaultProps = {

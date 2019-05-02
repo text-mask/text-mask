@@ -26,7 +26,8 @@ export default function createTextMaskInputElement(config) {
       pipe,
       placeholderChar = defaultPlaceholderChar,
       keepCharPositions = false,
-      showMask = false
+      showMask = false,
+      onSetInputValue = () => {}
     } = config) {
       // if `rawValue` is `undefined`, read from the `inputElement`
       if (typeof rawValue === 'undefined') {
@@ -169,6 +170,7 @@ export default function createTextMaskInputElement(config) {
 
       inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
+      onSetInputValue(inputElementValue)
     }
   }
 }
