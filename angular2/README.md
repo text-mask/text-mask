@@ -12,12 +12,10 @@ Then, import it into your `@NgModule`:
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   imports: [
-    FormsModule,
     TextMaskModule
   ],
   declarations: []
