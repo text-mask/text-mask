@@ -30,12 +30,13 @@ Then, use it in your component:
 @Component({
   selector: 'app',
   template: `
-    <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>
+    <input [textMask]="textMask" type="text"/>
   `
 })
 export class AppComponent {
-  public myModel = ''
-  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  public textMask = {
+    mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+  };
 }
 ```
 
