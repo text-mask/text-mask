@@ -62,10 +62,28 @@ The code of the example is in [`react/example`](https://github.com/text-mask/tex
 For advanced uses, you can customize the rendering of the resultant `<input>` via a render prop.
 This is entirely optional, if no `render` prop is passed, a normal `<input>` is rendered.
 
-For example, to use with styled-components,
-[which requires an innerRef](https://www.styled-components.com/docs/advanced#refs):
+For example, to use with `styled-components` (v4+) [which uses `ref`](https://www.styled-components.com/docs/advanced#refs) thanks to the `forwardRef` API (React 16.3+):
+```javascript
+import styled from 'styled-component';
+import MakedInput from 'react-text-mask';
 
+<MaskedInput
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+  placeholder="Enter a phone number"
+  id="my-input-id"
+  render={(ref, props) => (
+    <MyStyledInput ref={ref} {...props} />
+  )}
+/>
+
+const MyStyledInput = styled.input`
+  background: papayawhip;
+`;
+```
+
+If using `styled-components` < v4, pass the `ref` to the `innerRef` attribute: 
 ```js
+
 <MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   placeholder="Enter a phone number"
@@ -75,10 +93,9 @@ For example, to use with styled-components,
   )}
 />
 
-const MyStyledInput = styled.input`
-  background: papayawhip;
-`;
 ```
+
+Note: The `render` prop will produce a `ref` that can be passed along. You will not need to create your own.
 
 ## Contributing
 
