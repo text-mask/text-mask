@@ -2,15 +2,7 @@ import { Directive, ElementRef, forwardRef, Input, Inject, NgModule, OnChanges, 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, COMPOSITION_BUFFER_MODE } from '@angular/forms'
 import {ɵgetDOM as getDOM} from '@angular/platform-browser'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
-
-export class TextMaskConfig {
-  mask: Array<string | RegExp> | ((raw: string) => Array<string | RegExp>) | false
-  guide?: boolean
-  placeholderChar?: string
-  pipe?: (conformedValue: string, config: TextMaskConfig) => false | string | object
-  keepCharPositions?: boolean
-  showMask?: boolean
-}
+import { TextMaskConfig } from './interfaces';
 
 export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
