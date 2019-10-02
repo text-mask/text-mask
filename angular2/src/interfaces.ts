@@ -1,4 +1,4 @@
-export interface TextMaskOptions {
+export interface TextMaskConfig {
     /**
      * {@link https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#mask}
      */
@@ -38,12 +38,12 @@ export type TextMaskList = ReadonlyArray<string | RegExp>;
 /**
  * {@link https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#mask-function}
  */
-export type TextMaskListHandler = (rawValue: string, config: TextMaskConfig) => TextMaskList | false;
+export type TextMaskListHandler = (rawValue: string, config: TextMaskCurrentConfig) => TextMaskList | false;
 
 /**
  * {@link https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#pipe}
  */
-export interface TextMaskConfig {
+export interface TextMaskCurrentConfig {
     readonly rawValue: string;
     readonly previousConformedValue?: string;
     readonly currentCaretPosition?: number;
@@ -54,7 +54,7 @@ export interface TextMaskConfig {
  */
 export type TextMaskPipeHandler = (
     conformedValue: string,
-    config: TextMaskOptions & TextMaskConfig,
+    config: TextMaskConfig & TextMaskCurrentConfig,
 ) => string | TextMaskPipeResult | false;
 
 /**
