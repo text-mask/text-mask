@@ -20,6 +20,7 @@
     "test/index.spec.ts"
   ],
   "include": [
-    "test/**/*.spec.ts"
+    "test/**/*.spec.ts",
+    "src/**/*.ts"
   ]
 }
