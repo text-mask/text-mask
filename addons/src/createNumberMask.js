@@ -89,7 +89,7 @@ export default function createNumberMask({
     integer = includeThousandsSeparator ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
 
     // if both includeLakhsSeparator and includeThousandsSeparator is true use thousandsSeparator
-    integer = includeLakhsSeparator && !includeThousandsSeparator ? addLakhsSeparator(integer) : integer;
+    integer = includeLakhsSeparator && !includeThousandsSeparator ? addLakhsSeparator(integer) : integer
 
     mask = convertToMask(integer)
 
@@ -150,5 +150,5 @@ function addThousandsSeparator(n, thousandsSeparatorSymbol) {
 }
 
 function addLakhsSeparator(n) {
-  return n.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+  return n.replace(/(\d)(?=(\d\d)+\d$)/g, '$1,')
 }

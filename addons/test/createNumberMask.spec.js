@@ -59,7 +59,7 @@ describe('createNumberMask', () => {
   })
 
   it('should use lakh separator', () => {
-    let numberMask = createNumberMask({includeLakhsSeparator: true, includeThousandsSeparator: false, prefix:'₹'})
+    let numberMask = createNumberMask({includeLakhsSeparator: true, includeThousandsSeparator: false, prefix: '₹'})
     expect(numberMask('100000')).to.deep.equal([ '₹', /\d/, ',', /\d/, /\d/, ',', /\d/, /\d/, /\d/ ])
   })
 
