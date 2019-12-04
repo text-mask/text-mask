@@ -8,21 +8,17 @@ export default class MaskedInput extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
-    this.setRef = this.setRef.bind(this)
+    this.inputRef = React.createRef()
     this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
-  }
-
-  setRef(inputElement) {
-    this.inputElement = inputElement
   }
 
   initTextMask() {
     const {props, props: {value}} = this
 
     this.textMaskInputElement = createTextMaskInputElement({
-      inputElement: this.inputElement,
-      ...props,
+      inputElement: this.inputRef.current,
+      ...props
     })
     this.textMaskInputElement.update(value)
   }
@@ -31,7 +27,7 @@ export default class MaskedInput extends React.PureComponent {
     this.initTextMask()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     // Getting props affecting value
     const {value, pipe, mask, guide, placeholderChar, showMask} = this.props
 
@@ -50,12 +46,17 @@ export default class MaskedInput extends React.PureComponent {
         isPipeChanged
 
     // Сalculate that value was changed
-    const isValueChanged = value !== this.inputElement.value
-
-    // Check value and settings to prevent duplicating update() call
-    if (isValueChanged || isSettingChanged) {
+    const isValueChanged = value !== snapshot.value
+    // Re-init mask only if settings changed, and update if only value changed
+    if (isSettingChanged) {
       this.initTextMask()
+    } else if (isValueChanged) {
+      this.textMaskInputElement.update(value)
     }
+  }
+
+  getSnapshotBeforeUpdate() {
+    return {value: this.inputRef.current.value}
   }
 
   render() {
@@ -71,11 +72,11 @@ export default class MaskedInput extends React.PureComponent {
     delete props.onChange
     delete props.showMask
 
-    return render(this.setRef, {
+    return render(this.inputRef, {
       onBlur: this.onBlur,
       onChange: this.onChange,
       defaultValue: this.props.value,
-      ...props,
+      ...props
     })
   }
 
@@ -101,8 +102,8 @@ MaskedInput.propTypes = {
     PropTypes.bool,
     PropTypes.shape({
       mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-      pipe: PropTypes.func,
-    }),
+      pipe: PropTypes.func
+    })
   ]).isRequired,
   guide: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
