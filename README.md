@@ -1,6 +1,6 @@
 # [![Text Mask](assets/logo.png)](https://github.com/text-mask/text-mask/#readme)
 
-⚠️ This library is not maintained. Pull-requests and issues are not monitored. I'm happy to list alternative libraries here. If you know a good alternative, email me at msafi@msafi.com and I'll list.
+⚠️ This library is not maintained. Pull-requests and issues are not monitored. I'm happy to list alternative libraries here. If you know a good alternative, email me at msafi@msafi.com.
 
 -----
 
