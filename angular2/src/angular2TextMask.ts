@@ -32,7 +32,7 @@ function _isAndroid(): boolean {
     '(input)': '_handleInput($event.target.value)',
     '(blur)': 'onTouched()',
     '(compositionstart)': '_compositionStart()',
-    '(compositionend)': '_compositionEnd($event.target.value)'
+    '(compositionupdate)': '_compositionUpdate($event.target.value)'
   },
   selector: '[textMask]',
   exportAs: 'textMask',
@@ -128,7 +128,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
 
   _compositionStart(): void { this._composing = true }
 
-  _compositionEnd(value: any): void {
+  _compositionUpdate(value: any): void {
     this._composing = false
     this._compositionMode && this._handleInput(value)
   }
