@@ -1,5 +1,13 @@
 # [![Text Mask](assets/logo.png)](https://github.com/text-mask/text-mask/#readme)
 
+⚠️ This library is not maintained. Pull-requests and issues are not monitored. Alternatives to `text-mask` include:
+
+* https://github.com/uNmAnNeR/imaskjs
+
+If you know other alternatives that should be listed here, email me at msafi@msafi.com.
+
+-----
+
 [![Build Status](https://travis-ci.org/text-mask/text-mask.svg?branch=master)](https://travis-ci.org/text-mask/text-mask)
 
 Text Mask is an input mask library. It can create input masks for phone, date, currency, zip code, percentage, email, 

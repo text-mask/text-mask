@@ -29,7 +29,7 @@ pass it CSS classes, a placeholder attribute, or even an `onBlur` handler.
 For example, the following works:
 
 ```js
-<MaskedTextInput
+<MaskedInput
   mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
   className="form-control"
   placeholder="Enter a phone number"
@@ -56,6 +56,29 @@ To see an example of the code running, follow these steps:
 1. Open [http://localhost:3000](http://localhost:3000)
 
 The code of the example is in [`react/example`](https://github.com/text-mask/text-mask/tree/master/react/example).
+
+## Customize Rendered `<input>` Component
+
+For advanced uses, you can customize the rendering of the resultant `<input>` via a render prop.
+This is entirely optional, if no `render` prop is passed, a normal `<input>` is rendered.
+
+For example, to use with styled-components,
+[which requires an innerRef](https://www.styled-components.com/docs/advanced#refs):
+
+```js
+<MaskedInput
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+  placeholder="Enter a phone number"
+  id="my-input-id"
+  render={(ref, props) => (
+    <MyStyledInput innerRef={ref} {...props} />
+  )}
+/>
+
+const MyStyledInput = styled.input`
+  background: papayawhip;
+`;
+```
 
 ## Contributing
 

@@ -19,9 +19,9 @@ Add the following markup to your template to render a masked input component.
 In the template's controller, specify a `mask`.
 
 ```js
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
 
 ## Documentation
 
-&#x1F4CD; For more information about the attributes that the `masked-input` component accepts, see the 
+&#x1F4CD; For more information about the attributes that the `masked-input` component accepts, see the
 [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
 
 #### Other use-cases
@@ -48,7 +48,7 @@ To see an example of the code running, follow these steps:
 * `cd text-mask/ember`
 * `npm install`
 * `bower install`
-* `ember server`
+* `ember serve`
 * Open [http://localhost:4200](http://localhost:4200)
 
 You should have a working demo.
