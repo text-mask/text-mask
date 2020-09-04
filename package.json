@@ -105,7 +105,7 @@
     "lodash": "^4.0.0",
     "mocha": "^3.0.0",
     "mocha-dynamic-tests": "^2.0.0",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.13.1",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.1.0",
