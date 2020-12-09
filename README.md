@@ -3,6 +3,7 @@
 ⚠️ This library is not maintained. Pull-requests and issues are not monitored. Alternatives to `text-mask` include:
 
 * https://github.com/uNmAnNeR/imaskjs
+* https://github.com/JsDaddy/ngx-mask
 
 If you know other alternatives that should be listed here, email me at msafi@msafi.com.
 
