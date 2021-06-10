@@ -98,7 +98,7 @@ MaskedInput.propTypes = {
   mask: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.func,
-    PropTypes.bool,
+    PropTypes.oneOf([false]),
     PropTypes.shape({
       mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
       pipe: PropTypes.func,
