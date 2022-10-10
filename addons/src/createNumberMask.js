@@ -71,6 +71,8 @@ export default function createNumberMask({
         integer = rawValue
       }
     }
+    
+    integer = integer.replace(nonDigitsRegExp, emptyString)
 
     if (integerLimit && typeof integerLimit === number) {
       const thousandsSeparatorRegex = thousandsSeparatorSymbol === '.' ? '[.]' : `${thousandsSeparatorSymbol}`
@@ -78,8 +80,6 @@ export default function createNumberMask({
 
       integer = integer.slice(0, integerLimit + (numberOfThousandSeparators * thousandsSeparatorSymbolLength))
     }
-
-    integer = integer.replace(nonDigitsRegExp, emptyString)
 
     if (!allowLeadingZeroes) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1')
