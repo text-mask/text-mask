@@ -2,15 +2,7 @@ import { Directive, ElementRef, forwardRef, Input, Inject, NgModule, OnChanges, 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, COMPOSITION_BUFFER_MODE } from '@angular/forms'
 import {ɵgetDOM as getDOM} from '@angular/platform-browser'
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
-
-export class TextMaskConfig {
-  mask: Array<string | RegExp> | ((raw: string) => Array<string | RegExp>) | false
-  guide?: boolean
-  placeholderChar?: string
-  pipe?: (conformedValue: string, config: TextMaskConfig) => false | string | object
-  keepCharPositions?: boolean
-  showMask?: boolean
-}
+import { TextMaskConfig } from './interfaces'
 
 export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -92,14 +84,14 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
     this._renderer.setProperty(this._elementRef.nativeElement, 'disabled', isDisabled)
   }
 
-  
+
   _handleInput(value) {
     if (!this._compositionMode || (this._compositionMode && !this._composing)) {
       this._setupMask()
 
       if (this.textMaskInputElement !== undefined) {
         this.textMaskInputElement.update(value)
-        
+
         // get the updated value
         value = this.inputElement.value
         this.onChange(value)
@@ -117,13 +109,13 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
         this.inputElement = this._elementRef.nativeElement.getElementsByTagName('INPUT')[0]
       }
     }
-    
+
     if (this.inputElement && create) {
       this.textMaskInputElement = createTextMaskInputElement(
         Object.assign({inputElement: this.inputElement}, this.textMaskConfig)
       )
     }
-    
+
   }
 
   _compositionStart(): void { this._composing = true }

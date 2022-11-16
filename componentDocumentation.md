@@ -172,7 +172,8 @@ The `pipe` function receives:
 1. `config`
 
 The `conformedValue` is the value that the user entered after it has been conformed. `config` is an object that 
-contains all the user configurations for Text Mask (the ones detailed on this page).
+contains all the user configurations for Text Mask (the ones detailed on this page) and also the following fields:
+`rawValue`, `previousConformedValue` (if there is any) and `currentCaretPosition` (when applicable).
 
 The `pipe` function must return one of the following: `false`, `string`, or `object`.
 
