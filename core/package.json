@@ -3,6 +3,7 @@
   "version": "5.1.2",
   "description": "Core of https://github.com/text-mask/text-mask",
   "main": "dist/textMaskCore.js",
+  "typings": "dist/textMaskCore.d.ts",
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "Unlicense",
   "bugs": {
