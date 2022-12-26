@@ -52,6 +52,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
 
   private textMaskInputElement: any
   private inputElement: HTMLInputElement
+  private previousValue: any
 
   /** Whether the user is creating a composition string (IME events). */
   private _composing = false
@@ -102,7 +103,11 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
         
         // get the updated value
         value = this.inputElement.value
-        this.onChange(value)
+        //check if there actually was a change, otherwise don't call onChange
+        if (value !== this.previousValue) {
+            this.previousValue = value
+            this.onChange(value)
+        }
       }
     }
   }
