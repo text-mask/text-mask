@@ -58,7 +58,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-resolver": "^4.0.0",
     "ember-source": "~3.1.1",
-    "ember-source-channel-url": "^1.1.0",
+    "ember-source-channel-url": "^3.0.0",
     "ember-try": "^0.2.23",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^6.0.1",
