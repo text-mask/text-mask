@@ -6,6 +6,8 @@
 * https://github.com/JsDaddy/ngx-mask
 * https://github.com/Tinkoff/maskito
 
+> **NOTE:** Alternatives are not checked or verified by the maintainer of Text Mask. 
+
 If you know other alternatives that should be listed here, email me at msafi@msafi.com.
 
 -----
