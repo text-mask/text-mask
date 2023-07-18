@@ -4,6 +4,7 @@
 
 * https://github.com/uNmAnNeR/imaskjs
 * https://github.com/JsDaddy/ngx-mask
+* https://github.com/Tinkoff/maskito
 
 If you know other alternatives that should be listed here, email me at msafi@msafi.com.
 
