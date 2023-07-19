@@ -1,9 +1,10 @@
 # [![Text Mask](assets/logo.png)](https://github.com/text-mask/text-mask/#readme)
 
-⚠️ This library is not maintained. Pull-requests and issues are not monitored. Alternatives to `text-mask` include:
+⚠️ This library is not maintained. Pull-requests and issues are not monitored. Below are some alternatives to `text-mask` (**Please note** that the alternatives below are not checked or verified by the maintainers of Text Mask):
 
 * https://github.com/uNmAnNeR/imaskjs
 * https://github.com/JsDaddy/ngx-mask
+* https://github.com/Tinkoff/maskito
 
 If you know other alternatives that should be listed here, email me at msafi@msafi.com.
 
