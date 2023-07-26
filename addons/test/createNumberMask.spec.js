@@ -53,6 +53,16 @@ describe('createNumberMask', () => {
     expect(numberMask('1000')).to.deep.equal(['$', /\d/, '.', /\d/, /\d/, /\d/])
   })
 
+  it('should use thousand separator by default when both lakh and thousand separator are true', () => {
+    let numberMask = createNumberMask({includeLakhsSeparator: true})
+    expect(numberMask('100000')).to.deep.equal([ '$', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/ ])
+  })
+
+  it('should use lakh separator', () => {
+    let numberMask = createNumberMask({includeLakhsSeparator: true, includeThousandsSeparator: false, prefix: '₹'})
+    expect(numberMask('100000')).to.deep.equal([ '₹', /\d/, ',', /\d/, /\d/, ',', /\d/, /\d/, /\d/ ])
+  })
+
   it('can be configured to accept a fraction and returns the fraction separator with caret traps', () => {
     let numberMask = createNumberMask({allowDecimal: true})
 

@@ -13,6 +13,7 @@ export default function createNumberMask({
   prefix = dollarSign,
   suffix = emptyString,
   includeThousandsSeparator = true,
+  includeLakhsSeparator = false,
   thousandsSeparatorSymbol = comma,
   allowDecimal = false,
   decimalSymbol = period,
@@ -85,7 +86,10 @@ export default function createNumberMask({
       integer = integer.replace(/^0+(0$|[^0])/, '$1')
     }
 
-    integer = (includeThousandsSeparator) ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
+    integer = includeThousandsSeparator ? addThousandsSeparator(integer, thousandsSeparatorSymbol) : integer
+
+    // if both includeLakhsSeparator and includeThousandsSeparator is true use thousandsSeparator
+    integer = includeLakhsSeparator && !includeThousandsSeparator ? addLakhsSeparator(integer) : integer
 
     mask = convertToMask(integer)
 
@@ -143,4 +147,8 @@ function convertToMask(strNumber) {
 // http://stackoverflow.com/a/10899795/604296
 function addThousandsSeparator(n, thousandsSeparatorSymbol) {
   return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparatorSymbol)
+}
+
+function addLakhsSeparator(n) {
+  return n.replace(/(\d)(?=(\d\d)+\d$)/g, '$1,')
 }
