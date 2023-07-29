@@ -1,6 +1,6 @@
-var StatsPlugin = require('stats-webpack-plugin')
-var path = require('path')
-var webpack = require('webpack')
+let StatsPlugin = require('stats-webpack-plugin')
+let path = require('path')
+let webpack = require('webpack')
 
 module.exports = {
   entry: path.join(__dirname, '../website/src/index.js'),
