@@ -80,6 +80,27 @@ const MyStyledInput = styled.input`
 `;
 ```
 
+## Using DOM Refs
+
+You can obtain a ref to the underlying DOM element by passing a callback to the `innerRef` prop.
+
+In most cases [refs should be avoided](https://reactjs.org/docs/refs-and-the-dom.html), however there are some good use cases.
+Note that this is using "callback refs" and not the new `createRef()` API introduced in React 16.3.
+
+For example:
+
+```js
+<MaskedInput
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+  placeholder="Enter a phone number"
+  innerRef={el => this.phoneRef = el}
+/>
+
+focusPhoneInput() {
+  if (this.phoneRef) this.phoneRef.focus();
+}
+```
+
 ## Contributing
 
 We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
