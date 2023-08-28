@@ -177,6 +177,10 @@ function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
     if (isAndroid) {
       defer(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
+    } else if (element.type === 'number') {
+      element.type = 'text'
+      element.setSelectionRange(selectionPosition, selectionPosition, strNone)
+      element.type = 'number'
     } else {
       element.setSelectionRange(selectionPosition, selectionPosition, strNone)
     }
