@@ -175,11 +175,16 @@ export default function createTextMaskInputElement(config) {
 
 function safeSetSelection(element, selectionPosition) {
   if (document.activeElement === element) {
+    // Fix for setSelectionRange not working on types other than these in some modern browsers:
+    let _type = element.type.slice();
+    if (_type !== 'text' && _type !== 'search' && _type !== 'url' && _type !== 'tel' && _type !== 'password')
+      element.type = 'text';
     if (isAndroid) {
       defer(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
     } else {
       element.setSelectionRange(selectionPosition, selectionPosition, strNone)
     }
+    element.type = _type;
   }
 }
 
