@@ -75,6 +75,17 @@ describe('createNumberMask', () => {
     expect(numberMask('1000,')).to.deep.equal(['$', /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]'])
   })
 
+  it('can be configured with alternative character for the fraction separator', () => {
+    let numberMask = createNumberMask({
+      allowDecimal: true,
+      decimalSymbol: '.',
+      decimalSymbolAlt: ',',
+      thousandsSeparatorSymbol: '.'
+    })
+
+    expect(numberMask('1000,')).to.deep.equal(['$', /\d/, '.', /\d/, /\d/, /\d/, '[]', /[.|,]/, '[]'])
+  })
+
   it('can limit the length of the fraction', () => {
     let numberMask = createNumberMask({allowDecimal: true, decimalLimit: 2})
 

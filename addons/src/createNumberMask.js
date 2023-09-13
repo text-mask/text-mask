@@ -16,12 +16,14 @@ export default function createNumberMask({
   thousandsSeparatorSymbol = comma,
   allowDecimal = false,
   decimalSymbol = period,
+  decimalSymbolAlt: decimalSymbolAltParam,
   decimalLimit = 2,
   requireDecimal = false,
   allowNegative = false,
   allowLeadingZeroes = false,
   integerLimit = null
 } = {}) {
+  const decimalSymbolAlt = decimalSymbolAltParam || decimalSymbol
   const prefixLength = prefix && prefix.length || 0
   const suffixLength = suffix && suffix.length || 0
   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
@@ -47,7 +49,11 @@ export default function createNumberMask({
       rawValue = rawValue.toString().substr(1)
     }
 
-    const indexOfLastDecimal = rawValue.lastIndexOf(decimalSymbol)
+    const decimalSymbolIndex = rawValue.lastIndexOf(decimalSymbol)
+    const altDecimalSymbolIndex = rawValue.lastIndexOf(decimalSymbolAlt)
+
+    const indexOfLastDecimal =
+      decimalSymbolIndex !== -1 ? decimalSymbolIndex : altDecimalSymbolIndex
     const hasDecimal = indexOfLastDecimal !== -1
 
     let integer
@@ -90,11 +96,18 @@ export default function createNumberMask({
     mask = convertToMask(integer)
 
     if ((hasDecimal && allowDecimal) || requireDecimal === true) {
-      if (rawValue[indexOfLastDecimal - 1] !== decimalSymbol) {
+      const lastSymbol = rawValue[indexOfLastDecimal - 1]
+
+      if (lastSymbol !== decimalSymbol || lastSymbol !== decimalSymbolAlt) {
         mask.push(caretTrap)
       }
 
-      mask.push(decimalSymbol, caretTrap)
+      if (decimalSymbol === decimalSymbolAlt) {
+        mask.push(decimalSymbol, caretTrap)
+      } else {
+        const separatorRegString = `[${decimalSymbol}|${decimalSymbolAlt}]`
+        mask.push(new RegExp(separatorRegString), caretTrap)
+      }
 
       if (fraction) {
         if (typeof decimalLimit === number) {
@@ -104,7 +117,7 @@ export default function createNumberMask({
         mask = mask.concat(fraction)
       }
 
-      if (requireDecimal === true && rawValue[indexOfLastDecimal - 1] === decimalSymbol) {
+      if (requireDecimal === true && (lastSymbol === decimalSymbol || lastSymbol === decimalSymbolAlt)) {
         mask.push(digitRegExp)
       }
     }
