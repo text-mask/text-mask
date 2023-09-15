@@ -71,7 +71,7 @@ For example, to use with styled-components,
   placeholder="Enter a phone number"
   id="my-input-id"
   render={(ref, props) => (
-    <MyStyledInput innerRef={ref} {...props} />
+    <MyStyledInput ref={ref} {...props} />
   )}
 />
 
