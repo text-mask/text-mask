@@ -11,10 +11,10 @@
   },
   "scripts": {
     "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot",
+    "build": "ng-packagr -p package.json",
     "test": "karma start",
-    "loud-lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts",
-    "lint": "node_modules/.bin/tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts || true",
+    "loud-lint": "tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts",
+    "lint": "tslint -c tslint.json src/*.ts test/**/*.ts example/**/*.ts || true",
     "ci": "npm run test && npm run loud-lint"
   },
   "repository": {
@@ -35,36 +35,45 @@
     "string formatting"
   ],
   "devDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/compiler-cli": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@types/core-js": "^0.9.34",
-    "@types/jasmine": "^2.5.52",
-    "@types/node": "^6.0.45",
-    "awesome-typescript-loader": "^1.0.0",
-    "concurrently": "^3.0.0",
+    "@angular/common": "^8.0.0",
+    "@angular/compiler": "^8.0.0",
+    "@angular/compiler-cli": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@angular/forms": "^8.0.0",
+    "@angular/platform-browser": "^8.0.0",
+    "@angular/platform-browser-dynamic": "^8.0.0",
+    "@types/jasmine": "^3.3.13",
+    "@types/node": "^12.0.4",
+    "concurrently": "^4.1.0",
     "core-js": "^2.4.1",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
-    "karma-cli": "^1.0.1",
-    "karma-jasmine": "^1.1.0",
+    "jasmine-core": "^3.4.0",
+    "karma": "^4.1.0",
+    "karma-jasmine": "^2.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-typescript": "^3.0.4",
+    "karma-typescript": "^4.1.0",
     "lite-server": "^2.2.2",
+    "ng-packagr": "^5.2.0",
     "reflect-metadata": "^0.1.8",
-    "rxjs": "^5.0.1",
+    "rxjs": "^6.5.2",
     "systemjs": "0.19.39",
-    "ts-node": "~1.2.0",
+    "ts-node": "^8.2.0",
     "tslint": "^3.13.0",
-    "typescript": "~2.7.0",
-    "zone.js": "^0.8.4"
+    "typescript": "^3.4.5",
+    "zone.js": "^0.9.1"
   },
   "dependencies": {
     "text-mask-core": "^5.0.0"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/angular2TextMask.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+      "text-mask-core"
+    ]
+  },
+  "peerDependencies": {
+    "@angular/core": ">=8.0.0",
+    "@angular/forms": ">=8.0.0"
   }
 }
