@@ -61,7 +61,6 @@ export default class MaskedInput extends React.PureComponent {
   render() {
     const {render, ...props} = this.props
 
-    delete props.mask
     delete props.guide
     delete props.pipe
     delete props.placeholderChar
