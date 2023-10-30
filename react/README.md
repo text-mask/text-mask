@@ -80,6 +80,20 @@ const MyStyledInput = styled.input`
 `;
 ```
 
+This is only an example on how to use custom render prop. However, it is possible to use it alongside styled-components in its most common way, as shown below:
+
+```js
+<MaskedInput
+  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+  placeholder="Enter a phone number"
+  id="my-input-id"
+/>
+
+const MyStyledInput = styled(MaskedInput)`
+  background: papayawhip;
+`;
+```
+
 ## Contributing
 
 We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
