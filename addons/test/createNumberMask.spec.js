@@ -87,6 +87,12 @@ describe('createNumberMask', () => {
     expect(numberMask('1000')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/, '[]', '.', '[]'])
   })
 
+  it('can require zero fraction paddings', () => {
+    let numberMask = createNumberMask({requireDecimal: true, allowZeroFractionPadding: true})
+
+    expect(numberMask('1000')).to.deep.equal(['$', /\d/, ',', /\d/, /\d/, /\d/, '[]', '.', '[]', '0', '0'])
+  })
+
   it('accepts negative integers', function() {
     let numberMask = createNumberMask({allowNegative: true})
     expect(numberMask('-$12')).to.deep.equal([/-/, '$', /\d/, /\d/])
@@ -173,6 +179,139 @@ describe('createNumberMask', () => {
       })
       expect(numberMask('1234567890,12345678'))
         .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
+    })
+  })
+
+  describe('zero padding', () => {
+    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        thousandsSeparatorSymbol: '.',
+        decimalSymbol: ',',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 3,
+        allowZeroFractionPadding: true,
+      })
+      expect(numberMask('1234567890,12345678'))
+        .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, /\d/, /\d/])
+    })
+
+    it('works when thousandsSeparatorSymbol is a period and allowZeroFractionPadding is set to true and ' +
+          'zeroFractionPaddingLimit is a non-zero value greater than places provided', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        thousandsSeparatorSymbol: '.',
+        decimalSymbol: ',',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 3,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('1234567890,1'))
+        .to.deep.equal([/\d/, /\d/, '.', /\d/, /\d/, /\d/, '[]', ',', '[]', /\d/, '0'])
+    })
+
+    it('works when fraction length is less than zeroFractionPaddingLimit value', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 2,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.1'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, '0'])
+    })
+
+    it('works when fraction length is greater than zeroFractionPaddingLimit value', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 2,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.13433'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/])
+    })
+
+    it('works when decimalLimit is greater than zeroFractionPaddingLimit value', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 3,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.13433'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, /\d/, /\d/])
+    })
+
+    it('works when decimalLimit is less than zeroFractionPaddingLimit value', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: true,
+        integerLimit: 5,
+        decimalLimit: 1,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.13433'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/])
+    })
+
+    it('works when requireDecimal is false and allowZeroFractionPadding is true', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: false,
+        integerLimit: 5,
+        decimalLimit: 2,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.1'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/, '0'])
+    })
+
+    it('works when requireDecimal is false and allowZeroFractionPadding is true and decimalLimit is less than' +
+          'zeroFractionPaddingLimit', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: false,
+        integerLimit: 5,
+        decimalLimit: 1,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123.1'))
+        .to.deep.equal([/\d/, /\d/, /\d/, '[]', '.', '[]', /\d/])
+    })
+
+    it('works when requireDecimal is false and allowZeroFractionPadding is true but no fraction is provided', () => {
+      let numberMask = createNumberMask({
+        prefix: '',
+        allowDecimal: true,
+        requireDecimal: false,
+        integerLimit: 5,
+        decimalLimit: 2,
+        allowZeroFractionPadding: true,
+        zeroFractionPaddingLimit: 2,
+      })
+      expect(numberMask('123'))
+        .to.deep.equal([/\d/, /\d/, /\d/])
     })
   })
 

@@ -31,6 +31,8 @@ to Text Mask.
 after the integer. Defaults to `false`.
 1. `allowNegative` (boolean): whether or not to allow negative numbers. Defaults to `false`
 1. `allowLeadingZeroes` (boolean): whether or not to allow leading zeroes. Defaults to `false`
+1. `allowZeroFractionPadding` (boolean): whether or not to allow zero padding to the fraction portion of the value.  Defaults to `false`
+1. `zeroFractionPaddingLimit` (number): the number of decimal places the fraction should be zero padded to.  Defaults to `2`
 
 #### Usage
 
