@@ -1,0 +1,58 @@
+{
+  "name": "ionic3-text-mask",
+  "version": "1.0.0",
+  "description": "Ionic 3/Angular 2 directive for ion-input text masking",
+  "main": "dist/ionic3TextMask.js",
+  "typings": "./dist/ionic3TextMask.d.ts",
+  "author": "CFT-Chris",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/text-mask/text-mask/issues"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/ngc -p tsconfig.json && rm -rf aot",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/text-mask/text-mask.git"
+  },
+  "keywords": [
+    "ionic",
+    "ionic component",
+    "ionic directive",
+    "text mask",
+    "input mask",
+    "string mask",
+    "input formatting",
+    "text formatting",
+    "string formatting"
+  ],
+  "devDependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/compiler-cli": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@types/core-js": "^0.9.34",
+    "@types/jasmine": "^2.5.52",
+    "@types/node": "^6.0.45",
+    "core-js": "^2.4.1",
+    "jasmine-core": "^2.6.4",
+    "karma": "^1.7.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-typescript": "^3.0.4",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.1",
+    "ts-node": "~1.2.0",
+    "typescript": "~2.7.0",
+    "zone.js": "^0.8.4"
+  },
+  "dependencies": {
+    "angular2-text-mask": "^9.0.0",
+    "ionic-angular": "^3.9.2"
+  }
+}

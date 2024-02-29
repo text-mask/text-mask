@@ -1,0 +1,4 @@
+dist
+src/*.js
+src/*.js.map
+npm-debug.log
