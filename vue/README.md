@@ -2,10 +2,16 @@
 
 ## Getting started
 
-First, install it.
+First, install it. Using `npm`:
 
 ```bash
 npm i vue-text-mask --save
+```
+
+or `yarn`:
+
+```bash
+yarn add vue-text-mask
 ```
 
 Then, use it as follows:
