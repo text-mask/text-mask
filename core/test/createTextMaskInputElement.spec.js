@@ -4,6 +4,9 @@ import packageJson from '../package.json'
 import conformToMask from '../src/conformToMask'
 import {placeholderChar} from '../src/constants'
 
+// Should set up fake timers before requiring createTextMaskInputElement
+const clock = sinon.useFakeTimers()
+
 const createTextMaskInputElement = (isVerify()) ?
   require(`../${packageJson.main}`).createTextMaskInputElement :
   require('../src/createTextMaskInputElement.js').default
@@ -13,6 +16,7 @@ describe('createTextMaskInputElement', () => {
 
   beforeEach(() => {
     inputElement = document.createElement('input')
+    navigator.userAgent = 'Mozilla/5.0 (iOS)'
   })
 
   it('takes an inputElement and other Text Mask parameters and returns an object which ' +
@@ -359,5 +363,81 @@ describe('createTextMaskInputElement', () => {
       textMaskControl.update()
       expect(inputElement.value).to.equal('(234) ___-____')
     })
+  })
+
+  it('can enable deferred selection through config passed to createTextMaskInputElement', () => {
+    const config = {
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')'],
+      deferredSelectionEnabled: true
+    }
+
+    const setSelectionRangeSpy = sinon.spy(inputElement, 'setSelectionRange')
+    const textMaskControl = createTextMaskInputElement(config)
+
+    inputElement.focus()
+    inputElement.value = '2'
+    textMaskControl.update()
+
+    // setSelectionRange should be called after a timeout
+    expect(setSelectionRangeSpy.callCount).to.equal(0)
+    clock.tick()
+    expect(setSelectionRangeSpy.callCount).to.equal(1)
+  })
+
+  it('can disable deferred selection through config passed to createTextMaskInputElement', () => {
+    const config = {
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')'],
+      deferredSelectionEnabled: false
+    }
+
+    const setSelectionRangeSpy = sinon.spy(inputElement, 'setSelectionRange')
+    const textMaskControl = createTextMaskInputElement(config)
+
+    inputElement.focus()
+    inputElement.value = '2'
+    textMaskControl.update()
+
+    // setSelectionRange should be called immediately without timeout
+    expect(setSelectionRangeSpy.callCount).to.equal(1)
+  })
+
+  it('can default the deferred selection based on userAgent value on Android', () => {
+    const config = {
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')']
+    }
+
+    navigator.userAgent = 'Mozilla/5.0 (Android)'
+
+    const setSelectionRangeSpy = sinon.spy(inputElement, 'setSelectionRange')
+    const textMaskControl = createTextMaskInputElement(config)
+
+    inputElement.focus()
+    inputElement.value = '2'
+    textMaskControl.update()
+
+    // setSelectionRange should be called after a timeout on Android
+    expect(setSelectionRangeSpy.callCount).to.equal(0)
+    clock.tick()
+    expect(setSelectionRangeSpy.callCount).to.equal(1)
+  })
+
+  it('can default the deferred selection based on userAgent value on iOS and others', () => {
+    const config = {
+      inputElement,
+      mask: ['(', /\d/, /\d/, /\d/, ')']
+    }
+
+    const setSelectionRangeSpy = sinon.spy(inputElement, 'setSelectionRange')
+    const textMaskControl = createTextMaskInputElement(config)
+
+    inputElement.focus()
+    inputElement.value = '2'
+    textMaskControl.update()
+
+    // setSelectionRange should be called immediately without timeout on iOS and others
+    expect(setSelectionRangeSpy.callCount).to.equal(1)
   })
 })

@@ -110,6 +110,12 @@ string to contain a guide or no. The `guide` is basically the placeholder charac
 mask hard characters. For example, with mask `['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]`, input `123` with `guide` set to
 `true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
 
+* `deferredSelectionEnabled` (boolean) (defaults to `true` if `navigator.userAgent` includes
+'Android' and `false` otherwise): this specifies whether the caret position on input element
+should be set after a timeout after text value is updated. The default value works for most
+use cases (e.g. Android, iOS, Mac, Linux, and Windows). In case the behavior needs to be
+customized (e.g. Tizen), this config option allows you to specify a desired behavior.
+
 * `previousConformedValue` (string) (required): this is the previous `output` of `conformToMask`.
 If you're calling `conformToMask` for the first time, you don't have to pass this value.
 

@@ -6,12 +6,14 @@ import {placeholderChar as defaultPlaceholderChar, strFunction} from './constant
 const emptyString = ''
 const strNone = 'none'
 const strObject = 'object'
-const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout
 
 export default function createTextMaskInputElement(config) {
   // Anything that we will need to keep between `update` calls, we will store in this `state` object.
   const state = {previousConformedValue: undefined, previousPlaceholder: undefined}
+
+  // Determine whether text selection behavior should be deferred or not based on `config` object.
+  const deferredSelectionEnabled = isDeferredSelectionEnabled(config)
 
   return {
     state,
@@ -168,14 +170,14 @@ export default function createTextMaskInputElement(config) {
       }
 
       inputElement.value = inputElementValue // set the input value
-      safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
+      safeSetSelection(inputElement, adjustedCaretPosition, deferredSelectionEnabled) // adjust caret position
     }
   }
 }
 
-function safeSetSelection(element, selectionPosition) {
+function safeSetSelection(element, selectionPosition, deferredSelectionEnabled) {
   if (document.activeElement === element) {
-    if (isAndroid) {
+    if (deferredSelectionEnabled) {
       defer(() => element.setSelectionRange(selectionPosition, selectionPosition, strNone), 0)
     } else {
       element.setSelectionRange(selectionPosition, selectionPosition, strNone)
@@ -195,5 +197,14 @@ function getSafeRawValue(inputValue) {
       "The 'value' provided to Text Mask needs to be a string or a number. The value " +
       `received was:\n\n ${JSON.stringify(inputValue)}`
     )
+  }
+}
+
+function isDeferredSelectionEnabled(config) {
+  if (!config || config.deferredSelectionEnabled === undefined) {
+    // If the option is not specified in config, set the behavior based on the user agent.
+    return typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+  } else {
+    return config.deferredSelectionEnabled
   }
 }
