@@ -4,42 +4,47 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    textMaskAddons: path.join(__dirname, './src/index.js'),
-    createAutoCorrectedDatePipe: [path.join(__dirname, './src/createAutoCorrectedDatePipe.js')],
-    createNumberMask: [path.join(__dirname, './src/createNumberMask.js')],
-    emailMask: [path.join(__dirname, './src/emailMask.js')]
+    textMaskAddons: path.join(__dirname, "./src/index.js"),
+    createAutoCorrectedDatePipe: [
+      path.join(__dirname, "./src/createAutoCorrectedDatePipe.js"),
+    ],
+    createNumberMask: [path.join(__dirname, "./src/createNumberMask.js")],
+    emailMask: [path.join(__dirname, "./src/emailMask.js")],
   },
 
+  mode: "production",
+
   output: {
-    path: path.join(__dirname, './dist'),
-    filename: '[name].js',
-    library: '[name]',
-    libraryTarget: 'umd'
+    path: path.join(__dirname, "./dist"),
+    filename: "[name].js",
+    libraryTarget: "module",
+    module: true,
+  },
+  experiments: {
+    outputModule: true,
   },
 
   module: {
-    loaders: [
-      {test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/}
-    ]
+    rules: [{ test: /\.js$/, loader: "babel-loader", exclude: /node_modules/ }],
   },
 
   resolve: {
-    extensions: ['', '.js']
+    extensions: ["", ".js"],
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      }
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     screw_ie8: true,
+    //     warnings: false
+    //   }
+    // }),
+    new StatsPlugin("stats.json", {
+      chunkModules: true,
     }),
-    new StatsPlugin('stats.json', {
-      chunkModules: true
-    })
-  ]
-}
+  ],
+};

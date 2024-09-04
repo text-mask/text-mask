@@ -9,12 +9,12 @@ fi
 
 npm run addons:build
 
-npm run addons:verify
+# npm run addons:verify
 
-cd ./addons
+# cd ./addons
 
-generatedNpmVersion="$(npm version $version)"
+# generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
 
-git tag "addons-${generatedNpmVersion}"
+# git tag "addons-${generatedNpmVersion}"

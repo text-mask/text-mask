@@ -1,10 +1,12 @@
 import { Directive, ElementRef, forwardRef, Input, Inject, NgModule, OnChanges, Optional, Provider, Renderer2, SimpleChanges } from '@angular/core'
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, COMPOSITION_BUFFER_MODE } from '@angular/forms'
 import {ɵgetDOM as getDOM} from '@angular/platform-browser'
-import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore'
+import { createTextMaskInputElement } from '@hjgs/text-mask-core/dist/textMaskCore'
+
+export { conformToMask } from '@hjgs/text-mask-core/dist/textMaskCore'
 
 export class TextMaskConfig {
-  mask: Array<string | RegExp> | ((raw: string) => Array<string | RegExp>) | false
+  mask!: Array<string | RegExp> | ((raw: string) => Array<string | RegExp>) | false
   guide?: boolean
   placeholderChar?: string
   pipe?: (conformedValue: string, config: TextMaskConfig) => false | string | object
@@ -28,6 +30,7 @@ function _isAndroid(): boolean {
 }
 
 @Directive({
+  // standalone: true,
   host: {
     '(input)': '_handleInput($event.target.value)',
     '(blur)': 'onTouched()',
@@ -51,7 +54,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   onTouched = () => {}
 
   private textMaskInputElement: any
-  private inputElement: HTMLInputElement
+  private inputElement!: HTMLInputElement
 
   /** Whether the user is creating a composition string (IME events). */
   private _composing = false
@@ -93,7 +96,7 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   }
 
   
-  _handleInput(value) {
+  _handleInput(value: any) {
     if (!this._compositionMode || (this._compositionMode && !this._composing)) {
       this._setupMask()
 
@@ -139,5 +142,3 @@ export class MaskedInputDirective implements ControlValueAccessor, OnChanges {
   exports: [MaskedInputDirective]
 })
 export class TextMaskModule {}
-
-export { conformToMask } from 'text-mask-core/dist/textMaskCore'

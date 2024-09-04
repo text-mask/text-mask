@@ -1,0 +1,47 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="1"
+               class="control-label">Masked Input using <code>NgModel</code></label>
+        <div class="input-group">
+            <input id="1"
+                   name="phone"
+                   [(ngModel)]="myModel"
+                   [textMask]="{mask: mask}"
+                   type="text"
+                   class="form-control" />
+            <span class="input-group-addon">Model value: {{myModel || "[empty]"}}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="2"
+               class="control-label">
+            Masked Input using <code>NgModel</code> with initial value
+        </label>
+        <div class="input-group">
+            <input id="2"
+                   name="phoneWithValue"
+                   [(ngModel)]="modelWithValue"
+                   [textMask]="{mask: mask}"
+                   type="text"
+                   class="form-control" />
+            <span class="input-group-addon">Model value: {{modelWithValue || "[empty]"}}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="3"
+               class="control-label">
+            Masked Input using <code>FormControl</code> with initial value
+        </label>
+        <div class="input-group">
+            <input id="3"
+                   name="phoneFormControl"
+                   [formControl]='formControlInput'
+                   [textMask]="{mask: mask}"
+                   type="text"
+                   class="form-control" />
+            <span class="input-group-addon">Model value: {{formControlInput.value || "[empty]"}}</span>
+        </div>
+    </div>
+</form>

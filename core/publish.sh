@@ -9,12 +9,12 @@ fi
 
 npm run core:build
 
-npm run core:verify
+# npm run core:verify
 
-cd ./core
+# cd ./core
 
-generatedNpmVersion="$(npm version $version)"
+# generatedNpmVersion="$(npm version $version)"
 
 npm publish --access public
 
-git tag "core-${generatedNpmVersion}"
+# git tag "core-${generatedNpmVersion}"

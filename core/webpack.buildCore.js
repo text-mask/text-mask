@@ -5,17 +5,22 @@ var path = require('path')
 module.exports = {
   entry: path.join(__dirname, './src/index.js'),
 
+  mode: 'production',
+
   module: {
-    loaders: [
-      {test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/}
+    rules: [
+      {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/}
     ]
   },
 
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'textMaskCore.js',
-    library: 'textMaskCore',
-    libraryTarget: 'umd'
+    libraryTarget: 'module',
+    module: true
+  },
+  experiments: {
+    outputModule: true
   },
 
   resolve: {
@@ -23,16 +28,16 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     screw_ie8: true,
+    //     warnings: false
+    //   }
+    // }),
     new StatsPlugin('stats.json', {
       chunkModules: true
     })
