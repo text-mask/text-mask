@@ -6,10 +6,10 @@ layout of the project.
 #### How the project is structured
 
 Text Mask has components for different frameworks, like React in
-[`/react`](https://github.com/text-mask/text-mask/tree/master/react)
-and Angular in [`/angular2`](https://github.com/text-mask/text-mask/tree/master/angular2).
+[`/react`](https://github.com/im-open/text-mask/tree/master/react)
+and Angular in [`/angular2`](https://github.com/im-open/text-mask/tree/master/angular2).
 Under the hood, these components are powered by the same **core**
-[`/core`](https://github.com/text-mask/text-mask/tree/master/core).
+[`/core`](https://github.com/im-open/text-mask/tree/master/core).
 
 Each framework component is published to npm independently. The user only needs to install the
 component package. However, the `core` is also published to npm as a separate package, just in case
@@ -18,7 +18,7 @@ somebody wishes to use it.
 #### The relationship between Text Mask `core` and framework components
 
 Text Mask core has a function called
-[`createTextMaskInputElement`](https://github.com/text-mask/text-mask/blob/master/core/src/createTextMaskInputElement.js),
+[`createTextMaskInputElement`](https://github.com/im-open/text-mask/blob/master/core/src/createTextMaskInputElement.js),
 which all framework components utilize.
 This function takes an input element and other text mask configurations and returns an object with
 `update` method. Framework components call the `update` method at different points in their life-cycles
@@ -48,11 +48,11 @@ Say you're interested in Angular 2 component: all you have to do is run...
 This command will start an HTTP server and a webpack process.
 
 1. The HTTP server will serve the content of
-[`angular2/example`](https://github.com/text-mask/text-mask/tree/master/angular2/example), and
+   [`angular2/example`](https://github.com/im-open/text-mask/tree/master/angular2/example), and
 1. The webpack process will build the code in
-[`angular2/src`](https://github.com/text-mask/text-mask/tree/master/angular2/src)
-along with the code in
-[`core/src`](https://github.com/text-mask/text-mask/tree/master/core/src).
+   [`angular2/src`](https://github.com/im-open/text-mask/tree/master/angular2/src)
+   along with the code in
+   [`core/src`](https://github.com/im-open/text-mask/tree/master/core/src).
 
 To reach the HTTP server, load [http://localhost:3000](http://localhost:3000)
 
@@ -64,7 +64,7 @@ After you've made some changes, send a PR!
 #### What are the commands for all the framework components?
 
 The pattern is like `npm run LIBRARY_NAME:dev`. Check out the scripts section of
-the root [`package.json`](https://github.com/text-mask/text-mask/blob/master/package.json) to see the specific spellings.
+the root [`package.json`](https://github.com/im-open/text-mask/blob/master/package.json) to see the specific spellings.
 
 #### How about running the code for the `core`?
 

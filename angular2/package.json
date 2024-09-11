@@ -7,7 +7,7 @@
   "author": "M.K. Safi <msafi@msafi.com>",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/text-mask/text-mask/issues"
+    "url": "https://github.com/im-open/text-mask/issues"
   },
   "scripts": {
     "start": "tsc -p example/tsconfig.json && concurrently \"tsc -w -p example/tsconfig.json\" lite-server ",
@@ -19,9 +19,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/text-mask/text-mask.git"
+    "url": "https://github.com/im-open/text-mask.git"
   },
-  "homepage": "https://github.com/text-mask/text-mask/tree/master/angular2/#readme",
+  "homepage": "https://github.com/im-open/text-mask/tree/master/angular2/#readme",
   "keywords": [
     "angular2",
     "ng2",

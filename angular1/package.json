@@ -6,10 +6,10 @@
   "author": "Thomas (@PerfectPixel)",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/text-mask/text-mask/issues"
+    "url": "https://github.com/im-open/text-mask/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/text-mask/text-mask.git"
+    "url": "https://github.com/im-open/text-mask.git"
   }
 }

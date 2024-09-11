@@ -14,7 +14,6 @@ To download the script, use npm.
 npm i text-mask-core --save
 ```
 
-
 ### Include it
 
 After installing with npm, you could possibly do something like this from your `index.html`:
@@ -29,16 +28,16 @@ Or if you're using Node.js or a bundler such as webpack or Browserify, you can r
 `textMaskCore` as such:
 
 ```js
-var textMaskCore = require('text-mask-core')
+var textMaskCore = require("text-mask-core");
 ```
 
 ## How to use
 
 `textMaskCore` exposes three functions:
 
-* createTextMaskInputElement
-* conformToMask
-* adjustCaretPosition
+- createTextMaskInputElement
+- conformToMask
+- adjustCaretPosition
 
 ### Overview
 
@@ -53,31 +52,31 @@ to restore the caret to its proper position.
 
 ### `createTextMaskInputElement(config)`
 
-This function takes a configuration and returns an object with an `update` method.  The `update` method is used to conform the raw value to the mask you provide in the config.
+This function takes a configuration and returns an object with an `update` method. The `update` method is used to conform the raw value to the mask you provide in the config.
 
 ```js
 // the config requires a `mask` and a reference to an `input` element.
-const textMaskConfig = {inputElement, mask}
+const textMaskConfig = { inputElement, mask };
 
 // initialize text mask
-const textMaskInputElement = createTextMaskInputElement(textMaskConfig)
+const textMaskInputElement = createTextMaskInputElement(textMaskConfig);
 
 // call `update` to conform the `inputElement.value` to the provided `mask`.
-textMaskInputElement.update()
+textMaskInputElement.update();
 ```
 
-The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the `textMaskConfig` accepts.
+The `textMaskConfig` requires a `mask` and a reference to the `inputElement`. See the [documentation here](https://github.com/im-open/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the `textMaskConfig` accepts.
 
-The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
+The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask. However, you can also pass the `value` and `textMaskConfig` to the `update` method.
 
 ```js
-const textMaskConfig = {inputElement, mask}
+const textMaskConfig = { inputElement, mask };
 
 // initialize text mask without a config (or with a default config)
-const textMaskInputElement = createTextMaskInputElement()
+const textMaskInputElement = createTextMaskInputElement();
 
 // call `update` with the raw value and config
-textMaskInputElement.update(inputElement.value, textMaskConfig)
+textMaskInputElement.update(inputElement.value, textMaskConfig);
 ```
 
 The `update` method should be called every time the `inputElement.value` changes.
@@ -88,38 +87,68 @@ The `update` method should be called every time the `inputElement.value` changes
 
 This function takes three arguments:
 
-* rawValue (string): the string value that you want to conform to the mask
-* mask (array or function): the mask to which you want the string to conform. You can find
-[mask documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
-* config (object): config object. See below for details
+- rawValue (string): the string value that you want to conform to the mask
+- mask (array or function): the mask to which you want the string to conform. You can find
+  [mask documentation here](https://github.com/im-open/text-mask/blob/master/componentDocumentation.md#readme).
+- config (object): config object. See below for details
 
 This function returns an object with a property `conformedValue` (string).
 
 ```js
-const results = conformToMask('5554833902', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/])
+const results = conformToMask("5554833902", [
+  "(",
+  /[1-9]/,
+  /\d/,
+  /\d/,
+  ")",
+  " ",
+  /\d/,
+  /\d/,
+  /\d/,
+  "-",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+]);
 
-results.conformedValue // '(555) 483-3902'
+results.conformedValue; // '(555) 483-3902'
 ```
 
 #### config
 
 The `config` object takes the following values
 
-* `guide` (boolean) (defaults to `true`): this tells `conformToMask` whether you want the conformed
-string to contain a guide or no. The `guide` is basically the placeholder character and the
-mask hard characters. For example, with mask `['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]`, input `123` with `guide` set to
-`true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
+- `guide` (boolean) (defaults to `true`): this tells `conformToMask` whether you want the conformed
+  string to contain a guide or no. The `guide` is basically the placeholder character and the
+  mask hard characters. For example, with mask `['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]`, input `123` with `guide` set to
+  `true` would return `(123) ___-____`. With `guide` set to `false`, it would return `(123) `.
 
-* `previousConformedValue` (string) (required): this is the previous `output` of `conformToMask`.
-If you're calling `conformToMask` for the first time, you don't have to pass this value.
+- `previousConformedValue` (string) (required): this is the previous `output` of `conformToMask`.
+  If you're calling `conformToMask` for the first time, you don't have to pass this value.
 
-* `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
-documentation page](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#placeholderChar).
+- `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
+  documentation page](https://github.com/im-open/text-mask/blob/master/componentDocumentation.md#placeholderChar).
 
 ```js
-const results = conformToMask('5554833902', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/])
+const results = conformToMask("5554833902", [
+  "(",
+  /[1-9]/,
+  /\d/,
+  /\d/,
+  ")",
+  " ",
+  /\d/,
+  /\d/,
+  /\d/,
+  "-",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+]);
 
-results.conformedValue // '(555) 483-3902'
+results.conformedValue; // '(555) 483-3902'
 ```
 
 Whenever the value of the `input` element changes, you can pass that value to `conformToMask`
@@ -135,16 +164,16 @@ helps you restore the position.
 
 `adjustCaretPosition` takes the following object of arguments:
 
-* `previousConformedValue` (string): the string value of the `input` before the last time you set
-its value. If you're calling this function for the first time, you can pass an empty string.
-* `conformedValue` (string): the `conformedValue` returned from the last call to `conformToMask`
-* `currentCaretPosition` (integer): the position of the caret right before you called this
-function
-* `rawValue` (string): value of the input element
-* `placeholderChar` (string): placeholder character
-* `placeholder` (string): the generated placeholder
-* `indexesOfPipedChars` (array): an array of piped characters returned from the last call to the `pipe` function
-* `caretTrapIndexes` (array): an array of caret trap indexes
+- `previousConformedValue` (string): the string value of the `input` before the last time you set
+  its value. If you're calling this function for the first time, you can pass an empty string.
+- `conformedValue` (string): the `conformedValue` returned from the last call to `conformToMask`
+- `currentCaretPosition` (integer): the position of the caret right before you called this
+  function
+- `rawValue` (string): value of the input element
+- `placeholderChar` (string): placeholder character
+- `placeholder` (string): the generated placeholder
+- `indexesOfPipedChars` (array): an array of piped characters returned from the last call to the `pipe` function
+- `caretTrapIndexes` (array): an array of caret trap indexes
 
 `adjustCaretPosition` will return an integer representing the index of where the caret should be
 moved to next.

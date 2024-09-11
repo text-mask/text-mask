@@ -27,13 +27,13 @@
     "test:all": "ember try:each"
   },
   "bugs": {
-    "url": "https://github.com/text-mask/text-mask/issues"
+    "url": "https://github.com/im-open/text-mask/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/text-mask/text-mask.git"
+    "url": "https://github.com/im-open/text-mask.git"
   },
-  "homepage": "https://github.com/text-mask/text-mask/tree/master/ember/#readme",
+  "homepage": "https://github.com/im-open/text-mask/tree/master/ember/#readme",
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "broccoli-merge-trees": "^3.0.0",
