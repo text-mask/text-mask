@@ -212,11 +212,19 @@ export default function createTextMaskInputElement(config) {
       inputElement.value = inputElementValue // set the input value
       safeSetSelection(inputElement, adjustedCaretPosition) // adjust caret position
     },
-  };
+  }
+}
+
+function getActiveElement(element = document.activeElement) {
+  // We need to target the actual active element, drilling into shadow roots
+  if (element.shadowRoot && element.shadowRoot.activeElement) {
+    return getActiveElement(element.shadowRoot.activeElement)
+  }
+  return element
 }
 
 function safeSetSelection(element, selectionPosition) {
-  if (document.activeElement === element) {
+  if (getActiveElement() === element) {
     if (isAndroid) {
       defer(
         () =>
