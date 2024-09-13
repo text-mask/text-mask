@@ -1,8 +1,8 @@
-import {createStore} from 'redux'
+import {configureStore} from '@reduxjs/toolkit'
 import {reducer} from './redux'
 
-export default function configureStore() {
-  const store = createStore(reducer)
+export default function createStore() {
+  const store = configureStore({reducer})
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

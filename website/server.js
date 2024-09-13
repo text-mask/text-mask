@@ -4,14 +4,26 @@ var webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server')
 var config = require('./webpack.runWebsiteWithHotReloading.js')
 
-new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true,
-  stats: {
-    colors: true
-  }
-}).listen(3000, 'localhost', function(err) {
+const compiler = webpack({...config, mode: 'development'})
+
+new WebpackDevServer(
+  {
+    hot: true,
+    port: 3000,
+    historyApiFallback: {
+      rewrites: [
+        {
+          from: /./,
+          to: '/website/static/index.html',
+        },
+      ],
+    },
+    devMiddleware: {
+      publicPath: config.output.publicPath,
+    },
+  },
+  compiler
+).startCallback(function(err) {
   if (err) {
     console.log(err)
   }

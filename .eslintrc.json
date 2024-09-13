@@ -1,6 +1,7 @@
 {
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true
@@ -9,7 +10,8 @@
   },
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "globals": {
     "document": false,
@@ -26,12 +28,7 @@
     "getLineNumber": true,
     "requestAnimationFrame": true
   },
-  "plugins": [
-    "react",
-    "standard",
-    "promise",
-    "mocha"
-  ],
+  "plugins": ["@babel", "react", "standard", "promise", "mocha"],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
@@ -45,10 +42,7 @@
         "after": true
       }
     ],
-    "block-spacing": [
-      2,
-      "always"
-    ],
+    "block-spacing": [2, "always"],
     "brace-style": [
       2,
       "1tbs",
@@ -63,25 +57,13 @@
         "after": true
       }
     ],
-    "comma-style": [
-      2,
-      "last"
-    ],
+    "comma-style": [2, "last"],
     "constructor-super": 2,
     "object-curly-spacing": [2, "never"],
-    "curly": [
-      2,
-      "multi-line"
-    ],
-    "dot-location": [
-      2,
-      "property"
-    ],
+    "curly": [2, "multi-line"],
+    "dot-location": [2, "property"],
     "eol-last": 2,
-    "eqeqeq": [
-      2,
-      "allow-null"
-    ],
+    "eqeqeq": [2, "allow-null"],
     "generator-star-spacing": [
       2,
       {
@@ -89,10 +71,7 @@
         "after": true
       }
     ],
-    "handle-callback-err": [
-      2,
-      "^(err|error)$"
-    ],
+    "handle-callback-err": [2, "^(err|error)$"],
     "indent": [
       2,
       2,
@@ -100,10 +79,7 @@
         "SwitchCase": 1
       }
     ],
-    "jsx-quotes": [
-      "error",
-      "prefer-single"
-    ],
+    "jsx-quotes": ["error", "prefer-single"],
     "key-spacing": [
       2,
       {
@@ -139,18 +115,12 @@
     "no-extend-native": 2,
     "no-extra-bind": 2,
     "no-extra-boolean-cast": 2,
-    "no-extra-parens": [
-      2,
-      "functions"
-    ],
+    "no-extra-parens": [2, "functions"],
     "no-fallthrough": 2,
     "no-floating-decimal": 2,
     "no-func-assign": 2,
     "no-implied-eval": 2,
-    "no-inner-declarations": [
-      2,
-      "functions"
-    ],
+    "no-inner-declarations": [2, "functions"],
     "no-invalid-regexp": 2,
     "no-irregular-whitespace": 2,
     "no-iterator": 2,
@@ -186,10 +156,7 @@
     "no-proto": 2,
     "no-redeclare": 2,
     "no-regex-spaces": 2,
-    "no-return-assign": [
-      2,
-      "except-parens"
-    ],
+    "no-return-assign": [2, "except-parens"],
     "no-self-assign": 2,
     "no-self-compare": 2,
     "no-sequences": 2,
@@ -225,23 +192,10 @@
         "initialized": "never"
       }
     ],
-    "operator-linebreak": [
-      2,
-      "after"
-    ],
-    "padded-blocks": [
-      2,
-      "never"
-    ],
-    "quotes": [
-      2,
-      "single",
-      "avoid-escape"
-    ],
-    "semi": [
-      2,
-      "never"
-    ],
+    "operator-linebreak": [2, "after"],
+    "padded-blocks": [2, "never"],
+    "quotes": [2, "single", "avoid-escape"],
+    "semi": [2, "never"],
     "semi-spacing": [
       2,
       {
@@ -249,18 +203,9 @@
         "after": true
       }
     ],
-    "space-before-blocks": [
-      2,
-      "always"
-    ],
-    "space-before-function-paren": [
-      2,
-      "never"
-    ],
-    "space-in-parens": [
-      2,
-      "never"
-    ],
+    "space-before-blocks": [2, "always"],
+    "space-before-function-paren": [2, "never"],
+    "space-in-parens": [2, "never"],
     "space-infix-ops": 2,
     "space-unary-ops": [
       2,
@@ -269,32 +214,30 @@
         "nonwords": false
       }
     ],
-    "template-curly-spacing": [
-      2,
-      "never"
-    ],
+    "template-curly-spacing": [2, "never"],
     "use-isnan": 2,
     "valid-typeof": 2,
-    "wrap-iife": [
-      2,
-      "any"
-    ],
-    "yield-star-spacing": [
-      2,
-      "both"
-    ],
-    "yoda": [
-      2,
-      "never"
-    ],
-    "standard/array-bracket-even-spacing": [
-      2,
-      "either"
-    ],
-    "standard/computed-property-even-spacing": [
-      2,
-      "even"
-    ],
+    "wrap-iife": [2, "any"],
+    "yield-star-spacing": [2, "both"],
+    "yoda": [2, "never"],
+    "standard/array-bracket-even-spacing": [2, "either"],
+    "standard/computed-property-even-spacing": [2, "even"],
     "promise/param-names": 2
-  }
+  },
+  "overrides": [
+    {
+      "files": ["./react/**/*.js"],
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "ecmaFeatures": {
+          "experimentalObjectRestSpread": true,
+          "jsx": true
+        },
+        "sourceType": "module",
+        "babelOptions": {
+          "configFile": "./react/babel.config.js"
+        }
+      }
+    }
+  ]
 }

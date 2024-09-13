@@ -8,21 +8,26 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '/'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
-  plugins: [new webpack.NoErrorsPlugin()],
+  optimization: {
+    emitOnErrors: false,
+  },
   resolve: {
     alias: {vue: 'vue/dist/vue.js'},
-    extensions: ['', '.js', '.vue']
+    extensions: ['', '.js', '.vue'],
   },
   module: {
-    loaders: [{
-      test: /\.vue$/,
-      loader: 'vue'
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }].concat(coreLoaders)
+    loaders: [
+      {
+        test: /\.vue$/,
+        loader: 'vue',
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+    ].concat(coreLoaders),
   },
 }

@@ -14,8 +14,7 @@
   },
   "babel": {
     "presets": [
-      "env",
-      "stage-0"
+      "@babel/preset-env"
     ]
   },
   "homepage": "https://github.com/im-open/text-mask/tree/master/vue/#readme",

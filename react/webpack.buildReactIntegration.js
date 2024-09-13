@@ -6,46 +6,37 @@ module.exports = {
   entry: path.join(__dirname, './src/reactTextMask.js'),
 
   module: {
-    loaders: [
-      {test: /\.jsx?$/, loaders: ['babel-loader']}
-    ]
+    loaders: [{test: /\.jsx?$/, loaders: ['babel-loader']}],
   },
 
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'reactTextMask.js',
     library: 'reactTextMask',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
 
   resolve: {
-    extensions: ['', '.jsx', '.js']
+    extensions: ['', '.jsx', '.js'],
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      }
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new StatsPlugin('stats.json', {
-      chunkModules: true
-    })
+      chunkModules: true,
+    }),
   ],
 
   externals: [
     {
-      'react': {
+      react: {
         root: 'React',
         commonjs2: 'react',
         commonjs: 'react',
-        amd: 'react'
-      }
-    }
-  ]
+        amd: 'react',
+      },
+    },
+  ],
 }

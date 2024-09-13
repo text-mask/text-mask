@@ -1,3 +1,4 @@
 {
-  "presets": ["env", "react", "stage-0"]
+  "extends": "../react/babel.config.js",
+  "include": ['../**/*.js'],
 }

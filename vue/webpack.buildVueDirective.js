@@ -9,51 +9,44 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue',
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
 
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'vueTextMask.js',
     library: 'vueTextMask',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
 
   resolve: {
-    extensions: ['', '.vue', '.js']
+    extensions: ['', '.vue', '.js'],
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      }
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new StatsPlugin('stats.json', {
-      chunkModules: true
-    })
+      chunkModules: true,
+    }),
   ],
 
   externals: [
     {
-      'vue': {
+      vue: {
         root: 'Vue',
         commonjs2: 'vue',
         commonjs: 'vue',
-        amd: 'vue'
-      }
-    }
-  ]
+        amd: 'vue',
+      },
+    },
+  ],
 }
