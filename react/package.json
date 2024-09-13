@@ -1,5 +1,5 @@
 {
-  "name": "react-text-mask",
+  "name": "@im-open/react-text-mask",
   "version": "5.5.0",
   "description": "React input component that accepts mask pattern",
   "main": "dist/reactTextMask.js",

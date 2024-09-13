@@ -3,10 +3,24 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
+  mode: 'production',
   entry: path.join(__dirname, './src/reactTextMask.js'),
 
   module: {
-    loaders: [{test: /\.jsx?$/, loaders: ['babel-loader']}],
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              configFile: path.join(__dirname, 'babel.config.js'),
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+    ],
   },
 
   output: {

@@ -28,7 +28,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              configFile: path.join(__dirname, '.babelrc'),
+              configFile: path.join(__dirname, 'babel.config.js'),
             },
           },
         ],
