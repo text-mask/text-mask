@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {forwardRef} from 'react'
 import PropTypes from 'prop-types'
-import createTextMaskInputElement
-  from '../../core/src/createTextMaskInputElement'
+import createTextMaskInputElement from '../../core/src/createTextMaskInputElement'
 import {isNil} from '../../core/src/utilities'
 
-export default class MaskedInput extends React.PureComponent {
+export class InnerMaskedInput extends React.PureComponent {
   constructor(...args) {
     super(...args)
 
+    this.state = {
+      initialValue: this.props.value,
+    }
     this.setRef = this.setRef.bind(this)
     this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -15,10 +17,17 @@ export default class MaskedInput extends React.PureComponent {
 
   setRef(inputElement) {
     this.inputElement = inputElement
+    this.props.forwardedRef &&
+      (typeof this.props.forwardedRef === 'function' ?
+        this.props.forwardedRef(inputElement) :
+        (this.props.forwardedRef.current = inputElement))
   }
 
   initTextMask() {
-    const {props, props: {value}} = this
+    const {
+      props,
+      props: {value},
+    } = this
 
     this.textMaskInputElement = createTextMaskInputElement({
       inputElement: this.inputElement,
@@ -40,14 +49,18 @@ export default class MaskedInput extends React.PureComponent {
     // - `mask` converting to string, to compare values or function content
     // - `keepCharPositions` exludes, because it affect only cursor position
     const settings = {guide, placeholderChar, showMask}
-    const isPipeChanged = typeof pipe === 'function' && typeof prevProps.pipe === 'function' ?
-      pipe.toString() !== prevProps.pipe.toString() :
-      isNil(pipe) && !isNil(prevProps.pipe) || !isNil(pipe) && isNil(prevProps.pipe)
+    const isPipeChanged =
+      typeof pipe === 'function' && typeof prevProps.pipe === 'function' ?
+        pipe.toString() !== prevProps.pipe.toString() :
+        (isNil(pipe) && !isNil(prevProps.pipe)) ||
+          (!isNil(pipe) && isNil(prevProps.pipe))
     const isMaskChanged = mask.toString() !== prevProps.mask.toString()
     const isSettingChanged =
-      Object.keys(settings).some(prop => settings[prop] !== prevProps[prop]) ||
-        isMaskChanged ||
-        isPipeChanged
+      Object.keys(settings).some(
+        (prop) => settings[prop] !== prevProps[prop]
+      ) ||
+      isMaskChanged ||
+      isPipeChanged
 
     // Сalculate that value was changed
     const isValueChanged = value !== this.inputElement.value
@@ -70,11 +83,12 @@ export default class MaskedInput extends React.PureComponent {
     delete props.onBlur
     delete props.onChange
     delete props.showMask
+    delete props.forwardedRef
 
     return render(this.setRef, {
       onBlur: this.onBlur,
       onChange: this.onChange,
-      defaultValue: this.props.value,
+      defaultValue: this.state.initialValue,
       ...props,
     })
   }
@@ -94,7 +108,7 @@ export default class MaskedInput extends React.PureComponent {
   }
 }
 
-MaskedInput.propTypes = {
+InnerMaskedInput.propTypes = {
   mask: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.func,
@@ -110,10 +124,18 @@ MaskedInput.propTypes = {
   placeholderChar: PropTypes.string,
   keepCharPositions: PropTypes.bool,
   showMask: PropTypes.bool,
+  forwardedRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.any}),
+  ]),
 }
 
-MaskedInput.defaultProps = {
-  render: (ref, props) => <input ref={ref} {...props} />
+InnerMaskedInput.defaultProps = {
+  render: (ref, props) => <input ref={ref} {...props} />,
 }
+
+export default (forwardRef || ((mIn) => mIn))(function MaskedInput(props, ref) {
+  return <InnerMaskedInput {...props} forwardedRef={ref} />
+})
 
 export {default as conformToMask} from '../../core/src/conformToMask.js'
