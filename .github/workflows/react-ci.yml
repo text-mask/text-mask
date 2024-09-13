@@ -1,0 +1,87 @@
+name: React CI
+on:
+  # This workflow only works with pull_request triggers.
+  # It will run on these pull request events:
+  # opened/reopened: A PR is opened/re-opened,
+  # synchronize: The PR's head branch is updated (commits pushed, the base branch changed or the head is updated from the base branch)
+  # closed: A PR is merged or closed (The examine-triggers job makes sure we don't build anything if a PR is closed without being merged)
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "*"
+      - "core/**"
+      - "website/**"
+      - "react/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "*"
+      - "core/**"
+      - "website/**"
+      - "react/**"
+
+jobs:
+  test:
+    name: "Test with Node version: ${{ matrix.node }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [node, lts/*]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Lint
+        run: npm run react:test
+
+  publish:
+    needs: [test]
+    name: Publish NPM Package
+    runs-on: ubuntu-latest
+    env:
+      GIT_AUTHOR_NAME: "im-pipeline-bot"
+      GIT_AUTHOR_EMAIL: ${{ secrets.COMMIT_BOT_EMAIL }}
+      GIT_COMMITTER_NAME: "im-pipeline-bot"
+      GIT_COMMITTER_EMAIL: ${{ secrets.COMMIT_BOT_EMAIL }}
+      GITHUB_TOKEN: ${{ secrets.PIPELINE_BOT_PAT }}
+      GH_TOKEN: ${{ secrets.PIPELINE_BOT_PAT }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PIPELINE_BOT_PAT }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: |
+          npm run build:core
+          npm run build:react
+          npm run build:website
+          git add -A
+
+      - name: Semantic Release - core
+        run: npx cross-env PACKAGE_NAME=core npx semantic-release
+
+      - name: Semantic Release - react
+        run: npx cross-env PACKAGE_NAME=react npx semantic-release
