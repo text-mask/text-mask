@@ -1,5 +1,2 @@
 **/dist/*.js
-**/static/*.js
 node_modules/
-ember/
-angular2/**/*.js

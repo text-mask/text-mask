@@ -2,21 +2,14 @@
   "name": "react-text-mask",
   "version": "0.3.0",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
-  "main": "index.js",
-  "babel": {
-    "presets": [
-      "env",
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-object-assign"
-    ]
-  },
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/text-mask/text-mask.git"
+    "url": "https://github.com/text-mask/text-mask.git"
   },
-  "author": "M.K. Safi <msafi@msafi.com>",
+  "author": "Thabo Rachidi",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/text-mask/text-mask/issues"
@@ -28,6 +21,35 @@
     "string mask",
     "input formatting",
     "text formatting",
-    "string formatting"
-  ]
+    "string formatting",
+    "react"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build:dev": "tsc && vite build",
+    "build": "tsc --p ./tsconfig-build.json && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.7",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.6",
+    "vite-plugin-dts": "^4.2.1",
+    "vitest": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }
