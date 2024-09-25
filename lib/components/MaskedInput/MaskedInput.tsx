@@ -7,6 +7,7 @@ import { TextMaskInputElementResult } from '../../types/TextMaskInputElement.js'
 
 type ComponentProps = React.InputHTMLAttributes<HTMLInputElement> & {
   mask: Mask;
+  type: 'text' | 'tel' | 'url' | 'password' | 'search';
   guide?: boolean;
   value?: string;
   defaultValue?: string;
@@ -31,6 +32,7 @@ export class MaskedInput extends React.PureComponent<Props, State> {
   static defaultProps: Props = {
     mask: [],
     render: (ref, props) => <input ref={ref} {...props} />,
+    type: 'text',
   };
 
   constructor(props: Props) {
@@ -53,10 +55,10 @@ export class MaskedInput extends React.PureComponent<Props, State> {
     // Getting props affecting value
     const { value, pipe, mask, guide, placeholderChar, showMask } = this.props;
 
-    // Сalculate that settings was changed:
+    // Calculate that settings was changed:
     // - `pipe` converting to string, to compare function content
     // - `mask` converting to string, to compare values or function content
-    // - `keepCharPositions` exludes, because it affect only cursor position
+    // - `keepCharPositions` excludes, because it affect only cursor position
     const settings: { [key: string]: boolean | string | undefined } = {
       guide,
       placeholderChar,
@@ -138,6 +140,7 @@ export class MaskedInput extends React.PureComponent<Props, State> {
 MaskedInput.defaultProps = {
   mask: [],
   render: (ref, props) => <input ref={ref} {...props} />,
+  type: 'text',
 };
 
 export { default as conformToMask } from '../../core/conformToMask.js';

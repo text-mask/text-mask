@@ -26,22 +26,6 @@ export function convertMaskToPlaceholder(
     .join('');
 }
 
-export function isArray(value: any): boolean {
-  return (Array.isArray && Array.isArray(value)) || value instanceof Array;
-}
-
-export function isString(value: any): boolean {
-  return typeof value === 'string' || value instanceof String;
-}
-
-export function isNumber(value: any): boolean {
-  return typeof value === 'number' && !isNaN(value);
-}
-
-export function isNil(value: any): boolean {
-  return typeof value === 'undefined' || value === null;
-}
-
 export function processCaretTraps(mask: Mask) {
   const indexes = [];
 
@@ -59,16 +43,32 @@ export function processCaretTraps(mask: Mask) {
   return { maskWithoutCaretTraps: mask, indexes };
 }
 
+export function isArray(value: any): boolean {
+  return (Array.isArray && Array.isArray(value)) || value instanceof Array;
+}
+
+export function isString(value: any): boolean {
+  return typeof value === 'string' || value instanceof String;
+}
+
+export function isNumber(value: any): boolean {
+  return typeof value === 'number' && !isNaN(value);
+}
+
+export function isNil(value: any): boolean {
+  return typeof value === 'undefined' || value === null;
+}
+
 export function isMaskFunction(mask: Mask): mask is MaskFunc {
-  return (mask as MaskFunc) !== undefined;
+  return (mask as MaskFunc) !== undefined && typeof mask === 'function';
 }
 
 export function isMaskArray(mask: Mask): mask is MaskArray {
-  return (mask as MaskArray) !== undefined;
+  return typeof mask === 'object' && !('call' in mask);
 }
 
 export function isPipeFunction(pipe?: Pipe): pipe is Pipe {
-  return (pipe as Pipe) !== undefined;
+  return (pipe as Pipe) !== undefined && typeof pipe === 'function';
 }
 
 export function isPipeResultsBoolean(pipeResults: PipeResult): pipeResults is boolean {
