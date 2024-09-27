@@ -1,4 +1,4 @@
-import { Config } from '../types/Config';
+import { MainConfig } from '../types/Config';
 import {
   AllWhitespaceRegExp,
   AnyNonDotOrWhitespaceRegExp,
@@ -13,7 +13,7 @@ import {
 } from '../utils/constants';
 import emailPipe from './emailPipe';
 
-function emailMask(rawValue: string, config: Config) {
+function emailMask(rawValue: string, config: MainConfig) {
   rawValue = rawValue.replace(AllWhitespaceRegExp, EmptyString);
 
   const { placeholderChar, currentCaretPosition } = config;
@@ -81,7 +81,7 @@ function getDomainName(
   rawValue: string,
   indexOfFirstAtSymbol: number,
   indexOfTopLevelDomainDot: number,
-  placeholderChar: string,
+  placeholderChar?: string,
 ) {
   let domainName = EmptyString;
 
@@ -109,8 +109,8 @@ function getDomainName(
 function getTopLevelDomain(
   rawValue: string,
   indexOfTopLevelDomainDot: number,
-  placeholderChar: string,
-  currentCaretPosition: number,
+  placeholderChar?: string,
+  currentCaretPosition?: number | null,
 ) {
   let topLevelDomain = EmptyString;
 

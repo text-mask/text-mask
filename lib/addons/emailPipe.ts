@@ -1,4 +1,4 @@
-import { Config } from '../types/Config';
+import { MainConfig } from '../types/Config';
 import {
   AllAtSymbolsRegExp,
   AllDotsRegExp,
@@ -10,7 +10,7 @@ import {
   EmptyString,
 } from '../utils/constants';
 
-export default function emailPipe(conformedValue: string, config: Config) {
+export default function emailPipe(conformedValue: string, config: MainConfig) {
   const { currentCaretPosition, rawValue, previousConformedValue, placeholderChar } = config;
 
   let value: string = conformedValue;
@@ -19,7 +19,7 @@ export default function emailPipe(conformedValue: string, config: Config) {
 
   const indexOfAtDot = value.indexOf(AtDot);
 
-  const emptyEmail = rawValue.match(new RegExp(`[^@\\s.${placeholderChar}]`)) === null;
+  const emptyEmail = rawValue?.match(new RegExp(`[^@\\s.${placeholderChar}]`)) === null;
 
   if (emptyEmail) {
     return EmptyString;
@@ -28,7 +28,7 @@ export default function emailPipe(conformedValue: string, config: Config) {
   if (
     value.indexOf(DotDot) !== -1 ||
     (indexOfAtDot !== -1 && currentCaretPosition !== indexOfAtDot + 1) ||
-    (rawValue.indexOf(AtSymbol) === -1 &&
+    (rawValue?.indexOf(AtSymbol) === -1 &&
       previousConformedValue !== EmptyString &&
       rawValue.indexOf(Dot) !== -1)
   ) {
@@ -41,7 +41,7 @@ export default function emailPipe(conformedValue: string, config: Config) {
   if (
     (domainPart.match(AllDotsRegExp) || EmptyArray).length > 1 &&
     value.substr(-1) === Dot &&
-    currentCaretPosition !== rawValue.length
+    currentCaretPosition !== rawValue?.length
   ) {
     value = value.slice(0, value.length - 1);
   }

@@ -1,4 +1,4 @@
-import { Mask, MaskArray, MaskFunc } from '../types/Mask';
+import { Mask, MaskArray, MaskFunc, MaskObject } from '../types/Mask';
 import { Pipe, PipeResult, PipeResultObject } from '../types/Pipe';
 import { CaretTrap, EmptyArray, PlaceholderChar } from './constants';
 
@@ -6,7 +6,7 @@ export function convertMaskToPlaceholder(
   mask: Mask = EmptyArray,
   placeholderChar = PlaceholderChar,
 ) {
-  if (!isArray(mask) || typeof mask === 'boolean' || typeof mask === 'function') {
+  if (!isArray(mask) || typeof mask === 'boolean' || isMaskFunction(mask) || isMaskObject(mask)) {
     throw new Error('Text-mask: convertMaskToPlaceholder: The mask property must be an array.');
   }
 
@@ -29,7 +29,7 @@ export function convertMaskToPlaceholder(
 export function processCaretTraps(mask: Mask) {
   const indexes = [];
 
-  if (!isArray(mask) || typeof mask === 'boolean' || typeof mask === 'function') {
+  if (!isArray(mask) || typeof mask === 'boolean' || isMaskFunction(mask) || isMaskObject(mask)) {
     throw new Error('Text-mask: processCaretTraps: The mask property must be an array.');
   }
 
@@ -65,6 +65,10 @@ export function isMaskFunction(mask: Mask): mask is MaskFunc {
 
 export function isMaskArray(mask: Mask): mask is MaskArray {
   return typeof mask === 'object' && !('call' in mask);
+}
+
+export function isMaskObject(mask: Mask): mask is MaskObject {
+  return (mask as MaskObject) && typeof mask === 'object' && 'mask' in mask && 'pipe' in mask;
 }
 
 export function isPipeFunction(pipe?: Pipe): pipe is Pipe {
