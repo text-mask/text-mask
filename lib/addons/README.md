@@ -1,18 +1,10 @@
-# Text Mask Addons
+# Mask Addons
 
-These addons are ready-to-use pipes and masks that can be used with Text Mask.
-
-## Installation
-
-```bash
-npm i text-mask-addons --save
-```
+These addons are ready-to-use pipes and masks that can be used with React Text Mask.
 
 ## Masks
 
-These can be passed as a
-[`mask`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#mask)
-to Text Mask.
+These can be passed as a mask to React Text Mask.
 
 ### `createNumberMask`
 
@@ -58,14 +50,11 @@ import emailMask from 'text-mask-addons/dist/emailMask'
 // ...then pass `emailMask` to the Text Mask component as the mask
 ```
 
-*Technical side note*: even though `emailMask` is passed as a `mask`, it is actually made of both a `mask` and a `pipe` bundled 
-together for convenience. The Text Mask component knows how to unwrap and separate the `pipe` and `mask` functions to use them. 
+*Technical side note*: even though `emailMask` is passed as a `mask`, it is actually made of both a `mask` and a `pipe` bundled together for convenience. The React Text Mask component knows how to unwrap and separate the `pipe` and `mask` functions to use them.
 
 ## Pipes
 
-These functions here can be passed as a
-[`pipe`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#pipe)
-to Text Mask.
+These functions here can be passed as a pipe to React Text Mask.
 
 ### `createAutoCorrectedDatePipe`
 
@@ -75,7 +64,6 @@ The `createAutoCorrectedDatePipe` accepts a string specifying date format and an
 1. `minYear` (number): the minimum year allowed in the date field `mask`.
 1. `maxYear` (number): the maximum year allowed in the date field `mask`.
 
-
 For example, if the user enters a value
 larger than `1` in the 1st slot of month, it appends `0` to it. That is `4` => `04`. It does a similar thing for the
 day slots.
@@ -83,9 +71,7 @@ day slots.
 It also blocks the user from entering invalid days or months such as `33/44`.
 
 For `createAutoCorrectedDatePipe` to work properly, the Text Mask component needs to be
-configured with
-[`keepCharPositions`](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#keepcharpositions)
-set to `true`.
+configured with `keepCharPositions` set to `true`.
 
 #### Usage
 
