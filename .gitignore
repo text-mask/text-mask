@@ -13,3 +13,7 @@ psd
 thumb
 sketch
 *storybook.log
+
+build
+dist
+*.tgz

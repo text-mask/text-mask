@@ -1,9 +1,9 @@
-Thank you for your interest in contributing!
+# Contributing to React Text Mask
 
 This document contains information that will hopefully allow you to better understand the overall
 layout of the project.
 
-#### How the project is structured
+## How the project is structured
 
 Text Mask has components for different frameworks, like React in
 [`/react`](https://github.com/text-mask/text-mask/tree/master/react)
@@ -15,7 +15,7 @@ Each framework component is published to npm independently. The user only needs 
 component package. However, the `core` is also published to npm as a separate package, just in case
 somebody wishes to use it.
 
-#### The relationship between Text Mask `core` and framework components
+## The relationship between Text Mask `core` and framework components
 
 Text Mask core has a function called
 [`createTextMaskInputElement`](https://github.com/text-mask/text-mask/blob/master/core/src/createTextMaskInputElement.js),
@@ -24,26 +24,24 @@ This function takes an input element and other text mask configurations and retu
 `update` method. Framework components call the `update` method at different points in their life-cycles
 to tell Text Mask to conform the value of the input element.
 
-##### The `update` method
+## The `update` method
 
 When called, `update` will conform whatever is the current `value` of the input element. However, you
 can pass an optional string to it and it will conform and show that instead.
 This is useful when you want to pass a value to the input element programmatically.
 
-#### How to run the code for development
+## How to run the code for development
 
 If you want to run Text Mask, make changes, and see them reflected on an actual page, here's
 how to get started:
 
 1. Fork this repository
 1. Clone your fork to your computer
-1. In the root of the repository, run `npm install`
+1. In the root of the repository, run `yarn`
 
-The next commands depend on the framework component you're interested in.
+### Start the development server
 
-Say you're interested in Angular 2 component: all you have to do is run...
-
-`npm run angular2:dev`
+`yarn storybook`
 
 This command will start an HTTP server and a webpack process.
 

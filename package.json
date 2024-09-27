@@ -1,10 +1,13 @@
 {
   "name": "react-text-mask",
-  "version": "0.3.0",
+  "version": "0.0.2",
   "description": "Conforms string to given mask or pattern, and can be hooked up to input element",
-  "main": "build/main.js",
-  "types": "build/main.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/text-mask/text-mask.git"

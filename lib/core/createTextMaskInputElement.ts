@@ -4,7 +4,9 @@ import { TextMaskInputElementResult } from '../types/TextMaskInputElement';
 import { Defer, EmptyString, IsAndroid, PlaceholderChar, StrNone } from '../utils/constants';
 import {
   convertMaskToPlaceholder,
+  isMaskArray,
   isMaskFunction,
+  isMaskObject,
   isNumber,
   isPipeFunction,
   isPipeResultsBoolean,
@@ -56,15 +58,10 @@ export default function createTextMaskInputElement(config: MainConfig): TextMask
       // Text Mask accepts masks that are a combination of a `mask` and a `pipe` that work together. If such a `mask` is
       // passed, we destructure it below, so the rest of the code can work normally as if a separate `mask` and a `pipe`
       // were passed.
-      // TODO: Investigate
-      // if (
-      //   typeof providedMask === StrObject &&
-      //   providedMask.pipe !== undefined &&
-      //   providedMask.mask !== undefined
-      // ) {
-      //   pipe = providedMask.pipe;
-      //   providedMask = providedMask.mask;
-      // }
+      if (isMaskObject(providedMask)) {
+        pipe = providedMask.pipe;
+        providedMask = providedMask.mask;
+      }
 
       // The `placeholder` is an essential piece of how Text Mask works. For a mask like `(111)`, the placeholder would
       // be `(___)` if the `placeholderChar` is set to `_`.
@@ -76,7 +73,7 @@ export default function createTextMaskInputElement(config: MainConfig): TextMask
 
       // If the provided mask is an array, we can call `convertMaskToPlaceholder` here once and we'll always have the
       // correct `placeholder`.
-      if (providedMask instanceof Array) {
+      if (isMaskArray(providedMask)) {
         placeholder = convertMaskToPlaceholder(providedMask, placeholderChar);
       }
 
@@ -143,7 +140,7 @@ export default function createTextMaskInputElement(config: MainConfig): TextMask
       let pipeResults: PipeResult = { value: '', indexesOfPipedChars: [] };
 
       // If `pipe` is a function, we call it.
-      if (piped) {
+      if (piped && pipe) {
         // `pipe` receives the `conformedValue` and the configurations with which `conformToMask` was called.
         pipeResults = pipe(conformedValue, {
           rawValue: safeRawValue,
