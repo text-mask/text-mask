@@ -7,7 +7,7 @@ import { TextMaskInputElementResult } from '../../types/TextMaskInputElement.js'
 
 type ComponentProps = React.InputHTMLAttributes<HTMLInputElement> & {
   mask: Mask;
-  type: 'text' | 'tel' | 'url' | 'password' | 'search';
+  type?: 'text' | 'tel' | 'url' | 'password' | 'search';
   guide?: boolean;
   value?: string;
   defaultValue?: string;

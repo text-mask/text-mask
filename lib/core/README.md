@@ -1,55 +1,21 @@
-# Text Mask Core
+# Core
 
-This module contains the core functions that power Text Mask. Text Mask
-has wrappers for Angular1, Angular2, Ember, React and Vue which can be used directly.
+This module contains the core functions that power React Text Mask. 
 
-However, Text Mask Core functions could be useful on their own. That's why they are published
-and documented here as a separate module.
-
-## Getting started
-
-To download the script, use npm.
-
-```bash
-npm i text-mask-core --save
-```
-
-
-### Include it
-
-After installing with npm, you could possibly do something like this from your `index.html`:
-
-```html
-<script src="./node_modules/text-mask-core/dist/textMaskCore.js"></script>
-```
-
-Including this file in your source code will expose the global object `textMaskCore`.
-
-Or if you're using Node.js or a bundler such as webpack or Browserify, you can require
-`textMaskCore` as such:
-
-```js
-var textMaskCore = require('text-mask-core')
-```
-
-## How to use
-
-`textMaskCore` exposes three functions:
+This module exposes three functions:
 
 * createTextMaskInputElement
 * conformToMask
 * adjustCaretPosition
 
-### Overview
+## Overview
 
 The general idea is to take user input, conform it to your desired mask using `conformToMask`,
 and then apply the output of `conformToMask` to the value of the HTML input element.
 Once you do that however, the caret position will be lost. You can then use `adjustCaretPosition`
 to restore the caret to its proper position.
 
----
-
-## API documentation
+## Documentation
 
 ### `createTextMaskInputElement(config)`
 
@@ -66,9 +32,9 @@ const textMaskInputElement = createTextMaskInputElement(textMaskConfig)
 textMaskInputElement.update()
 ```
 
-The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.  See the [documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme) for more information on the properties that the `textMaskConfig` accepts.
+The `textMaskConfig` requires a `mask` and a reference to the `inputElement`.
 
-The default use-case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
+The default use case is for the `textMaskConfig` to be passed to the `createTextMaskInputElement` method when you initialize React Text Mask.  However, you can also pass the `value` and `textMaskConfig` to the `update` method.
 
 ```js
 const textMaskConfig = {inputElement, mask}
@@ -89,9 +55,8 @@ The `update` method should be called every time the `inputElement.value` changes
 This function takes three arguments:
 
 * rawValue (string): the string value that you want to conform to the mask
-* mask (array or function): the mask to which you want the string to conform. You can find
-[mask documentation here](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
-* config (object): config object. See below for details
+* mask (array or function): the mask to which you want the string to conform.
+* config (object): config object. See [below](#config) for details
 
 This function returns an object with a property `conformedValue` (string).
 
@@ -113,8 +78,7 @@ mask hard characters. For example, with mask `['(', /[1-9]/, /\d/, /\d/, ')', ' 
 * `previousConformedValue` (string) (required): this is the previous `output` of `conformToMask`.
 If you're calling `conformToMask` for the first time, you don't have to pass this value.
 
-* `placeholderChar` (string) (optional): for documentation on this key, [see this section of the component
-documentation page](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#placeholderChar).
+* `placeholderChar` (string) (optional)
 
 ```js
 const results = conformToMask('5554833902', ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/])
