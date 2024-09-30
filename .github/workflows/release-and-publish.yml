@@ -1,4 +1,4 @@
-name: Create Release
+name: Release and Publish
 
 on:
   push:
@@ -77,3 +77,37 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ steps.release.outputs.tag_name }} release.tar.gz
+
+  publish-npm:
+    name: Publish to NPM
+    needs: release-please
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to NPM
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
