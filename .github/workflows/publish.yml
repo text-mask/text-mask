@@ -77,28 +77,28 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ steps.release.outputs.tag_name }} release.tar.gz
 
-    publish-npm:
-      name: Publish to NPM
-      needs: release-please
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        id-token: write
+  publish-npm:
+    name: Publish to NPM
+    needs: release-please
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
-      steps:
-        - name: Checkout 🛎️
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
 
-        - name: Setup Node
-          uses: actions/setup-node@v4
-          with:
-            node-version: '20.x'
-            registry-url: 'https://registry.npmjs.org'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
 
-        - name: Install dependencies
-          run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-        - name: Publish to NPM
-          run: npm publish --provenance
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to NPM
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
