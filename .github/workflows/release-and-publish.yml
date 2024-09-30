@@ -44,6 +44,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+
     steps:
       - name: Create release
         uses: googleapis/release-please-action@v4
