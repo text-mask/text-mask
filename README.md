@@ -106,7 +106,7 @@ For example, a mask for a U.S. based phone number such as `(555) 392-4932`, coul
 ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 ```
 
-That means the user can enter only a number between 1 and 9 in the first placeholder, and only a digit in the placeholders after that.
+That means the user can only enter a number between 1 and 9 in the first placeholder, and only a digit in the placeholders after that.
 
 Any valid regular expressions should work.
 
