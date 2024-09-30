@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/thaboRach/react-text-mask/compare/v1.0.4...v1.0.5) (2024-09-30)
+
+
+### Bug Fixes
+
+* **actions:** add if for publish-npm ([289b547](https://github.com/thaboRach/react-text-mask/commit/289b547c38d89a82e48a91d9c016b643b9664363))
+
 ## [1.0.4](https://github.com/thaboRach/react-text-mask/compare/v1.0.3...v1.0.4) (2024-09-30)
 
 
