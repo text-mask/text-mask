@@ -1,7 +1,14 @@
 # @thaborach/react-text-mask
 
-Text Mask is an input mask library. It can create input masks for phone, date, currency, zip code, percentage, email,
+React Text Mask is an input mask library. It can create input masks for phone, date, currency, zip code, percentage, email,
 and literally anything!
+
+* It is very configurable and allows you to create any type of input mask with minimal APIs.
+
+* It supports pasting, browser auto-fill, and all operations that a user would expect while interacting with
+an input field.
+
+* It works on mobile, has no 3rd party dependencies, and has a tiny footprint (less than 4KB gzipped).
 
 It is forked from [text mask](https://github.com/text-mask/text-mask) which is deprecated and no longer being maintained.
 
@@ -12,6 +19,8 @@ It is forked from [text mask](https://github.com/text-mask/text-mask) which is d
 * [Installation and usage](#installation-and-usage)
 * [Properties](#properties)
 * [Utilities](#utilities)
+* [Contributing](#contributing)
+* [Questions, suggestions, or feature requests](#for-any-questions-suggestions-or-feature-requests)
 
 ## Installation and usage
 
@@ -302,6 +311,7 @@ const MyStyledInput = styled.input`
 In addition to the Mask Input component there are additional utility functions that you can utilize, such as:
 
 * [`conformToMask`](#conformtomask)
+* [`Addons`](#add-ons)
 
 ### `conformToMask`
 
@@ -352,28 +362,15 @@ const conformedPhoneNumber = conformToMask(
 console.log(conformedPhoneNumber.conformedValue) // prints (555) 123-4444
 ```
 
+### Add ons
 
-## Flexible
-
-Text Mask is very configurable and allows you to create any type of input mask with minimal APIs.
-[See the documentation for details](https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme).
-
-## Extendable
-
-You can easily expand the base functionality of Text Mask with addons for more mask types.
-[Checkout existing addons](https://github.com/text-mask/text-mask/tree/master/addons/#readme).
-
-## Robust
-
-Text Mask supports pasting, browser auto-fill, and all operations that a user would expect while interacting with
-an input field.
-
-It works on mobile, has no 3rd party dependencies, and has a tiny footprint (less than 4KB gzipped).
-
-## For any questions, suggestions, or feature requests
-
-[Please file an issue](https://github.com/text-mask/text-mask/issues)!
+You can easily expand the base functionality of React Text Mask with addons for more mask types.
+[Checkout existing addons](https://github.com/thaboRach/react-text-mask/tree/master/lib/addons#mask-addons).
 
 ## Contributing
 
-We would love some contributions! Check out [this document](https://github.com/text-mask/text-mask/blob/master/howToContribute.md#readme) to get started.
+We would love some contributions! Check out [this document](https://github.com/thaboRach/react-text-mask/blob/master/CONTRIBUTING.md#contributing-to-react-text-mask) to get started.
+
+## For any questions, suggestions, or feature requests
+
+[Please file an issue](https://github.com/thaboRach/react-text-mask/issues)!
