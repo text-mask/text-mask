@@ -100,7 +100,7 @@ Each element in the array has to be either a string or a regular expression. Eac
 
 The regular expression will be used to test user input and either allow it or reject it.
 
-For example, a mask for a U.S. phone number such as `(555) 392-4932`, could be:
+For example, a mask for a U.S. based phone number such as `(555) 392-4932`, could be:
 
 ```js
 ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
