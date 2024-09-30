@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/thaboRach/react-text-mask/compare/v1.0.2...v1.0.3) (2024-09-30)
+
+
+### Bug Fixes
+
+* **actions:** upload artifact after building ([32af255](https://github.com/thaboRach/react-text-mask/commit/32af25532e7028865f431a77947777793497ef4d))
+
 ## [1.0.2](https://github.com/thaboRach/react-text-mask/compare/v1.0.1...v1.0.2) (2024-09-30)
 
 
