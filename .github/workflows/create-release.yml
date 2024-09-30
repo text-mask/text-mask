@@ -59,7 +59,7 @@ jobs:
         uses: actions/download-artifact@v4
         if: ${{ steps.release.outputs.release_created }}
         with:
-          name: build
+          name: dist
           path: dist
 
       - name: Pack the release
