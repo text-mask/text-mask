@@ -83,7 +83,7 @@ jobs:
 
   publish-npm:
     name: Publish to NPM
-    if: ${{ needs.release.outputs.release_created }}
+    if: ${{ needs.release-please.outputs.release_created }}
     needs: release-please
     runs-on: ubuntu-latest
     permissions:
