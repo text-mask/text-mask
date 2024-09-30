@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/thaboRach/react-text-mask/compare/v1.0.6...v1.0.7) (2024-09-30)
+
+
+### Bug Fixes
+
+* **actions:** publish workflow if ([8bc549d](https://github.com/thaboRach/react-text-mask/commit/8bc549dfb82a28908afb697e75d1e4baffd39784))
+
 ## [1.0.6](https://github.com/thaboRach/react-text-mask/compare/v1.0.5...v1.0.6) (2024-09-30)
 
 
