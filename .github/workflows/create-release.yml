@@ -43,9 +43,6 @@ jobs:
         uses: googleapis/release-please-action@v4
         id: release
         with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
           release-type: node
 
@@ -58,16 +55,16 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
 
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v4
-      #   if: ${{ steps.release.outputs.release_created }}
-      #   with:
-      #     name: build
-      #     path: dist
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          name: build
+          path: dist
 
-      # - name: Pack the release
-      #   if: ${{ steps.release.outputs.release_created }}
-      #   run: yarn pack --filename release.tar.gz
+      - name: Pack the release
+        if: ${{ steps.release.outputs.release_created }}
+        run: yarn pack --filename release.tar.gz
 
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
