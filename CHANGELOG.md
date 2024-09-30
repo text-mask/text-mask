@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/thaboRach/react-text-mask/compare/v1.0.0...v1.0.1) (2024-09-30)
+
+
+### Bug Fixes
+
+* **actions:** create release ([1c608ef](https://github.com/thaboRach/react-text-mask/commit/1c608ef2f4b7b3056f9801e0eb2b22fce2264f96))
+
 ## 1.0.0 (2024-09-30)
 
 
