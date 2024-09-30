@@ -1,0 +1,18 @@
+# Changelog
+
+## 1.0.0 (2024-09-30)
+
+
+### Features
+
+* `keepCharPositions` ([#93](https://github.com/thaboRach/react-text-mask/issues/93)) ([b423519](https://github.com/thaboRach/react-text-mask/commit/b42351960bb7b06211e6d3d48d0c9a216655a2bc))
+* `pipe` ([#95](https://github.com/thaboRach/react-text-mask/issues/95)) ([efc877a](https://github.com/thaboRach/react-text-mask/commit/efc877a11737b69489c76186e0734b932d529d4b))
+* custom validator ([#56](https://github.com/thaboRach/react-text-mask/issues/56)) ([87ca8c6](https://github.com/thaboRach/react-text-mask/commit/87ca8c675d173fcbe0fe6f389c5f8235a7117a11))
+
+
+### Bug Fixes
+
+* 231 ([#237](https://github.com/thaboRach/react-text-mask/issues/237)) ([16c5a9e](https://github.com/thaboRach/react-text-mask/commit/16c5a9ee9444192950c4bb3ed963dde0e58e9ec6))
+* 238 ([#239](https://github.com/thaboRach/react-text-mask/issues/239)) ([5d68cd3](https://github.com/thaboRach/react-text-mask/commit/5d68cd3e14b3f0ab3c81d1c5ebee1da0aef7d17c))
+* **adjustCaretPosition:** caret position prevent input reset ([#747](https://github.com/thaboRach/react-text-mask/issues/747)) ([96b3239](https://github.com/thaboRach/react-text-mask/commit/96b3239f0bc838fcc7cae7410fc5957941b1c21d))
+* pass the correct value to _onChange ([#391](https://github.com/thaboRach/react-text-mask/issues/391)) ([1eb5d85](https://github.com/thaboRach/react-text-mask/commit/1eb5d858910c352b2dde950247fc5f90850a0d50))
