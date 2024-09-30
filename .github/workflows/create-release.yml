@@ -33,6 +33,12 @@ jobs:
       - name: Build 🔧
         run: yarn build
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
   release-please:
     name: Release Please
     needs: build
