@@ -12,7 +12,7 @@ an input field.
 
 It is forked from [text mask](https://github.com/text-mask/text-mask) which is deprecated and no longer being maintained.
 
-[Check out the demo](https://thaborach.github.io/react-text-mask/)
+[Check out the demo](https://thaborach.github.io/react-text-mask/?path=/docs/components-maskedinput--docs)
 
 ## Table of Contents
 
