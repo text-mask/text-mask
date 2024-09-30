@@ -17,4 +17,5 @@ sketch
 build
 dist
 *.tgz
+*.tar.gz
 storybook-static
