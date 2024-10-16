@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/thaboRach/react-text-mask/compare/v1.0.7...v1.0.8) (2024-10-16)
+
+
+### Bug Fixes
+
+* **exports:** expose types ([05deb24](https://github.com/thaboRach/react-text-mask/commit/05deb24992a4964fc9b24ceb17f99c7c97d9d849))
+
 ## [1.0.7](https://github.com/thaboRach/react-text-mask/compare/v1.0.6...v1.0.7) (2024-09-30)
 
 
