@@ -11,6 +11,20 @@ import {
   MinusRegExp,
 } from '../utils/constants';
 
+type CreateNumberMask = {
+  prefix: string;
+  suffix: string;
+  includeThousandsSeparator: boolean;
+  thousandsSeparatorSymbol: string;
+  allowDecimal: boolean;
+  decimalSymbol: string;
+  decimalLimit: number;
+  requireDecimal: boolean;
+  allowNegative: boolean;
+  allowLeadingZeroes: boolean;
+  integerLimit: number | null;
+};
+
 export default function createNumberMask({
   prefix = DollarSign,
   suffix = EmptyString,
@@ -23,7 +37,7 @@ export default function createNumberMask({
   allowNegative = false,
   allowLeadingZeroes = false,
   integerLimit = null,
-} = {}) {
+}: CreateNumberMask) {
   const prefixLength = (prefix && prefix.length) || 0;
   const suffixLength = (suffix && suffix.length) || 0;
   const thousandsSeparatorSymbolLength =
