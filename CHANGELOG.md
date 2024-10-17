@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/thaboRach/react-text-mask/compare/v1.0.8...v1.0.9) (2024-10-17)
+
+
+### Bug Fixes
+
+* **bug:** add parameter types for createNumberMask ([8cde947](https://github.com/thaboRach/react-text-mask/commit/8cde947453ced5f2e4f163fceae523ff799c60e3))
+
 ## [1.0.8](https://github.com/thaboRach/react-text-mask/compare/v1.0.7...v1.0.8) (2024-10-16)
 
 

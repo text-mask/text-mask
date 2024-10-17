@@ -1,6 +1,6 @@
 {
   "name": "@thaborach/react-text-mask",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A masked React Input component",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
