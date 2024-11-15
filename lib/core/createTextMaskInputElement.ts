@@ -40,13 +40,13 @@ export default function createTextMaskInputElement(config: MainConfig): TextMask
         showMask = false,
       }: MainConfig = config,
     ) {
+      if (inputElement === undefined) {
+        throw new Error('Text-mask: createTextMaskInputElement: inputElement is required');
+      }
+
       // if `rawValue` is `undefined`, read from the `inputElement`
-      if (typeof rawValue === 'undefined' && inputElement !== undefined) {
+      if (rawValue === undefined) {
         rawValue = inputElement.value;
-      } else {
-        throw new Error(
-          'Text-mask: createTextMaskInputElement: inputElement is required if there is no rawValue',
-        );
       }
 
       // If `rawValue` equals `state.previousConformedValue`, we don't need to change anything. So, we return.
