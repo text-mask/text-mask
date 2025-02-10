@@ -1,6 +1,6 @@
 {
   "name": "react-text-mask",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "description": "React input component that accepts mask pattern",
   "main": "dist/reactTextMask.js",
   "author": "M.K. Safi <msafi@msafi.com>",
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/text-mask/text-mask/tree/master/react/#readme",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "babel": {
     "presets": [
