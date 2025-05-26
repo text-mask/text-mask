@@ -5,6 +5,7 @@
 * https://github.com/uNmAnNeR/imaskjs
 * https://github.com/JsDaddy/ngx-mask
 * https://github.com/Tinkoff/maskito
+* https://github.com/mertohancan/react-text-mask-modern
 
 If you know other alternatives that should be listed here, email me at msafi@msafi.com.
 
