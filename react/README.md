@@ -63,7 +63,8 @@ For advanced uses, you can customize the rendering of the resultant `<input>` vi
 This is entirely optional, if no `render` prop is passed, a normal `<input>` is rendered.
 
 For example, to use with styled-components,
-[which requires an innerRef](https://www.styled-components.com/docs/advanced#refs):
+[which requires a ref](https://www.styled-components.com/docs/advanced#refs):
+* Note if you're using an older version of `styled-components` <4.0.0 or `react` <16.3 Use the `innerRef` prop instead of `ref`.
 
 ```js
 <MaskedInput
@@ -71,7 +72,7 @@ For example, to use with styled-components,
   placeholder="Enter a phone number"
   id="my-input-id"
   render={(ref, props) => (
-    <MyStyledInput innerRef={ref} {...props} />
+    <MyStyledInput ref={ref} {...props} />
   )}
 />
 
