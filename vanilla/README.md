@@ -13,10 +13,8 @@ npm i vanilla-text-mask --save
 Then, use it as follows:
 
 ```html
-<script
-  type="text/javascript"
-  src="./node_modules/vanilla-text-mask/dist/vanillaTextMask.js"></script>
-<script type="text/javascript">
+<script src="./node_modules/vanilla-text-mask/dist/vanillaTextMask.js"></script>
+<script>
   var phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   // Assuming you have an input element in your HTML with the class .myInput
